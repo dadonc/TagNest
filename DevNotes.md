@@ -9,3 +9,6 @@ npm init electron-app@latest my-new-app -- --template=vite
 npm init vite
 # and selecting svelte
 ```
+
+* Added prisma using a Proxy for the renderer process
+* Added TailwindCSS
