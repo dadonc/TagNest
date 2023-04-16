@@ -1,11 +1,23 @@
 <script lang="ts">
   import svelteLogo from './assets/svelte.svg'
+  import {createUser, getUsers} from './db'
   //import viteLogo from '/vite.svg'
   import Counter from './lib/Counter.svelte'
+  let users =  getUsers()
 </script>
 
 <main>
   <div>
+    {#await users}
+	    <p>...waiting</p>
+    {:then users}
+      {#each users as user}
+        <p>{user.name}</p>
+      {/each}
+    {:catch error}
+      <p style="color: red">{error.message}</p>
+    {/await}
+
 
     <a href="https://svelte.dev" target="_blank" rel="noreferrer">
       <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
@@ -15,6 +27,10 @@
 
   <div class="card">
     <Counter />
+    <button on:click={async () => {
+      await createUser()
+      users = getUsers()
+      }}>CREATE TEST USER</button>
   </div>
 
   <p>
