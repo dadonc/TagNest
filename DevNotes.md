@@ -4,4 +4,8 @@
 ```bash
 npm init electron-app@latest my-new-app -- --template=vite
 ```
-
+* Copy+pasted Svelte template from running
+```bash
+npm init vite
+# and selecting svelte
+```
