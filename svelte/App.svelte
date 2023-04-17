@@ -1,18 +1,11 @@
 <script lang="ts">
-  import { getUsers} from './db'
-  let users =  getUsers()
+  import Layout from "./Layout.svelte";
+  import { getUsers } from "./db";
+  import CssStoreRenderer from "./stores/CssStoreRenderer.svelte";
+  let users = getUsers();
 </script>
 
 <main>
-  <div>
-    {#await users}
-	    <p>...waiting</p>
-    {:then users}
-      {#each users as user}
-        <p>{user.name}</p>
-      {/each}
-    {:catch error}
-      <p class="bg-red-500">{error.message}</p>
-    {/await}
-  </div>
+  <CssStoreRenderer />
+  <Layout />
 </main>
