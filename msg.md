@@ -1,6 +1,6 @@
 url: https://github.com/prisma/prisma/discussions/7889
 
-After struggling with exposing the PrismaClient to the renderer I've found a solution using a JavaScript proxy:
+After struggling with exposing the PrismaClient to the renderer I've found a solution using a JavaScript proxy and IPC messaging:
 
 Use contextBridge to expose a function to the renderer that sends a string to the main process and returns the result.
 ```js
@@ -11,7 +11,7 @@ contextBridge.exposeInMainWorld("electron", {
 });
 ```
 
-Use ipcMain.handle in the main process to receive the string and call the PrismaClient with it.
+In the mainprocess, use ipcMain.handle to receive the string and call the PrismaClient with it.
 ```js
 // main.js
 const createWindow = () => {
@@ -71,7 +71,7 @@ const prisma = new Proxy(() => {}, {
 export default prisma;
 ```
 
-Because the proxy is typed as a PrismaClient it can be used as if it was a normal PrismaClient, including autocomplete and linting. Usage example:
+Because the proxy is typed as a PrismaClient it can be used as if it was a normal PrismaClient, including autocomplete and linting. Further, the returned values are correctly typed. Usage example:
 ```ts
 // example.ts (renderer)
 import prisma from "./prisma";

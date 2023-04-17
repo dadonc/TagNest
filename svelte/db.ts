@@ -10,5 +10,8 @@ export const createUser = async () => {
 };
 
 export const getUsers = async () => {
-  return await prisma.user.findMany();
+  const users = await prisma.user.findMany();
+  return users.map((user) => {
+    return { ...users, name: user.name?.toUpperCase() };
+  });
 };

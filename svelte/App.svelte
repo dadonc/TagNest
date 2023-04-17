@@ -12,7 +12,7 @@
         <p>{user.name}</p>
       {/each}
     {:catch error}
-      <p style="color: red">{error.message}</p>
+      <p class="bg-red-500">{error.message}</p>
     {/await}
   </div>
 </main>
