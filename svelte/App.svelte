@@ -6,6 +6,5 @@
 </script>
 
 <main>
-  <CssStoreRenderer />
   <Layout />
 </main>

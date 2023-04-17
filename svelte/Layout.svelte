@@ -6,8 +6,9 @@
     rightContainer,
     bottomContainer,
   } from "./stores/CssStore";
+  import CssStoreRenderer from "./stores/CssStoreRenderer.svelte";
 
-  export let canOpenBottom = false;
+  export let canOpenBottom = true;
   export let canOpenRight = true;
 
   let gridColString = canOpenRight
@@ -55,21 +56,26 @@
   };
 
   const dragLeft = (e: DragEvent) => {
-    const val = e.x - 4 + "px";
-    $leftContainer.currentVal = val;
-    $leftContainer.val = val;
+    let val = e.x - 4;
+    val = val < 0 ? 0 : val;
+    $leftContainer.currentVal = val + "px";
+    $leftContainer.val = val + "px";
   };
 
   const dragRight = (e: DragEvent) => {
-    const val = document.documentElement.clientWidth - e.x - 8 + "px"; // 1rem is the width of the divider
-    $rightContainer.currentVal = val;
-    $rightContainer.val = val;
+    let val = document.documentElement.clientWidth - e.x - 8; // 1rem is the width of the divider
+    // when dragging this wraps around to the clientWidth if under 0
+    val =
+      val <= 0 || val > document.documentElement.clientWidth - 100 ? 0 : val;
+    $rightContainer.currentVal = val + "px";
+    $rightContainer.val = val + "px";
   };
 
   const dragBottom = (e: DragEvent) => {
     if (!canOpenBottom) return;
     let val = document.documentElement.clientHeight - e.y;
-    val = val < 0 ? 0 : val;
+    val =
+      val < 0 || val > document.documentElement.clientHeight - 100 ? 0 : val;
     $bottomContainer.currentVal = val + "px";
     $bottomContainer.val = val + "px";
   };
@@ -89,6 +95,8 @@
     document.body.removeChild(dragHider);
   }
 </script>
+
+<CssStoreRenderer />
 
 <div
   class="main"
