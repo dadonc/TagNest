@@ -6,5 +6,9 @@
 </script>
 
 <main>
-  <Layout />
+  <Layout>
+    <div slot="topContainer">
+      <div class="flex flex-row-reverse h-full">Test</div>
+    </div>
+  </Layout>
 </main>

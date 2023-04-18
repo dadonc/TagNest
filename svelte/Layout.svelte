@@ -103,52 +103,57 @@
   on:dragover|preventDefault
   style={`--gridColString: ${gridColString}; --gridRowString: ${gridRowString};`}
 >
-  <div class="text-white bg-blue-900 topContainer">
+  <div class="h-8 topContainer bg-base-300">
     <slot name="topContainer">No topContainer</slot>
   </div>
-  <div class="bg-blue-300 leftContainer">
+  <div class=" bg-base-300 leftContainer">
     <slot name="leftContainer">No leftContainer</slot>
   </div>
   <div
-    class="bg-gray-500 leftDivider grababble"
+    class="bg-base-300 leftDivider grababble"
     draggable="true"
     on:dblclick={toggleLeft}
     on:drag={dragLeft}
     on:dragstart={hideDragPreview}
     on:dragend={removeDragHider}
   >
-    <slot name="leftDivider">No leftDivider</slot>
+    <!-- <slot name="leftDivider">No leftDivider</slot> -->
+    &nbsp;
   </div>
-  <div class="mainContainer bg-blue-50">
-    <slot name="mainContainer">No mainContainer</slot>
+  <div class="bg-base-300 mainContainer">
+    <div class="h-full p-2 rounded-sm bg-base-100">
+      <slot name="mainContainer">No mainContainer</slot>
+    </div>
   </div>
   {#if canOpenRight}
     <div
-      class="bg-gray-500 rightDivider grababble"
+      class="bg-base-300 rightDivider grababble"
       draggable="true"
       on:dblclick={toggleRight}
       on:drag={dragRight}
       on:dragstart={hideDragPreview}
       on:dragend={removeDragHider}
     >
-      <slot name="rightDivider">No rightDivider</slot>
+      <!-- <slot name="rightDivider">No rightDivider</slot> -->
+      &nbsp;
     </div>
-    <div class="bg-blue-300 rightContainer">
+    <div class="rightContainer">
       <slot name="rightContainer">No rightContainer</slot>
     </div>
   {/if}
   {#if canOpenBottom}
     <div
-      class="bg-gray-500 bottomDivider grababble"
+      class="bg-base-300 bottomDivider grababble"
       draggable="true"
       on:dblclick={toggleBottom}
       on:drag={dragBottom}
       on:dragstart={hideDragPreview}
       on:dragend={removeDragHider}
     >
-      <slot name="bottomDivider">No bottomDivider</slot>
+      <!-- <slot name="bottomDivider">No bottomDivider</slot> -->
+      &nbsp;
     </div>
-    <div class="text-white bg-blue-900 bottomContainer">
+    <div class="bottomContainer">
       <slot name="bottomContainer" />
     </div>
   {/if}
@@ -182,6 +187,22 @@
         calc(var(--topContainer) + var(--bottomContainer) + var(--dividerWidth))
     ); */
     overflow: scroll;
+  }
+
+  .leftContainer,
+  .topContainer,
+  .rightContainer,
+  .bottomContainer,
+  .mainContainer {
+    @apply p-2;
+  }
+
+  .topContainer {
+    -webkit-app-region: drag;
+  }
+
+  .topContainer * {
+    -webkit-app-region: no-drag;
   }
 
   .grababble:hover {
