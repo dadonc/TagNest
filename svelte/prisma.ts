@@ -1,13 +1,5 @@
 import type { PrismaClient } from "@prisma/client";
 
-declare global {
-  interface Window {
-    electron: {
-      prisma: (a: string) => Promise<any>;
-    };
-  }
-}
-
 let props = "";
 const prisma = new Proxy(() => {}, {
   get: function (target, name, receiver) {

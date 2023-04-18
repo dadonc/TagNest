@@ -1,8 +1,9 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("electron", {
-  node: () => process.versions.node,
-  chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron,
+  nodeVersion: () => process.versions.node,
+  chromeVersion: () => process.versions.chrome,
+  electronVersion: () => process.versions.electron,
   prisma: (str) => ipcRenderer.invoke("prisma", str),
+  onOpenAddItem: (callback) => ipcRenderer.on("openAddItem", callback),
 });

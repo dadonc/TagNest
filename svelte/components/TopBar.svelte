@@ -2,11 +2,15 @@
   import Plus from "../assets/feather/Plus.svelte";
   import AddModal from "./AddModal.svelte";
 
-  let showAddModal = true;
+  let showAddModal = false;
 
   const handleToggleAddModal = () => {
     showAddModal = !showAddModal;
   };
+
+  window.electron.onOpenAddItem(() => {
+    showAddModal = true;
+  });
 </script>
 
 <div class="flex flex-row-reverse items-center h-full">

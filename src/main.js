@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
 const path = require("path");
 const { PrismaClient } = require("@prisma/client");
 
@@ -37,6 +37,11 @@ const createWindow = () => {
       path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
     );
   }
+
+  globalShortcut.register("CommandOrControl+Shift+I", () => {
+    mainWindow.webContents.send("openAddItem");
+    mainWindow.show();
+  });
 
   ipcMain.handle("prisma", (channel, arg) => handlePrisma(arg));
 };
