@@ -10,8 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model Item {
+  id        String   @id @default(cuid())
+  name      String?
+  url       String?
+  note      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  file      File?    @relation(fields: [fileId], references: [id])
+  fileId    String?
+}
+
+model File {
+  id        String   @id @default(cuid())
+  path      String
+  createdAt DateTime @default(now())
+  item      Item[]
 }

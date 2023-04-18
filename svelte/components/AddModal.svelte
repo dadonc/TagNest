@@ -6,15 +6,15 @@
   export let close: () => void;
 
   function save() {
-    const newTitle = title ? title : titlePlaceholder ? titlePlaceholder : "";
-    createItem({ title: newTitle, url, note, path });
+    const newName = name ? name : namePlaceholder ? namePlaceholder : "";
+    createItem({ name: newName, url, note, path });
     close();
   }
 
-  $: disabled = !title && !url && !path;
+  $: disabled = !name && !url && !path;
 
-  let title = "";
-  let titlePlaceholder = "Title";
+  let name = "";
+  let namePlaceholder = "Name";
   let url = "";
   let note = "";
   let path = "";
@@ -28,16 +28,16 @@
         on:file-chosen={(ev) => {
           const filePath = ev.detail;
           const name = filePath.split("/").pop();
-          if (titlePlaceholder === "Title" && name) {
-            titlePlaceholder = name;
+          if (namePlaceholder === "Name" && name) {
+            namePlaceholder = name;
           }
           path = filePath;
         }}
       />
       <input
-        bind:value={title}
+        bind:value={name}
         type="text"
-        placeholder={titlePlaceholder}
+        placeholder={namePlaceholder}
         class="w-full mt-2 input input-bordered"
       />
       <input

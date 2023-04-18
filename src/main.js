@@ -32,6 +32,7 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
+      webSecurity: MAIN_WINDOW_VITE_DEV_SERVER_URL ? false : true,
     },
     titleBarStyle: "hidden",
   });
@@ -60,7 +61,6 @@ const createWindow = () => {
 
     return result.then(({ canceled, filePaths, bookmarks }) => {
       const base64 = fs.readFileSync(filePaths[0]).toString("base64");
-      // event.reply("chosenFile", base64);
       mainWindow.webContents.send("onChosenFile", {
         base64,
         path: filePaths[0],
