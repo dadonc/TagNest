@@ -1,14 +1,12 @@
 <script lang="ts">
   import Layout from "./Layout.svelte";
-  import { getUsers } from "./db";
-  import CssStoreRenderer from "./stores/CssStoreRenderer.svelte";
-  let users = getUsers();
+  import TopBar from "./components/TopBar.svelte";
 </script>
 
 <main>
   <Layout>
-    <div slot="topContainer">
-      <div class="flex flex-row-reverse h-full">Test</div>
-    </div>
+    <svelte:fragment slot="topContainer">
+      <TopBar />
+    </svelte:fragment>
   </Layout>
 </main>

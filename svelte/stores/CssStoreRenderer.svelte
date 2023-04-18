@@ -61,8 +61,8 @@
     $topContainer = top
       ? JSON.parse(top)
       : {
-          val: "2rem",
-          currentVal: "2rem",
+          val: "3.5rem",
+          currentVal: "3.5rem",
         };
     topContainer.subscribe((v) => {
       const value = v as CssContainerType;

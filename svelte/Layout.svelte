@@ -5,6 +5,7 @@
     leftContainer,
     rightContainer,
     bottomContainer,
+    topContainer,
   } from "./stores/CssStore";
   import CssStoreRenderer from "./stores/CssStoreRenderer.svelte";
 
@@ -103,7 +104,7 @@
   on:dragover|preventDefault
   style={`--gridColString: ${gridColString}; --gridRowString: ${gridRowString};`}
 >
-  <div class="h-8 topContainer bg-base-300">
+  <div class="topContainer bg-base-300">
     <slot name="topContainer">No topContainer</slot>
   </div>
   <div class=" bg-base-300 leftContainer">
@@ -121,7 +122,7 @@
     &nbsp;
   </div>
   <div class="bg-base-300 mainContainer">
-    <div class="h-full p-2 rounded-sm bg-base-100">
+    <div class="h-full p-2 rounded-sm bg-base-100 slot">
       <slot name="mainContainer">No mainContainer</slot>
     </div>
   </div>
@@ -193,16 +194,12 @@
   .topContainer,
   .rightContainer,
   .bottomContainer,
-  .mainContainer {
+  .mainContainer .slot {
     @apply p-2;
   }
 
   .topContainer {
     -webkit-app-region: drag;
-  }
-
-  .topContainer * {
-    -webkit-app-region: no-drag;
   }
 
   .grababble:hover {
