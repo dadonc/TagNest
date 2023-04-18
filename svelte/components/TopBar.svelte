@@ -2,7 +2,7 @@
   import Plus from "../assets/feather/Plus.svelte";
   import AddModal from "./AddModal.svelte";
 
-  let showAddModal = false;
+  let showAddModal = true;
 
   const handleToggleAddModal = () => {
     showAddModal = !showAddModal;

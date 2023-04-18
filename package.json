@@ -25,6 +25,7 @@
     "@electron-forge/maker-zip": "^6.1.1",
     "@electron-forge/plugin-vite": "^6.1.1",
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
+    "@tailwindcss/forms": "^0.5.3",
     "@tsconfig/svelte": "^3.0.0",
     "autoprefixer": "^10.4.14",
     "electron": "24.1.2",

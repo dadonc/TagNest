@@ -17,7 +17,6 @@
       }
     }}
     on:keydown={(e) => {
-      console.log(e.key);
       if (e.key === "Escape") {
         close();
       }
