@@ -1,4 +1,11 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  globalShortcut,
+  dialog,
+} = require("electron");
+const fs = require("fs");
 const path = require("path");
 const { PrismaClient } = require("@prisma/client");
 
@@ -44,6 +51,22 @@ const createWindow = () => {
   });
 
   ipcMain.handle("prisma", (channel, arg) => handlePrisma(arg));
+
+  ipcMain.on("chooseFile", (event, arg) => {
+    const result = dialog.showOpenDialog({
+      properties: ["openFile"],
+      filters: [{ name: "Images", extensions: ["png", "jpg", "jpeg"] }],
+    });
+
+    return result.then(({ canceled, filePaths, bookmarks }) => {
+      const base64 = fs.readFileSync(filePaths[0]).toString("base64");
+      // event.reply("chosenFile", base64);
+      mainWindow.webContents.send("onChosenFile", {
+        base64,
+        path: filePaths[0],
+      });
+    });
+  });
 };
 
 // This method will be called when Electron has finished

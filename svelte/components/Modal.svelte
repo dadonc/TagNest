@@ -24,8 +24,16 @@
     transition:fade={{ duration: 200 }}
     class={`transition-opacity duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg`}
   >
-    <div class="w-full p-2 rounded md:w-3/4 lg:w-1/2 bg-base-100">
+    <div
+      class="w-full p-2 overflow-scroll rounded modalMaxHeight md:w-3/4 lg:w-1/2 bg-base-100"
+    >
       <slot name="body" />
     </div>
   </div>
 {/if}
+
+<style>
+  .modalMaxHeight {
+    max-height: calc(100vh - 2rem);
+  }
+</style>

@@ -25,13 +25,13 @@
     <div slot="body">
       <h1 class="mt-2 mb-4 text-3xl text-center">Add new item</h1>
       <FileDragArea
-        previewImage={path}
-        on:file-chosen={(e) => {
-          const file = e.detail[0];
-          if (titlePlaceholder === "Title") {
-            titlePlaceholder = file.name;
+        on:file-chosen={(ev) => {
+          const filePath = ev.detail;
+          const name = filePath.split("/").pop();
+          if (titlePlaceholder === "Title" && name) {
+            titlePlaceholder = name;
           }
-          path = file.path;
+          path = filePath;
         }}
       />
       <input

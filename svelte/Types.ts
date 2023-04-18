@@ -4,8 +4,15 @@ declare global {
       nodeVersion: () => string;
       chromeVersion: () => string;
       electronVersion: () => string;
-      prisma: (a: string) => Promise<any>;
+      prisma: (callback: string) => Promise<any>;
       onOpenAddItem: (a: () => void) => void;
+      chooseFile: () => void;
+      onChosenFile: (
+        callback: (
+          ev: Event,
+          { base64, path }: { base64: string; path: string }
+        ) => void
+      ) => void;
     };
   }
 }

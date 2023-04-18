@@ -3,17 +3,19 @@
 
   const dispatch = createEventDispatcher();
 
-  function fileChosen(event: Event) {
-    const files = (event.target as HTMLInputElement).files;
-    if (files) {
-      dispatch("file-chosen", files);
-    }
+  async function openFileChooser() {
+    window.electron.chooseFile();
   }
 
-  export let previewImage = "";
+  window.electron.onChosenFile((ev, { base64, path }) => {
+    previewBase64 = `data:image/jpg;base64,${base64}`;
+    dispatch("file-chosen", path);
+  });
+
+  let previewBase64 = "";
 </script>
 
-{#if !previewImage}
+{#if !previewBase64}
   <div class="col-span-full">
     <div
       class="flex justify-center px-6 py-10 mt-2 border border-dashed rounded-lg border-gray-900/25"
@@ -32,19 +34,9 @@
           />
         </svg>
         <div class="flex mt-4 text-sm leading-6 text-gray-600">
-          <label
-            for="file-upload"
-            class="relative font-semibold text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+          <button class="text-primary" on:click={openFileChooser}
+            >Upload a file</button
           >
-            <span>Upload a file</span>
-            <input
-              on:change={fileChosen}
-              id="file-upload"
-              name="file-upload"
-              type="file"
-              class="sr-only"
-            />
-          </label>
           <p class="pl-1">or drag and drop</p>
         </div>
         <p class="text-xs leading-5 text-gray-600">images,</p>
@@ -52,5 +44,14 @@
     </div>
   </div>
 {:else}
-  <img src={previewImage} alt="" />
+  <img
+    src={previewBase64}
+    alt=""
+    on:click={openFileChooser}
+    on:keydown={(e) => {
+      if (e.key === "Enter") {
+        openFileChooser();
+      }
+    }}
+  />
 {/if}
