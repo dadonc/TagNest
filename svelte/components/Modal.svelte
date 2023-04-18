@@ -1,31 +1,31 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
-  export let open = false;
-  const dispatch = createEventDispatcher();
+  export let isOpen = false;
+  export let closeOnClickOutside = false;
+  export let close: () => void;
 </script>
 
-{#if open}
+{#if isOpen}
   <!-- svelte-ignore a11y-autofocus -->
   <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
   <div
     tabindex="0"
     autofocus
     on:click={(e) => {
-      if (e.target === e.currentTarget) {
-        dispatch("close");
+      if (closeOnClickOutside && e.target === e.currentTarget) {
+        close();
       }
     }}
     on:keydown={(e) => {
       console.log(e.key);
       if (e.key === "Escape") {
-        dispatch("close");
+        close();
       }
     }}
     transition:fade={{ duration: 200 }}
-    class={`transition-opacity duration-200 opacity-50 absolute top-0 bottom-0 left-0 flex items-center justify-center w-screen h-screen bg-gray-900`}
+    class={`transition-opacity duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg`}
   >
-    <div class="w-64 h-64 p-2 bg-white rounded">
+    <div class="w-full p-2 rounded md:w-3/4 lg:w-1/2 bg-base-100">
       <slot name="body" />
     </div>
   </div>

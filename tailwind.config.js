@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./svelte/**/*.{html,js,svelte,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        fadeBg: "rgba(17, 24, 39, 0.5)", // bg-gray-900 50% opacity
+      },
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {

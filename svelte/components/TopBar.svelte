@@ -1,8 +1,8 @@
 <script lang="ts">
   import Plus from "../assets/feather/Plus.svelte";
-  import Modal from "./Modal.svelte";
+  import AddModal from "./AddModal.svelte";
 
-  let showAddModal = false;
+  let showAddModal = true;
 
   const handleToggleAddModal = () => {
     showAddModal = !showAddModal;
@@ -15,8 +15,4 @@
   </button>
 </div>
 
-<Modal open={showAddModal} on:close={handleToggleAddModal}>
-  <div slot="body">
-    <h1>Modal</h1>
-  </div>
-</Modal>
+<AddModal isOpen={showAddModal} close={handleToggleAddModal} />
