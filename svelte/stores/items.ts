@@ -1,5 +1,9 @@
 import prisma from "../prisma";
-export const createItem = async ({
+import { writable } from "svelte/store";
+
+export const items = writable<ReturnType<typeof getItems>>(getItems());
+
+export async function createItem({
   name,
   url,
   note,
@@ -9,7 +13,7 @@ export const createItem = async ({
   url: string;
   note: string;
   path: string;
-}) => {
+}) {
   // TODO get file creation date
   const fileId = await prisma.file.create({
     data: {
@@ -17,7 +21,7 @@ export const createItem = async ({
     },
   });
 
-  prisma.item.create({
+  return prisma.item.create({
     data: {
       name,
       url,
@@ -29,15 +33,15 @@ export const createItem = async ({
       },
     },
   });
-};
+}
 
-export const getItems = async () => {
+export async function getItems() {
   return await prisma.item.findMany({
     include: {
       file: true,
     },
   });
-};
+}
 
 async function getItemsDummy() {
   return (await getItems())[0];

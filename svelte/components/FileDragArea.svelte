@@ -7,6 +7,33 @@
     window.electron.chooseFile();
   }
 
+  interface FileWithPath extends File {
+    path: string;
+  }
+
+  function dropHandler(e: DragEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!e.dataTransfer || e.dataTransfer.files.length === 0) {
+      return;
+    }
+    const file = e.dataTransfer.files[0];
+
+    if (!file.type.startsWith("image/")) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (!e.target || !e.target.result) {
+        return;
+      }
+      previewBase64 = e.target.result as string;
+      dispatch("file-chosen", (file as FileWithPath).path);
+    };
+    reader.readAsDataURL(file);
+  }
+
   window.electron.onChosenFile((ev, { base64, path }) => {
     previewBase64 = `data:image/jpg;base64,${base64}`;
     dispatch("file-chosen", path);
@@ -18,7 +45,9 @@
 {#if !previewBase64}
   <div class="col-span-full">
     <div
-      class="flex justify-center px-6 py-10 mt-2 border border-dashed rounded-lg border-gray-900/25"
+      on:drop={dropHandler}
+      class="flex justify-center px-6 py-10 mt-2 border border-dashed rounded-lg"
+      style="border-color: hsl(var(--bc) / 0.3)"
     >
       <div class="text-center">
         <svg

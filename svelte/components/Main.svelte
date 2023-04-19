@@ -2,8 +2,8 @@
   import { getItems } from "../stores/items";
   import ItemPreview from "./ItemPreview.svelte";
   import { currView } from "../stores/CurrViewStore";
+  import { items } from "../stores/items";
 
-  const items = getItems();
   $: gridCols = createGridColsString($currView.zoomLvl);
 
   const createGridColsString = (zoomLvl: number) => {
@@ -15,7 +15,7 @@
   };
 </script>
 
-{#await items}
+{#await $items}
   <div>Loading...</div>
 {:then items}
   {#each items as item}

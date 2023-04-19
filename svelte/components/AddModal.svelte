@@ -1,13 +1,14 @@
 <script lang="ts">
   import Modal from "./Modal.svelte";
   import FileDragArea from "./FileDragArea.svelte";
-  import { createItem } from "../stores/items";
+  import { items, createItem, getItems } from "../stores/items";
   export let isOpen = false;
   export let close: () => void;
 
-  function save() {
+  async function save() {
     const newName = name ? name : namePlaceholder ? namePlaceholder : "";
-    createItem({ name: newName, url, note, path });
+    await createItem({ name: newName, url, note, path });
+    $items = getItems();
     close();
   }
 
