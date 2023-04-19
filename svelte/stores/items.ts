@@ -1,7 +1,4 @@
 import prisma from "../prisma";
-import type { Item } from "@prisma/client";
-
-export { Item };
 export const createItem = async ({
   name,
   url,

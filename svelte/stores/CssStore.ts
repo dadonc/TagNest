@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { CssContainerType } from "../Types";
+import type { CssContainerType } from "../types";
 
 export const leftContainer = writable<CssContainerType>();
 export const rightContainer = writable<CssContainerType>();

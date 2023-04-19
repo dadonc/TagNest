@@ -21,3 +21,7 @@ export type CssContainerType = {
   val: string;
   currentVal: string;
 };
+
+export type CurrViewType = {
+  zoomLvl: number;
+};

@@ -2,7 +2,6 @@
   import type { SingleItem } from "../stores/items";
 
   export let item: SingleItem;
-  console.log(item);
 </script>
 
 <div>

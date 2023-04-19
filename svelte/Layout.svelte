@@ -5,9 +5,9 @@
     leftContainer,
     rightContainer,
     bottomContainer,
-    topContainer,
   } from "./stores/CssStore";
   import CssStoreRenderer from "./stores/CssStoreRenderer.svelte";
+  import CurrViewStoreRenderer from "./stores/CurrViewStoreRenderer.svelte";
 
   export let canOpenBottom = true;
   export let canOpenRight = true;
@@ -17,7 +17,7 @@
     : "var(--leftContainer) var(--dividerWidth) auto";
 
   let gridRowString = canOpenBottom
-    ? "var(--topContainer) auto var(--dividerWidth) var(--bottomContainer);"
+    ? "var(--topContainer) auto var(--bottomDividerHeight) var(--bottomContainer);"
     : "var(--topContainer) auto ";
 
   onMount(() => {
@@ -98,6 +98,7 @@
 </script>
 
 <CssStoreRenderer />
+<CurrViewStoreRenderer />
 
 <div
   class="main"
@@ -145,13 +146,14 @@
   {#if canOpenBottom}
     <div
       class="bg-base-300 bottomDivider grababble"
+      style="height: var(--bottomDividerHeight);"
       draggable="true"
       on:dblclick={toggleBottom}
       on:drag={dragBottom}
       on:dragstart={hideDragPreview}
       on:dragend={removeDragHider}
     >
-      <!-- <slot name="bottomDivider">No bottomDivider</slot> -->
+      <slot name="bottomDivider">No bottomDivider</slot>
       &nbsp;
     </div>
     <div class="bottomContainer">
@@ -163,6 +165,7 @@
 <style>
   :global(:root) {
     --dividerWidth: 1rem;
+    --bottomDividerHeight: 2rem;
   }
 
   .main {
