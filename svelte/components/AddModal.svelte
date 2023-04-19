@@ -1,14 +1,14 @@
 <script lang="ts">
   import Modal from "./Modal.svelte";
   import FileDragArea from "./FileDragArea.svelte";
-  import { items, createItem, getItems } from "../stores/items";
+  import { createItem, refreshDisplayedItems } from "../stores/items";
   export let isOpen = false;
   export let close: () => void;
 
   async function save() {
     const newName = name ? name : namePlaceholder ? namePlaceholder : "";
     await createItem({ name: newName, url, note, path });
-    $items = getItems();
+    refreshDisplayedItems();
     close();
   }
 
@@ -56,6 +56,6 @@
         <button class="btn btn-tertiary" on:click={close}>Cancel</button>
         <button {disabled} class="btn btn-primary" on:click={save}>Save</button>
       </div>
-    </div></Modal
-  >
+    </div>
+  </Modal>
 {/if}

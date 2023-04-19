@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
 
+  export let previewSrc: string = "";
   const dispatch = createEventDispatcher();
 
   async function openFileChooser() {
@@ -28,21 +29,19 @@
       if (!e.target || !e.target.result) {
         return;
       }
-      previewBase64 = e.target.result as string;
+      previewSrc = e.target.result as string;
       dispatch("file-chosen", (file as FileWithPath).path);
     };
     reader.readAsDataURL(file);
   }
 
   window.electron.onChosenFile((ev, { base64, path }) => {
-    previewBase64 = `data:image/jpg;base64,${base64}`;
+    previewSrc = `data:image/jpg;base64,${base64}`;
     dispatch("file-chosen", path);
   });
-
-  let previewBase64 = "";
 </script>
 
-{#if !previewBase64}
+{#if !previewSrc}
   <div class="col-span-full">
     <div
       on:drop={dropHandler}
@@ -74,7 +73,7 @@
   </div>
 {:else}
   <img
-    src={previewBase64}
+    src={previewSrc}
     alt=""
     on:click={openFileChooser}
     on:keydown={(e) => {

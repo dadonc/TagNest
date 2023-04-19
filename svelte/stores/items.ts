@@ -35,6 +35,43 @@ export async function createItem({
   });
 }
 
+async function getFileIdByPath(path: string) {
+  return await prisma.file.findFirst({
+    where: {
+      path,
+    },
+  });
+}
+
+export async function updateItem(item: SingleItem) {
+  let fileId;
+  if (item.file) {
+    fileId = await getFileIdByPath(item.file.path);
+    if (!fileId) {
+      fileId = await prisma.file.create({
+        data: {
+          path: item.file.path,
+        },
+      });
+    }
+  }
+  return prisma.item.update({
+    where: {
+      id: item.id,
+    },
+    data: {
+      name: item.name,
+      url: item.url,
+      note: item.note,
+      file: {
+        connect: {
+          id: fileId?.id,
+        },
+      },
+    },
+  });
+}
+
 export async function getItems() {
   return await prisma.item.findMany({
     include: {
@@ -47,3 +84,7 @@ async function getItemsDummy() {
   return (await getItems())[0];
 }
 export type SingleItem = Awaited<ReturnType<typeof getItemsDummy>>;
+
+export async function refreshDisplayedItems() {
+  items.set(getItems());
+}
