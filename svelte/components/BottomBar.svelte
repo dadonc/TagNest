@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { currView } from "../stores/CurrViewStore";
 </script>
 
-<div class="flex items-center h-full">
+<div class="flex items-center h-full text-2xl">
   <span
     class="inline-block"
     style="width: calc( 1rem + var(--leftContainer))"

@@ -11,7 +11,7 @@ type CurrViewType = {
   // focusedAction?: CurrViewActionsType;
 };
 
-export const emptyCurrView: CurrViewType = {
+const emptyCurrView: CurrViewType = {
   zoomLvl: 3,
   // selectionType: "grid",
   // route: "main",
