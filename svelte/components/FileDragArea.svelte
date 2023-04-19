@@ -75,6 +75,7 @@
   <img
     src={previewSrc}
     alt=""
+    class="m-auto"
     on:click={openFileChooser}
     on:keydown={(e) => {
       if (e.key === "Enter") {

@@ -37,5 +37,13 @@
 </script>
 
 {#key item}
-  <CreateOrEdit {save} {item} {close} {isButtonDisabled} {wasChanged} />
+  <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
+
+  <CreateOrEdit
+    {save}
+    existingItem={item}
+    {close}
+    {isButtonDisabled}
+    {wasChanged}
+  />
 {/key}

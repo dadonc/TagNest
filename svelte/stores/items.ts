@@ -88,3 +88,11 @@ export type SingleItem = Awaited<ReturnType<typeof getItemsDummy>>;
 export async function refreshDisplayedItems() {
   items.set(getItems());
 }
+
+export async function deleteItem(id: string) {
+  return await prisma.item.delete({
+    where: {
+      id,
+    },
+  });
+}
