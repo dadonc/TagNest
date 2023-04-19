@@ -96,3 +96,13 @@ export async function deleteItem(id: string) {
     },
   });
 }
+
+export async function deleteItems(ids: string[]) {
+  return await prisma.item.deleteMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+  });
+}
