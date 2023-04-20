@@ -29,7 +29,6 @@
     "@tsconfig/svelte": "^3.0.0",
     "daisyui": "^2.51.5",
     "electron": "24.1.2",
-    "postcss": "^8.4.22",
     "prisma": "^4.13.0",
     "svelte": "^3.55.1",
     "svelte-check": "^2.10.3",
