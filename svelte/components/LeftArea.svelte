@@ -1,11 +1,10 @@
 <script lang="ts">
   import { allTags } from "../stores/tags";
+  import LeftTags from "./LeftTags.svelte";
 </script>
 
 {#await $allTags}
-  <div>Loading...</div>
+  <div />
 {:then tags}
-  {#each tags as tag}
-    <div>{tag.name}</div>
-  {/each}
+  <LeftTags {tags} />
 {/await}

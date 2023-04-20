@@ -51,7 +51,6 @@ async function getFileIdByPath(path: string) {
 }
 
 export async function updateItem(item: SingleItem, tagString: string) {
-  await updateItemTags(item, tagString);
   let fileId;
   if (item.file) {
     fileId = await getFileIdByPath(item.file.path);
@@ -63,7 +62,7 @@ export async function updateItem(item: SingleItem, tagString: string) {
       });
     }
   }
-  return prisma.item.update({
+  prisma.item.update({
     where: {
       id: item.id,
     },
@@ -78,6 +77,7 @@ export async function updateItem(item: SingleItem, tagString: string) {
       },
     },
   });
+  return updateItemTags(item, tagString);
 }
 
 export async function getItem(id: string) {
@@ -112,21 +112,36 @@ export async function refreshDisplayedItems() {
 
 export async function deleteItem(id: string) {
   const item = await getItem(id);
+  const tagIds = item?.tags.map((tag) => tag.id);
   if (!item) return;
-  possiblyDeleteTags(item.tags.map((tag) => tag.id));
-  return await prisma.item.delete({
+  await prisma.item.delete({
     where: {
       id,
     },
   });
+  return possiblyDeleteTags(tagIds || []);
 }
 
 export async function deleteItems(ids: string[]) {
-  return await prisma.item.deleteMany({
+  const items = await prisma.item.findMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+    include: {
+      tags: true,
+    },
+  });
+  const tagIds = items.reduce((acc, item) => {
+    return [...acc, ...item.tags.map((tag) => tag.id)];
+  }, [] as string[]);
+  await prisma.item.deleteMany({
     where: {
       id: {
         in: ids,
       },
     },
   });
+  return possiblyDeleteTags(tagIds);
 }

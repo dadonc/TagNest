@@ -10,8 +10,8 @@
   let originalItem = { ...item, file: item.file ? { ...item.file } : null };
   let isButtonDisabled = true;
 
-  const save = (tagString: string) => {
-    updateItem(item, tagString);
+  const save = async (tagString: string) => {
+    await updateItem(item, tagString);
     if (item.file?.path) {
       if (item.file.path !== originalItem.file?.path) {
         refreshDisplayedItems();

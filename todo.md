@@ -1,1 +1,0 @@
-test tag delete on item delete

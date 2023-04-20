@@ -73,7 +73,7 @@
   placeholder="URL"
   class="w-full mt-2 input input-bordered"
 />
-<TagSelectWrapper bind:tagString item={existingItem} />
+<TagSelectWrapper bind:tagString />
 <textarea
   bind:value={note}
   placeholder="Notes"

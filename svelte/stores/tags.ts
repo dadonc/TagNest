@@ -4,25 +4,50 @@ import type { SingleItem } from "./items";
 
 export const allTags = writable<ReturnType<typeof getTags>>(getTags());
 
+function refreshTagsStore() {
+  allTags.set(getTags());
+}
+
 export async function getTags() {
   return prisma.tag.findMany();
 }
 
-async function createTag(name: string) {
-  return prisma.tag.create({
+async function createTag({
+  name,
+  dontRefreshStore,
+}: {
+  name: string;
+  dontRefreshStore?: boolean;
+}) {
+  const newTag = await prisma.tag.create({
     data: {
       name,
     },
   });
+  if (!dontRefreshStore) refreshTagsStore();
+  return newTag;
 }
 
-async function createTags(tagNames: string[]): Promise<string[]> {
-  return await Promise.all(
-    tagNames.map(async (tagName) => (await createTag(tagName)).id)
+async function createTags(tagNames: string[]) {
+  const newIds = await Promise.all(
+    tagNames.map(
+      async (tagName) =>
+        (
+          await createTag({ name: tagName, dontRefreshStore: true })
+        ).id
+    )
   );
+  refreshTagsStore();
+  return newIds;
 }
 
-async function possiblyDeleteTag(id: string) {
+async function possiblyDeleteTag({
+  id,
+  dontRefreshStore,
+}: {
+  id: string;
+  dontRefreshStore?: boolean;
+}) {
   const count = await prisma.item.count({
     where: {
       tags: {
@@ -32,19 +57,25 @@ async function possiblyDeleteTag(id: string) {
       },
     },
   });
-  if (count === 1) {
-    return prisma.tag.delete({
+  if (count === 0) {
+    const deleted = await prisma.tag.delete({
       where: {
         id,
       },
     });
+    if (!dontRefreshStore) refreshTagsStore();
+    return deleted;
   }
 }
 
 export async function possiblyDeleteTags(tagIds: string[]) {
-  return await Promise.all(
-    tagIds.map(async (tagId) => possiblyDeleteTag(tagId))
+  const deletedTags = await Promise.all(
+    tagIds.map((tagId) =>
+      possiblyDeleteTag({ id: tagId, dontRefreshStore: true })
+    )
   );
+  refreshTagsStore();
+  return deletedTags;
 }
 
 export async function updateItemTags(item: SingleItem, tagString: string) {
@@ -72,7 +103,7 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
   const existingTagIds = tags.map((tag) => tag.id);
 
   // Update the store
-  allTags.set(getTags());
+  refreshTagsStore();
 
   // Connect all tags to the item
   const allTagIds = [...newTagIds, ...existingTagIds];

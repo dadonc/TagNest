@@ -5,7 +5,7 @@
 </script>
 
 {#await $items}
-  <div>Loading...</div>
+  <div />
 {:then items}
   {#if $state.selectedItems.length === 1}
     {#each items as item}

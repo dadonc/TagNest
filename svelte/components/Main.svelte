@@ -4,7 +4,7 @@
 </script>
 
 {#await $items}
-  <div>Loading...</div>
+  <div />
 {:then items}
   <MainGrid {items} />
 {/await}
