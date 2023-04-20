@@ -25,6 +25,11 @@
   };
 
   const handleKeydown = async (e: KeyboardEvent) => {
+    if (
+      document.activeElement?.tagName === "INPUT" ||
+      document.activeElement?.tagName === "TEXTAREA"
+    )
+      return;
     if (e.key === "Escape") {
       deselectItems();
     } else if (e.key === "Backspace" && e.metaKey) {

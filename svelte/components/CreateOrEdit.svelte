@@ -34,7 +34,7 @@
       save(tagString);
     } else {
       const newName = name ? name : namePlaceholder ? namePlaceholder : "";
-      await createItem({ name: newName, url, note, path });
+      await createItem({ name: newName, url, note, path, tagString });
       refreshDisplayedItems();
       close();
     }

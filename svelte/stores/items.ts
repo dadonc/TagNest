@@ -9,11 +9,13 @@ export async function createItem({
   url,
   note,
   path,
+  tagString,
 }: {
   name: string;
   url: string;
   note: string;
   path: string;
+  tagString: string;
 }) {
   // TODO get file creation date
   const fileId = await prisma.file.create({
@@ -22,7 +24,7 @@ export async function createItem({
     },
   });
 
-  return prisma.item.create({
+  const newItem = await prisma.item.create({
     data: {
       name,
       url,
@@ -34,6 +36,10 @@ export async function createItem({
       },
     },
   });
+
+  const item = await getItem(newItem.id);
+  await updateItemTags(item!, tagString);
+  return item;
 }
 
 async function getFileIdByPath(path: string) {
@@ -70,6 +76,18 @@ export async function updateItem(item: SingleItem, tagString: string) {
           id: fileId?.id,
         },
       },
+    },
+  });
+}
+
+export async function getItem(id: string) {
+  return await prisma.item.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      file: true,
+      tags: true,
     },
   });
 }

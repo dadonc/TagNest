@@ -48,7 +48,6 @@ async function possiblyDeleteTags(tagIds: string[]) {
 }
 
 export async function updateItemTags(item: SingleItem, tagString: string) {
-  console.log("updateItemTags", item, tagString);
   const tagNames = tagString.split(",").map((tag) => tag.trim());
   const tags = await prisma.tag.findMany({
     where: {
