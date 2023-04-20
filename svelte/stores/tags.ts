@@ -41,7 +41,7 @@ async function possiblyDeleteTag(id: string) {
   }
 }
 
-async function possiblyDeleteTags(tagIds: string[]) {
+export async function possiblyDeleteTags(tagIds: string[]) {
   return await Promise.all(
     tagIds.map(async (tagId) => possiblyDeleteTag(tagId))
   );

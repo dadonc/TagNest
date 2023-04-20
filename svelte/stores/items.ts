@@ -1,6 +1,6 @@
 import prisma from "../prisma";
 import { writable } from "svelte/store";
-import { updateItemTags } from "./tags";
+import { possiblyDeleteTags, updateItemTags } from "./tags";
 
 export const items = writable<ReturnType<typeof getItems>>(getItems());
 
@@ -111,6 +111,9 @@ export async function refreshDisplayedItems() {
 }
 
 export async function deleteItem(id: string) {
+  const item = await getItem(id);
+  if (!item) return;
+  possiblyDeleteTags(item.tags.map((tag) => tag.id));
   return await prisma.item.delete({
     where: {
       id,
