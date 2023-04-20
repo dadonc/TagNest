@@ -6,7 +6,7 @@
     bottomContainer,
     topContainer,
   } from "./CssStore";
-  import type { CssContainerType } from "../Types";
+  import type { CssContainerType } from "../types";
 
   onMount(async () => {
     const left = localStorage.getItem("leftContainer");

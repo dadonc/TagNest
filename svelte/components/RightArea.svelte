@@ -1,6 +1,6 @@
 <script lang="ts">
   import { state } from "../stores/stateStore";
-  import { items, type SingleItem } from "../stores/items";
+  import { items } from "../stores/items";
   import RightEditSingle from "./RightEditSingle.svelte";
 </script>
 

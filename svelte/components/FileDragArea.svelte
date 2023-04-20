@@ -35,7 +35,7 @@
     reader.readAsDataURL(file);
   }
 
-  window.electron.onChosenFile((ev, { base64, path }) => {
+  window.electron.onChosenFile((_, { base64, path }) => {
     previewSrc = `data:image/jpg;base64,${base64}`;
     dispatch("file-chosen", path);
   });

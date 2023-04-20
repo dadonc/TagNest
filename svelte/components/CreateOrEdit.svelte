@@ -9,11 +9,11 @@
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
 
   export let close: () => void;
-  export let save = (tagString: string) => {};
+  export let save: (tagString: string) => any = (tagString: string) => {};
   export let existingItem: SingleItem | null = null;
 
   export let isButtonDisabled = true;
-  export let wasChanged = (tagsWerechanged?: boolean) => {};
+  export let wasChanged: (tagsWerechanged?: boolean) => void = () => {};
 
   $: disabled = isButtonDisabled || (!name && !url && !path);
 

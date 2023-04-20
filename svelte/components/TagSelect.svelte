@@ -26,6 +26,9 @@
           }
         });
         if (isExisting) {
+          if (isGroup) {
+            return `<span class="text-blue-500">${t}</span>`;
+          }
           return `<span class="text-green-500">${t}</span>`;
         } else {
           return `<span class="text-red-500">${t}</span>`;
