@@ -1,10 +1,8 @@
 <script lang="ts">
   import type { Tag } from "@prisma/client";
-  import type { SingleItem } from "../stores/items";
   import { classNames } from "../utils";
   import TagAutocomplete from "./TagAutocomplete.svelte";
   import { tick } from "svelte";
-  export let item: SingleItem | null;
   export let tags: Tag[];
   export let tagString: string;
 
@@ -86,8 +84,18 @@
     on:focus={() => {
       displayAutocomplete = true;
     }}
-    on:blur={() => {
-      displayAutocomplete = false;
+    on:blur={(event) => {
+      if (
+        !(
+          event.relatedTarget &&
+          //@ts-ignore
+          event.relatedTarget.classList &&
+          //@ts-ignore
+          event.relatedTarget.classList.contains("JS-autocomplete-item")
+        )
+      ) {
+        displayAutocomplete = false;
+      }
     }}
   >
     {@html tagsHTML}

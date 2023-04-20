@@ -12,7 +12,8 @@
 
   const allTagNames = tags.map((t) => t.name);
   $: currentTags = tagString.split(",").map((t) => t.trim());
-  $: currentTag = tagString.split(",").pop()?.trim() ?? "";
+  $: currentTag =
+    tagString.split(",").pop()?.trim().replace("&nbsp;", "") ?? "";
 
   const options = {
     extract: function (tag: Tag) {
@@ -20,8 +21,8 @@
     },
   };
   $: matches = fuzzy.filter(currentTag, tags, options).filter((match) => {
-    // remove tags that are already in the list
-    return currentTags.indexOf(match.string) === -1;
+    // remove empty matches and tags that are already in the list
+    return match.string && currentTags.indexOf(match.string) === -1;
   });
 
   function addTag(i: number | undefined = undefined) {
@@ -80,12 +81,16 @@
   >
     <ul>
       {#each matchesToShow as match, i}
+        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
         <div
+          tabindex="0"
           on:click={() => addTag(i)}
           on:keydown={() => {}}
           class={classNames(
-            "py-1 pl-4",
-            i === highlightedIndex ? "bg-secondary text-white" : ""
+            "py-1 pl-4 JS-autocomplete-item",
+            i === highlightedIndex
+              ? "bg-secondary text-white"
+              : "hover:bg-secondary hover:text-white"
           )}
         >
           {match}
