@@ -37,7 +37,11 @@
         curr.pop();
       }
     }
-    tagString = [...curr, matches[highlightedIndex].string + ", "].join(", ");
+    if (matches[highlightedIndex]) {
+      tagString = [...curr, matches[highlightedIndex].string + ",&nbsp;"].join(
+        ", "
+      );
+    }
     if (highlightedIndex === matchesToShow.length - 1) {
       highlightedIndex = 0;
     }

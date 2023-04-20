@@ -6,7 +6,7 @@
     refreshDisplayedItems,
     type SingleItem,
   } from "../stores/items";
-  import TagSelect from "./TagSelect.svelte";
+  import TagSelectWrapper from "./TagSelectWrapper.svelte";
 
   export let close: () => void;
   export let save = (tagString: string) => {};
@@ -73,7 +73,7 @@
   placeholder="URL"
   class="w-full mt-2 input input-bordered"
 />
-<TagSelect bind:tagString item={existingItem} />
+<TagSelectWrapper bind:tagString item={existingItem} />
 <textarea
   bind:value={note}
   placeholder="Notes"
