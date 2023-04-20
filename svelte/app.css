@@ -5,3 +5,7 @@
 .topContainer button {
   -webkit-app-region: no-drag;
 }
+
+.input:focus {
+  outline: none;
+}

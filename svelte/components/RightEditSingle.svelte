@@ -10,16 +10,19 @@
   let originalItem = { ...item, file: item.file ? { ...item.file } : null };
   let isButtonDisabled = true;
 
-  const save = () => {
-    updateItem(item);
+  const save = (tagString: string) => {
+    updateItem(item, tagString);
     if (item.file?.path) {
       if (item.file.path !== originalItem.file?.path) {
         refreshDisplayedItems();
       }
     }
   };
-  const wasChanged = () => {
-    if (JSON.stringify(item) === JSON.stringify(originalItem)) {
+  const wasChanged = (tagsWereChanged = false) => {
+    if (
+      !tagsWereChanged &&
+      JSON.stringify(item) === JSON.stringify(originalItem)
+    ) {
       isButtonDisabled = true;
     } else {
       isButtonDisabled = false;

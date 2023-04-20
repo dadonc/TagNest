@@ -1,5 +1,6 @@
 import prisma from "../prisma";
 import { writable } from "svelte/store";
+import { updateItemTags } from "./tags";
 
 export const items = writable<ReturnType<typeof getItems>>(getItems());
 
@@ -43,7 +44,8 @@ async function getFileIdByPath(path: string) {
   });
 }
 
-export async function updateItem(item: SingleItem) {
+export async function updateItem(item: SingleItem, tagString: string) {
+  await updateItemTags(item, tagString);
   let fileId;
   if (item.file) {
     fileId = await getFileIdByPath(item.file.path);
@@ -76,6 +78,7 @@ export async function getItems() {
   return await prisma.item.findMany({
     include: {
       file: true,
+      tags: true,
     },
   });
 }

@@ -6,13 +6,14 @@
     refreshDisplayedItems,
     type SingleItem,
   } from "../stores/items";
+  import TagSelect from "./TagSelect.svelte";
 
   export let close: () => void;
-  export let save = () => {};
+  export let save = (tagString: string) => {};
   export let existingItem: SingleItem | null = null;
 
   export let isButtonDisabled = true;
-  export let wasChanged = () => {};
+  export let wasChanged = (tagsWerechanged?: boolean) => {};
 
   $: disabled = isButtonDisabled || (!name && !url && !path);
 
@@ -24,13 +25,13 @@
       if (existingItem.file) {
         existingItem.file.path = path;
       }
-      wasChanged();
+      wasChanged(tagString !== existingItem.tags.map((t) => t.name).join(", "));
     }
   }
 
   async function updateOrCreate() {
     if (existingItem) {
-      save();
+      save(tagString);
     } else {
       const newName = name ? name : namePlaceholder ? namePlaceholder : "";
       await createItem({ name: newName, url, note, path });
@@ -42,6 +43,9 @@
   let name = existingItem ? existingItem.name : "";
   let namePlaceholder = name ? name : "Name";
   let url = existingItem?.url ? existingItem.url : "";
+  let tagString = existingItem
+    ? existingItem.tags.map((t) => t.name).join(", ")
+    : "";
   let note = existingItem?.note ? existingItem.note : "";
   let path = existingItem?.file?.path ? existingItem.file.path : "";
 </script>
@@ -69,6 +73,7 @@
   placeholder="URL"
   class="w-full mt-2 input input-bordered"
 />
+<TagSelect bind:tagString item={existingItem} />
 <textarea
   bind:value={note}
   placeholder="Notes"

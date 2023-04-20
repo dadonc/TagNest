@@ -19,11 +19,20 @@ model Item {
   updatedAt DateTime @updatedAt
   file      File?    @relation(fields: [fileId], references: [id])
   fileId    String?
+  tags      Tag[]
 }
 
 model File {
   id        String   @id @default(cuid())
   path      String
   createdAt DateTime @default(now())
+  item      Item[]
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  isGroup   Boolean  @default(false)
   item      Item[]
 }
