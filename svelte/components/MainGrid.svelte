@@ -78,12 +78,13 @@
     } else if (e.key === "a" && e.metaKey) {
       $state.selectedItems = items.map((item) => item.id);
     } else if ((e.key === "+" || e.key === "*") && e.metaKey && e.shiftKey) {
-      $currView.zoomLvl++;
-    } else if ((e.key === "-" || e.key === "_") && e.metaKey && e.shiftKey) {
       e.preventDefault();
       if ($currView.zoomLvl > 1) {
         $currView.zoomLvl--;
       }
+    } else if ((e.key === "-" || e.key === "_") && e.metaKey && e.shiftKey) {
+      e.preventDefault();
+      $currView.zoomLvl++;
     }
   };
 </script>
