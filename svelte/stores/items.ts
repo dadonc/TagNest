@@ -106,7 +106,8 @@ async function getItemsDummy() {
 }
 export type SingleItem = Awaited<ReturnType<typeof getItemsDummy>>;
 
-export async function refreshDisplayedItems() {
+export async function refreshDisplayedItems(src?: string) {
+  console.log("item refresh", src);
   items.set(getItems());
 }
 

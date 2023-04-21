@@ -25,6 +25,7 @@ export type FilteredTag = Tag & { count: number };
 export const filteredData = derived(
   [selectedTags, items, allTags],
   async ([$selectedTags, $items, $allTags]) => {
+    console.log("derived store");
     let filteredItems = await $items;
     const selectedTagIds = $selectedTags.selectedIds;
     const deselectedTagIds = $selectedTags.deselectedIds;

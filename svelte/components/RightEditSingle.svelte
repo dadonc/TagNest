@@ -12,11 +12,8 @@
 
   const save = async (tagString: string) => {
     await updateItem(item, tagString);
-    if (item.file?.path) {
-      if (item.file.path !== originalItem.file?.path) {
-        refreshDisplayedItems();
-      }
-    }
+    isButtonDisabled = true;
+    refreshDisplayedItems();
   };
   const wasChanged = (tagsWereChanged = false) => {
     if (

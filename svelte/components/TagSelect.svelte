@@ -47,11 +47,7 @@
       e.preventDefault();
       return;
     } else {
-      // tick().then(() => {
-      setTimeout(() => {
-        tagString = e.target.innerText;
-      }, 0);
-      // });
+      tagString = e.target.innerText;
     }
   };
 
@@ -83,7 +79,7 @@
       "w-full mt-2 input input-bordered outlineFuckery h-16 p-2 overflow-scroll caret-base-content",
       isAutoCompleteVisible ? "rounded-b-none" : ""
     )}
-    on:keydown={handleKeydown}
+    on:input={handleKeydown}
     on:focus={() => {
       displayAutocomplete = true;
     }}

@@ -5,7 +5,8 @@ import { selectedTags } from "./stateStore";
 
 export const allTags = writable<ReturnType<typeof getTags>>(getTags());
 
-function refreshTagsStore() {
+function refreshTagsStore(src?: string) {
+  console.log("Refreshing tags store", src);
   allTags.set(getTags());
 }
 
@@ -38,11 +39,11 @@ async function createTags(tagNames: string[]) {
         ).id
     )
   );
-  refreshTagsStore();
+  refreshTagsStore("createTags");
   return newIds;
 }
 
-async function possiblyDeleteTag({
+async function possiblyDeleteSingleTag({
   id,
   dontRefreshStore,
 }: {
@@ -65,7 +66,7 @@ async function possiblyDeleteTag({
       },
     });
     if (!dontRefreshStore) {
-      refreshTagsStore();
+      refreshTagsStore("possiblyDeleteSingleTag");
 
       selectedTags.update((tags) => {
         const selectedIds = tags.selectedIds.filter((id) => id !== deleted.id);
@@ -85,15 +86,18 @@ async function possiblyDeleteTag({
 export async function possiblyDeleteTags(tagIds: string[]) {
   const deletedTags = await Promise.all(
     tagIds.map((tagId) =>
-      possiblyDeleteTag({ id: tagId, dontRefreshStore: true })
+      possiblyDeleteSingleTag({ id: tagId, dontRefreshStore: true })
     )
   );
-  refreshTagsStore();
+  refreshTagsStore("possiblyDeleteTags");
   return deletedTags;
 }
 
 export async function updateItemTags(item: SingleItem, tagString: string) {
-  const tagNames = tagString.split(",").map((tag) => tag.trim());
+  const tagNames = tagString
+    .split(",")
+    .map((tag) => tag.trim())
+    .filter((t) => Boolean(t) && t != "&nbsp;");
   const tags = await prisma.tag.findMany({
     where: {
       name: {
@@ -107,28 +111,25 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
     (oldTag) => !tagNames.some((tag) => tag === oldTag.name)
   );
   const deletedTagIds = deletedTags.map((tag) => tag.id);
-  await possiblyDeleteTags(deletedTagIds);
 
   // Create new tags
   const newTagNames = tagNames.filter(
     (tagName) => !tags.some((tag) => tag.name === tagName)
   );
   const newTagIds = await createTags(newTagNames);
-  const existingTagIds = tags.map((tag) => tag.id);
 
-  // Update the store
-  refreshTagsStore();
-
-  // Connect all tags to the item
-  const allTagIds = [...newTagIds, ...existingTagIds];
-  return prisma.item.update({
+  // Update item tags
+  await prisma.item.update({
     where: {
       id: item.id,
     },
     data: {
       tags: {
-        connect: allTagIds.map((id) => ({ id })),
+        connect: newTagIds.map((id) => ({ id })),
+        disconnect: deletedTagIds.map((id) => ({ id })),
       },
     },
   });
+
+  await possiblyDeleteTags(deletedTagIds);
 }
