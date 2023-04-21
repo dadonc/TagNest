@@ -1,3 +1,5 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
   import Layout from "./Layout.svelte";
   import BottomBar from "./components/BottomBar.svelte";
