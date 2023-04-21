@@ -57,14 +57,14 @@
   };
 
   const dragLeft = (e: DragEvent) => {
-    let val = e.x - 4;
+    let val = e.x - 2;
     val = val < 0 ? 0 : val;
     $leftContainer.currentVal = val + "px";
     $leftContainer.val = val + "px";
   };
 
   const dragRight = (e: DragEvent) => {
-    let val = document.documentElement.clientWidth - e.x - 8; // 1rem is the width of the divider
+    let val = document.documentElement.clientWidth - e.x - 4; // 0.5rem is the width of the divider
     // when dragging this wraps around to the clientWidth if under 0
     val =
       val <= 0 || val > document.documentElement.clientWidth - 100 ? 0 : val;
@@ -164,7 +164,7 @@
 
 <style>
   :global(:root) {
-    --dividerWidth: 1rem;
+    --dividerWidth: 0.5rem;
     --bottomDividerHeight: 2rem;
   }
 
@@ -193,12 +193,15 @@
     overflow: scroll;
   }
 
-  .leftContainer,
   .topContainer,
   .rightContainer,
   .bottomContainer,
   .mainContainer .slot {
     @apply p-2;
+  }
+
+  .leftContainer {
+    padding: 0.5rem 0 0.5rem 0.5rem;
   }
 
   .topContainer {

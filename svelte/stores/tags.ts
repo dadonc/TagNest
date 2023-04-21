@@ -118,6 +118,9 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
   );
   const newTagIds = await createTags(newTagNames);
 
+  // Link newly added, but previously created tags
+  const allTags = [...tags.map((tag) => tag.id), ...newTagIds];
+
   // Update item tags
   await prisma.item.update({
     where: {
@@ -125,7 +128,7 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
     },
     data: {
       tags: {
-        connect: newTagIds.map((id) => ({ id })),
+        connect: allTags.map((id) => ({ id })),
         disconnect: deletedTagIds.map((id) => ({ id })),
       },
     },

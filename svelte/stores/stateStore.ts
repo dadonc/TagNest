@@ -17,10 +17,12 @@ export const selectedTags = writable<{
   deselectedIds: [],
 });
 
-// export const selectedTags = writable<string[]>([]);
-// export const deSelectedTags = writable<string[]>([]);
-
-export type FilteredTag = Tag & { count: number };
+export type FilteredTag = Tag & {
+  totalCount: number;
+  countAfterSelection: number;
+  countAfterDeselection: number;
+  isDeselected: boolean;
+};
 
 export const filteredData = derived(
   [selectedTags, items, allTags],
@@ -29,12 +31,19 @@ export const filteredData = derived(
     let filteredItems = await $items;
     const selectedTagIds = $selectedTags.selectedIds;
     const deselectedTagIds = $selectedTags.deselectedIds;
-    if (!(selectedTagIds.length === 0)) {
+    if (selectedTagIds.length > 0) {
       filteredItems = filteredItems.filter((item) => {
-        return item.tags.some((tag) => selectedTagIds.includes(tag.id));
+        let itemHasAllTags = true;
+        selectedTagIds.forEach((tagId) => {
+          if (!item.tags.some((tag) => tag.id === tagId)) {
+            itemHasAllTags = false;
+          }
+        });
+        return itemHasAllTags;
+        // return item.tags.every((tag) => selectedTagIds.includes(tag.id));
       });
     }
-    if (!(deselectedTagIds.length === 0)) {
+    if (deselectedTagIds.length > 0) {
       filteredItems = filteredItems.filter((item) => {
         return item.tags.every((tag) => !deselectedTagIds.includes(tag.id));
       });
@@ -43,16 +52,24 @@ export const filteredData = derived(
     const allTags = await $allTags;
     let filteredTags: FilteredTag[] = allTags
       .map((tag) => {
+        const isDeselected = deselectedTagIds.includes(tag.id);
         let count = 0;
         filteredItems.forEach((item) => {
           if (item.tags.some((t) => t.id === tag.id)) {
             count++;
           }
         });
-        return { ...tag, count };
-      })
-      .filter((tag) => tag.count > 0);
 
+        return {
+          ...tag,
+          isDeselected,
+          totalCount: count,
+          countAfterSelection: filteredItems.length - count,
+          countAfterDeselection: (count - filteredItems.length) * -1,
+        };
+      })
+      .filter((tag) => tag.totalCount > 0 || tag.isDeselected);
+    console.log(filteredTags);
     return {
       items: filteredItems,
       tags: filteredTags,
