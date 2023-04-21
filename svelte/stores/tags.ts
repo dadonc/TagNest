@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import prisma from "../prisma";
 import type { SingleItem } from "./items";
+import { selectedTags } from "./stateStore";
 
 export const allTags = writable<ReturnType<typeof getTags>>(getTags());
 
@@ -63,7 +64,20 @@ async function possiblyDeleteTag({
         id,
       },
     });
-    if (!dontRefreshStore) refreshTagsStore();
+    if (!dontRefreshStore) {
+      refreshTagsStore();
+
+      selectedTags.update((tags) => {
+        const selectedIds = tags.selectedIds.filter((id) => id !== deleted.id);
+        const deselectedIds = tags.deselectedIds.filter(
+          (id) => id !== deleted.id
+        );
+        return {
+          selectedIds,
+          deselectedIds,
+        };
+      });
+    }
     return deleted;
   }
 }

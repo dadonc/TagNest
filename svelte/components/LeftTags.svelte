@@ -1,9 +1,10 @@
 <script lang="ts">
-  import type { Tag } from "@prisma/client";
+  import LeftSingleTag from "./LeftSingleTag.svelte";
+  import type { FilteredTag } from "../stores/stateStore";
 
-  export let tags: Tag[];
+  export let tags: FilteredTag[];
 </script>
 
 {#each tags as tag}
-  <div>{tag.name}</div>
+  <LeftSingleTag {tag} />
 {/each}

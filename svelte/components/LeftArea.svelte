@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { allTags } from "../stores/tags";
   import LeftTags from "./LeftTags.svelte";
+  import { filteredData } from "../stores/stateStore";
 </script>
 
-{#await $allTags}
+{#await $filteredData}
   <div />
-{:then tags}
-  <LeftTags {tags} />
+{:then filteredData}
+  <LeftTags tags={filteredData.tags} />
 {/await}

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { items } from "../stores/items";
+  import { filteredData } from "../stores/stateStore";
   import MainGrid from "./MainGrid.svelte";
 </script>
 
-{#await $items}
+{#await $filteredData}
   <div />
-{:then items}
-  <MainGrid {items} />
+{:then filteredData}
+  <MainGrid items={filteredData.items} />
 {/await}
