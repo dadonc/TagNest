@@ -70,7 +70,6 @@ export const filteredData = derived(
         };
       })
       .filter((tag) => tag.totalCount > 0 || tag.isDeselected);
-    console.log(filteredTags);
     return {
       items: filteredItems,
       tags: filteredTags,

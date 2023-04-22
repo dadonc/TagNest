@@ -136,3 +136,21 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
 
   await possiblyDeleteTags(deletedTagIds);
 }
+
+export async function updateItemsTags(itemIds: string[], tagString: string) {
+  const items = await prisma.item.findMany({
+    where: {
+      id: {
+        in: itemIds,
+      },
+    },
+    include: {
+      tags: true,
+      file: true,
+    },
+  });
+  // Don't use Promise.all because tags should be created before the next item gets processed
+  for (const item of items) {
+    await updateItemTags(item, tagString);
+  }
+}
