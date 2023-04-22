@@ -1,13 +1,13 @@
 <script lang="ts">
   import { currView } from "../stores/CurrViewStore";
+  import { filteredData } from "../stores/stateStore";
 </script>
 
-<div class="flex items-center h-full text-2xl">
-  <span
-    class="inline-block"
-    style="width: calc( 1rem + var(--leftContainer))"
-  />
-
+<div class="inline-block" style="width: var(--leftContainer)" />
+<div
+  class="inline-flex items-center w-full h-full text-2xl"
+  style="width: calc(100% - var(--leftContainer) - var(--rightContainer))"
+>
   <button
     on:click={() => {
       currView.update((v) => {
@@ -27,4 +27,10 @@
       });
     }}>-</button
   >
+  <div class="w-full text-sm text-center">
+    {#await $filteredData then data}
+      {data.items.length} items
+    {/await}
+  </div>
 </div>
+<div class="inline-block" style="width: var(--rightContainer)" />
