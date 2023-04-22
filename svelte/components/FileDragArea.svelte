@@ -15,11 +15,18 @@
   function dropHandler(e: DragEvent) {
     e.preventDefault();
     e.stopPropagation();
+
+    const url = e.dataTransfer?.getData("URL");
+    if (url) {
+      window.electron.saveFileFromUrl(url);
+      return;
+    }
+
     if (!e.dataTransfer || e.dataTransfer.files.length === 0) {
       return;
     }
-    const file = e.dataTransfer.files[0];
 
+    const file = e.dataTransfer.files[0];
     if (!file.type.startsWith("image/")) {
       return;
     }
@@ -44,6 +51,8 @@
 {#if !previewSrc}
   <div class="col-span-full">
     <div
+      on:dragenter={(e) => e.preventDefault()}
+      on:dragover={(e) => e.preventDefault()}
       on:drop={dropHandler}
       class="flex justify-center px-6 py-10 mt-2 border border-dashed rounded-lg"
       style="border-color: hsl(var(--bc) / 0.3)"

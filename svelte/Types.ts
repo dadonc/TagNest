@@ -13,6 +13,7 @@ declare global {
           { base64, path }: { base64: string; path: string }
         ) => void
       ) => void;
+      saveFileFromUrl: (url: string) => void;
     };
   }
 }

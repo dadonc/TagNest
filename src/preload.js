@@ -8,4 +8,5 @@ contextBridge.exposeInMainWorld("electron", {
   onOpenAddItem: (callback) => ipcRenderer.on("openAddItem", callback), // open AddItem on shortcut
   chooseFile: () => ipcRenderer.send("chooseFile"),
   onChosenFile: (callback) => ipcRenderer.on("onChosenFile", callback),
+  saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
 });

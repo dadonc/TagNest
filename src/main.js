@@ -8,6 +8,7 @@ const {
 const fs = require("fs");
 const path = require("path");
 const { PrismaClient } = require("@prisma/client");
+const https = require("https");
 
 const prisma = new PrismaClient();
 function handlePrisma(arg) {
@@ -67,6 +68,23 @@ const createWindow = () => {
       });
     });
   });
+
+  ipcMain.on("saveFileFromUrl", (event, url) => {
+    const extension = url.split(".").pop();
+    if (!["png", "jpg", "jpeg", "webp"].includes(extension.toLowerCase())) {
+      return;
+    } else {
+      const name = url.split("/").pop();
+      const localPath = path.join(process.resourcesPath, name);
+      download(url, localPath, function (err) {
+        const base64 = fs.readFileSync(localPath).toString("base64");
+        mainWindow.webContents.send("onChosenFile", {
+          base64,
+          path: localPath,
+        });
+      });
+    }
+  });
 };
 
 // This method will be called when Electron has finished
@@ -88,3 +106,19 @@ app.on("activate", () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+function download(url, dest, cb) {
+  //https://stackoverflow.com/a/22907134
+  var file = fs.createWriteStream(dest);
+  https
+    .get(url, function (response) {
+      response.pipe(file);
+      file.on("finish", function () {
+        file.close(cb);
+      });
+    })
+    .on("error", function (err) {
+      fs.unlink(dest);
+      if (cb) cb(err.message);
+    });
+}
