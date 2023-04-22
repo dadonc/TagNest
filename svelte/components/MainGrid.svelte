@@ -96,7 +96,7 @@
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
   <div class="myGrid" style={`--grid-cols-string: ${gridCols};`}>
     {#each items as item}
-      <ItemPreview {item} />
+      <ItemPreview {item} {items} />
     {/each}
   </div>
 </div>

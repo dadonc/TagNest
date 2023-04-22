@@ -138,6 +138,7 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
 }
 
 export async function updateItemsTags(itemIds: string[], tagString: string) {
+  // if this takes long implement "dontRefreshStore"
   const items = await prisma.item.findMany({
     where: {
       id: {
