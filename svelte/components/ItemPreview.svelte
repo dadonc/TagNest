@@ -2,17 +2,24 @@
   import type { SingleItem } from "../stores/items";
   import { state } from "../stores/stateStore";
   import { classNames } from "../utils";
+  import ImagePreview from "./ImagePreview.svelte";
   export let item: SingleItem;
   export let items: SingleItem[];
 
-  $: itemIsSelected =
+  $: isItemSelected =
     $state.selectedItems.filter((id) => id === item.id).length > 0;
 
   function selectItem(event: MouseEvent | KeyboardEvent) {
+    console.log(event.target);
+    if (
+      (event.target as HTMLElement).matches(".hoverDisplay, .hoverDisplay *")
+    ) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     if (event.metaKey) {
-      itemIsSelected
+      isItemSelected
         ? ($state.selectedItems = $state.selectedItems.filter(
             (id) => id !== item.id
           ))
@@ -53,8 +60,8 @@
     }
   }}
   class={classNames(
-    itemIsSelected ? "border border-blue-500" : "border border-transparent"
+    isItemSelected ? "border border-blue-500" : "border border-transparent"
   )}
 >
-  <img src={"file://" + item.file?.path} alt="" />
+  <ImagePreview {item} />
 </div>

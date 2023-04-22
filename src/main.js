@@ -4,6 +4,7 @@ const {
   ipcMain,
   globalShortcut,
   dialog,
+  shell,
 } = require("electron");
 const fs = require("fs");
 const path = require("path");
@@ -50,6 +51,11 @@ const createWindow = () => {
   globalShortcut.register("CommandOrControl+Shift+I", () => {
     mainWindow.webContents.send("openAddItem");
     mainWindow.show();
+  });
+
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: "deny" };
   });
 
   ipcMain.handle("prisma", (channel, arg) => handlePrisma(arg));

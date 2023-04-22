@@ -22,7 +22,7 @@
       }
     }}
     transition:fade={{ duration: 200 }}
-    class={`transition-opacity duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg`}
+    class={`transition-opacity z-10 duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg`}
   >
     <div
       class="w-full p-2 overflow-scroll rounded modalMaxHeight md:w-3/4 lg:w-1/2 bg-base-100"
