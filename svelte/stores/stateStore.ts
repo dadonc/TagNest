@@ -27,7 +27,6 @@ export type FilteredTag = Tag & {
 export const filteredData = derived(
   [selectedTags, items, allTags],
   async ([$selectedTags, $items, $allTags]) => {
-    console.log("derived store");
     let filteredItems = await $items;
     const selectedTagIds = $selectedTags.selectedIds;
     const deselectedTagIds = $selectedTags.deselectedIds;
@@ -40,7 +39,6 @@ export const filteredData = derived(
           }
         });
         return itemHasAllTags;
-        // return item.tags.every((tag) => selectedTagIds.includes(tag.id));
       });
     }
     if (deselectedTagIds.length > 0) {
@@ -65,7 +63,10 @@ export const filteredData = derived(
           isDeselected,
           totalCount: count,
           countAfterSelection: filteredItems.length - count,
-          countAfterDeselection: (count - filteredItems.length) * -1,
+          countAfterDeselection:
+            filteredItems.length - count === 0
+              ? 0
+              : filteredItems.length - (count - filteredItems.length) * -1,
         };
       })
       .filter((tag) => tag.totalCount > 0 || tag.isDeselected);
