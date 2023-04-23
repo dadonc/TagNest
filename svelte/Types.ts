@@ -10,7 +10,7 @@ declare global {
       onChosenFile: (
         callback: (
           ev: Event,
-          { base64, path }: { base64: string; path: string }
+          { base64, path, type }: { base64: string; path: string; type: string }
         ) => void
       ) => void;
       saveFileFromUrl: (url: string) => void;

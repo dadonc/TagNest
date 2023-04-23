@@ -63,5 +63,14 @@
     isItemSelected ? "border border-blue-500" : "border border-transparent"
   )}
 >
-  <ImagePreview {item} />
+  {#if item.file?.type === "image"}
+    <ImagePreview {item} />
+  {:else}
+    <div class="flex flex-col items-center justify-center h-full">
+      <div class="text-2xl text-gray-500">
+        <i class="fas fa-file" />
+      </div>
+      <div class="text-sm text-gray-500">{item.name}</div>
+    </div>
+  {/if}
 </div>

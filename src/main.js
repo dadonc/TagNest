@@ -63,13 +63,16 @@ const createWindow = () => {
   ipcMain.on("chooseFile", (event, arg) => {
     const result = dialog.showOpenDialog({
       properties: ["openFile"],
-      filters: [{ name: "Images", extensions: ["png", "jpg", "jpeg"] }],
+      // filters: [{ name: "Images", extensions: ["png", "jpg", "jpeg"] }],
     });
 
     return result.then(({ canceled, filePaths, bookmarks }) => {
       const base64 = fs.readFileSync(filePaths[0]).toString("base64");
+      const extension = filePaths[0].split(".").pop();
+      const type = getTypeFromExtension(extension);
       mainWindow.webContents.send("onChosenFile", {
         base64,
+        type,
         path: filePaths[0],
       });
     });
@@ -77,15 +80,18 @@ const createWindow = () => {
 
   ipcMain.on("saveFileFromUrl", (event, url) => {
     const extension = url.split(".").pop();
-    if (!["png", "jpg", "jpeg", "webp"].includes(extension.toLowerCase())) {
+    if (!IMAGE_EXTENSIONS.includes(extension.toLowerCase())) {
       return;
     } else {
       const name = url.split("/").pop();
+      const extension = name.split(".").pop();
+      const type = getTypeFromExtension(extension);
       const localPath = path.join(process.resourcesPath, name);
       download(url, localPath, function (err) {
         const base64 = fs.readFileSync(localPath).toString("base64");
         mainWindow.webContents.send("onChosenFile", {
           base64,
+          type,
           path: localPath,
         });
       });
@@ -127,4 +133,16 @@ function download(url, dest, cb) {
       fs.unlink(dest);
       if (cb) cb(err.message);
     });
+}
+
+// !!!IMPORTANT!!! This is duplicated inside svelte/utils.ts
+// TODO: Find a way to share this between the two
+const IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
+const VIDEO_EXTENSIONS = ["mp4", "m4v", "mpg", "mpeg", "ogg", "webm"];
+
+function getTypeFromExtension(extension) {
+  if (IMAGE_EXTENSIONS.includes(extension)) {
+    return "image";
+  }
+  return "external";
 }

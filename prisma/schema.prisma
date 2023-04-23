@@ -27,6 +27,7 @@ model File {
   path      String
   createdAt DateTime @default(now())
   item      Item[]
+  type      String // image, video, external
 }
 
 model Tag {

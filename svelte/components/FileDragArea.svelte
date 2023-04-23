@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import { getTypeFromExtension } from "../utils";
 
   export let previewSrc: string = "";
   const dispatch = createEventDispatcher();
@@ -25,26 +26,30 @@
     if (!e.dataTransfer || e.dataTransfer.files.length === 0) {
       return;
     }
-
     const file = e.dataTransfer.files[0];
-    if (!file.type.startsWith("image/")) {
-      return;
+    const filePath = (file as FileWithPath).path;
+    const type = getTypeFromExtension(filePath.split(".").pop() || "");
+    if (type === "image") {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (!e.target || !e.target.result) {
+          return;
+        }
+        previewSrc = e.target.result as string;
+        dispatch("file-chosen", {
+          filePath: (file as FileWithPath).path,
+          type,
+        });
+      };
+      reader.readAsDataURL(file);
     }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (!e.target || !e.target.result) {
-        return;
-      }
-      previewSrc = e.target.result as string;
-      dispatch("file-chosen", (file as FileWithPath).path);
-    };
-    reader.readAsDataURL(file);
   }
 
-  window.electron.onChosenFile((_, { base64, path }) => {
-    previewSrc = `data:image/jpg;base64,${base64}`;
-    dispatch("file-chosen", path);
+  window.electron.onChosenFile((_, { base64, path, type }) => {
+    if (type === "image") {
+      previewSrc = `data:image/jpg;base64,${base64}`;
+    }
+    dispatch("file-chosen", { filePath: path, type });
   });
 </script>
 

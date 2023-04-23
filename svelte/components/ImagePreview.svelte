@@ -1,7 +1,6 @@
 <script lang="ts">
-  import ExternalLink from "../assets/feather/ExternalLink.svelte";
+  import Link from "../assets/feather/Link.svelte";
   import type { SingleItem } from "../stores/items";
-  import { classNames } from "../utils";
 
   export let item: SingleItem;
 </script>
@@ -14,7 +13,7 @@
       href={item.url}
       class="absolute w-6 h-6 p-1 bg-base-100 text-primary bottom-2 right-2 hoverDisplay"
     >
-      <ExternalLink />
+      <Link />
     </a>
   {/if}
 </div>
