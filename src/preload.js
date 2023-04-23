@@ -6,7 +6,7 @@ contextBridge.exposeInMainWorld("electron", {
   electronVersion: () => process.versions.electron,
   prisma: (str) => ipcRenderer.invoke("prisma", str),
   onOpenAddItem: (callback) => ipcRenderer.on("openAddItem", callback), // open AddItem on shortcut
-  chooseFile: () => ipcRenderer.send("chooseFile"),
-  onChosenFile: (callback) => ipcRenderer.on("onChosenFile", callback),
+  chooseFile: () => ipcRenderer.send("chooseFile"), // open file dialog
+  onChosenFile: (callback) => ipcRenderer.on("onChosenFile", callback), // get chosen file
   saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
 });

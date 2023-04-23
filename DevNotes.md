@@ -12,3 +12,8 @@ npm init vite
 
 * Added prisma using a Proxy for the renderer process
 * Added TailwindCSS
+
+
+## Interesting
+
+* Open in VSC: https://stackoverflow.com/a/68881419

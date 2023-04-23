@@ -10,7 +10,6 @@
     $state.selectedItems.filter((id) => id === item.id).length > 0;
 
   function selectItem(event: MouseEvent | KeyboardEvent) {
-    console.log(event.target);
     if (
       (event.target as HTMLElement).matches(".hoverDisplay, .hoverDisplay *")
     ) {
