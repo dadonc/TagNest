@@ -5,9 +5,8 @@
     leftContainer,
     rightContainer,
     bottomContainer,
-  } from "./stores/CssStore";
-  import CssStoreRenderer from "./stores/CssStoreRenderer.svelte";
-  import CurrViewStoreRenderer from "./stores/CurrViewStoreRenderer.svelte";
+  } from "./stores/cssStore";
+  import StoreRenderer from "./stores/StoreRenderer.svelte";
 
   export let canOpenBottom = true;
   export let canOpenRight = true;
@@ -97,8 +96,7 @@
   }
 </script>
 
-<CssStoreRenderer />
-<CurrViewStoreRenderer />
+<StoreRenderer />
 
 <div
   class="main"

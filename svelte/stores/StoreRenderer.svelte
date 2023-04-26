@@ -5,17 +5,11 @@
     rightContainer,
     bottomContainer,
     topContainer,
-  } from "./CssStore";
+  } from "./cssStore";
   import type { CssContainerType } from "../types";
+  import { currView } from "./stateStore";
 
   onMount(async () => {
-    const left = localStorage.getItem("leftContainer");
-    $leftContainer = left
-      ? JSON.parse(left)
-      : {
-          val: "200px",
-          currentVal: "200px",
-        };
     leftContainer.subscribe((v) => {
       const value = v as CssContainerType;
       localStorage.setItem("leftContainer", JSON.stringify(value));
@@ -25,13 +19,6 @@
       );
     });
 
-    const right = localStorage.getItem("rightContainer");
-    $rightContainer = right
-      ? JSON.parse(right)
-      : {
-          val: "200px",
-          currentVal: "200px",
-        };
     rightContainer.subscribe((v) => {
       const value = v as CssContainerType;
       localStorage.setItem("rightContainer", JSON.stringify(value));
@@ -41,13 +28,6 @@
       );
     });
 
-    const bottom = localStorage.getItem("bottomContainer");
-    $bottomContainer = bottom
-      ? JSON.parse(bottom)
-      : {
-          val: "200px",
-          currentVal: "200px",
-        };
     bottomContainer.subscribe((v) => {
       const value = v as CssContainerType;
       localStorage.setItem("bottomContainer", JSON.stringify(value));
@@ -57,13 +37,6 @@
       );
     });
 
-    const top = localStorage.getItem("topContainer");
-    $topContainer = top
-      ? JSON.parse(top)
-      : {
-          val: "3.5rem",
-          currentVal: "3.5rem",
-        };
     topContainer.subscribe((v) => {
       const value = v as CssContainerType;
       localStorage.setItem("topContainer", JSON.stringify(value));
@@ -71,6 +44,11 @@
         "--topContainer",
         value.currentVal
       );
+    });
+
+    currView.subscribe((v) => {
+      const value = JSON.stringify(v);
+      localStorage.setItem("currView", value);
     });
   });
 </script>

@@ -76,3 +76,23 @@ export const filteredData = derived(
     };
   }
 );
+
+type CurrViewType = {
+  zoomLvl: number;
+  // selectionType: "grid";
+  // route: "main" | "detail";
+  // detailsType: CurrViewDetailsType;
+  // focusedAction?: CurrViewActionsType;
+};
+
+const emptyCurrView: CurrViewType = {
+  zoomLvl: 3,
+  // selectionType: "grid",
+  // route: "main",
+  // detailsType: "image",
+};
+
+const currentCurrView = localStorage.getItem("currView");
+export const currView = writable<CurrViewType>(
+  currentCurrView ? JSON.parse(currentCurrView) : emptyCurrView
+);

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currView } from "../stores/CurrViewStore";
+  import { currView } from "../stores/stateStore";
   import { filteredData } from "../stores/stateStore";
 </script>
 
