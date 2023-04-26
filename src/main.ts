@@ -1,18 +1,21 @@
-const {
+import {
   app,
   BrowserWindow,
   ipcMain,
   globalShortcut,
   dialog,
   shell,
-} = require("electron");
-const fs = require("fs");
-const path = require("path");
-const { PrismaClient } = require("@prisma/client");
-const https = require("https");
+} from "electron";
+import fs from "fs";
+import path from "path";
+import { PrismaClient } from "@prisma/client";
+import https from "https";
+
+declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
+declare const MAIN_WINDOW_VITE_NAME: string;
 
 const prisma = new PrismaClient();
-function handlePrisma(arg) {
+function handlePrisma(arg: string) {
   // arg is of the form 'user.create({"data":{"name":"Alice","email":"alice@example.com"}})'
   const props = arg.split("(")[0].split(".");
   const callArgs = arg.split("(")[1].slice(0, -1);
@@ -30,8 +33,8 @@ if (require("electron-squirrel-startup")) {
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       webSecurity: MAIN_WINDOW_VITE_DEV_SERVER_URL ? false : true,
@@ -123,7 +126,7 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-function download(url, dest, cb) {
+function download(url: string, dest: string, cb: (res: any) => void) {
   //https://stackoverflow.com/a/22907134
   var file = fs.createWriteStream(dest);
   https
@@ -134,7 +137,7 @@ function download(url, dest, cb) {
       });
     })
     .on("error", function (err) {
-      fs.unlink(dest);
+      fs.unlink(dest, () => {});
       if (cb) cb(err.message);
     });
 }
