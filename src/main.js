@@ -97,6 +97,10 @@ const createWindow = () => {
       });
     }
   });
+
+  ipcMain.on("openFileInDefaultApp", (event, path) => {
+    shell.openPath(path);
+  });
 };
 
 // This method will be called when Electron has finished

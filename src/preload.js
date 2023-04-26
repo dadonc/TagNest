@@ -9,4 +9,6 @@ contextBridge.exposeInMainWorld("electron", {
   chooseFile: () => ipcRenderer.send("chooseFile"), // open file dialog
   onChosenFile: (callback) => ipcRenderer.on("onChosenFile", callback), // get chosen file
   saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
+  openFileInDefaultApp: (path) =>
+    ipcRenderer.send("openFileInDefaultApp", path),
 });

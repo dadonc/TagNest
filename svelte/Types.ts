@@ -14,6 +14,7 @@ declare global {
         ) => void
       ) => void;
       saveFileFromUrl: (url: string) => void;
+      openFileInDefaultApp: (path: string) => void;
     };
   }
 }

@@ -65,7 +65,13 @@
   {#if item.file?.type === "image"}
     <ImagePreview {item} />
   {:else}
-    <div class="flex flex-col items-center justify-center h-full">
+    <div
+      class="flex flex-col items-center justify-center h-full"
+      on:dblclick={() => {
+        if (item.file?.path)
+          window.electron.openFileInDefaultApp(item.file?.path);
+      }}
+    >
       <div class="text-2xl text-gray-500">
         <i class="fas fa-file" />
       </div>
