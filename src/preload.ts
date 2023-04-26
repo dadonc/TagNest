@@ -1,6 +1,31 @@
 import { contextBridge, ipcRenderer } from "electron";
 
-contextBridge.exposeInMainWorld("electron", {
+export type ExposedInMainWorld = {
+  nodeVersion: () => string;
+  chromeVersion: () => string;
+  electronVersion: () => string;
+  prisma: (str: string) => Promise<any>;
+  onOpenAddItem: (callback: () => void) => void;
+  chooseFile: () => void;
+  onChosenFile: (
+    callback: (
+      ev: Electron.IpcRendererEvent,
+      {
+        base64,
+        path,
+        type,
+      }: {
+        base64: string;
+        path: string;
+        type: string;
+      }
+    ) => void
+  ) => void;
+  saveFileFromUrl: (url: string) => void;
+  openFileInDefaultApp: (path: string) => void;
+};
+
+const api: ExposedInMainWorld = {
   nodeVersion: () => process.versions.node,
   chromeVersion: () => process.versions.chrome,
   electronVersion: () => process.versions.electron,
@@ -11,4 +36,6 @@ contextBridge.exposeInMainWorld("electron", {
   saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
   openFileInDefaultApp: (path) =>
     ipcRenderer.send("openFileInDefaultApp", path),
-});
+};
+
+contextBridge.exposeInMainWorld("electron", api);
