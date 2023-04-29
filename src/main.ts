@@ -1,6 +1,7 @@
 import { app, BrowserWindow, globalShortcut } from "electron";
 import path from "path";
 import ipcHandler from "./ipcHandler";
+import startServer from "./server";
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
@@ -31,6 +32,7 @@ const createWindow = () => {
   }
 
   ipcHandler(mainWindow);
+  startServer();
 };
 
 // This method will be called when Electron has finished
