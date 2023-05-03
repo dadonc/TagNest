@@ -11,15 +11,17 @@ datasource db {
 }
 
 model Item {
-  id        String   @id @default(cuid())
-  name      String?
-  url       String?
-  note      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  file      File?    @relation(fields: [fileId], references: [id])
-  fileId    String?
-  tags      Tag[]
+  id         String    @id @default(cuid())
+  name       String?
+  url        String?
+  note       String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  file       File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview
+  fileId     String?
+  tags       Tag[]
+  bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id])
+  bookmarkId String?
 }
 
 model File {
@@ -36,4 +38,13 @@ model Tag {
   createdAt DateTime @default(now())
   isGroup   Boolean  @default(false)
   item      Item[]
+}
+
+model Bookmark {
+  id             String  @id @default(cuid())
+  faviconBase64  String?
+  mhtmlPath      String?
+  text           String?
+  screenshotPath String?
+  item           Item[]
 }

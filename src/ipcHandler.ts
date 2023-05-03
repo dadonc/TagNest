@@ -14,7 +14,7 @@ import {
   downloadImageFromUrl,
 } from "./utils";
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 function handlePrisma(arg: string) {
   // arg is of the form 'user.create({"data":{"name":"Alice","email":"alice@example.com"}})'
   const props = arg.split("(")[0].split(".");

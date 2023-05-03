@@ -32,7 +32,7 @@ const createWindow = () => {
   }
 
   ipcHandler(mainWindow);
-  startServer();
+  startServer(mainWindow);
 };
 
 // This method will be called when Electron has finished

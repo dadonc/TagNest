@@ -1,8 +1,10 @@
 import fs from "fs";
-import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
+import Fastify, { FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
 import util from "util";
 import { pipeline } from "stream";
+import { createItemWithBookmark } from "./bookmarks";
+import { BrowserWindow } from "electron";
 const pump = util.promisify(pipeline);
 
 const server: FastifyInstance = Fastify({});
@@ -16,7 +18,7 @@ server.register(require("@fastify/multipart"), {
   },
 });
 
-export default function startServer() {
+export default function startServer(mainWindow: BrowserWindow) {
   server.get("/ping", async (request, reply) => {
     return { pong: "okay" };
   });
@@ -36,7 +38,8 @@ export default function startServer() {
         };
       };
     };
-    const data = (await req.file()) as unknown as CreateMhtmlRequest;
+    const r: any = req;
+    const data = (await r.file()) as CreateMhtmlRequest;
     if (data === undefined) {
       console.error("No file received");
       return;
@@ -50,10 +53,16 @@ export default function startServer() {
         .replaceAll("/", "-")
         .replaceAll(".", "_") + ".mhtml";
 
-    await pump(
-      data.file,
-      fs.createWriteStream("/Users/domenic/Projects/hbr-data/" + fileName)
-    );
+    const mhtmlPath = "/Users/domenic/Projects/hbr-data/" + fileName;
+    await pump(data.file, fs.createWriteStream(mhtmlPath));
+    const newItem = await createItemWithBookmark({
+      name: data.fields.title.value,
+      url: data.fields.url.value,
+      mhtmlPath,
+    });
+    mainWindow.webContents.send("openAddBookmark", { newItemId: newItem.id });
+    mainWindow.show();
+
     reply.send({ success: true });
   });
 

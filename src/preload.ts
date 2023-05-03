@@ -10,11 +10,7 @@ export type ExposedInMainWorld = {
   onChosenFile: (
     callback: (
       ev: Electron.IpcRendererEvent,
-      {
-        base64,
-        path,
-        type,
-      }: {
+      args: {
         base64: string;
         path: string;
         type: string;
@@ -23,6 +19,14 @@ export type ExposedInMainWorld = {
   ) => void;
   saveFileFromUrl: (url: string) => void;
   openFileInDefaultApp: (path: string) => void;
+  onOpenAddBookmark: (
+    callback: (
+      ev: Electron.IpcRendererEvent,
+      args: {
+        newItemId: string;
+      }
+    ) => void
+  ) => void;
 };
 
 const api: ExposedInMainWorld = {
@@ -36,6 +40,7 @@ const api: ExposedInMainWorld = {
   saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
   openFileInDefaultApp: (path) =>
     ipcRenderer.send("openFileInDefaultApp", path),
+  onOpenAddBookmark: (callback) => ipcRenderer.on("openAddBookmark", callback),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

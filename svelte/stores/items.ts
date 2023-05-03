@@ -66,6 +66,15 @@ export async function updateItem(item: SingleItem, tagString: string) {
       });
     }
   }
+  let fileConnect = fileId
+    ? {
+        file: {
+          connect: {
+            id: fileId?.id,
+          },
+        },
+      }
+    : {};
   prisma.item.update({
     where: {
       id: item.id,
@@ -74,11 +83,7 @@ export async function updateItem(item: SingleItem, tagString: string) {
       name: item.name,
       url: item.url,
       note: item.note,
-      file: {
-        connect: {
-          id: fileId?.id,
-        },
-      },
+      ...fileConnect,
     },
   });
   return updateItemTags(item, tagString);
@@ -92,6 +97,7 @@ export async function getItem(id: string) {
     include: {
       file: true,
       tags: true,
+      bookmark: true,
     },
   });
 }
@@ -101,6 +107,7 @@ export async function getItems() {
     include: {
       file: true,
       tags: true,
+      bookmark: true,
     },
   });
 }

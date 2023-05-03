@@ -1,5 +1,6 @@
 <script lang="ts">
   import Plus from "../assets/feather/Plus.svelte";
+  import AddBookmarkModal from "./AddBookmarkModal.svelte";
   import AddModal from "./AddModal.svelte";
 
   let showAddModal = false;
@@ -20,3 +21,4 @@
 </div>
 
 <AddModal isOpen={showAddModal} close={handleToggleAddModal} />
+<AddBookmarkModal />
