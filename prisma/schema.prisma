@@ -20,6 +20,7 @@ model Item {
   file       File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview
   fileId     String?
   tags       Tag[]
+  type       String // image, video, external
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id])
   bookmarkId String?
 }
@@ -29,7 +30,6 @@ model File {
   path      String
   createdAt DateTime @default(now())
   item      Item[]
-  type      String // image, video, external
 }
 
 model Tag {

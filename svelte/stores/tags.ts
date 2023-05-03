@@ -148,6 +148,7 @@ export async function updateItemsTags(itemIds: string[], tagString: string) {
     include: {
       tags: true,
       file: true,
+      bookmark: true,
     },
   });
   // Don't use Promise.all because tags should be created before the next item gets processed

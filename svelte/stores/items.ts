@@ -10,20 +10,19 @@ export async function createItem({
   note,
   tagString,
   path,
-  fileType,
+  type,
 }: {
   name: string;
   url: string;
   note: string;
   tagString: string;
   path: string;
-  fileType: string;
+  type: string;
 }) {
   // TODO get file creation date
   const fileId = await prisma.file.create({
     data: {
       path,
-      type: fileType,
     },
   });
 
@@ -32,6 +31,7 @@ export async function createItem({
       name,
       url,
       note,
+      type,
       file: {
         connect: {
           id: fileId.id,
@@ -61,7 +61,6 @@ export async function updateItem(item: SingleItem, tagString: string) {
       fileId = await prisma.file.create({
         data: {
           path: item.file.path,
-          type: item.file.type,
         },
       });
     }
@@ -83,6 +82,7 @@ export async function updateItem(item: SingleItem, tagString: string) {
       name: item.name,
       url: item.url,
       note: item.note,
+      type: item.type,
       ...fileConnect,
     },
   });

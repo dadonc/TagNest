@@ -62,7 +62,7 @@
     isItemSelected ? "border border-blue-500" : "border border-transparent"
   )}
 >
-  {#if item.file?.type === "image"}
+  {#if item.type === "image"}
     <ImagePreview {item} />
   {:else}
     <div

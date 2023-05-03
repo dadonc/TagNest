@@ -22,9 +22,9 @@
       existingItem.name = name;
       existingItem.url = url;
       existingItem.note = note;
+      existingItem.type = itemType;
       if (existingItem.file) {
         existingItem.file.path = path;
-        existingItem.file.type = fileType;
       }
       wasChanged(tagString !== existingItem.tags.map((t) => t.name).join(", "));
     }
@@ -35,7 +35,14 @@
       save(tagString);
     } else {
       const newName = name ? name : namePlaceholder ? namePlaceholder : "";
-      await createItem({ name: newName, url, note, path, tagString, fileType });
+      await createItem({
+        name: newName,
+        url,
+        note,
+        path,
+        tagString,
+        type: itemType,
+      });
       refreshDisplayedItems();
       close();
     }
@@ -49,14 +56,14 @@
     : "";
   let note = existingItem?.note ? existingItem.note : "";
   let path = existingItem?.file?.path ? existingItem.file.path : "";
-  let fileType = existingItem?.file?.type ? existingItem.file.type : "";
+  let itemType = existingItem?.type ? existingItem.type : "";
 </script>
 
 <FileDragArea
   previewSrc={path ? "file://" + path : ""}
   on:file-chosen={(ev) => {
     const { filePath, type } = ev.detail;
-    fileType = type;
+    itemType = type;
     const name = filePath.split("/").pop();
     if (namePlaceholder === "Name" && name) {
       namePlaceholder = name;
