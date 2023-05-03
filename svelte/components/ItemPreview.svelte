@@ -2,6 +2,7 @@
   import type { SingleItem } from "../stores/items";
   import { state } from "../stores/stateStore";
   import { classNames } from "../utils";
+  import BookmarkPreview from "./BookmarkPreview.svelte";
   import ImagePreview from "./ImagePreview.svelte";
   export let item: SingleItem;
   export let items: SingleItem[];
@@ -64,6 +65,8 @@
 >
   {#if item.type === "image"}
     <ImagePreview {item} />
+  {:else if item.type === "bookmark"}
+    <BookmarkPreview {item} />
   {:else}
     <div
       class="flex flex-col items-center justify-center h-full"

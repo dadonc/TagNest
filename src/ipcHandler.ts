@@ -13,6 +13,7 @@ import {
   getTypeFromExtension,
   downloadImageFromUrl,
 } from "./utils";
+import { extractBookmarkImages } from "./bookmarks";
 
 export const prisma = new PrismaClient();
 function handlePrisma(arg: string) {
@@ -79,5 +80,9 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
 
   ipcMain.on("openFileInDefaultApp", (event, path) => {
     shell.openPath(path);
+  });
+
+  ipcMain.handle("extractBookmarkImages", (event, mhtmlPath) => {
+    return extractBookmarkImages(mhtmlPath);
   });
 }

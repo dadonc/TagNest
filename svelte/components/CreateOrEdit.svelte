@@ -7,6 +7,7 @@
     type SingleItem,
   } from "../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
+  import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
 
   export let close: () => void;
   export let save: (tagString: string) => any = (_: string) => {};
@@ -25,6 +26,11 @@
       existingItem.type = itemType;
       if (existingItem.file) {
         existingItem.file.path = path;
+      } else {
+        // @ts-ignore
+        existingItem.file = {
+          path,
+        };
       }
       wasChanged(tagString !== existingItem.tags.map((t) => t.name).join(", "));
     }
@@ -59,18 +65,28 @@
   let itemType = existingItem?.type ? existingItem.type : "";
 </script>
 
-<FileDragArea
-  previewSrc={path ? "file://" + path : ""}
-  on:file-chosen={(ev) => {
-    const { filePath, type } = ev.detail;
-    itemType = type;
-    const name = filePath.split("/").pop();
-    if (namePlaceholder === "Name" && name) {
-      namePlaceholder = name;
-    }
-    path = filePath;
-  }}
-/>
+{#if existingItem?.type === "bookmark"}
+  <BookmarkPreviewImageChooser
+    item={existingItem}
+    {path}
+    on:image-chosen={(ev) => {
+      path = ev.detail.image;
+    }}
+  />
+{:else}
+  <FileDragArea
+    previewSrc={path ? "file://" + path : ""}
+    on:file-chosen={(ev) => {
+      const { filePath, type } = ev.detail;
+      itemType = type;
+      const name = filePath.split("/").pop();
+      if (namePlaceholder === "Name" && name) {
+        namePlaceholder = name;
+      }
+      path = filePath;
+    }}
+  />
+{/if}
 <input
   bind:value={name}
   type="text"

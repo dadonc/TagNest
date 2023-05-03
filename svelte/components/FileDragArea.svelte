@@ -47,6 +47,7 @@
 
   window.electron.onChosenFile((_, { base64, path, type }) => {
     if (type === "image") {
+      // TODO image type should not always be jpg
       previewSrc = `data:image/jpg;base64,${base64}`;
     }
     dispatch("file-chosen", { filePath: path, type });

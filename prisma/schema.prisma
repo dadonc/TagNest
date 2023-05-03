@@ -17,7 +17,7 @@ model Item {
   note       String?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  file       File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview
+  file       File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview, other itmes as main file
   fileId     String?
   tags       Tag[]
   type       String // image, video, external
