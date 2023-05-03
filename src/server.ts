@@ -63,6 +63,7 @@ export default function startServer(mainWindow: BrowserWindow) {
       url: data.fields.url.value,
       mhtmlPath,
       screenshot: data.fields.screenshot.value,
+      faviconUrl: data.fields.favicon.value,
     });
     mainWindow.webContents.send("openAddBookmark", { newItemId: newItem.id });
     mainWindow.show();
