@@ -1,22 +1,29 @@
 import fs from "fs";
 import { prisma } from "./ipcHandler";
 type NewBookmark = {
-  name: string;
+  title: string;
   url: string;
   mhtmlPath: string;
+  screenshot: string;
 };
 
 export async function createItemWithBookmark(params: NewBookmark) {
   // todo: favicon, text, screenshot
-  const { name, url, mhtmlPath } = params as NewBookmark;
+  const { title, url, mhtmlPath } = params as NewBookmark;
   const newItem = await prisma.item.create({
     data: {
-      name,
+      name: title,
       url,
       type: "bookmark",
+      file: {
+        create: {
+          path: params.screenshot,
+        },
+      },
       bookmark: {
         create: {
           mhtmlPath,
+          screenshot: params.screenshot,
         },
       },
     },

@@ -36,6 +36,9 @@ export default function startServer(mainWindow: BrowserWindow) {
         favicon: {
           value: string;
         };
+        screenshot: {
+          value: string;
+        };
       };
     };
     const r: any = req;
@@ -56,9 +59,10 @@ export default function startServer(mainWindow: BrowserWindow) {
     const mhtmlPath = "/Users/domenic/Projects/hbr-data/" + fileName;
     await pump(data.file, fs.createWriteStream(mhtmlPath));
     const newItem = await createItemWithBookmark({
-      name: data.fields.title.value,
+      title: data.fields.title.value,
       url: data.fields.url.value,
       mhtmlPath,
+      screenshot: data.fields.screenshot.value,
     });
     mainWindow.webContents.send("openAddBookmark", { newItemId: newItem.id });
     mainWindow.show();

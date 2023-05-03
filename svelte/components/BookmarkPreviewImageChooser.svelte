@@ -11,9 +11,12 @@
 
   onMount(async () => {
     if (item.bookmark?.mhtmlPath) {
-      images = await window.electron.extractBookmarkImages(
-        item.bookmark?.mhtmlPath
-      );
+      images = [
+        item.bookmark.screenshot as string,
+        ...(await window.electron.extractBookmarkImages(
+          item.bookmark?.mhtmlPath
+        )),
+      ];
     } else {
       console.error("No mhtmlPath");
     }

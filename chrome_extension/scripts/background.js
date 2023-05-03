@@ -7,21 +7,23 @@ chrome.runtime.onMessage.addListener((msg) => {
       formData.append("title", msg.title);
       formData.append("url", msg.url);
       formData.append("favicon", msg.favicon);
-      formData.append("file", mhtml);
-      try {
-        const response = await fetch("http://localhost:3434/mhtml", {
-          method: "POST",
-          body: formData,
-        });
+      formData.append("mhtml", mhtml);
+      chrome.tabs.captureVisibleTab(null, null, async (screenshotData) => {
+        formData.append("screenshot", screenshotData);
+        try {
+          const response = await fetch("http://localhost:3434/mhtml", {
+            method: "POST",
+            body: formData,
+          });
 
-        const result = await response.json();
-        chrome.runtime.sendMessage(result);
-      } catch (error) {
-        console.error(error);
-        chrome.runtime.sendMessage({ success: "false", error });
-      }
+          const result = await response.json();
+          chrome.runtime.sendMessage(result);
+        } catch (error) {
+          console.error(error);
+          chrome.runtime.sendMessage({ success: "false", error });
+        }
+      });
     });
-    return true;
   } else {
     console.log("BGScript", msg);
     return false;

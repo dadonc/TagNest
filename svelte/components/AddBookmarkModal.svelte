@@ -21,7 +21,6 @@
     if (newItem) {
       item = newItem;
       isOpen = true;
-      console.log(item);
     }
   });
 
