@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { state } from "../../stores/stateStore";
+  import { selectedItems } from "../../stores/stateStore";
   import { items } from "../../stores/items";
   import RightEditSingle from "./RightEditSingle.svelte";
   import RightEditMultiple from "./RightEditMultiple.svelte";
@@ -8,13 +8,13 @@
 {#await $items}
   <div />
 {:then items}
-  {#if $state.selectedItems.length === 1}
+  {#if $selectedItems.ids.length === 1}
     {#each items as item}
-      {#if item.id === $state.selectedItems[0]}
+      {#if item.id === $selectedItems.ids[0]}
         <RightEditSingle {item} />
       {/if}
     {/each}
-  {:else if $state.selectedItems.length > 1}
+  {:else if $selectedItems.ids.length > 1}
     <RightEditMultiple {items} />
   {:else}
     <div class="flex flex-col items-center justify-center h-full">

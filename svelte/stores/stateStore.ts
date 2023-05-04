@@ -3,11 +3,10 @@ import { items } from "./items";
 import { allTags } from "./tags";
 import type { Tag } from "@prisma/client";
 
-// todo rename to selectedItems, move into filteredData, change all usages
-export const state = writable<{
-  selectedItems: string[];
+export const selectedItems = writable<{
+  ids: string[];
 }>({
-  selectedItems: [],
+  ids: [],
 });
 
 export const selectedTags = writable<{

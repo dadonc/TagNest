@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { filteredData, currView, state } from "../../stores/stateStore";
+  import {
+    filteredData,
+    currView,
+    selectedItems,
+  } from "../../stores/stateStore";
   import DetailView from "./DetailView.svelte";
   import MainGrid from "./MainGrid.svelte";
 </script>
@@ -9,7 +13,7 @@
     <MainGrid items={filteredData.items} />
   {:else if $currView.route === "details"}
     {#each filteredData.items as item}
-      {#if item.id === $state.selectedItems[0]}
+      {#if item.id === $selectedItems.ids[0]}
         <DetailView {item} />
       {/if}
     {/each}

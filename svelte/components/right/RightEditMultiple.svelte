@@ -4,13 +4,13 @@
     refreshDisplayedItems,
     deleteItems,
   } from "../../stores/items";
-  import { state } from "../../stores/stateStore";
+  import { selectedItems } from "../../stores/stateStore";
   import { updateItemsTags } from "../../stores/tags";
   import TagSelectWrapper from "../top/TagSelectWrapper.svelte";
 
   export let items: SingleItem[];
 
-  const sharedTags = $state.selectedItems
+  const sharedTags = $selectedItems.ids
     .map((id) => items.find((item) => item.id === id))
     .reduce((acc, item) => {
       if (item) {
@@ -30,7 +30,7 @@
   $: isSaveButtonDisabled = tagString === originalTagString;
 
   const save = async () => {
-    await updateItemsTags($state.selectedItems, tagString);
+    await updateItemsTags($selectedItems.ids, tagString);
     isSaveButtonDisabled = true;
     refreshDisplayedItems();
   };
@@ -41,7 +41,7 @@
 
 <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
 <div class="text-center">
-  Selected <span class="font-bold">{$state.selectedItems.length}</span> items
+  Selected <span class="font-bold">{$selectedItems.ids.length}</span> items
 </div>
 <TagSelectWrapper bind:tagString />
 
@@ -57,7 +57,7 @@
   <button
     class="mt-16 btn btn-error"
     on:click={async () => {
-      await deleteItems($state.selectedItems);
+      await deleteItems($selectedItems.ids);
       refreshDisplayedItems();
     }}>Delete</button
   >

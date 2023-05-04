@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
-  import { state, currView } from "../../stores/stateStore";
+  import { selectedItems, currView } from "../../stores/stateStore";
   import { classNames } from "../../utils";
   import BookmarkPreview from "./BookmarkPreview.svelte";
   import ImagePreview from "./ImagePreview.svelte";
@@ -8,7 +8,7 @@
   export let items: SingleItem[];
 
   $: isItemSelected =
-    $state.selectedItems.filter((id) => id === item.id).length > 0;
+    $selectedItems.ids.filter((id) => id === item.id).length > 0;
 
   function selectItem(event: MouseEvent | KeyboardEvent) {
     if (
@@ -20,34 +20,33 @@
     event.stopPropagation();
     if (event.metaKey) {
       isItemSelected
-        ? ($state.selectedItems = $state.selectedItems.filter(
+        ? ($selectedItems.ids = $selectedItems.ids.filter(
             (id) => id !== item.id
           ))
-        : ($state.selectedItems = [...$state.selectedItems, item.id]);
+        : ($selectedItems.ids = [...$selectedItems.ids, item.id]);
     } else if (event.shiftKey) {
       const itemIndex = items.indexOf(item);
       const firstSelectedItemIndex = items.findIndex(
-        (item) => item.id === $state.selectedItems[0]
+        (item) => item.id === $selectedItems.ids[0]
       );
       const lastSelectedItemIndex = items.findIndex(
-        (item) =>
-          item.id === $state.selectedItems[$state.selectedItems.length - 1]
+        (item) => item.id === $selectedItems.ids[$selectedItems.ids.length - 1]
       );
       if (itemIndex < firstSelectedItemIndex) {
-        $state.selectedItems = items
+        $selectedItems.ids = items
           .slice(itemIndex, firstSelectedItemIndex + 1)
           .map((item) => item.id);
       } else if (itemIndex > lastSelectedItemIndex) {
-        $state.selectedItems = items
+        $selectedItems.ids = items
           .slice(lastSelectedItemIndex, itemIndex + 1)
           .map((item) => item.id);
       } else {
-        $state.selectedItems = items
+        $selectedItems.ids = items
           .slice(firstSelectedItemIndex, itemIndex + 1)
           .map((item) => item.id);
       }
     } else {
-      $state.selectedItems = [item.id];
+      $selectedItems.ids = [item.id];
     }
   }
 </script>

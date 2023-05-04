@@ -6,7 +6,7 @@
     refreshDisplayedItems,
     type SingleItem,
   } from "../../stores/items";
-  import { state } from "../../stores/stateStore";
+  import { selectedItems } from "../../stores/stateStore";
 
   export let items: SingleItem[];
 
@@ -21,7 +21,7 @@
   };
 
   const deselectItems = () => {
-    $state.selectedItems = [];
+    $selectedItems.ids = [];
   };
 
   const handleKeydown = async (e: KeyboardEvent) => {
@@ -35,50 +35,50 @@
     if (e.key === "Escape") {
       deselectItems();
     } else if (e.key === "Backspace" && e.metaKey) {
-      await deleteItems($state.selectedItems);
+      await deleteItems($selectedItems.ids);
       refreshDisplayedItems();
     } else if (e.key === "ArrowLeft") {
-      if ($state.selectedItems.length == 1) {
-        const item = items.find((item) => item.id === $state.selectedItems[0]);
+      if ($selectedItems.ids.length == 1) {
+        const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
           const index = items.indexOf(item);
           if (index > 0) {
-            $state.selectedItems = [items[index - 1].id];
+            $selectedItems.ids = [items[index - 1].id];
           }
         }
       }
     } else if (e.key === "ArrowRight") {
-      if ($state.selectedItems.length == 1) {
-        const item = items.find((item) => item.id === $state.selectedItems[0]);
+      if ($selectedItems.ids.length == 1) {
+        const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
           const index = items.indexOf(item);
           if (index < items.length - 1) {
-            $state.selectedItems = [items[index + 1].id];
+            $selectedItems.ids = [items[index + 1].id];
           }
         }
       }
     } else if (e.key === "ArrowUp") {
-      if ($state.selectedItems.length == 1) {
-        const item = items.find((item) => item.id === $state.selectedItems[0]);
+      if ($selectedItems.ids.length == 1) {
+        const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
           const index = items.indexOf(item);
           if (index - $currView.zoomLvl >= 0) {
-            $state.selectedItems = [items[index - $currView.zoomLvl].id];
+            $selectedItems.ids = [items[index - $currView.zoomLvl].id];
           }
         }
       }
     } else if (e.key === "ArrowDown") {
-      if ($state.selectedItems.length == 1) {
-        const item = items.find((item) => item.id === $state.selectedItems[0]);
+      if ($selectedItems.ids.length == 1) {
+        const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
           const index = items.indexOf(item);
           if (index + $currView.zoomLvl < items.length) {
-            $state.selectedItems = [items[index + $currView.zoomLvl].id];
+            $selectedItems.ids = [items[index + $currView.zoomLvl].id];
           }
         }
       }
     } else if (e.key === "a" && e.metaKey) {
-      $state.selectedItems = items.map((item) => item.id);
+      $selectedItems.ids = items.map((item) => item.id);
     } else if ((e.key === "+" || e.key === "*") && e.metaKey && e.shiftKey) {
       e.preventDefault();
       if ($currView.zoomLvl > 1) {
