@@ -3,10 +3,10 @@
     type SingleItem,
     refreshDisplayedItems,
     deleteItems,
-  } from "../stores/items";
-  import { state } from "../stores/stateStore";
-  import { updateItemsTags } from "../stores/tags";
-  import TagSelectWrapper from "./TagSelectWrapper.svelte";
+  } from "../../stores/items";
+  import { state } from "../../stores/stateStore";
+  import { updateItemsTags } from "../../stores/tags";
+  import TagSelectWrapper from "../top/TagSelectWrapper.svelte";
 
   export let items: SingleItem[];
 

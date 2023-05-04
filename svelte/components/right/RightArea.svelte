@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { state } from "../stores/stateStore";
-  import { items } from "../stores/items";
+  import { state } from "../../stores/stateStore";
+  import { items } from "../../stores/items";
   import RightEditSingle from "./RightEditSingle.svelte";
   import RightEditMultiple from "./RightEditMultiple.svelte";
 </script>

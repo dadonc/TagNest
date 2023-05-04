@@ -1,6 +1,6 @@
 <script lang="ts">
   import LeftTags from "./LeftTags.svelte";
-  import { filteredData } from "../stores/stateStore";
+  import { filteredData } from "../../stores/stateStore";
 </script>
 
 {#await $filteredData}

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Modal from "./Modal.svelte";
+  import Modal from "../Modal.svelte";
   import {
     getItem,
     updateItem,
     type SingleItem,
     refreshDisplayedItems,
-  } from "../stores/items";
+  } from "../../stores/items";
   import CreateOrEdit from "./CreateOrEdit.svelte";
   let isOpen = false;
   let item: SingleItem;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { allTags } from "../stores/tags";
+  import { allTags } from "../../stores/tags";
   import TagSelect from "./TagSelect.svelte";
 
   export let tagString: string;

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { selectedTags, type FilteredTag } from "../stores/stateStore";
-  import { classNames } from "../utils";
+  import { selectedTags, type FilteredTag } from "../../stores/stateStore";
+  import { classNames } from "../../utils";
 
   export let tag: FilteredTag;
   let isSelected = $selectedTags.selectedIds.includes(tag.id);

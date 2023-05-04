@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { getItemTypeFromExtension } from "../../src/utils";
+  import { getItemTypeFromExtension } from "../../../src/utils";
 
   export let previewSrc: string = "";
   const dispatch = createEventDispatcher();

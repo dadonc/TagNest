@@ -1,12 +1,12 @@
 <script lang="ts">
   import ItemPreview from "./ItemPreview.svelte";
-  import { currView } from "../stores/stateStore";
+  import { currView } from "../../stores/stateStore";
   import {
     deleteItems,
     refreshDisplayedItems,
     type SingleItem,
-  } from "../stores/items";
-  import { state } from "../stores/stateStore";
+  } from "../../stores/items";
+  import { state } from "../../stores/stateStore";
 
   export let items: SingleItem[];
 

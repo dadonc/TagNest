@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
-  import type { SingleItem } from "../stores/items";
+  import type { SingleItem } from "../../stores/items";
 
   export let item: SingleItem;
   export let path: string;

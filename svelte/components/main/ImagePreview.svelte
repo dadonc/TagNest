@@ -1,12 +1,12 @@
 <script lang="ts">
-  import Link from "../assets/feather/Link.svelte";
-  import type { SingleItem } from "../stores/items";
+  import Link from "../../assets/feather/Link.svelte";
+  import type { SingleItem } from "../../stores/items";
 
   export let item: SingleItem;
 </script>
 
 <div class="relative hoverContainer">
-  <img src={item.file?.path} alt="" />
+  <img src={"file://" + item.file?.path} alt="" />
   {#if item.url}
     <a
       target="_blank"

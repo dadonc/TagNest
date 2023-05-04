@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { filteredData } from "../stores/stateStore";
+  import { filteredData } from "../../stores/stateStore";
   import MainGrid from "./MainGrid.svelte";
 </script>
 

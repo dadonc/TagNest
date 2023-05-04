@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Plus from "../assets/feather/Plus.svelte";
+  import Plus from "../../assets/feather/Plus.svelte";
   import AddBookmarkModal from "./AddBookmarkModal.svelte";
   import AddModal from "./AddModal.svelte";
 

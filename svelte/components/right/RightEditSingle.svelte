@@ -3,8 +3,8 @@
     type SingleItem,
     updateItem,
     refreshDisplayedItems,
-  } from "../stores/items";
-  import CreateOrEdit from "./CreateOrEdit.svelte";
+  } from "../../stores/items";
+  import CreateOrEdit from "../top/CreateOrEdit.svelte";
 
   export let item: SingleItem;
   let originalItem = { ...item, file: item.file ? { ...item.file } : null };

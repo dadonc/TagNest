@@ -5,7 +5,7 @@
     deleteItem,
     refreshDisplayedItems,
     type SingleItem,
-  } from "../stores/items";
+  } from "../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
   import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Modal from "./Modal.svelte";
+  import Modal from "../Modal.svelte";
   import CreateOrEdit from "./CreateOrEdit.svelte";
   export let isOpen = false;
   export let close: () => void;

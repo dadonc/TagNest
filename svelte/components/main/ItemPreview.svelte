@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { SingleItem } from "../stores/items";
-  import { state } from "../stores/stateStore";
-  import { classNames } from "../utils";
+  import type { SingleItem } from "../../stores/items";
+  import { state } from "../../stores/stateStore";
+  import { classNames } from "../../utils";
   import BookmarkPreview from "./BookmarkPreview.svelte";
   import ImagePreview from "./ImagePreview.svelte";
   export let item: SingleItem;

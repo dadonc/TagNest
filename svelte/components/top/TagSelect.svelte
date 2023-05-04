@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Tag } from "@prisma/client";
-  import { classNames } from "../utils";
+  import { classNames } from "../../utils";
   import TagAutocomplete from "./TagAutocomplete.svelte";
   import { tick } from "svelte";
   export let tags: Tag[];
