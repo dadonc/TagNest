@@ -3,6 +3,7 @@ import { items } from "./items";
 import { allTags } from "./tags";
 import type { Tag } from "@prisma/client";
 
+// todo rename to selectedItems, move into filteredData, change all usages
 export const state = writable<{
   selectedItems: string[];
 }>({
@@ -79,16 +80,16 @@ export const filteredData = derived(
 
 type CurrViewType = {
   zoomLvl: number;
+  route: "main" | "details";
   // selectionType: "grid";
-  // route: "main" | "detail";
   // detailsType: CurrViewDetailsType;
   // focusedAction?: CurrViewActionsType;
 };
 
 const emptyCurrView: CurrViewType = {
   zoomLvl: 3,
+  route: "main",
   // selectionType: "grid",
-  // route: "main",
   // detailsType: "image",
 };
 
