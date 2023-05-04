@@ -9,3 +9,46 @@
 .input:focus {
   outline: none;
 }
+
+// Remove cookie banners
+// this code was injected by uBlock Origin on
+// https://www.science.org/content/article/brazilian-frog-might-be-first-pollinating-amphibian-known-science
+.js.tc-banner,
+.pb-ad,
+.header-ads,
+.header-adv,
+.container-fluid.cookie-modal,
+.container-fluid.cookies,
+.row[data-test-selector*="cookie-banner"],
+.py-4.cookie,
+.navbar > .CookieConsent,
+.w-100.cookie,
+.col.modal-cookie,
+.politic__cookie,
+.politics_cookie,
+.py-1.cookie,
+.text-center.cookie,
+.text-center.cookie-consent,
+.show.udc-bar-holder,
+.show.udc-ovr,
+.show[class*="cookie-notice"],
+.show.cp-wrap,
+.py-3.rgpd,
+.flex.cookie,
+.adplaceholder,
+.card.cookie,
+.sticky-ads,
+.modal.sm_optin_bg,
+.modal.udc-bar-holder,
+.modal.udc-ovr,
+.footer > #cookie-law-info-bar,
+.col-xs-10.cookie,
+.active.cookie,
+.active.cookie-banner,
+.active.rgpd-modal,
+.active.GDPR,
+.active.disclaimer,
+.alert-donation,
+.news-article__newsletter {
+  display: none !important;
+}

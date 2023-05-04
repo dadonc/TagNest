@@ -1,48 +1,10 @@
 console.log("This is a background script.");
 
-function inlineStylesheets2() {
-  // inline all stylesheets, including injected from uBlock Origin
-  var styleSheets = document.styleSheets;
-  var cssText = "";
-  for (var i = 0; i < styleSheets.length; i++) {
-    console.log("Inlining stylesheet: " + styleSheets[i].href);
-    var styleSheet = styleSheets[i];
-    try {
-      var cssRules = styleSheet.cssRules;
-      for (var j = 0; j < cssRules.length; j++) {
-        cssText += cssRules[j].cssText;
-      }
-    } catch (e) {
-      console.log("Error inlining stylesheet: " + styleSheet.href + ": " + e);
-    }
-  }
-  var style = document.createElement("style");
-  style.innerHTML = cssText;
-  console.log(cssText);
-  document.head.appendChild(style);
-}
-
-function inlineStylesheets() {
-  var cssText = "";
-  var elements = [document.documentElement];
-
-  while (elements.length > 0) {
-    var element = elements.pop();
-    var rules = window.getMatchedCSSRules(element);
-    if (rules) {
-      for (var i = 0; i < rules.length; i++) {
-        cssText += rules[i].cssText + "\n";
-      }
-    }
-    for (var i = 0; i < element.children.length; i++) {
-      elements.push(element.children[i]);
-    }
-  }
-  var style = document.createElement("style");
-  style.type = "text/css";
-  style.innerHTML = cssText;
-  document.head.appendChild(style);
-}
+const inlineStylesheets = () => {
+  // todo: inline dynamically added stylesheets
+  // see https://www.science.org/content/article/brazilian-frog-might-be-first-pollinating-amphibian-known-science for example
+  return;
+};
 
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.action === "saveWebsite") {
