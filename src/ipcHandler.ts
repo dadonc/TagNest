@@ -85,4 +85,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   ipcMain.handle("extractBookmarkImages", (event, mhtmlPath) => {
     return extractBookmarkImages(mhtmlPath);
   });
+
+  ipcMain.handle("readFile", (event, path) => {
+    return fs.readFileSync(path).toString();
+  });
 }

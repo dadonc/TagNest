@@ -10,5 +10,5 @@
     "service_worker": "scripts/background.js"
   },
 
-  "permissions": ["pageCapture", "tabs", "activeTab"]
+  "permissions": ["pageCapture", "tabs", "activeTab", "scripting"]
 }

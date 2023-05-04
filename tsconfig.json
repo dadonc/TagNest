@@ -10,9 +10,11 @@
      * Disable checkJs if you'd like to use dynamic types in JS.
      * Note that setting allowJs false does not prevent the use
      * of JS in `.svelte` files.
+
+     * I had to disable this after adding svelte/assets/deps/mhtml2html.js
      */
-    "allowJs": true,
-    "checkJs": true,
+    "allowJs": false,
+    "checkJs": false,
     "isolatedModules": true,
     "ignoreDeprecations": "5.0",
     "strict": true

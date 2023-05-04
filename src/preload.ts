@@ -28,6 +28,7 @@ export type ExposedInMainWorld = {
     ) => void
   ) => void;
   extractBookmarkImages: (path: string) => Promise<string[]>;
+  readFile: (path: string) => Promise<string>;
 };
 
 const api: ExposedInMainWorld = {
@@ -44,6 +45,7 @@ const api: ExposedInMainWorld = {
   onOpenAddBookmark: (callback) => ipcRenderer.on("openAddBookmark", callback),
   extractBookmarkImages: (path) =>
     ipcRenderer.invoke("extractBookmarkImages", path),
+  readFile: (path) => ipcRenderer.invoke("readFile", path),
 };
 
 contextBridge.exposeInMainWorld("electron", api);
