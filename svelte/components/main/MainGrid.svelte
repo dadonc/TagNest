@@ -36,6 +36,7 @@
       deselectItems();
     } else if (e.key === "Backspace" && e.metaKey) {
       await deleteItems($selectedItems.ids);
+      $selectedItems.ids = [];
       refreshDisplayedItems();
     } else if (e.key === "ArrowLeft") {
       if ($selectedItems.ids.length == 1) {

@@ -1,7 +1,6 @@
 # Bugs
 
 * delete newly added bookmark before saving
-* deselect items on deletion 
 
 * deselect count
 * delete files on item delete
