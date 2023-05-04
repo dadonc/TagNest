@@ -10,7 +10,7 @@ import path from "path";
 import { PrismaClient } from "@prisma/client";
 import {
   IMAGE_EXTENSIONS,
-  getTypeFromExtension,
+  getItemTypeFromExtension,
   downloadImageFromUrl,
 } from "./utils";
 import { extractBookmarkImages } from "./bookmarks";
@@ -49,7 +49,7 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     return result.then(({ canceled, filePaths, bookmarks }) => {
       const base64 = fs.readFileSync(filePaths[0]).toString("base64");
       const extension = filePaths[0].split(".").pop();
-      const type = getTypeFromExtension(extension);
+      const type = getItemTypeFromExtension(extension);
       mainWindow.webContents.send("onChosenFile", {
         base64,
         type,
@@ -65,7 +65,7 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     } else {
       const name = url.split("/").pop();
       const extension = name.split(".").pop();
-      const type = getTypeFromExtension(extension);
+      const type = getItemTypeFromExtension(extension);
       const localPath = path.join(process.resourcesPath, name);
       downloadImageFromUrl(url, localPath, function (err) {
         const base64 = fs.readFileSync(localPath).toString("base64");

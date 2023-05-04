@@ -46,10 +46,12 @@
           on:keydown={(e) => {
             if (e.key === "Enter") {
               dispatch("image-chosen", { image });
+              isExpanded = false;
             }
           }}
           on:click={() => {
             dispatch("image-chosen", { image });
+            isExpanded = false;
           }}
         />
       </div>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { getTypeFromExtension } from "../../src/utils";
+  import { getItemTypeFromExtension } from "../../src/utils";
 
   export let previewSrc: string = "";
   const dispatch = createEventDispatcher();
@@ -28,7 +28,7 @@
     }
     const file = e.dataTransfer.files[0];
     const filePath = (file as FileWithPath).path;
-    const type = getTypeFromExtension(filePath.split(".").pop() || "");
+    const type = getItemTypeFromExtension(filePath.split(".").pop() || "");
     if (type === "image") {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -48,7 +48,10 @@
   window.electron.onChosenFile((_, { base64, path, type }) => {
     if (type === "image") {
       // TODO image type should not always be jpg
-      previewSrc = `data:image/jpg;base64,${base64}`;
+      previewSrc = `data:${type}/${path
+        .split(".")
+        .pop()
+        ?.toLowerCase()};base64,${base64}`;
     }
     dispatch("file-chosen", { filePath: path, type });
   });

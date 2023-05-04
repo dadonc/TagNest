@@ -6,7 +6,9 @@ export const VIDEO_EXTENSIONS = ["mp4", "m4v", "mpg", "mpeg", "ogg", "webm"];
 
 type ItemType = "image" | "video" | "external";
 
-export function getTypeFromExtension(extension: string | undefined): ItemType {
+export function getItemTypeFromExtension(
+  extension: string | undefined
+): ItemType {
   if (extension && IMAGE_EXTENSIONS.includes(extension)) {
     return "image";
   }
