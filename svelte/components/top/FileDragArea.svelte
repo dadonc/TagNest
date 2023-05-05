@@ -61,7 +61,6 @@
     // TODO ask Chris - how to type this
     // @ts-ignore
     $importItems = [...$importItems, ...newItems];
-    console.log($importItems);
     $currView.route = "importMultiple";
   });
 </script>
