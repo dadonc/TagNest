@@ -10,10 +10,12 @@
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
   import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
   import { currView } from "../../stores/stateStore";
+  import startImportTasks from "../main/import/importQueue";
+  import { tick } from "svelte";
 
   export let close: () => void;
-  export let save: (tagString: string) => any = (_: string) => {};
-  export let existingItem: SingleItem | null = null;
+  export let save: (tagString: string) => Promise<void>;
+  export let existingItem: SingleItem | null;
 
   export let isButtonDisabled = true;
   export let wasChanged: (tagsWerechanged?: boolean) => void = () => {};
@@ -43,14 +45,20 @@
       save(tagString);
     } else {
       const newName = name ? name : namePlaceholder ? namePlaceholder : "";
-      await createItem({
+      const newItem = await createItem({
         name: newName,
         url,
         note,
         path,
         tagString,
         type: itemType,
+        importStep: 1,
       });
+      if (newItem) {
+        $importItems = [...$importItems, newItem];
+        await tick();
+        startImportTasks();
+      }
       refreshDisplayedItems();
       close();
     }
@@ -58,9 +66,17 @@
 
   async function importItem() {
     if (existingItem) {
-      // TODO ask Chris - why is ! needed after existingItem?
-      $importItems = $importItems.filter((i) => i.id !== existingItem!.id);
-      save(tagString);
+      $importItems = $importItems.map((i) => {
+        if (existingItem && i.id === existingItem.id) {
+          return { ...i, importStep: 1 };
+        }
+        return i;
+      });
+      await save(tagString);
+      // todo - rmv
+      setTimeout(() => {
+        startImportTasks();
+      }, 100);
     }
   }
 

@@ -9,7 +9,7 @@ type ItemType = "image" | "video" | "external";
 export function getItemTypeFromExtension(
   extension: string | undefined
 ): ItemType {
-  if (extension && IMAGE_EXTENSIONS.includes(extension)) {
+  if (extension && IMAGE_EXTENSIONS.includes(extension.toLowerCase())) {
     return "image";
   }
   return "external";

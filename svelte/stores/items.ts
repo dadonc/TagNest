@@ -11,6 +11,7 @@ export async function createItem({
   tagString,
   path,
   type,
+  importStep,
   getsCurrentlyImported = false,
 }: {
   name: string;
@@ -19,6 +20,7 @@ export async function createItem({
   tagString: string;
   path: string;
   type: string;
+  importStep: number;
   getsCurrentlyImported?: boolean;
 }) {
   // TODO get file creation date
@@ -35,6 +37,7 @@ export async function createItem({
       note,
       type,
       getsCurrentlyImported,
+      importStep,
       file: {
         connect: {
           id: fileId.id,
@@ -86,6 +89,7 @@ export async function updateItem(item: SingleItem, tagString: string) {
       url: item.url,
       note: item.note,
       type: item.type,
+      importStep: item.importStep,
       ...fileConnect,
     },
   });
@@ -164,6 +168,21 @@ export async function deleteItems(ids: string[]) {
     },
   });
   return possiblyDeleteTags(tagIds);
+}
+
+export async function finishItemImport(id: string, importStep: number) {
+  importItems.update((items) => {
+    return items.filter((item) => item.id !== id);
+  });
+  return await prisma.item.update({
+    where: {
+      id,
+    },
+    data: {
+      getsCurrentlyImported: false,
+      importStep,
+    },
+  });
 }
 
 const currentImportItems = localStorage.getItem("importItems");

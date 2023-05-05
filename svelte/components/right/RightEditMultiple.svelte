@@ -3,6 +3,7 @@
     type SingleItem,
     refreshDisplayedItems,
     deleteItems,
+    importItems,
   } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
   import { updateItemsTags } from "../../stores/tags";
@@ -58,6 +59,9 @@
     class="mt-16 btn btn-error"
     on:click={async () => {
       await deleteItems($selectedItems.ids);
+      $importItems = $importItems.filter(
+        (item) => !$selectedItems.ids.includes(item.id)
+      );
       refreshDisplayedItems();
     }}>Delete</button
   >
