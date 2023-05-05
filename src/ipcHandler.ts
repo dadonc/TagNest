@@ -8,12 +8,9 @@ import {
 import fs from "fs";
 import path from "path";
 import { PrismaClient } from "@prisma/client";
-import {
-  IMAGE_EXTENSIONS,
-  getItemTypeFromExtension,
-  downloadImageFromUrl,
-} from "./utils";
+import { IMAGE_EXTENSIONS, getItemTypeFromExtension } from "./gschert";
 import { extractBookmarkImages } from "./bookmarks";
+import { downloadImageFromUrl } from "./utils";
 
 export const prisma = new PrismaClient();
 function handlePrisma(arg: string) {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { getItemTypeFromExtension } from "../../../src/utils";
+  import { getItemTypeFromExtension } from "../../../src/gschert";
   import { currView } from "../../stores/stateStore";
   import { importItems } from "../../stores/items";
   import createImportItems from "../main/import/createImportItems";

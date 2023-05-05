@@ -1,21 +1,8 @@
 import https from "https";
 import path from "path";
 import fs from "fs";
-export const IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
-export const VIDEO_EXTENSIONS = ["mp4", "m4v", "mpg", "mpeg", "ogg", "webm"];
 
-type ItemType = "image" | "video" | "external";
-
-export function getItemTypeFromExtension(
-  extension: string | undefined
-): ItemType {
-  if (extension && IMAGE_EXTENSIONS.includes(extension.toLowerCase())) {
-    return "image";
-  }
-  return "external";
-}
-
-// todo remove
+// todo remove, and use promisified version, see below
 export function downloadImageFromUrl(
   url: string,
   dest: string,

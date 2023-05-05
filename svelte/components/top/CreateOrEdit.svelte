@@ -14,8 +14,8 @@
   import { tick } from "svelte";
 
   export let close: () => void;
-  export let save: (tagString: string) => Promise<void>;
-  export let existingItem: SingleItem | null;
+  export let save: (tagString: string) => Promise<void> = async () => {};
+  export let existingItem: SingleItem | undefined = undefined;
 
   export let isButtonDisabled = true;
   export let wasChanged: (tagsWerechanged?: boolean) => void = () => {};

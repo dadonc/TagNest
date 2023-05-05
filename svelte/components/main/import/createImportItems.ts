@@ -1,4 +1,4 @@
-import { getItemTypeFromExtension } from "../../../../src/utils";
+import { getItemTypeFromExtension } from "../../../../src/gschert";
 import { createItem } from "../../../stores/items";
 
 export default function createImportItems(paths: string[]) {
@@ -11,6 +11,7 @@ export default function createImportItems(paths: string[]) {
       url: "",
       note: "",
       tagString: "",
+      importStep: 0,
     };
   });
   return Promise.all(items.map(async (item) => await createItem(item)));
