@@ -8,6 +8,7 @@
   } from "./cssStore";
   import type { CssContainerType } from "../types";
   import { currView } from "./stateStore";
+  import { importItems } from "./items";
 
   onMount(async () => {
     leftContainer.subscribe((v) => {
@@ -49,6 +50,11 @@
     currView.subscribe((v) => {
       const value = JSON.stringify(v);
       localStorage.setItem("currView", value);
+    });
+
+    importItems.subscribe((v) => {
+      const value = JSON.stringify(v);
+      localStorage.setItem("importItems", value);
     });
   });
 </script>

@@ -11,18 +11,19 @@ datasource db {
 }
 
 model Item {
-  id         String    @id @default(cuid())
-  name       String?
-  url        String?
-  note       String?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  file       File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview, other itmes as main file
-  fileId     String?
-  tags       Tag[]
-  type       String // image, video, external
-  bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id])
-  bookmarkId String?
+  id                    String    @id @default(cuid())
+  name                  String?
+  url                   String?
+  note                  String?
+  getsCurrentlyImported Boolean   @default(false)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  file                  File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview, other itmes as main file
+  fileId                String?
+  tags                  Tag[]
+  type                  String // image, video, external
+  bookmark              Bookmark? @relation(fields: [bookmarkId], references: [id])
+  bookmarkId            String?
 }
 
 model File {

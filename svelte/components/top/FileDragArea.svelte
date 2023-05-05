@@ -2,6 +2,8 @@
   import { createEventDispatcher } from "svelte";
   import { getItemTypeFromExtension } from "../../../src/utils";
   import { currView } from "../../stores/stateStore";
+  import { importItems } from "../../stores/items";
+  import createImportItems from "../main/import/createImportItems";
 
   export let previewSrc: string = "";
   const dispatch = createEventDispatcher();
@@ -53,9 +55,13 @@
     dispatch("file-chosen", { path, itemType });
   });
 
-  window.electron.onChosenFiles((_, filePaths) => {
+  window.electron.onChosenFiles(async (_, filePaths) => {
     dispatch("close-modal");
-    console.log(filePaths);
+    const newItems = await createImportItems(filePaths);
+    // TODO - ask Chris how to type this
+    // @ts-ignore
+    $importItems = [...$importItems, ...newItems];
+    console.log($importItems);
     $currView.route = "importMultiple";
   });
 </script>

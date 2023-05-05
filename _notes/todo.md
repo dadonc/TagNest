@@ -1,5 +1,5 @@
 # Bugs
-
+* don't open bottom bar on zoomLevel click
 * delete newly added bookmark before saving
 
 * deselect count

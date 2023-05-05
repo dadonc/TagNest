@@ -1,8 +1,8 @@
 <script lang="ts">
   import Plus from "../../assets/feather/Plus.svelte";
   import ChevronLeft from "../../assets/feather/ChevronLeft.svelte";
-
   import { currView } from "../../stores/stateStore";
+  import { importItems, type SingleItem } from "../../stores/items";
   import AddBookmarkModal from "./AddBookmarkModal.svelte";
   import AddModal from "./AddModal.svelte";
 
@@ -26,9 +26,19 @@
       </button>
     {/if}
   </div>
-  <button on:click={handleToggleAddModal} class="w-4 h-4 mr-2 text-green-700">
-    <Plus />
-  </button>
+  <div class="flex items-center">
+    <button
+      on:click={() => {
+        $currView.route = "importMultiple";
+      }}
+      class="w-4 h-4 mr-2"
+    >
+      {$importItems.length}
+    </button>
+    <button on:click={handleToggleAddModal} class="w-4 h-4 mr-2 text-green-700">
+      <Plus />
+    </button>
+  </div>
 </div>
 
 <AddModal isOpen={showAddModal} close={handleToggleAddModal} />

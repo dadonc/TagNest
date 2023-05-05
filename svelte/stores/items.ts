@@ -11,6 +11,7 @@ export async function createItem({
   tagString,
   path,
   type,
+  getsCurrentlyImported = false,
 }: {
   name: string;
   url: string;
@@ -18,6 +19,7 @@ export async function createItem({
   tagString: string;
   path: string;
   type: string;
+  getsCurrentlyImported?: boolean;
 }) {
   // TODO get file creation date
   const fileId = await prisma.file.create({
@@ -32,6 +34,7 @@ export async function createItem({
       url,
       note,
       type,
+      getsCurrentlyImported,
       file: {
         connect: {
           id: fileId.id,
@@ -104,6 +107,9 @@ export async function getItem(id: string) {
 
 export async function getItems() {
   return await prisma.item.findMany({
+    where: {
+      getsCurrentlyImported: false,
+    },
     include: {
       file: true,
       tags: true,
@@ -157,3 +163,8 @@ export async function deleteItems(ids: string[]) {
   });
   return possiblyDeleteTags(tagIds);
 }
+
+const currentImportItems = localStorage.getItem("importItems");
+export const importItems = writable<SingleItem[]>(
+  currentImportItems ? JSON.parse(currentImportItems) : []
+);

@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { selectedItems } from "../../stores/stateStore";
-  import { items } from "../../stores/items";
+  import { currView, selectedItems } from "../../stores/stateStore";
+  import { importItems, items } from "../../stores/items";
   import RightEditSingle from "./RightEditSingle.svelte";
   import RightEditMultiple from "./RightEditMultiple.svelte";
+
+  const itemsToGet = $currView.route === "main" ? $items : $importItems;
 </script>
 
-{#await $items}
+{#await itemsToGet}
   <div />
 {:then items}
   {#if $selectedItems.ids.length === 1}
