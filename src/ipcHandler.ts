@@ -42,19 +42,26 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
 
   ipcMain.on("chooseFile", (event, arg) => {
     const result = dialog.showOpenDialog({
-      properties: ["openFile"],
-      // filters: [{ name: "Images", extensions: ["png", "jpg", "jpeg"] }],
+      properties: [
+        "openFile",
+        "multiSelections",
+        "showHiddenFiles",
+        "openDirectory",
+      ],
     });
 
-    return result.then(({ canceled, filePaths, bookmarks }) => {
-      const base64 = fs.readFileSync(filePaths[0]).toString("base64");
-      const extension = filePaths[0].split(".").pop();
-      const type = getItemTypeFromExtension(extension);
-      mainWindow.webContents.send("onChosenFile", {
-        base64,
-        type,
-        path: filePaths[0],
-      });
+    return result.then(({ canceled, filePaths }) => {
+      if (filePaths.length > 1) {
+        console.log("multiple files", filePaths);
+        mainWindow.webContents.send("chosenFiles", filePaths);
+      } else {
+        const extension = filePaths[0].split(".").pop();
+        const itemType = getItemTypeFromExtension(extension);
+        mainWindow.webContents.send("chosenFile", {
+          itemType,
+          path: filePaths[0],
+        });
+      }
     });
   });
 

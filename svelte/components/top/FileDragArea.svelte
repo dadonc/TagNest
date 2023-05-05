@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { getItemTypeFromExtension } from "../../../src/utils";
+  import { currView } from "../../stores/stateStore";
 
   export let previewSrc: string = "";
   const dispatch = createEventDispatcher();
@@ -45,15 +46,17 @@
     }
   }
 
-  window.electron.onChosenFile((_, { base64, path, type }) => {
-    if (type === "image") {
-      // TODO image type should not always be jpg
-      previewSrc = `data:${type}/${path
-        .split(".")
-        .pop()
-        ?.toLowerCase()};base64,${base64}`;
+  window.electron.onChosenFile((_, { path, itemType }) => {
+    if (itemType === "image") {
+      previewSrc = `file://${path}`;
     }
-    dispatch("file-chosen", { filePath: path, type });
+    dispatch("file-chosen", { path, itemType });
+  });
+
+  window.electron.onChosenFiles((_, filePaths) => {
+    dispatch("close-modal");
+    console.log(filePaths);
+    $currView.route = "importMultiple";
   });
 </script>
 

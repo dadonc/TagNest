@@ -79,7 +79,8 @@ export const filteredData = derived(
 
 type CurrViewType = {
   zoomLvl: number;
-  route: "main" | "details";
+  // TODO move into antoher store that doesn't get saved in local storage
+  route: "main" | "details" | "importMultiple";
   // selectionType: "grid";
   // detailsType: CurrViewDetailsType;
   // focusedAction?: CurrViewActionsType;

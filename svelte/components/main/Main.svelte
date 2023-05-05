@@ -6,6 +6,7 @@
   } from "../../stores/stateStore";
   import DetailView from "./DetailView.svelte";
   import MainGrid from "./MainGrid.svelte";
+  import ImportMultiple from "./import/ImportMultiple.svelte";
 </script>
 
 {#await $filteredData then filteredData}
@@ -17,5 +18,7 @@
         <DetailView {item} />
       {/if}
     {/each}
+  {:else if $currView.route === "importMultiple"}
+    <ImportMultiple />
   {/if}
 {/await}

@@ -1,9 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 export type ExposedInMainWorld = {
-  nodeVersion: () => string;
-  chromeVersion: () => string;
-  electronVersion: () => string;
   prisma: (str: string) => Promise<any>;
   onOpenAddItem: (callback: () => void) => void;
   chooseFile: () => void;
@@ -11,11 +8,13 @@ export type ExposedInMainWorld = {
     callback: (
       ev: Electron.IpcRendererEvent,
       args: {
-        base64: string;
         path: string;
-        type: string;
+        itemType: string;
       }
     ) => void
+  ) => void;
+  onChosenFiles: (
+    callback: (ev: Electron.IpcRendererEvent, filePaths: string[]) => void
   ) => void;
   saveFileFromUrl: (url: string) => void;
   openFileInDefaultApp: (path: string) => void;
@@ -32,13 +31,11 @@ export type ExposedInMainWorld = {
 };
 
 const api: ExposedInMainWorld = {
-  nodeVersion: () => process.versions.node,
-  chromeVersion: () => process.versions.chrome,
-  electronVersion: () => process.versions.electron,
   prisma: (str) => ipcRenderer.invoke("prisma", str),
   onOpenAddItem: (callback) => ipcRenderer.on("openAddItem", callback), // open AddItem on shortcut
   chooseFile: () => ipcRenderer.send("chooseFile"), // open file dialog
-  onChosenFile: (callback) => ipcRenderer.on("onChosenFile", callback), // get chosen file
+  onChosenFile: (callback) => ipcRenderer.on("chosenFile", callback), // get chosen file
+  onChosenFiles: (filePaths) => ipcRenderer.on("chosenFiles", filePaths),
   saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
   openFileInDefaultApp: (path) =>
     ipcRenderer.send("openFileInDefaultApp", path),

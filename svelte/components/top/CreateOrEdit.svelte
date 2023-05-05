@@ -76,14 +76,14 @@
 {:else}
   <FileDragArea
     previewSrc={path ? "file://" + path : ""}
+    on:close-modal={close}
     on:file-chosen={(ev) => {
-      const { filePath, type } = ev.detail;
-      itemType = type;
-      const name = filePath.split("/").pop();
+      itemType = ev.detail.itemType;
+      const name = ev.detail.path.split("/").pop();
       if (namePlaceholder === "Name" && name) {
         namePlaceholder = name;
       }
-      path = filePath;
+      path = ev.detail.path;
     }}
   />
 {/if}

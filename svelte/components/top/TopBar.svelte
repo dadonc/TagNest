@@ -20,7 +20,7 @@
 <div class="flex items-center justify-between h-full">
   <div class="flex items-center">
     <div class="inline-block" style="width: var(--leftContainer)" />
-    {#if $currView.route === "details"}
+    {#if $currView.route !== "main"}
       <button on:click={() => ($currView.route = "main")} class="p-2">
         <ChevronLeft className="h-4 w-4" />
       </button>
