@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { importItems } from "../stores/items";
   import { currView } from "../stores/stateStore";
   import { filteredData } from "../stores/stateStore";
 </script>
@@ -29,7 +30,11 @@
   >
   <div class="w-full text-sm text-center">
     {#await $filteredData then data}
-      {data.items.length} items
+      {#if $currView.route === "importMultiple"}
+        {$importItems.length} items to import
+      {:else}
+        {data.items.length} items
+      {/if}
     {/await}
   </div>
 </div>

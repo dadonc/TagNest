@@ -106,16 +106,18 @@ export async function getItem(id: string) {
 }
 
 export async function getItems() {
-  return await prisma.item.findMany({
-    where: {
-      getsCurrentlyImported: false,
-    },
+  const x = await prisma.item.findMany({
+    // where: {
+    //   getsCurrentlyImported: false,
+    // },
     include: {
       file: true,
       tags: true,
       bookmark: true,
     },
   });
+  // TODO ask Chris - using "where" errors in for example RightEditSingle
+  return x.filter((item) => !item.getsCurrentlyImported);
 }
 
 async function getItemsDummy() {

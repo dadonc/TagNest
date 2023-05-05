@@ -58,7 +58,7 @@
   window.electron.onChosenFiles(async (_, filePaths) => {
     dispatch("close-modal");
     const newItems = await createImportItems(filePaths);
-    // TODO - ask Chris how to type this
+    // TODO ask Chris - how to type this
     // @ts-ignore
     $importItems = [...$importItems, ...newItems];
     console.log($importItems);

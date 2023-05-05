@@ -4,7 +4,7 @@
   import RightEditSingle from "./RightEditSingle.svelte";
   import RightEditMultiple from "./RightEditMultiple.svelte";
 
-  const itemsToGet = $currView.route === "main" ? $items : $importItems;
+  $: itemsToGet = $currView.route === "main" ? $items : $importItems;
 </script>
 
 {#await itemsToGet}

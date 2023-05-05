@@ -4,6 +4,7 @@
     updateItem,
     refreshDisplayedItems,
   } from "../../stores/items";
+  import { currView } from "../../stores/stateStore";
   import CreateOrEdit from "../top/CreateOrEdit.svelte";
 
   export let item: SingleItem;
@@ -37,7 +38,11 @@
 </script>
 
 {#key item}
-  <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
+  {#if $currView.route === "importMultiple"}
+    <h1 class="mt-2 mb-4 text-3xl text-center">Import</h1>
+  {:else}
+    <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
+  {/if}
 
   <CreateOrEdit
     {save}

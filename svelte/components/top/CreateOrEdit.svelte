@@ -3,11 +3,13 @@
   import {
     createItem,
     deleteItem,
+    importItems,
     refreshDisplayedItems,
     type SingleItem,
   } from "../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
   import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
+  import { currView } from "../../stores/stateStore";
 
   export let close: () => void;
   export let save: (tagString: string) => any = (_: string) => {};
@@ -51,6 +53,14 @@
       });
       refreshDisplayedItems();
       close();
+    }
+  }
+
+  async function importItem() {
+    if (existingItem) {
+      // TODO ask Chris - why is ! needed after existingItem?
+      $importItems = $importItems.filter((i) => i.id !== existingItem!.id);
+      save(tagString);
     }
   }
 
@@ -105,18 +115,27 @@
   placeholder="Notes"
   class="w-full h-32 mt-2 input input-bordered"
 />
-<div class="flex justify-center mt-2 gap-x-2">
-  <button class="btn btn-tertiary" on:click={close}>Cancel</button>
-  <button {disabled} class="btn btn-primary" on:click={updateOrCreate}
-    >Save</button
-  >
-</div>
+{#if $currView.route === "importMultiple"}
+  <div class="flex justify-center mt-2 gap-x-2">
+    <button class="btn btn-primary" on:click={importItem}>Import</button>
+  </div>
+{:else}
+  <div class="flex justify-center mt-2 gap-x-2">
+    <button class="btn btn-tertiary" on:click={close}>Cancel</button>
+    <button {disabled} class="btn btn-primary" on:click={updateOrCreate}
+      >Save</button
+    >
+  </div>
+{/if}
 {#if existingItem}
   <div class="flex justify-center">
     <button
       class="mt-16 btn btn-error"
       on:click={async () => {
         if (existingItem) {
+          // TODO ask Chris - why do I need this?
+          const existingItemId = existingItem.id;
+          $importItems = $importItems.filter((i) => i.id !== existingItemId);
           await deleteItem(existingItem.id);
           refreshDisplayedItems();
         }
