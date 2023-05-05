@@ -34,7 +34,7 @@
     }
   }}
   on:click={(e) => selectAction(e, importItem)}
-  class={classNames(isItemSelected ? "bg-gray-200" : "")}
+  class={classNames(isItemSelected ? "bg-gray-200" : "", "select-none")}
 >
   {#if countImportSteps > 0}
     {`${importItem.importStep}/${countImportSteps}  `}

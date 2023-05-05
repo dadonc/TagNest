@@ -79,6 +79,7 @@
         }
       }
     } else if (e.key === "a" && e.metaKey) {
+      e.preventDefault();
       $selectedItems.ids = items.map((item) => item.id);
     } else if ((e.key === "+" || e.key === "*") && e.metaKey && e.shiftKey) {
       e.preventDefault();

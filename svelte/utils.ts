@@ -1,6 +1,11 @@
 import { get } from "svelte/store";
-import { importItems, type SingleItem } from "./stores/items";
-import { filteredData, selectedItems } from "./stores/stateStore";
+import {
+  deleteItems,
+  importItems,
+  refreshDisplayedItems,
+  type SingleItem,
+} from "./stores/items";
+import { currView, filteredData, selectedItems } from "./stores/stateStore";
 
 export function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -58,3 +63,64 @@ export async function selectItem({
   }
   return $selectedItems;
 }
+
+export const deselectItems = () => {
+  selectedItems.set({ ids: [] as string[] });
+};
+
+// todo use this in all locations
+export const handleKeydown = async (
+  e: KeyboardEvent,
+  useImportItems: boolean = false
+) => {
+  if (
+    document.activeElement?.tagName === "INPUT" ||
+    document.activeElement?.tagName === "TEXTAREA" ||
+    //@ts-ignore
+    document.activeElement?.isContentEditable
+  ) {
+    return;
+  }
+  const $selectedItems = get(selectedItems);
+  const items = useImportItems
+    ? get(importItems)
+    : (await get(filteredData)).items;
+
+  const step = useImportItems ? 1 : get(currView).zoomLvl;
+  if (e.key === "Escape") {
+    deselectItems();
+  } else if (e.key === "Backspace" && e.metaKey) {
+    await deleteItems($selectedItems.ids);
+    if (useImportItems) {
+      importItems.update((items) =>
+        items.filter((item) => !$selectedItems.ids.includes(item.id))
+      );
+    }
+    $selectedItems.ids = [];
+    refreshDisplayedItems();
+  } else if (e.key === "ArrowUp") {
+    if ($selectedItems.ids.length == 1) {
+      const item = items.find((item) => item.id === $selectedItems.ids[0]);
+      if (item) {
+        const index = items.indexOf(item);
+        if (index - step >= 0) {
+          $selectedItems.ids = [items[index - step].id];
+        }
+      }
+    }
+  } else if (e.key === "ArrowDown") {
+    if ($selectedItems.ids.length == 1) {
+      const item = items.find((item) => item.id === $selectedItems.ids[0]);
+      if (item) {
+        const index = items.indexOf(item);
+        if (index + step < items.length) {
+          $selectedItems.ids = [items[index + step].id];
+        }
+      }
+    }
+  } else if (e.key === "a" && e.metaKey) {
+    e.preventDefault();
+    $selectedItems.ids = items.map((item) => item.id);
+  }
+  selectedItems.set($selectedItems);
+};
