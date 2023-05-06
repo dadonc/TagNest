@@ -63,7 +63,8 @@
     }
   }}
   class={classNames(
-    isItemSelected ? "border border-blue-500" : "border border-transparent"
+    isItemSelected ? "border border-blue-500" : "border border-transparent",
+    "flex items-center justify-center"
   )}
 >
   {#if item.type === "image"}

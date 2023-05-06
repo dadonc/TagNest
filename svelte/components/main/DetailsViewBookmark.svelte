@@ -10,6 +10,11 @@
       item.bookmark?.mhtmlPath as string
     );
     let htmlDoc = mhtml2html.convert(mhtml);
+    htmlDoc.window.document
+      .querySelectorAll("a")
+      .forEach((aTag: HTMLAnchorElement) => {
+        aTag.setAttribute("target", "_blank");
+      });
     html = new XMLSerializer().serializeToString(htmlDoc.window.document);
   });
 </script>
