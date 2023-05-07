@@ -52,6 +52,7 @@
 </script>
 
 <div
+  id={item.id}
   on:click={selectItem}
   on:dblclick={(e) => {
     selectItem(e);

@@ -182,5 +182,6 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
     e.preventDefault();
     $selectedItems.ids = items.map((item) => item.id);
   }
+  document.getElementById($selectedItems.ids[0])?.scrollIntoView();
   selectedItems.set($selectedItems);
 };
