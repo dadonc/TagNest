@@ -28,7 +28,9 @@
       <Main />
     </svelte:fragment>
     <svelte:fragment slot="rightContainer">
-      <RightArea />
+      {#await $filteredData then data}
+        <RightArea items={data.items} />
+      {/await}
     </svelte:fragment>
     <svelte:fragment slot="bottomDivider">
       <BottomBar />

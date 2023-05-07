@@ -1,29 +1,27 @@
 <script lang="ts">
   import { currView, selectedItems } from "../../stores/stateStore";
-  import { importItems, items } from "../../stores/items";
+  import { importItems, type SingleItem } from "../../stores/items";
   import RightEditSingle from "./RightEditSingle.svelte";
   import RightEditMultiple from "./RightEditMultiple.svelte";
 
-  $: itemsToGet = $currView.route === "main" ? $items : $importItems;
+  export let items: SingleItem[];
+
+  $: itemsToUse = $currView.route === "importMultiple" ? $importItems : items;
 </script>
 
 <div class="h-full select-none">
-  {#await itemsToGet}
-    <div />
-  {:then items}
-    {#if $selectedItems.ids.length === 1}
-      {#each items as item}
-        {#if item.id === $selectedItems.ids[0]}
-          <RightEditSingle {item} />
-        {/if}
-      {/each}
-    {:else if $selectedItems.ids.length > 1}
-      <RightEditMultiple {items} />
-    {:else}
-      <div class="flex flex-col items-center justify-center h-full">
-        <div class="text-2xl font-bold">No item selected</div>
-        <div class="text-sm text-gray-500">Select an item to edit it.</div>
-      </div>
-    {/if}
-  {/await}
+  {#if $selectedItems.ids.length === 1}
+    {#each itemsToUse as item}
+      {#if item.id === $selectedItems.ids[0]}
+        <RightEditSingle {item} />
+      {/if}
+    {/each}
+  {:else if $selectedItems.ids.length > 1}
+    <RightEditMultiple {items} />
+  {:else}
+    <div class="flex flex-col items-center justify-center h-full">
+      <div class="text-2xl font-bold">No item selected</div>
+      <div class="text-sm text-gray-500">Select an item to edit it.</div>
+    </div>
+  {/if}
 </div>
