@@ -10,7 +10,7 @@
   import TopBar from "./components/top/TopBar.svelte";
   import startImportTasks from "./components/main/import/importQueue";
   import BottomArea from "./components/bottom/BottomArea.svelte";
-  import { currView } from "./stores/stateStore";
+  import { currView, filteredData } from "./stores/stateStore";
 
   onMount(() => {
     startImportTasks();
@@ -34,7 +34,9 @@
       <BottomBar />
     </svelte:fragment>
     <svelte:fragment slot="bottomContainer">
-      <BottomArea />
+      {#await $filteredData then data}
+        <BottomArea items={data.items} />
+      {/await}
     </svelte:fragment>
     <svelte:fragment slot="leftContainer">
       <LeftArea />

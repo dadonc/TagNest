@@ -1,12 +1,18 @@
 <script lang="ts">
   import Link from "../../assets/feather/Link.svelte";
   import type { SingleItem } from "../../stores/items";
+  import { currView } from "../../stores/stateStore";
 
   export let item: SingleItem;
 </script>
 
-<div class="relative hoverContainer">
-  <img src={"file://" + item.file?.path} alt="" />
+<div
+  class="relative hoverContainer"
+  style={$currView.route === "details"
+    ? "height: calc(var(--bottomContainer) - 1rem)"
+    : ""}
+>
+  <img src={"file://" + item.file?.path} alt="" class="h-full" />
   {#if item.url}
     <a
       target="_blank"

@@ -5,6 +5,7 @@
 
   export let item: SingleItem;
   let html: string;
+
   onMount(async () => {
     const mhtml = await window.electron.readFile(
       item.bookmark?.mhtmlPath as string
@@ -19,4 +20,4 @@
   });
 </script>
 
-{@html html}
+<iframe srcdoc={html} class="w-full h-full" title={item.name} />

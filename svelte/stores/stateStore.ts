@@ -70,6 +70,16 @@ export const filteredData = derived(
         };
       })
       .filter((tag) => tag.totalCount > 0 || tag.isDeselected);
+
+    // deselect items if currently selected items are not in the filtered items
+    selectedItems.update((selectedItems) => {
+      return {
+        ...selectedItems,
+        ids: selectedItems.ids.filter((id) =>
+          filteredItems.some((item) => item.id === id)
+        ),
+      };
+    });
     return {
       items: filteredItems,
       tags: filteredTags,

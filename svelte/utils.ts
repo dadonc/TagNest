@@ -126,7 +126,6 @@ export const handleKeydown = async (
 };
 
 export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
-  console.log("keydown details view");
   if (
     document.activeElement?.tagName === "INPUT" ||
     document.activeElement?.tagName === "TEXTAREA" ||
