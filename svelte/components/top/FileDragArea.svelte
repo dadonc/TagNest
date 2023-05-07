@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import { getItemTypeFromExtension } from "../../../src/gschert";
   import { currView } from "../../stores/stateStore";
   import { importItems } from "../../stores/items";
@@ -48,20 +48,26 @@
     }
   }
 
-  window.electron.onChosenFile((_, { path, itemType }) => {
-    if (itemType === "image") {
-      previewSrc = `file://${path}`;
-    }
-    dispatch("file-chosen", { path, itemType });
-  });
+  onMount(() => {
+    window.electron.onChosenFile((_, { path, itemType }) => {
+      if (itemType === "image") {
+        previewSrc = `file://${path}`;
+      }
+      dispatch("file-chosen", { path, itemType });
+    });
 
-  window.electron.onChosenFiles(async (_, filePaths) => {
-    dispatch("close-modal");
-    const newItems = await createImportItems(filePaths);
-    // TODO ask Chris - how to type this
-    // @ts-ignore
-    $importItems = [...$importItems, ...newItems];
-    $currView.route = "importMultiple";
+    window.electron.onChosenFiles(async (_, filePaths) => {
+      dispatch("close-modal");
+      const newItems = await createImportItems(filePaths);
+      // TODO ask Chris - how to type this
+      // @ts-ignore
+      $importItems = [...$importItems, ...newItems];
+      $currView.route = "importMultiple";
+    });
+    return () => {
+      window.electron.removeChosenFileListener();
+      window.electron.removeChosenFilesListener();
+    };
   });
 </script>
 

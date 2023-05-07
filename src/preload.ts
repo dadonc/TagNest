@@ -13,9 +13,11 @@ export type ExposedInMainWorld = {
       }
     ) => void
   ) => void;
+  removeChosenFileListener: () => void;
   onChosenFiles: (
     callback: (ev: Electron.IpcRendererEvent, filePaths: string[]) => void
   ) => void;
+  removeChosenFilesListener: () => void;
   saveFileFromUrl: (url: string) => void;
   openFileInDefaultApp: (path: string) => void;
   onOpenAddBookmark: (
@@ -35,7 +37,10 @@ const api: ExposedInMainWorld = {
   onOpenAddItem: (callback) => ipcRenderer.on("openAddItem", callback), // open AddItem on shortcut
   chooseFile: () => ipcRenderer.send("chooseFile"), // open file dialog
   onChosenFile: (callback) => ipcRenderer.on("chosenFile", callback), // get chosen file
+  removeChosenFileListener: () => ipcRenderer.removeAllListeners("chosenFile"),
   onChosenFiles: (filePaths) => ipcRenderer.on("chosenFiles", filePaths),
+  removeChosenFilesListener: () =>
+    ipcRenderer.removeAllListeners("chosenFiles"),
   saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
   openFileInDefaultApp: (path) =>
     ipcRenderer.send("openFileInDefaultApp", path),
