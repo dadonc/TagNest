@@ -2,14 +2,15 @@
   import { onMount } from "svelte";
   import type { SingleItem } from "../../stores/items";
   import DetailsViewBookmark from "./DetailsViewBookmark.svelte";
-  import { rightContainer } from "../../stores/cssStore";
+  import { bottomContainer, rightContainer } from "../../stores/cssStore";
 
   export let item: SingleItem;
 
   onMount(() => {
     $rightContainer.currentVal = "0px";
-    console.log($rightContainer);
+    $bottomContainer.currentVal = $bottomContainer.val;
     return () => {
+      $bottomContainer.currentVal = "0px";
       $rightContainer.currentVal = $rightContainer.val;
     };
   });

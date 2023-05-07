@@ -7,17 +7,18 @@
     bottomContainer,
   } from "./stores/cssStore";
   import StoreRenderer from "./stores/StoreRenderer.svelte";
+  import { classNames } from "./utils";
 
   export let canOpenBottom = true;
   export let canOpenRight = true;
 
   let gridColString = canOpenRight
     ? "var(--leftContainer) var(--dividerWidth) auto var(--dividerWidth) var(--rightContainer)"
-    : "var(--leftContainer) var(--dividerWidth) auto";
+    : "var(--leftContainer) var(--dividerWidth) auto var(--dividerWidth)";
 
   let gridRowString = canOpenBottom
     ? "var(--topContainer) auto var(--bottomDividerHeight) var(--bottomContainer);"
-    : "var(--topContainer) auto ";
+    : "var(--topContainer) auto var(--bottomDividerHeight)";
 
   onMount(() => {
     if (!canOpenBottom) {
@@ -141,19 +142,22 @@
       <slot name="rightContainer">No rightContainer</slot>
     </div>
   {/if}
+  <div
+    class={classNames(
+      "bg-base-300 bottomDivider",
+      canOpenBottom ? "grababble" : ""
+    )}
+    style="height: var(--bottomDividerHeight);"
+    draggable={canOpenBottom}
+    on:dblclick={toggleBottom}
+    on:drag={dragBottom}
+    on:dragstart={hideDragPreview}
+    on:dragend={removeDragHider}
+  >
+    <slot name="bottomDivider">No bottomDivider</slot>
+    &nbsp;
+  </div>
   {#if canOpenBottom}
-    <div
-      class="bg-base-300 bottomDivider grababble"
-      style="height: var(--bottomDividerHeight);"
-      draggable="true"
-      on:dblclick={toggleBottom}
-      on:drag={dragBottom}
-      on:dragstart={hideDragPreview}
-      on:dragend={removeDragHider}
-    >
-      <slot name="bottomDivider">No bottomDivider</slot>
-      &nbsp;
-    </div>
     <div class="bottomContainer">
       <slot name="bottomContainer" />
     </div>

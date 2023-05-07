@@ -124,3 +124,64 @@ export const handleKeydown = async (
   }
   selectedItems.set($selectedItems);
 };
+
+export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
+  console.log("keydown details view");
+  if (
+    document.activeElement?.tagName === "INPUT" ||
+    document.activeElement?.tagName === "TEXTAREA" ||
+    //@ts-ignore
+    document.activeElement?.isContentEditable
+  ) {
+    return;
+  }
+
+  const $selectedItems = get(selectedItems);
+  const items = (await get(filteredData)).items;
+
+  const step = 1;
+  if (e.key === "Escape") {
+    currView.update((view) => ({ ...view, route: "main" }));
+  } else if (e.key === "Backspace" && e.metaKey) {
+    const item = items.find(
+      (item) => item.id === $selectedItems.ids[$selectedItems.ids.length - 1]
+    );
+    if (item) {
+      const index = items.indexOf(item);
+      if (index + step < items.length) {
+        $selectedItems.ids = [items[index + step].id];
+      }
+    }
+    await deleteItems($selectedItems.ids);
+    refreshDisplayedItems();
+  } else if (e.key === "ArrowLeft") {
+    console.log("left");
+    if ($selectedItems.ids.length == 1) {
+      const item = items.find((item) => item.id === $selectedItems.ids[0]);
+      if (item) {
+        const index = items.indexOf(item);
+        if (index - step >= 0) {
+          $selectedItems.ids = [items[index - step].id];
+        } else {
+          $selectedItems.ids = [items[items.length - 1].id];
+        }
+      }
+    }
+  } else if (e.key === "ArrowRight") {
+    if ($selectedItems.ids.length == 1) {
+      const item = items.find((item) => item.id === $selectedItems.ids[0]);
+      if (item) {
+        const index = items.indexOf(item);
+        if (index + step < items.length) {
+          $selectedItems.ids = [items[index + step].id];
+        } else {
+          $selectedItems.ids = [items[0].id];
+        }
+      }
+    }
+  } else if (e.key === "a" && e.metaKey) {
+    e.preventDefault();
+    $selectedItems.ids = items.map((item) => item.id);
+  }
+  selectedItems.set($selectedItems);
+};

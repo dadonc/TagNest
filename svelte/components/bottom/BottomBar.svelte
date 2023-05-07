@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { importItems } from "../stores/items";
-  import { currView } from "../stores/stateStore";
-  import { filteredData } from "../stores/stateStore";
+  import { importItems } from "../../stores/items";
+  import { currView } from "../../stores/stateStore";
+  import { filteredData } from "../../stores/stateStore";
 </script>
 
 {#if $currView.route !== "details"}
