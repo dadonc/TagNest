@@ -15,12 +15,10 @@
   onMount(() => {
     startImportTasks();
   });
-
-  $: canOpenBottom = $currView.route === "details";
 </script>
 
 <main>
-  <Layout {canOpenBottom}>
+  <Layout>
     <svelte:fragment slot="topContainer">
       <TopBar />
     </svelte:fragment>
