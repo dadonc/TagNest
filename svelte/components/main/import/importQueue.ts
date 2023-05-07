@@ -56,7 +56,6 @@ export default async function startImportTasks() {
       return false;
     }
   });
-  console.log("startImportTasks", queue);
 
   async function startTasks() {
     while (currentTasks < maxTasks && queue.length > 0) {

@@ -154,7 +154,6 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
     await deleteItems($selectedItems.ids);
     refreshDisplayedItems();
   } else if (e.key === "ArrowLeft") {
-    console.log("left");
     if ($selectedItems.ids.length == 1) {
       const item = items.find((item) => item.id === $selectedItems.ids[0]);
       if (item) {

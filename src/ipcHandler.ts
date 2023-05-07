@@ -49,7 +49,6 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
 
     return result.then(({ canceled, filePaths }) => {
       if (filePaths.length > 1) {
-        console.log("multiple files", filePaths);
         mainWindow.webContents.send("chosenFiles", filePaths);
       } else {
         const extension = filePaths[0].split(".").pop();

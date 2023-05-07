@@ -39,7 +39,7 @@ chrome.runtime.onMessage.addListener((msg) => {
       }
     );
   } else {
-    console.log("BGScript", msg);
+    console.log("background script received:", msg);
     return false;
   }
 });
