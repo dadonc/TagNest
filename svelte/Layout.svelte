@@ -58,14 +58,14 @@
   };
 
   const dragLeft = (e: DragEvent) => {
-    let val = e.x - 2;
+    let val = e.x - 6;
     val = val < 0 ? 0 : val;
     $leftContainer.currentVal = val + "px";
     $leftContainer.val = val + "px";
   };
 
   const dragRight = (e: DragEvent) => {
-    let val = document.documentElement.clientWidth - e.x - 4; // 0.5rem is the width of the divider
+    let val = document.documentElement.clientWidth - e.x - 4; // 0.5rem, ie 8px is the width of the divider
     // when dragging this wraps around to the clientWidth if under 0
     val =
       val <= 0 || val > document.documentElement.clientWidth - 100 ? 0 : val;
@@ -75,7 +75,7 @@
 
   const dragBottom = (e: DragEvent) => {
     if (!canOpenBottom) return;
-    let val = document.documentElement.clientHeight - e.y;
+    let val = document.documentElement.clientHeight - e.y - 24; // 2rem, ie 32px is the height of the divider;
     val =
       val < 0 || val > document.documentElement.clientHeight - 100 ? 0 : val;
     $bottomContainer.currentVal = val + "px";
@@ -91,10 +91,16 @@
     document.body.appendChild(dragHider);
     e.dataTransfer!.effectAllowed = "copyMove";
     e.dataTransfer?.setDragImage(dragHider, 0, 0);
+
+    // fix iframe flickering when dragging
+    const iframe = document.getElementsByTagName("iframe")[0];
+    if (iframe) iframe.style.pointerEvents = "none";
   }
 
   function removeDragHider() {
     document.body.removeChild(dragHider);
+    const iframe = document.getElementsByTagName("iframe")[0];
+    if (iframe) iframe.style.pointerEvents = "auto";
   }
 </script>
 
@@ -112,7 +118,7 @@
     <slot name="leftContainer">No leftContainer</slot>
   </div>
   <div
-    class="bg-base-300 leftDivider grababble"
+    class="bg-base-300 leftDivider grababble-x"
     draggable="true"
     on:dblclick={toggleLeft}
     on:drag={dragLeft}
@@ -129,7 +135,7 @@
   </div>
   {#if canOpenRight}
     <div
-      class="bg-base-300 rightDivider grababble"
+      class="bg-base-300 rightDivider grababble-x"
       draggable="true"
       on:dblclick={toggleRight}
       on:drag={dragRight}
@@ -146,7 +152,7 @@
   <div
     class={classNames(
       "bg-base-300 bottomDivider",
-      canOpenBottom ? "grababble" : ""
+      canOpenBottom ? "grababble-y" : ""
     )}
     style="height: var(--bottomDividerHeight);"
     draggable={canOpenBottom}
@@ -160,7 +166,9 @@
   </div>
   {#if canOpenBottom}
     <div class="bottomContainer">
-      <slot name="bottomContainer" />
+      <div class={$bottomContainer.currentVal === "0px" ? "" : "slot"}>
+        <slot name="bottomContainer" />
+      </div>
     </div>
   {/if}
 </div>
@@ -198,7 +206,7 @@
 
   .topContainer,
   .rightContainer,
-  .bottomContainer,
+  .bottomContainer .slot,
   .mainContainer .slot {
     @apply p-2;
   }
@@ -211,10 +219,13 @@
     -webkit-app-region: drag;
   }
 
-  .grababble:hover {
-    cursor: -webkit-grab;
+  .grababble-x:active,
+  .grababble-x:hover {
+    cursor: col-resize;
   }
-  .grababble:active {
-    cursor: -webkit-grabbing;
+
+  .grababble-y:active,
+  .grababble-y:hover {
+    cursor: row-resize;
   }
 </style>

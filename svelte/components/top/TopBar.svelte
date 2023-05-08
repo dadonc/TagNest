@@ -32,18 +32,22 @@
       </button>
     {/if}
   </div>
-  <div class="flex items-center">
-    <button
-      on:click={() => {
-        if ($currView.route !== "importMultiple") {
-          $currView.route = "importMultiple";
-          selectedItems.set({ ids: [] });
-        }
-      }}
-      class="w-4 h-4 mr-2"
-    >
-      {$importItems.length}
-    </button>
+  <div class="flex items-center h-4 text-xs">
+    <span>
+      {#if $importItems.length > 0}
+        <button
+          on:click={() => {
+            if ($currView.route !== "importMultiple") {
+              $currView.route = "importMultiple";
+              selectedItems.set({ ids: [] });
+            }
+          }}
+          class="mr-4"
+        >
+          Import: {$importItems.length}
+        </button>
+      {/if}
+    </span>
     <button on:click={handleToggleAddModal} class="w-4 h-4 mr-2 text-green-700">
       <Plus />
     </button>

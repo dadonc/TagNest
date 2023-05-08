@@ -2,11 +2,8 @@
 
 
 
-* change left sidebar size when HN is opened
-* white gap when bottom area is closed
-* fix import count
 * don't open bottom bar on zoomLevel click
-* rightArea limit preview size
+* rightArea limit preview image size
 
 * iframe - rmv webfonts
 * bottom area preview - allow arrow up/down to navigate - https://developer.mozilla.org/en-US/docs/Web/API/Element/getClientRects
