@@ -1,10 +1,10 @@
 <script lang="ts">
-  import LeftTags from "./LeftTags.svelte";
-  import { filteredData } from "../../stores/stateStore";
+  import LeftSingleTag from "./LeftSingleTag.svelte";
+  import type { FilteredTag } from "../../stores/stateStore";
+
+  export let tags: FilteredTag[];
 </script>
 
-{#await $filteredData}
-  <div />
-{:then filteredData}
-  <LeftTags tags={filteredData.tags} />
-{/await}
+{#each tags as tag}
+  <LeftSingleTag {tag} />
+{/each}

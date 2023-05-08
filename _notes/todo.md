@@ -1,9 +1,15 @@
 # Bugs
 
-Add two images - full fail: add dialog doesn't close and both images are added twice to the multiImport view
 
 
+* change left sidebar size when HN is opened
+* white gap when bottom area is closed
+* fix import count
 * don't open bottom bar on zoomLevel click
+* rightArea limit preview size
+
+* iframe - rmv webfonts
+* bottom area preview - allow arrow up/down to navigate - https://developer.mozilla.org/en-US/docs/Web/API/Element/getClientRects
 
 
 * buttons pulsate if another button is clicked

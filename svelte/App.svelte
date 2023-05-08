@@ -18,28 +18,26 @@
 </script>
 
 <main>
-  <Layout>
-    <svelte:fragment slot="topContainer">
-      <TopBar />
-    </svelte:fragment>
-    <svelte:fragment slot="mainContainer">
-      <Main />
-    </svelte:fragment>
-    <svelte:fragment slot="rightContainer">
-      {#await $filteredData then data}
+  {#await $filteredData then data}
+    <Layout>
+      <svelte:fragment slot="topContainer">
+        <TopBar />
+      </svelte:fragment>
+      <svelte:fragment slot="mainContainer">
+        <Main items={data.items} />
+      </svelte:fragment>
+      <svelte:fragment slot="rightContainer">
         <RightArea items={data.items} />
-      {/await}
-    </svelte:fragment>
-    <svelte:fragment slot="bottomDivider">
-      <BottomBar />
-    </svelte:fragment>
-    <svelte:fragment slot="bottomContainer">
-      {#await $filteredData then data}
+      </svelte:fragment>
+      <svelte:fragment slot="bottomDivider">
+        <BottomBar itemsCount={data.items.length} />
+      </svelte:fragment>
+      <svelte:fragment slot="bottomContainer">
         <BottomArea items={data.items} />
-      {/await}
-    </svelte:fragment>
-    <svelte:fragment slot="leftContainer">
-      <LeftArea />
-    </svelte:fragment>
-  </Layout>
+      </svelte:fragment>
+      <svelte:fragment slot="leftContainer">
+        <LeftArea tags={data.tags} />
+      </svelte:fragment>
+    </Layout>
+  {/await}
 </main>

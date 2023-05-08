@@ -35,11 +35,9 @@
   class="overflow-y-scroll"
   style="height: calc(var(--bottomContainer) - 0.5rem)"
 >
-  {#await $filteredData then filteredData}
-    {#each filteredData.items as item}
-      <div class="inline-block">
-        <ItemPreview {item} items={filteredData.items} />
-      </div>
-    {/each}
-  {/await}
+  {#each items as item}
+    <div class="inline-block">
+      <ItemPreview {item} {items} />
+    </div>
+  {/each}
 </div>

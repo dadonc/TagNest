@@ -2,6 +2,8 @@
   import { importItems } from "../../stores/items";
   import { currView } from "../../stores/stateStore";
   import { filteredData } from "../../stores/stateStore";
+
+  export let itemsCount: number;
 </script>
 
 {#if $currView.route !== "details"}
@@ -30,13 +32,11 @@
       }}>-</button
     >
     <div class="w-full text-sm text-center">
-      {#await $filteredData then data}
-        {#if $currView.route === "importMultiple"}
-          {$importItems.length} items to import
-        {:else}
-          {data.items.length} items
-        {/if}
-      {/await}
+      {#if $currView.route === "importMultiple"}
+        {$importItems.length} items to import
+      {:else}
+        {itemsCount} items
+      {/if}
     </div>
   </div>
   <div class="inline-block" style="width: var(--rightContainer)" />

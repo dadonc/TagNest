@@ -31,22 +31,24 @@
   }
 </script>
 
-<div class="flex h-5">
-  {#if tag.countAfterDeselection !== 0}
-    <button
-      on:click={() => toggleDeselectTag(tag.id)}
-      class="flex items-center w-2 mr-1 font-mono text-error"
-      >{tag.countAfterDeselection}</button
-    >
-  {:else}
-    <div class="w-2 mr-1 font-mono opacity-0">x</div>
-  {/if}
+<div class="flex items-center h-5 text-sm font-medium">
+  <span>
+    {#if tag.countAfterDeselection !== 0}
+      <button
+        on:click={() => toggleDeselectTag(tag.id)}
+        class="w-2 mr-1 font-mono text-xs text-error"
+        >{tag.countAfterDeselection}</button
+      >
+    {:else}
+      <div class="w-2 mr-1 font-mono text-xs opacity-0">00</div>
+    {/if}
+  </span>
   <button
     class={classNames(
-      isSelected ? "bg-accent text-accent-content rounded-md" : "",
-      isDeSelected ? "bg-error text-error-content rounded-md" : "",
+      isSelected ? "bg-accent text-accent-content" : "",
+      isDeSelected ? "bg-error text-error-content" : "",
 
-      "text-sm w-full text-left flex justify-between font-medium h-5 mb-1 pl-1"
+      "rounded-md w-full flex justify-between items-center pl-1"
     )}
     on:click={() => toggleSelectTag(tag.id)}
   >
@@ -54,8 +56,7 @@
       {tag.name}
     </span>
     {#if !isSelected && !isDeSelected && tag.countAfterSelection !== 0}
-      <span
-        class="flex items-center justify-center px-3 bg-accent rounded-3xl text-accent-content"
+      <span class="px-3 text-xs bg-accent rounded-3xl text-accent-content"
         >{tag.totalCount}</span
       >
     {/if}

@@ -58,15 +58,19 @@ export const filteredData = derived(
           }
         });
 
+        const countAfterDeselect =
+          filteredItems.length -
+          (filteredItems.length + (count - filteredItems.length));
+
         return {
           ...tag,
           isDeselected,
           totalCount: count,
           countAfterSelection: filteredItems.length - count,
           countAfterDeselection:
-            filteredItems.length - count === 0
+            countAfterDeselect - filteredItems.length === 0
               ? 0
-              : filteredItems.length - (count - filteredItems.length) * -1,
+              : countAfterDeselect,
         };
       })
       .filter((tag) => tag.totalCount > 0 || tag.isDeselected);
