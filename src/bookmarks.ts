@@ -1,5 +1,6 @@
 import fs from "fs";
-import { downloadImageFromUrlPromisified } from "./utils";
+import path from "path";
+import { downloadImageFromUrlPromisified, getSavePathJson } from "./utils";
 import { getPrismaClient } from "./prisma";
 type NewBookmark = {
   title: string;
@@ -16,7 +17,7 @@ export async function createItemWithBookmark({
   screenshot,
   faviconUrl,
 }: NewBookmark) {
-  // todo: text
+  // todo: extract text
   const faviconPath = await getOrDownloadFavicon(url, faviconUrl);
   const prisma = await getPrismaClient();
   const newItem = await prisma.item.create({
@@ -73,7 +74,8 @@ async function getOrDownloadFavicon(websiteUrl: string, faviconUrl: string) {
   const extension = faviconUrl.split(".").pop();
   //@ts-ignore
   const faviconName = website.replaceAll(".", "_") + "-favicon." + extension;
-  const faviconPath = "/Users/domenic/Projects/hbr-data/" + faviconName;
+  const savePathJson = await getSavePathJson();
+  const faviconPath = path.join(savePathJson.savePath, faviconName);
   if (fs.existsSync(faviconPath)) {
     return faviconPath;
   } else {

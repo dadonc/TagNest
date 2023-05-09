@@ -1,10 +1,12 @@
 import fs from "fs";
-import Fastify, { FastifyInstance } from "fastify";
-import cors from "@fastify/cors";
+import path from "path";
 import util from "util";
 import { pipeline } from "stream";
-import { createItemWithBookmark } from "./bookmarks";
 import { BrowserWindow } from "electron";
+import Fastify, { FastifyInstance } from "fastify";
+import cors from "@fastify/cors";
+import { createItemWithBookmark } from "./bookmarks";
+import { getSavePathJson } from "./utils";
 const pump = util.promisify(pipeline);
 
 const server: FastifyInstance = Fastify({});
@@ -56,7 +58,9 @@ export default function startServer(mainWindow: BrowserWindow) {
         .replaceAll("/", "-")
         .replaceAll(".", "_") + ".mhtml";
 
-    const mhtmlPath = "/Users/domenic/Projects/hbr-data/" + fileName;
+    const savePathJson = await getSavePathJson();
+
+    const mhtmlPath = path.join(savePathJson.savePath, fileName);
     await pump(data.file, fs.createWriteStream(mhtmlPath));
     const newItem = await createItemWithBookmark({
       title: data.fields.title.value,

@@ -52,8 +52,15 @@ async function createSavePathJsonAndReturn(
   return JSON.parse(data);
 }
 
-export async function updateSavePathJson(newSavePathJson): Promise<SaveJson> {
-  const newSaveString = JSON.stringify(newSavePathJson, null, 2);
+export async function updateSavePathJson(
+  newSavePathJson: SaveJson
+): Promise<SaveJson> {
+  const oldJson = await getSavePathJson();
+  const newSaveString = JSON.stringify(
+    { ...newSavePathJson, oldSavePath: oldJson.savePath },
+    null,
+    2
+  );
   await writeFileAsync(
     path.join(process.resourcesPath, "save.json"),
     newSaveString,

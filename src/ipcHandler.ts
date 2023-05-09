@@ -65,7 +65,7 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     });
   });
 
-  ipcMain.on("saveFileFromUrl", (event, url) => {
+  ipcMain.on("saveFileFromUrl", async (event, url) => {
     const extension = url.split(".").pop();
     if (!IMAGE_EXTENSIONS.includes(extension.toLowerCase())) {
       return;
@@ -73,7 +73,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
       const name = url.split("/").pop();
       const extension = name.split(".").pop();
       const type = getItemTypeFromExtension(extension);
-      const localPath = path.join(process.resourcesPath, name);
+      const savePathJson = await getSavePathJson();
+      const localPath = path.join(savePathJson.savePath, name);
       downloadImageFromUrl(url, localPath, function (err) {
         const base64 = fs.readFileSync(localPath).toString("base64");
         mainWindow.webContents.send("onChosenFile", {

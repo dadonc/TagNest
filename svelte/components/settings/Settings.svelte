@@ -11,8 +11,8 @@
 </script>
 
 <div class="h-6 bg-base-300" style="-webkit-app-region: drag;" />
-<div class="h-full overflow-scroll">
-  <div class="h-screen max-w-xl p-4 m-auto my-4">
+<div class="overflow-scroll" style="height: calc(100vh - 1.5rem)">
+  <div class="max-w-xl p-4 m-auto my-4">
     <h1 class="text-4xl font-bold text-center">Settings</h1>
 
     <h2 class="mt-4 text-xl font-bold">Data location</h2>

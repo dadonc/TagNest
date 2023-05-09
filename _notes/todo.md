@@ -1,8 +1,7 @@
 # Bugs
 
 
-replace /Users/domenic/Projects/hbr-data/
-and process.resourcesPath
+remove absolute paths from db for bookmarks and favicons
 
 
 * rmv currView store from localstorage
