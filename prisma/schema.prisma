@@ -22,7 +22,7 @@ model Item {
   file                  File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview, other itmes as main file
   fileId                String?
   tags                  Tag[]
-  type                  String // image, video, external
+  type                  String // "bookmark" | "image" | "video" | "pdf" | "external";
   bookmark              Bookmark? @relation(fields: [bookmarkId], references: [id])
   bookmarkId            String?
 }

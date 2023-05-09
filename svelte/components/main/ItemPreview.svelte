@@ -4,6 +4,7 @@
   import { classNames } from "../../utils";
   import BookmarkPreview from "./BookmarkPreview.svelte";
   import ImagePreview from "./ImagePreview.svelte";
+  import PreviewPdf from "./PreviewPDF.svelte";
   export let item: SingleItem;
   export let items: SingleItem[];
 
@@ -72,6 +73,8 @@
     <ImagePreview {item} />
   {:else if item.type === "bookmark"}
     <BookmarkPreview {item} />
+  {:else if item.type === "pdf"}
+    <PreviewPdf {item} />
   {:else}
     <div
       class="flex flex-col items-center justify-center h-full"
@@ -80,9 +83,6 @@
           window.electron.openFileInDefaultApp(item.file?.path);
       }}
     >
-      <div class="text-2xl text-gray-500">
-        <i class="fas fa-file" />
-      </div>
       <div class="text-sm text-gray-500">{item.name}</div>
     </div>
   {/if}

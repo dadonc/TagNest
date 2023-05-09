@@ -1,15 +1,17 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
-  import DetailsViewBookmark from "./DetailsViewBookmark.svelte";
+  import DetailViewPdf from "./DetailViewPDF.svelte";
+  import DetailViewBookmark from "./DetailViewBookmark.svelte";
 
   export let item: SingleItem;
 </script>
 
 <div class="flex items-center justify-center h-full">
   {#if item.type === "bookmark"}
-    <DetailsViewBookmark {item} />
-  {/if}
-  {#if item.type === "image"}
+    <DetailViewBookmark {item} />
+  {:else if item.type === "image"}
     <img src={`file://${item.file?.path}`} alt={item.name} class="max-h-full" />
+  {:else if item.type === "pdf"}
+    <DetailViewPdf {item} />
   {/if}
 </div>
