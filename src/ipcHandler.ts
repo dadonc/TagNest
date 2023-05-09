@@ -124,4 +124,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     await updateSavePathJson({ ...curr, savePath: newPath });
     return true;
   });
+
+  ipcMain.handle("getCurrentWorkingDirectory", async (event) => {
+    return process.cwd();
+  });
 }

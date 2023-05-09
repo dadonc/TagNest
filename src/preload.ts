@@ -33,6 +33,8 @@ export type ExposedInMainWorld = {
   getSavePath: () => Promise<string>;
   getNewSavePath: () => Promise<string>;
   setSavePath: (path: string) => Promise<void>;
+
+  getCurrentWorkingDirectory: () => Promise<string>;
 };
 
 const api: ExposedInMainWorld = {
@@ -54,6 +56,8 @@ const api: ExposedInMainWorld = {
   getSavePath: () => ipcRenderer.invoke("getSavePath"),
   getNewSavePath: () => ipcRenderer.invoke("getNewSavePath"),
   setSavePath: (path) => ipcRenderer.invoke("setSavePath", path),
+  getCurrentWorkingDirectory: () =>
+    ipcRenderer.invoke("getCurrentWorkingDirectory"),
 };
 
 contextBridge.exposeInMainWorld("electron", api);
