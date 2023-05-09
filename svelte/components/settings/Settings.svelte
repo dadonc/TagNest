@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Alert from "./Alert.svelte";
+  import { currentRoute } from "../../stores/stateStore";
+  import ChevronLeft from "../../assets/feather/ChevronLeft.svelte";
 
   let wasChanged = false;
   let shouldRestart = false;
@@ -12,6 +14,14 @@
 </script>
 
 <div class="h-6 bg-base-300" style="-webkit-app-region: drag;" />
+<button
+  on:click={() => {
+    $currentRoute = "main";
+  }}
+  class="absolute p-4"
+>
+  <ChevronLeft className="h-4 w-4" />
+</button>
 <div class="overflow-scroll" style="height: calc(100vh - 1.5rem)">
   <div class="max-w-xl p-4 m-auto my-4">
     <h1 class="text-4xl font-bold text-center">Settings</h1>

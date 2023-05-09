@@ -19,17 +19,12 @@
     savePath.set(savePath_);
   });
 
-  // why is this needed? Why is the store not reactive?
-  let route = "main";
-
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "," && event.metaKey) {
       $currentRoute = "settings";
-      route = "settings";
     } else if (event.key === "Escape") {
       if ($currentRoute === "settings") {
         $currentRoute = "main";
-        route = "main";
       }
     }
   };
@@ -38,7 +33,7 @@
 <svelte:window on:keydown={handleKeyDown} />
 
 <main>
-  {#if route === "settings"}
+  {#if $currentRoute === "settings"}
     <Settings />
   {:else}
     {#await $filteredData then data}
