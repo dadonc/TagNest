@@ -92,4 +92,21 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   ipcMain.handle("readFile", (event, path) => {
     return fs.readFileSync(path).toString();
   });
+
+  ipcMain.handle("getSavePath", (event) => {
+    return process.resourcesPath;
+  });
+
+  ipcMain.handle("getNewSavePath", (event) => {
+    const result = dialog.showOpenDialog({
+      properties: ["createDirectory", "openDirectory"],
+    });
+    return result.then(({ canceled, filePaths }) => {
+      return filePaths[0];
+    });
+  });
+
+  ipcMain.handle("setSavePath", (event) => {
+    return true;
+  });
 }

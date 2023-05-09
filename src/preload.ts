@@ -30,6 +30,9 @@ export type ExposedInMainWorld = {
   ) => void;
   extractBookmarkImages: (path: string) => Promise<string[]>;
   readFile: (path: string) => Promise<string>;
+  getSavePath: () => Promise<string>;
+  getNewSavePath: () => Promise<string>;
+  setSavePath: (path: string) => Promise<void>;
 };
 
 const api: ExposedInMainWorld = {
@@ -48,6 +51,9 @@ const api: ExposedInMainWorld = {
   extractBookmarkImages: (path) =>
     ipcRenderer.invoke("extractBookmarkImages", path),
   readFile: (path) => ipcRenderer.invoke("readFile", path),
+  getSavePath: () => ipcRenderer.invoke("getSavePath"),
+  getNewSavePath: () => ipcRenderer.invoke("getNewSavePath"),
+  setSavePath: (path) => ipcRenderer.invoke("setSavePath", path),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

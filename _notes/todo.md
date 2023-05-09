@@ -2,7 +2,6 @@
 
 
 
-* don't open bottom bar on zoomLevel click
 * rightArea limit preview image size
 
 * iframe - rmv webfonts

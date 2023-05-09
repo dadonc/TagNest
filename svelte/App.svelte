@@ -11,33 +11,55 @@
   import startImportTasks from "./components/main/import/importQueue";
   import BottomArea from "./components/bottom/BottomArea.svelte";
   import { currView, filteredData } from "./stores/stateStore";
+  import Settings from "./components/Settings.svelte";
 
   onMount(() => {
     startImportTasks();
   });
+
+  // why is this needed? Why is the store not reactive?
+  let route = "settings";
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "," && event.metaKey) {
+      $currView.route = "settings";
+      route = "settings";
+    } else if (event.key === "Escape") {
+      if ($currView.route === "settings") {
+        $currView.route = "main";
+        route = "main";
+      }
+    }
+  };
 </script>
 
+<svelte:window on:keydown={handleKeyDown} />
+
 <main>
-  {#await $filteredData then data}
-    <Layout>
-      <svelte:fragment slot="topContainer">
-        <TopBar />
-      </svelte:fragment>
-      <svelte:fragment slot="mainContainer">
-        <Main items={data.items} />
-      </svelte:fragment>
-      <svelte:fragment slot="rightContainer">
-        <RightArea items={data.items} />
-      </svelte:fragment>
-      <svelte:fragment slot="bottomDivider">
-        <BottomBar itemsCount={data.items.length} />
-      </svelte:fragment>
-      <svelte:fragment slot="bottomContainer">
-        <BottomArea items={data.items} />
-      </svelte:fragment>
-      <svelte:fragment slot="leftContainer">
-        <LeftArea tags={data.tags} />
-      </svelte:fragment>
-    </Layout>
-  {/await}
+  {#if route === "settings"}
+    <Settings />
+  {:else}
+    {#await $filteredData then data}
+      <Layout>
+        <svelte:fragment slot="topContainer">
+          <TopBar />
+        </svelte:fragment>
+        <svelte:fragment slot="mainContainer">
+          <Main items={data.items} />
+        </svelte:fragment>
+        <svelte:fragment slot="rightContainer">
+          <RightArea items={data.items} />
+        </svelte:fragment>
+        <svelte:fragment slot="bottomDivider">
+          <BottomBar itemsCount={data.items.length} />
+        </svelte:fragment>
+        <svelte:fragment slot="bottomContainer">
+          <BottomArea items={data.items} />
+        </svelte:fragment>
+        <svelte:fragment slot="leftContainer">
+          <LeftArea tags={data.tags} />
+        </svelte:fragment>
+      </Layout>
+    {/await}
+  {/if}
 </main>
