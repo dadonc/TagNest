@@ -5,6 +5,7 @@
   let wasChanged = true;
   let shouldRestart = false;
   let savePath = "";
+  let oldSavePath = "";
   onMount(async () => {
     savePath = await window.electron.getSavePath();
   });
@@ -23,6 +24,7 @@
       on:click={async () => {
         const newPath = await window.electron.getNewSavePath();
         if (newPath && newPath !== savePath) {
+          oldSavePath = savePath;
           savePath = newPath;
           wasChanged = true;
         }
@@ -43,6 +45,14 @@
           Move existing database and files to new location
         </label>
         <div class="mt-2 text-center">
+          <button
+            on:click={() => {
+              savePath = oldSavePath;
+              wasChanged = false;
+            }}
+          >
+            <span class="text-primary">Cancel</span>
+          </button>
           <button
             class="btn btn-primary btn-sm"
             on:click={async () => {
