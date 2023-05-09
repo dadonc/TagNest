@@ -7,8 +7,8 @@
   let html: string;
 
   onMount(async () => {
-    const mhtml = await window.electron.readFile(
-      item.bookmark?.mhtmlPath as string
+    const mhtml = await window.electron.readMhtml(
+      item.bookmark?.mhtmlFilename as string
     );
     let htmlDoc = mhtml2html.convert(mhtml);
     htmlDoc.window.document

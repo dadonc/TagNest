@@ -111,3 +111,5 @@ const currentCurrView = localStorage.getItem("currView");
 export const currView = writable<CurrViewType>(
   currentCurrView ? JSON.parse(currentCurrView) : emptyCurrView
 );
+
+export const savePath = writable<string>("");

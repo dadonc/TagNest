@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
-import { downloadImageFromUrlPromisified, getSavePathJson } from "./utils";
+import { downloadImageFromUrlPromisified, getFaviconPath } from "./utils";
 import { getPrismaClient } from "./prisma";
 type NewBookmark = {
   title: string;
   url: string;
-  mhtmlPath: string;
+  mhtmlFilename: string;
   screenshot: string;
   faviconUrl: string;
 };
@@ -13,33 +13,37 @@ type NewBookmark = {
 export async function createItemWithBookmark({
   title,
   url,
-  mhtmlPath,
+  mhtmlFilename,
   screenshot,
   faviconUrl,
 }: NewBookmark) {
   // todo: extract text
-  const faviconPath = await getOrDownloadFavicon(url, faviconUrl);
+  const faviconFilename = await getOrDownloadFavicon(url, faviconUrl);
   const prisma = await getPrismaClient();
-  const newItem = await prisma.item.create({
-    data: {
-      name: title,
-      url,
-      type: "bookmark",
-      file: {
-        create: {
-          path: screenshot,
+  try {
+    const newItem = await prisma.item.create({
+      data: {
+        name: title,
+        url,
+        type: "bookmark",
+        file: {
+          create: {
+            path: screenshot,
+          },
+        },
+        bookmark: {
+          create: {
+            mhtmlFilename,
+            screenshot,
+            faviconFilename,
+          },
         },
       },
-      bookmark: {
-        create: {
-          mhtmlPath,
-          screenshot,
-          faviconPath,
-        },
-      },
-    },
-  });
-  return newItem;
+    });
+    return newItem;
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 export function extractBookmarkImages(mhtmlPath: string) {
@@ -74,12 +78,11 @@ async function getOrDownloadFavicon(websiteUrl: string, faviconUrl: string) {
   const extension = faviconUrl.split(".").pop();
   //@ts-ignore
   const faviconName = website.replaceAll(".", "_") + "-favicon." + extension;
-  const savePathJson = await getSavePathJson();
-  const faviconPath = path.join(savePathJson.savePath, faviconName);
+  const faviconPath = await getFaviconPath(faviconName);
   if (fs.existsSync(faviconPath)) {
-    return faviconPath;
+    return faviconName;
   } else {
     await downloadImageFromUrlPromisified(faviconUrl, faviconPath);
-    return faviconPath;
+    return faviconName;
   }
 }

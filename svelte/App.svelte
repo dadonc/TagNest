@@ -10,11 +10,13 @@
   import TopBar from "./components/top/TopBar.svelte";
   import startImportTasks from "./components/main/import/importQueue";
   import BottomArea from "./components/bottom/BottomArea.svelte";
-  import { currView, filteredData } from "./stores/stateStore";
+  import { currView, filteredData, savePath } from "./stores/stateStore";
   import Settings from "./components/settings/Settings.svelte";
 
-  onMount(() => {
+  onMount(async () => {
     startImportTasks();
+    const savePath_ = await window.electron.getSavePath();
+    savePath.set(savePath_);
   });
 
   // why is this needed? Why is the store not reactive?

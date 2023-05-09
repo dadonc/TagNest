@@ -1,8 +1,7 @@
 # Bugs
 
 
-remove absolute paths from db for bookmarks and favicons
-
+after changing db one has to click on the backicon in the topbar - why?
 
 * rmv currView store from localstorage
 * reload items after importing many items

@@ -102,3 +102,25 @@ export async function downloadImageAsBase64FromUrl(url: string) {
     });
   });
 }
+
+export async function getMhtmlPath(filename: string) {
+  const savePath = (await getSavePathJson()).savePath;
+  if (!fs.existsSync(path.join(savePath, "bookmarks", "mhtml"))) {
+    if (!fs.existsSync(path.join(savePath, "bookmarks"))) {
+      fs.mkdirSync(path.join(savePath, "bookmarks"));
+    }
+    fs.mkdirSync(path.join(savePath, "bookmarks", "mhtml"));
+  }
+  return path.join(savePath, "bookmarks", "mhtml", filename);
+}
+
+export async function getFaviconPath(faviconName: string) {
+  const savePath = (await getSavePathJson()).savePath;
+  if (!fs.existsSync(path.join(savePath, "bookmarks", "favicons"))) {
+    if (!fs.existsSync(path.join(savePath, "bookmarks"))) {
+      fs.mkdirSync(path.join(savePath, "bookmarks"));
+    }
+    fs.mkdirSync(path.join(savePath, "bookmarks", "favicons"));
+  }
+  return path.join(savePath, "bookmarks", "favicons", faviconName);
+}

@@ -6,7 +6,7 @@ import { BrowserWindow } from "electron";
 import Fastify, { FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
 import { createItemWithBookmark } from "./bookmarks";
-import { getSavePathJson } from "./utils";
+import { getMhtmlPath } from "./utils";
 const pump = util.promisify(pipeline);
 
 const server: FastifyInstance = Fastify({});
@@ -58,17 +58,19 @@ export default function startServer(mainWindow: BrowserWindow) {
         .replaceAll("/", "-")
         .replaceAll(".", "_") + ".mhtml";
 
-    const savePathJson = await getSavePathJson();
-
-    const mhtmlPath = path.join(savePathJson.savePath, fileName);
+    const mhtmlPath = await getMhtmlPath(fileName);
     await pump(data.file, fs.createWriteStream(mhtmlPath));
     const newItem = await createItemWithBookmark({
       title: data.fields.title.value,
       url: data.fields.url.value,
-      mhtmlPath,
+      mhtmlFilename: fileName,
       screenshot: data.fields.screenshot.value,
       faviconUrl: data.fields.favicon.value,
     });
+    if (!newItem) {
+      console.error("Failed to create item: ", data.fields.title.value);
+      return reply.send({ success: false });
+    }
     mainWindow.webContents.send("openAddBookmark", { newItemId: newItem.id });
     mainWindow.show();
 

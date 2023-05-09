@@ -10,15 +10,15 @@
   const dispatch = createEventDispatcher();
 
   onMount(async () => {
-    if (item.bookmark?.mhtmlPath) {
+    if (item.bookmark?.mhtmlFilename) {
       images = [
         item.bookmark.screenshot as string,
         ...(await window.electron.extractBookmarkImages(
-          item.bookmark?.mhtmlPath
+          item.bookmark?.mhtmlFilename
         )),
       ];
     } else {
-      console.error("No mhtmlPath");
+      console.error("No mhtmlFilename");
     }
   });
 </script>

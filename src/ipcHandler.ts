@@ -11,20 +11,26 @@ import { IMAGE_EXTENSIONS, getItemTypeFromExtension } from "./gschert";
 import { extractBookmarkImages } from "./bookmarks";
 import {
   downloadImageFromUrl,
+  getMhtmlPath,
   getSavePathJson,
   updateSavePathJson,
 } from "./utils";
 import { getPrismaClient } from "./prisma";
 
 async function handlePrisma(arg: string) {
-  const prisma = await getPrismaClient();
-  // arg is of the form 'user.create({"data":{"name":"Alice","email":"alice@example.com"}})'
-  const props = arg.split("(")[0].split(".");
-  const callArgs = arg.split("(")[1].slice(0, -1);
-  if (callArgs) {
-    return prisma[props[0]][props[1]](JSON.parse(callArgs));
-  } else {
-    return prisma[props[0]][props[1]]();
+  try {
+    const prisma = await getPrismaClient();
+    // arg is of the form 'user.create({"data":{"name":"Alice","email":"alice@example.com"}})'
+    const props = arg.split("(")[0].split(".");
+    const callArgs = arg.split("(")[1].slice(0, -1);
+    if (callArgs) {
+      return prisma[props[0]][props[1]](JSON.parse(callArgs));
+    } else {
+      return prisma[props[0]][props[1]]();
+    }
+  } catch (e) {
+    console.error(e);
+    return e;
   }
 }
 
@@ -90,11 +96,13 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     shell.openPath(path);
   });
 
-  ipcMain.handle("extractBookmarkImages", (event, mhtmlPath) => {
+  ipcMain.handle("extractBookmarkImages", async (event, mhtmlFilename) => {
+    const mhtmlPath = await getMhtmlPath(mhtmlFilename);
     return extractBookmarkImages(mhtmlPath);
   });
 
-  ipcMain.handle("readFile", (event, path) => {
+  ipcMain.handle("readMhtml", async (event, fileName) => {
+    const path = await getMhtmlPath(fileName);
     return fs.readFileSync(path).toString();
   });
 

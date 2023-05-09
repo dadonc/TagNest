@@ -28,8 +28,8 @@ export type ExposedInMainWorld = {
       }
     ) => void
   ) => void;
-  extractBookmarkImages: (path: string) => Promise<string[]>;
-  readFile: (path: string) => Promise<string>;
+  extractBookmarkImages: (fileName: string) => Promise<string[]>;
+  readMhtml: (fileName: string) => Promise<string>;
   getSavePath: () => Promise<string>;
   getNewSavePath: () => Promise<string>;
   setSavePath: (path: string) => Promise<void>;
@@ -48,9 +48,9 @@ const api: ExposedInMainWorld = {
   openFileInDefaultApp: (path) =>
     ipcRenderer.send("openFileInDefaultApp", path),
   onOpenAddBookmark: (callback) => ipcRenderer.on("openAddBookmark", callback),
-  extractBookmarkImages: (path) =>
-    ipcRenderer.invoke("extractBookmarkImages", path),
-  readFile: (path) => ipcRenderer.invoke("readFile", path),
+  extractBookmarkImages: (fileName) =>
+    ipcRenderer.invoke("extractBookmarkImages", fileName),
+  readMhtml: (fileName) => ipcRenderer.invoke("readMhtml", fileName),
   getSavePath: () => ipcRenderer.invoke("getSavePath"),
   getNewSavePath: () => ipcRenderer.invoke("getNewSavePath"),
   setSavePath: (path) => ipcRenderer.invoke("setSavePath", path),
