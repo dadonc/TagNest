@@ -5,7 +5,12 @@ import {
   refreshDisplayedItems,
   type SingleItem,
 } from "./stores/items";
-import { currView, filteredData, selectedItems } from "./stores/stateStore";
+import {
+  currentRoute,
+  currView,
+  filteredData,
+  selectedItems,
+} from "./stores/stateStore";
 
 export function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -140,7 +145,7 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
 
   const step = 1;
   if (e.key === "Escape") {
-    currView.update((view) => ({ ...view, route: "main" }));
+    currentRoute.set("main");
   } else if (e.key === "Backspace" && e.metaKey) {
     const item = items.find(
       (item) => item.id === $selectedItems.ids[$selectedItems.ids.length - 1]

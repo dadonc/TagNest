@@ -1,7 +1,7 @@
 <script lang="ts">
   import Plus from "../../assets/feather/Plus.svelte";
   import ChevronLeft from "../../assets/feather/ChevronLeft.svelte";
-  import { currView, selectedItems } from "../../stores/stateStore";
+  import { currentRoute, selectedItems } from "../../stores/stateStore";
   import { importItems } from "../../stores/items";
   import AddBookmarkModal from "./AddBookmarkModal.svelte";
   import AddModal from "./AddModal.svelte";
@@ -20,10 +20,10 @@
 <div class="flex items-center justify-between h-full">
   <div class="flex items-center">
     <div class="inline-block" style="width: var(--leftContainer)" />
-    {#if $currView.route !== "main"}
+    {#if $currentRoute !== "main"}
       <button
         on:click={() => {
-          $currView.route = "main";
+          $currentRoute = "main";
           selectedItems.set({ ids: [] });
         }}
         class="p-2"
@@ -37,8 +37,8 @@
       {#if $importItems.length > 0}
         <button
           on:click={() => {
-            if ($currView.route !== "importMultiple") {
-              $currView.route = "importMultiple";
+            if ($currentRoute !== "importMultiple") {
+              $currentRoute = "importMultiple";
               selectedItems.set({ ids: [] });
             }
           }}

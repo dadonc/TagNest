@@ -1,12 +1,11 @@
 <script lang="ts">
   import { importItems } from "../../stores/items";
-  import { currView } from "../../stores/stateStore";
-  import { filteredData } from "../../stores/stateStore";
+  import { currView, currentRoute } from "../../stores/stateStore";
 
   export let itemsCount: number;
 </script>
 
-{#if $currView.route !== "details"}
+{#if $currentRoute !== "details"}
   <div class="inline-block" style="width: var(--leftContainer)" />
   <div
     class="inline-flex items-center w-full h-full text-2xl"
@@ -32,7 +31,7 @@
       }}>-</button
     >
     <div class="w-full text-sm text-center">
-      {#if $currView.route === "importMultiple"}
+      {#if $currentRoute === "importMultiple"}
         {$importItems.length} items to import
       {:else}
         {itemsCount} items

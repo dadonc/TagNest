@@ -94,7 +94,6 @@ export const filteredData = derived(
 type CurrViewType = {
   zoomLvl: number;
   // TODO move into antoher store that doesn't get saved in local storage
-  route: "main" | "details" | "importMultiple" | "settings";
   // selectionType: "grid";
   // detailsType: CurrViewDetailsType;
   // focusedAction?: CurrViewActionsType;
@@ -102,7 +101,6 @@ type CurrViewType = {
 
 const emptyCurrView: CurrViewType = {
   zoomLvl: 3,
-  route: "main",
   // selectionType: "grid",
   // detailsType: "image",
 };
@@ -112,4 +110,6 @@ export const currView = writable<CurrViewType>(
   currentCurrView ? JSON.parse(currentCurrView) : emptyCurrView
 );
 
+type Route = "main" | "details" | "importMultiple" | "settings";
+export const currentRoute = writable<Route>("main");
 export const savePath = writable<string>("");

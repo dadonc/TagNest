@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
-  import { selectedItems, currView } from "../../stores/stateStore";
+  import { selectedItems, currentRoute } from "../../stores/stateStore";
   import { classNames } from "../../utils";
   import BookmarkPreview from "./BookmarkPreview.svelte";
   import ImagePreview from "./ImagePreview.svelte";
@@ -56,7 +56,7 @@
   on:click={selectItem}
   on:dblclick={(e) => {
     selectItem(e);
-    $currView.route = "details";
+    $currentRoute = "details";
   }}
   on:keydown={(e) => {
     if (e.key === "Enter") {

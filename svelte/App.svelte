@@ -10,7 +10,7 @@
   import TopBar from "./components/top/TopBar.svelte";
   import startImportTasks from "./components/main/import/importQueue";
   import BottomArea from "./components/bottom/BottomArea.svelte";
-  import { currView, filteredData, savePath } from "./stores/stateStore";
+  import { currentRoute, filteredData, savePath } from "./stores/stateStore";
   import Settings from "./components/settings/Settings.svelte";
 
   onMount(async () => {
@@ -24,11 +24,11 @@
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "," && event.metaKey) {
-      $currView.route = "settings";
+      $currentRoute = "settings";
       route = "settings";
     } else if (event.key === "Escape") {
-      if ($currView.route === "settings") {
-        $currView.route = "main";
+      if ($currentRoute === "settings") {
+        $currentRoute = "main";
         route = "main";
       }
     }

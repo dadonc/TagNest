@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { currView, selectedItems } from "../../stores/stateStore";
+  import { currentRoute, selectedItems } from "../../stores/stateStore";
   import { importItems, type SingleItem } from "../../stores/items";
   import RightEditSingle from "./RightEditSingle.svelte";
   import RightEditMultiple from "./RightEditMultiple.svelte";
 
   export let items: SingleItem[];
 
-  $: itemsToUse = $currView.route === "importMultiple" ? $importItems : items;
+  $: itemsToUse = $currentRoute === "importMultiple" ? $importItems : items;
 </script>
 
 <div class="h-full select-none">

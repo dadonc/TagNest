@@ -1,10 +1,6 @@
 <script lang="ts">
   import ItemPreview from "../main/ItemPreview.svelte";
-  import {
-    currView,
-    filteredData,
-    selectedItems,
-  } from "../../stores/stateStore";
+  import { currentRoute, selectedItems } from "../../stores/stateStore";
   import { handleKeydownDetailsView } from "../../utils";
   import type { SingleItem } from "../../stores/items";
   import { onMount } from "svelte";
@@ -16,7 +12,7 @@
     $rightContainer.currentVal = "0px";
     $bottomContainer.currentVal = $bottomContainer.val;
     return () => {
-      if ($currView.route !== "details") {
+      if ($currentRoute !== "details") {
         $rightContainer.currentVal = $rightContainer.val;
         $bottomContainer.currentVal = "0px";
       }

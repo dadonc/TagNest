@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import Alert from "./Alert.svelte";
 
-  let wasChanged = true;
+  let wasChanged = false;
   let shouldRestart = false;
   let savePath = "";
   let oldSavePath = "";

@@ -8,10 +8,10 @@
   } from "./stores/cssStore";
   import StoreRenderer from "./stores/StoreRenderer.svelte";
   import { classNames } from "./utils";
-  import { currView } from "./stores/stateStore";
+  import { currentRoute } from "./stores/stateStore";
 
   let canOpenRight = true;
-  $: canOpenBottom = $currView.route === "details";
+  $: canOpenBottom = $currentRoute === "details";
 
   let gridColString = canOpenRight
     ? "var(--leftContainer) var(--dividerWidth) auto var(--dividerWidth) var(--rightContainer)"

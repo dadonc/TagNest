@@ -9,7 +9,7 @@
   } from "../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
   import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
-  import { currView } from "../../stores/stateStore";
+  import { currentRoute } from "../../stores/stateStore";
   import startImportTasks from "../main/import/importQueue";
   import { tick } from "svelte";
 
@@ -131,7 +131,7 @@
   placeholder="Notes"
   class="w-full h-32 mt-2 input input-bordered"
 />
-{#if $currView.route === "importMultiple"}
+{#if $currentRoute === "importMultiple"}
   <div class="flex justify-center mt-2 gap-x-2">
     <button class="btn btn-primary" on:click={importItem}>Import</button>
   </div>

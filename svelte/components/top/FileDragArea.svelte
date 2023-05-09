@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
   import { getItemTypeFromExtension } from "../../../src/gschert";
-  import { currView } from "../../stores/stateStore";
+  import { currentRoute } from "../../stores/stateStore";
   import { importItems } from "../../stores/items";
   import createImportItems from "../main/import/createImportItems";
 
@@ -62,7 +62,7 @@
       // TODO ask Chris - how to type this
       // @ts-ignore
       $importItems = [...$importItems, ...newItems];
-      $currView.route = "importMultiple";
+      $currentRoute = "importMultiple";
     });
     return () => {
       window.electron.removeChosenFileListener();

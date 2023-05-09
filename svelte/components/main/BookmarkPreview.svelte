@@ -1,14 +1,14 @@
 <script lang="ts">
   import Link from "../../assets/feather/Link.svelte";
   import type { SingleItem } from "../../stores/items";
-  import { currView } from "../../stores/stateStore";
+  import { currentRoute } from "../../stores/stateStore";
 
   export let item: SingleItem;
 </script>
 
 <div
   class="relative hoverContainer"
-  style={$currView.route === "details"
+  style={$currentRoute === "details"
     ? "height: calc(var(--bottomContainer) - 1rem)"
     : ""}
 >
