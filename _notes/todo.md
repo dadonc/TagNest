@@ -1,10 +1,8 @@
 # Bugs
 
 
-after changing db one has to click on the backicon in the topbar - why?
-
+* after changing db one has to click on the backicon in the topbar - why?
 * rmv currView store from localstorage
-* reload items after importing many items
 * rightArea limit preview image size
 
 * iframe - rmv webfonts

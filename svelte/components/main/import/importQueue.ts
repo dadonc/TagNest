@@ -4,6 +4,7 @@ import {
   importItems,
   type SingleItem,
 } from "../../../stores/items";
+import { currView } from "../../../stores/stateStore";
 
 export const importSteps = {
   external: {
@@ -78,6 +79,14 @@ export default async function startImportTasks() {
         currentTasks--;
         startTasks();
       }
+    }
+    if (get(currView).route === "importMultiple") {
+      currView.update((view) => {
+        return {
+          ...view,
+          route: "main",
+        };
+      });
     }
   }
 

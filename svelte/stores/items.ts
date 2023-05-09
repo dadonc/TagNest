@@ -174,7 +174,7 @@ export async function finishItemImport(id: string, importStep: number) {
   importItems.update((items) => {
     return items.filter((item) => item.id !== id);
   });
-  return await prisma.item.update({
+  await prisma.item.update({
     where: {
       id,
     },
@@ -183,6 +183,7 @@ export async function finishItemImport(id: string, importStep: number) {
       importStep,
     },
   });
+  refreshDisplayedItems("finishItemImport");
 }
 
 const currentImportItems = localStorage.getItem("importItems");
