@@ -11,14 +11,14 @@
   import startImportTasks from "./components/main/import/importQueue";
   import BottomArea from "./components/bottom/BottomArea.svelte";
   import { currView, filteredData } from "./stores/stateStore";
-  import Settings from "./components/Settings.svelte";
+  import Settings from "./components/settings/Settings.svelte";
 
   onMount(() => {
     startImportTasks();
   });
 
   // why is this needed? Why is the store not reactive?
-  let route = "settings";
+  let route = "main";
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "," && event.metaKey) {

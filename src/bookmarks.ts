@@ -1,6 +1,6 @@
 import fs from "fs";
-import { prisma } from "./ipcHandler";
 import { downloadImageFromUrlPromisified } from "./utils";
+import { getPrismaClient } from "./prisma";
 type NewBookmark = {
   title: string;
   url: string;
@@ -18,6 +18,7 @@ export async function createItemWithBookmark({
 }: NewBookmark) {
   // todo: text
   const faviconPath = await getOrDownloadFavicon(url, faviconUrl);
+  const prisma = await getPrismaClient();
   const newItem = await prisma.item.create({
     data: {
       name: title,

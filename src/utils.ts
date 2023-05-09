@@ -1,6 +1,7 @@
 import https from "https";
 import path from "path";
 import fs from "fs";
+import util from "util";
 
 // todo remove, and use promisified version, see below
 export function downloadImageFromUrl(
@@ -21,6 +22,44 @@ export function downloadImageFromUrl(
       fs.unlink(dest, () => {});
       if (cb) cb(err.message);
     });
+}
+
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+
+type SaveJson = {
+  savePath: string;
+  latestMigration: string;
+  oldSavePath?: string;
+};
+export async function getSavePathJson(): Promise<SaveJson> {
+  const filePath = path.join(process.resourcesPath, "save.json");
+  if (fs.existsSync(filePath)) {
+    const data = await readFileAsync(filePath, "utf8");
+    return JSON.parse(data);
+  } else {
+    return createSavePathJsonAndReturn(filePath);
+  }
+}
+
+async function createSavePathJsonAndReturn(
+  filePath: string
+): Promise<SaveJson> {
+  const initialData = { savePath: process.resourcesPath, latestMigration: "" };
+  const initialDataString = JSON.stringify(initialData, null, 2);
+  await writeFileAsync(filePath, initialDataString, "utf8");
+  const data = await readFileAsync(filePath, "utf8");
+  return JSON.parse(data);
+}
+
+export async function updateSavePathJson(newSavePathJson): Promise<SaveJson> {
+  const newSaveString = JSON.stringify(newSavePathJson, null, 2);
+  await writeFileAsync(
+    path.join(process.resourcesPath, "save.json"),
+    newSaveString,
+    "utf8"
+  );
+  return newSavePathJson;
 }
 
 export function downloadImageFromUrlPromisified(url: string, dest: string) {

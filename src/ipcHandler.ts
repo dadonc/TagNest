@@ -7,13 +7,17 @@ import {
 } from "electron";
 import fs from "fs";
 import path from "path";
-import { PrismaClient } from "@prisma/client";
 import { IMAGE_EXTENSIONS, getItemTypeFromExtension } from "./gschert";
 import { extractBookmarkImages } from "./bookmarks";
-import { downloadImageFromUrl } from "./utils";
+import {
+  downloadImageFromUrl,
+  getSavePathJson,
+  updateSavePathJson,
+} from "./utils";
+import { getPrismaClient } from "./prisma";
 
-export const prisma = new PrismaClient();
-function handlePrisma(arg: string) {
+async function handlePrisma(arg: string) {
+  const prisma = await getPrismaClient();
   // arg is of the form 'user.create({"data":{"name":"Alice","email":"alice@example.com"}})'
   const props = arg.split("(")[0].split(".");
   const callArgs = arg.split("(")[1].slice(0, -1);
@@ -93,8 +97,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     return fs.readFileSync(path).toString();
   });
 
-  ipcMain.handle("getSavePath", (event) => {
-    return process.resourcesPath;
+  ipcMain.handle("getSavePath", async (event) => {
+    return (await getSavePathJson()).savePath;
   });
 
   ipcMain.handle("getNewSavePath", (event) => {
@@ -106,7 +110,9 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     });
   });
 
-  ipcMain.handle("setSavePath", (event) => {
+  ipcMain.handle("setSavePath", async (event, newPath) => {
+    const curr = await getSavePathJson();
+    await updateSavePathJson({ ...curr, savePath: newPath });
     return true;
   });
 }
