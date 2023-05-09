@@ -4,6 +4,8 @@
 replace /Users/domenic/Projects/hbr-data/
 and process.resourcesPath
 
+
+* rmv currView store from localstorage
 * reload items after importing many items
 * rightArea limit preview image size
 
