@@ -6,6 +6,8 @@ import startServer from "./server";
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
 
+export const isDev = MAIN_WINDOW_VITE_DEV_SERVER_URL ? true : false;
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
@@ -17,12 +19,12 @@ const createWindow = () => {
     height: 800,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
-      webSecurity: MAIN_WINDOW_VITE_DEV_SERVER_URL ? false : true,
+      webSecurity: isDev ? false : true,
     },
     titleBarStyle: "hidden",
   });
 
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+  if (isDev) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
     mainWindow.webContents.openDevTools();
   } else {

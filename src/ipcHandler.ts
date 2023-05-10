@@ -16,6 +16,7 @@ import {
   updateSavePathJson,
 } from "./utils";
 import { getPrismaClient } from "./prisma";
+import { isDev } from "./main";
 
 async function handlePrisma(arg: string) {
   try {
@@ -126,6 +127,10 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   });
 
   ipcMain.handle("getCurrentWorkingDirectory", async (event) => {
-    return process.cwd();
+    if (isDev) {
+      return process.cwd();
+    } else {
+      return path.join(process.resourcesPath, "app");
+    }
   });
 }
