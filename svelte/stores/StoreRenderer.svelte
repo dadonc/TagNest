@@ -6,7 +6,7 @@
     bottomContainer,
     topContainer,
   } from "./cssStore";
-  import type { CssContainerType } from "../types";
+  import type { CssContainerType } from "../Types";
   import { currView } from "./stateStore";
   import { importItems } from "./items";
 
