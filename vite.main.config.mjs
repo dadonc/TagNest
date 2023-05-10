@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 // https://vitejs.dev/config
 export default defineConfig({
@@ -12,4 +13,20 @@ export default defineConfig({
       ],
     },
   },
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          // copied to enable prisma migration on startup
+          src: "node_modules/prisma",
+          dest: "node_modules",
+        },
+        {
+          // copied to enable prisma migration on startup
+          src: "node_modules/@prisma",
+          dest: "node_modules",
+        },
+      ],
+    }),
+  ],
 });

@@ -7,6 +7,7 @@ import { fork } from "child_process";
 import { app } from "electron";
 import { PrismaClient } from "@prisma/client";
 import { getSavePathJson, updateSavePathJson } from "./utils";
+import { log } from "electron-log";
 
 let prisma: PrismaClient;
 export async function getPrismaClient() {
@@ -15,7 +16,6 @@ export async function getPrismaClient() {
   }
 
   const savePathJson = await getSavePathJson();
-  console.log("SavePathJson:", savePathJson);
   const dbPath = path.join(savePathJson.savePath, "database.db");
   const dbUrl = "file:" + dbPath + "?connection_limit=1";
 
@@ -42,7 +42,7 @@ export async function getPrismaClient() {
       latestMigration = latest[latest.length - 1]?.migration_name;
       needsMigration = latestMigration !== savePathJson.latestMigration;
     } catch (e) {
-      console.error(e);
+      log("ERROR:", e);
       needsMigration = true;
     }
   }
@@ -54,7 +54,7 @@ export async function getPrismaClient() {
         "prisma",
         "schema.prisma"
       );
-      console.info(
+      log(
         `Needs a migration. Running prisma migrate with schema path ${schemaPath}`
       );
 
@@ -72,14 +72,14 @@ export async function getPrismaClient() {
         latestMigration,
       });
       // seed
-      // log.info("Seeding...");
+      // log("Seeding...");
       // await seed(prisma);
     } catch (e) {
-      console.error(e);
+      log("ERROR:", e);
       process.exit(1);
     }
   } else {
-    console.info("Does not need migration");
+    log("Does not need migration");
   }
 
   return prisma;
@@ -96,42 +96,54 @@ function getPlatformName(): string {
 
 const platformName = getPlatformName();
 
+// the node_modules/@prisma/ and node_modules/prisma is copied into the .vite/build folder using vite-plugin-copy
 export const platformToExecutables: any = {
   win32: {
-    migrationEngine:
-      "node_modules/@prisma/engines/migration-engine-windows.exe",
-    queryEngine: "node_modules/@prisma/engines/query_engine-windows.dll.node",
+    migrationEngine: path.resolve(
+      __dirname,
+      "node_modules/@prisma/engines/migration-engine-windows.exe"
+    ),
+    queryEngine: path.resolve(
+      __dirname,
+      "node_modules/@prisma/engines/query_engine-windows.dll.node"
+    ),
   },
   linux: {
-    migrationEngine:
-      "node_modules/@prisma/engines/migration-engine-debian-openssl-1.1.x",
-    queryEngine:
-      "node_modules/@prisma/engines/libquery_engine-debian-openssl-1.1.x.so.node",
+    migrationEngine: path.resolve(
+      __dirname,
+      "node_modules/@prisma/engines/migration-engine-debian-openssl-1.1.x"
+    ),
+    queryEngine: path.resolve(
+      __dirname,
+      "node_modules/@prisma/engines/libquery_engine-debian-openssl-1.1.x.so.node"
+    ),
   },
   darwin: {
-    migrationEngine: "node_modules/@prisma/engines/migration-engine-darwin",
-    queryEngine:
-      "node_modules/@prisma/engines/libquery_engine-darwin.dylib.node",
+    migrationEngine: path.resolve(
+      __dirname,
+      "node_modules/@prisma/engines/migration-engine-darwin"
+    ),
+    queryEngine: path.resolve(
+      __dirname,
+      "node_modules/@prisma/engines/libquery_engine-darwin.dylib.node"
+    ),
   },
   darwinArm64: {
-    migrationEngine:
-      "node_modules/@prisma/engines/migration-engine-darwin-arm64",
-    queryEngine:
-      "node_modules/@prisma/engines/libquery_engine-darwin-arm64.dylib.node",
+    migrationEngine: path.resolve(
+      __dirname,
+      "node_modules/@prisma/engines/migration-engine-darwin-arm64"
+    ),
+    queryEngine: path.resolve(
+      __dirname,
+      "node_modules/@prisma/engines/libquery_engine-darwin-arm64.dylib.node"
+    ),
   },
 };
-const extraResourcesPath = app.getAppPath().replace("app.asar", ""); // impacted by extraResources setting in electron-builder.yml
 
-export const mePath = path.join(
-  extraResourcesPath,
-  platformToExecutables[platformName].migrationEngine
-);
-export const qePath = path.join(
-  extraResourcesPath,
-  platformToExecutables[platformName].queryEngine
-);
+const mePath = platformToExecutables[platformName].migrationEngine;
+const qePath = platformToExecutables[platformName].queryEngine;
 
-export interface Migration {
+interface Migration {
   id: string;
   checksum: string;
   finished_at: string;
@@ -142,15 +154,15 @@ export interface Migration {
   applied_steps_count: string;
 }
 
-export async function runPrismaCommand({
+async function runPrismaCommand({
   command,
   dbUrl,
 }: {
   command: string[];
   dbUrl: string;
 }): Promise<number> {
-  console.info("Migration engine path", mePath);
-  console.info("Query engine path", qePath);
+  log("Migration engine path", mePath);
+  log("Query engine path", qePath);
 
   // Currently we don't have any direct method to invoke prisma migration programatically.
   // As a workaround, we spawn migration script as a child process and wait for its completion.
@@ -159,11 +171,9 @@ export async function runPrismaCommand({
     const exitCode = await new Promise((resolve, _) => {
       const prismaPath = path.resolve(
         __dirname,
-        "..",
-        "..",
         "node_modules/prisma/build/index.js"
       );
-      console.info("Prisma path", prismaPath);
+      log("Prisma path", prismaPath);
 
       const child = fork(prismaPath, command, {
         env: {
@@ -182,11 +192,11 @@ export async function runPrismaCommand({
       });
 
       child.on("message", (msg) => {
-        console.info(msg);
+        log(msg);
       });
 
       child.on("error", (err) => {
-        console.error("Child process got error:", err);
+        log("ERROR:", "Child process got error:", err);
       });
 
       child.on("close", (code, signal) => {
@@ -194,11 +204,11 @@ export async function runPrismaCommand({
       });
 
       child.stdout?.on("data", function (data) {
-        console.info("prisma: ", data.toString());
+        log("prisma: ", data.toString());
       });
 
       child.stderr?.on("data", function (data) {
-        console.error("prisma: ", data.toString());
+        log("ERROR:", "prisma: ", data.toString());
       });
     });
 
@@ -207,7 +217,7 @@ export async function runPrismaCommand({
 
     return exitCode;
   } catch (e) {
-    console.error(e);
+    log("ERROR:", e);
     throw e;
   }
 }
