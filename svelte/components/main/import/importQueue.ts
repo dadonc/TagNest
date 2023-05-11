@@ -2,13 +2,13 @@ import { get } from "svelte/store";
 import {
   finishItemImport,
   importItems,
+  refreshDisplayedItems,
   type SingleItem,
 } from "../../../stores/items";
 import { currentRoute, currView } from "../../../stores/stateStore";
 
 export const importSteps = {
   external: {
-    count: 3,
     1: async (item: SingleItem) => {
       return new Promise((resolve) => {
         setTimeout(() => {
@@ -47,11 +47,10 @@ export default async function startImportTasks() {
 
   const queue = get(importItems).filter((item) => {
     if (item.type in importSteps) {
-      return (
-        // TODO ask Chris - how to type this
-        //@ts-ignore
-        item.importStep !== 0 && item.importStep < importSteps[item.type].count
-      );
+      // TODO ask Chris - how to type this
+      //@ts-ignore
+      const stepCount = Object.keys(importSteps[item.type]).length;
+      return item.importStep !== 0 && item.importStep < stepCount;
     } else {
       if (item.importStep !== 0) finishItemImport(item.id, 0);
       return false;
@@ -61,11 +60,12 @@ export default async function startImportTasks() {
   async function startTasks() {
     while (currentTasks < maxTasks && queue.length > 0) {
       const item = queue.shift();
+      //@ts-ignore
+      const stepCount = Object.keys(importSteps[item.type]).length;
       // TODO ask Chris - why is this check needed
       if (item) {
         currentTasks++;
-        //@ts-ignore
-        for (let i = item.importStep; i < importSteps[item.type].count; i++) {
+        for (let i = item.importStep; i < stepCount; i++) {
           //@ts-ignore
           await importSteps[item.type][item.importStep](item);
           importItems.update((items) => {
@@ -74,8 +74,7 @@ export default async function startImportTasks() {
             return items;
           });
         }
-        //@ts-ignore
-        await finishItemImport(item.id, importSteps[item.type].count);
+        await finishItemImport(item.id, stepCount);
         currentTasks--;
         startTasks();
       }
@@ -83,6 +82,7 @@ export default async function startImportTasks() {
     if (get(currentRoute) === "importMultiple") {
       currentRoute.set("main");
     }
+    refreshDisplayedItems("finishedItemsImport");
   }
 
   await startTasks();
