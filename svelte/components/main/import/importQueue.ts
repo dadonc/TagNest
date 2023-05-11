@@ -61,39 +61,44 @@ export default async function startImportTasks() {
     });
   }
 
-  async function startTasks() {
+  function startTasks() {
     while (currentTasks < maxTasks && queue.length > 0) {
       const item = queue.shift();
-      //@ts-ignore
-      const stepCount = Object.keys(importSteps[item.type]).length;
-      // TODO ask Chris - why is this check needed
-      if (item) {
-        currentTasks++;
-        for (let i = item.importStep; i <= stepCount; i++) {
-          //@ts-ignore
-          await importSteps[item.type][item.importStep](item);
-          importItems.update((items) => {
-            const index = items.findIndex((i) => i.id === item.id);
-            items[index].importStep = item.importStep + 1;
-            return items;
-          });
-        }
-        await finishItemImport(item.id, stepCount);
-        currentTasks--;
-        if (queue.length === 0) {
-          queue = fillQueue();
-        }
-        // if (queue.length > 0) {
-        //   startTasks();
-        // }
-      }
+      if (item) runItemTasks(item);
     }
-    if (get(currentRoute) === "importMultiple") {
-      currentRoute.set("main");
-    }
-    refreshDisplayedItems("finishedItemsImport");
   }
 
-  await startTasks();
-  isRunning = false;
+  async function runItemTasks(item: SingleItem) {
+    //@ts-ignore
+    const stepCount = Object.keys(importSteps[item.type]).length;
+    // TODO ask Chris - why is this check needed
+    if (item) {
+      currentTasks++;
+      for (let i = item.importStep; i <= stepCount; i++) {
+        //@ts-ignore
+        await importSteps[item.type][item.importStep](item);
+        importItems.update((items) => {
+          const index = items.findIndex((i) => i.id === item.id);
+          items[index].importStep = item.importStep + 1;
+          return items;
+        });
+      }
+      await finishItemImport(item.id, stepCount);
+      currentTasks--;
+      if (queue.length === 0) {
+        queue = fillQueue();
+      }
+      if (queue.length > 0) {
+        startTasks();
+      } else {
+        isRunning = false;
+        if (get(currentRoute) === "importMultiple") {
+          currentRoute.set("main");
+        }
+        refreshDisplayedItems("finishedItemsImport");
+      }
+    }
+  }
+
+  startTasks();
 }

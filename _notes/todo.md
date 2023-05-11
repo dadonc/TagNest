@@ -1,6 +1,7 @@
 # Bugs
 
 files with parens in name don't work
+make obvious that import is running on importMultiple page
 * rightArea limit preview image size
 
 * iframe - rmv webfonts
