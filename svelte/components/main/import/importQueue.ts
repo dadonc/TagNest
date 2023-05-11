@@ -45,17 +45,21 @@ export default async function startImportTasks() {
   let currentTasks = 0;
   const maxTasks = 5;
 
-  const queue = get(importItems).filter((item) => {
-    if (item.type in importSteps) {
-      // TODO ask Chris - how to type this
-      //@ts-ignore
-      const stepCount = Object.keys(importSteps[item.type]).length;
-      return item.importStep !== 0 && item.importStep < stepCount;
-    } else {
-      if (item.importStep !== 0) finishItemImport(item.id, 0);
-      return false;
-    }
-  });
+  let queue = fillQueue();
+
+  function fillQueue() {
+    return get(importItems).filter((item) => {
+      if (item.type in importSteps) {
+        // TODO ask Chris - how to type this
+        //@ts-ignore
+        const stepCount = Object.keys(importSteps[item.type]).length;
+        return item.importStep !== 0 && item.importStep <= stepCount;
+      } else {
+        if (item.importStep !== 0) finishItemImport(item.id, 0);
+        return false;
+      }
+    });
+  }
 
   async function startTasks() {
     while (currentTasks < maxTasks && queue.length > 0) {
@@ -65,7 +69,7 @@ export default async function startImportTasks() {
       // TODO ask Chris - why is this check needed
       if (item) {
         currentTasks++;
-        for (let i = item.importStep; i < stepCount; i++) {
+        for (let i = item.importStep; i <= stepCount; i++) {
           //@ts-ignore
           await importSteps[item.type][item.importStep](item);
           importItems.update((items) => {
@@ -76,7 +80,12 @@ export default async function startImportTasks() {
         }
         await finishItemImport(item.id, stepCount);
         currentTasks--;
-        startTasks();
+        if (queue.length === 0) {
+          queue = fillQueue();
+        }
+        // if (queue.length > 0) {
+        //   startTasks();
+        // }
       }
     }
     if (get(currentRoute) === "importMultiple") {

@@ -1,6 +1,6 @@
 # Bugs
 
-
+files with parens in name don't work
 * rightArea limit preview image size
 
 * iframe - rmv webfonts
