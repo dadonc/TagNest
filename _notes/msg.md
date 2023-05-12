@@ -31,8 +31,9 @@ const createWindow = () => {
 const prisma = new PrismaClient();
 function handlePrisma(arg) {
   // arg is of the form 'user.create({"data":{"name":"Alice","email":"alice@example.com"}})'
-  const props = arg.split("(")[0].split(".");
-  const callArgs = arg.split("(")[1].slice(0, -1);
+    const argsIndex = arg.indexOf("(");
+    const props = arg.slice(0, argsIndex).split(".");
+    const callArgs = arg.slice(argsIndex + 1, -1);
   if (callArgs) {
     return prisma[props[0]][props[1]](JSON.parse(callArgs));
   } else {

@@ -1,7 +1,8 @@
 # Bugs
 
-files with parens in name don't work
-make obvious that import is running on importMultiple page
+
+make obvious that import is running on importMultiple page (spinner) on click on "import all" don't change items that are already getting imported, deactivate button if all are already getting imported?
+"external" items and pdfs overflow on the x axis
 * rightArea limit preview image size
 
 * iframe - rmv webfonts
