@@ -8,6 +8,12 @@ import {
 import { currentRoute, currView } from "../../../stores/stateStore";
 
 export const importSteps = {
+  video: {
+    1: async (item: SingleItem) => {
+      await window.electron.createVideoPreview(item.file!.path);
+      console.log("Created video preview:", item.name);
+    },
+  },
   external: {
     1: async (item: SingleItem) => {
       return new Promise((resolve) => {
