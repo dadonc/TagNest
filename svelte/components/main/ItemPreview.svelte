@@ -5,6 +5,7 @@
   import BookmarkPreview from "./BookmarkPreview.svelte";
   import ImagePreview from "./ImagePreview.svelte";
   import PreviewPdf from "./PreviewPDF.svelte";
+  import PreviewVideo from "./PreviewVideo.svelte";
   export let item: SingleItem;
   export let items: SingleItem[];
 
@@ -75,6 +76,8 @@
     <BookmarkPreview {item} />
   {:else if item.type === "pdf"}
     <PreviewPdf {item} />
+  {:else if item.type === "video"}
+    <PreviewVideo {item} />
   {:else}
     <div
       class="flex flex-col items-center justify-center h-full"

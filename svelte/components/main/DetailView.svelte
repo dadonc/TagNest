@@ -2,6 +2,7 @@
   import type { SingleItem } from "../../stores/items";
   import DetailViewPdf from "./DetailViewPDF.svelte";
   import DetailViewBookmark from "./DetailViewBookmark.svelte";
+  import DetailViewVideo from "./DetailViewVideo.svelte";
 
   export let item: SingleItem;
 </script>
@@ -13,5 +14,7 @@
     <img src={`file://${item.file?.path}`} alt={item.name} class="max-h-full" />
   {:else if item.type === "pdf"}
     <DetailViewPdf {item} />
+  {:else if item.type === "video"}
+    <DetailViewVideo {item} />
   {/if}
 </div>

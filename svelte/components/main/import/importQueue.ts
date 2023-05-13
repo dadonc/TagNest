@@ -13,6 +13,10 @@ export const importSteps = {
       await window.electron.createVideoPreview(item.file!.path);
       console.log("Created video preview:", item.name);
     },
+    2: async (item: SingleItem) => {
+      await window.electron.getVideoDetails(item.file!.path);
+      console.log("Got video details:", item.name);
+    },
   },
   external: {
     1: async (item: SingleItem) => {

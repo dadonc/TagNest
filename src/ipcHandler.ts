@@ -140,4 +140,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     await createVideoPreview(videoPath);
     return true;
   });
+
+  ipcMain.handle("getVideoDetails", async (event, videoPath) => {
+    return true;
+  });
 }
