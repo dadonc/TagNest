@@ -119,6 +119,9 @@ export async function getItems() {
       tags: true,
       bookmark: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   // TODO ask Chris - using "where" errors in for example RightEditSingle
   return x.filter((item) => !item.getsCurrentlyImported);

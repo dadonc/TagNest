@@ -10,7 +10,7 @@ import { currentRoute, currView } from "../../../stores/stateStore";
 export const importSteps = {
   video: {
     1: async (item: SingleItem) => {
-      await window.electron.createVideoPreview(item.file!.path);
+      await window.electron.createVideoPreview(item.file!.path, item.id);
       console.log("Created video preview:", item.name);
     },
     2: async (item: SingleItem) => {

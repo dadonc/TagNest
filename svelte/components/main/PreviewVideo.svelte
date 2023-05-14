@@ -8,7 +8,7 @@
   let videoElement: HTMLVideoElement;
   let playIconElement: HTMLSpanElement;
 
-  const videoPath = `file://${$savePath}/${
+  const videoPath = `file://${$savePath}/previews/videos/${
     item.name?.split(".")[0]
   }_preview.${item.name!.split(".").pop()}`;
 </script>

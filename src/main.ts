@@ -26,7 +26,9 @@ const createWindow = () => {
 
   if (isDev) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-    mainWindow.webContents.openDevTools();
+    setTimeout(() => {
+      mainWindow.webContents.openDevTools();
+    }, 100);
   } else {
     mainWindow.loadFile(
       path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)

@@ -2,23 +2,28 @@
 
 
 ## Video
-Create preview inside /temp folder
-Save video previews under preview/video/${id}
 save video details
 virtualization
-move new items into save folder
 fake fullScreen
 detailview preview on space keydown
-newest items first
 change image poster on leftside
 import folders with subfolders
 
-(item groups, pin tags/items)
+combine library: move new items into save folder
+delete files on item delete
+How to work with item that are imported twice? (e.g. same file, different name)
 
+"untagged" tag
+type filter - display only items of selected type
 
 make obvious that import is running on importMultiple page (spinner) on click on "import all" don't change items that are already getting imported, deactivate button if all are already getting imported?
 "external" items and pdfs overflow on the x axis
 * rightArea limit preview image size
+
+(item groups, pin tags/items)
+
+save bookmark previews as files instead of in database
+
 
 * iframe - rmv webfonts
 * bottom area preview - allow arrow up/down to navigate - https://developer.mozilla.org/en-US/docs/Web/API/Element/getClientRects

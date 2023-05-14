@@ -54,15 +54,24 @@ const cutVideoSegment = (
   });
 };
 
-const concatVideo = (videoPath: string, savePath: string): Promise<void> => {
+const concatVideo = (
+  videoPath: string,
+  savePath: string,
+  tempPath: string
+): Promise<void> => {
   return new Promise((resolve, reject) => {
     // ffmpeg -y -f concat -safe 0 -i cutPoints.txt -c copy output.wav
     // -y overwrites output file if it exists
     try {
       const fileType = videoPath.split(".").pop() || "mp4";
       const fileName = videoPath.split("/").pop()?.split(".")[0];
-      const txtPath = path.join(savePath, fileName + "_cutPoints.txt");
-      const outPath = path.join(savePath, fileName + "_preview." + fileType);
+      const txtPath = path.join(tempPath, fileName + "_cutPoints.txt");
+      const outDir = path.join(savePath, "previews", "videos");
+      if (!fs.existsSync(outDir)) {
+        fs.mkdirSync(path.join(savePath, "previews"));
+        fs.mkdirSync(path.join(savePath, "previews", "videos"));
+      }
+      const outPath = path.join(outDir, fileName + "_preview." + fileType);
       const task = spawn(ffmpegPath, [
         "-y",
         "-f",
@@ -164,7 +173,10 @@ const delTempFiles = (
   fs.unlink(txtPath, () => {});
 };
 
-export const createVideoPreview = async (videoPath: string): Promise<void> => {
+export const createVideoPreview = async (
+  videoPath: string,
+  itemId: string
+): Promise<void> => {
   return new Promise(async (resolve, reject) => {
     try {
       const segmentDuration = 3; // seconds
@@ -182,13 +194,15 @@ export const createVideoPreview = async (videoPath: string): Promise<void> => {
         slicePoints.push(curr);
         curr += step;
       }
+      const tempPath = path.join(savePath, "temp");
+      if (!fs.existsSync(tempPath)) fs.mkdirSync(tempPath);
       slicePoints.pop();
       for (const point of slicePoints) {
-        await cutVideoSegment(videoPath, savePath, point, segmentDuration);
+        await cutVideoSegment(videoPath, tempPath, point, segmentDuration);
       }
-      createConcatTxt(videoPath, savePath, slicePoints);
-      await concatVideo(videoPath, savePath);
-      delTempFiles(videoPath, savePath, slicePoints);
+      createConcatTxt(videoPath, tempPath, slicePoints);
+      await concatVideo(videoPath, savePath, tempPath);
+      delTempFiles(videoPath, tempPath, slicePoints);
       resolve();
     } catch (e) {
       reject(e);
