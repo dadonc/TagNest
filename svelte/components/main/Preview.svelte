@@ -2,8 +2,8 @@
   import type { SingleItem } from "../../stores/items";
   import { selectedItems, currentRoute } from "../../stores/stateStore";
   import { classNames } from "../../utils";
-  import BookmarkPreview from "./BookmarkPreview.svelte";
-  import ImagePreview from "./ImagePreview.svelte";
+  import BookmarkPreview from "./PreviewBookmark.svelte";
+  import ImagePreview from "./PreviewImage.svelte";
   import PreviewPdf from "./PreviewPDF.svelte";
   import PreviewVideo from "./PreviewVideo.svelte";
   export let item: SingleItem;

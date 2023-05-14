@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ItemPreview from "../main/ItemPreview.svelte";
+  import ItemPreview from "../main/Preview.svelte";
   import { currentRoute, selectedItems } from "../../stores/stateStore";
   import { handleKeydownDetailsView } from "../../utils";
   import type { SingleItem } from "../../stores/items";

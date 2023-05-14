@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ItemPreview from "./ItemPreview.svelte";
+  import ItemPreview from "./Preview.svelte";
   import { currView } from "../../stores/stateStore";
   import {
     deleteItems,
