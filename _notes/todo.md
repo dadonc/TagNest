@@ -1,6 +1,23 @@
 # Bugs
 
 
+## Video
+start import tasks after adding
+Create preview inside /temp folder
+Save video previews under preview/video/${id}
+save video details
+hover itempreview for videos
+virtualization
+move new items into save folder
+fake fullScreen
+detailview preview on space keydown
+newest items first
+video: after import a wrong _preview path is tried to be loaded
+change image poster on leftside
+
+(item groups, pin tags/items)
+
+
 make obvious that import is running on importMultiple page (spinner) on click on "import all" don't change items that are already getting imported, deactivate button if all are already getting imported?
 "external" items and pdfs overflow on the x axis
 * rightArea limit preview image size

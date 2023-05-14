@@ -96,7 +96,7 @@ function getPlatformName(): string {
 
 const platformName = getPlatformName();
 
-// the node_modules/@prisma/ and node_modules/prisma is copied into the .vite/build folder using vite-plugin-copy
+// the node_modules/@prisma/ and node_modules/prisma folders are copied into the .vite/build folder using vite-plugin-copy
 export const platformToExecutables: any = {
   win32: {
     migrationEngine: path.resolve(
