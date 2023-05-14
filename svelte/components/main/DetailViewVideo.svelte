@@ -114,7 +114,7 @@
   bind:this={videoContainer}
   id="videoContainer"
 >
-  <div>
+  <div class="max-h-full">
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
       class="m-auto"

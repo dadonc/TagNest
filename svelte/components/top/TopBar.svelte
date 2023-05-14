@@ -19,7 +19,10 @@
 
 <div class="flex items-center justify-between h-full">
   <div class="flex items-center">
-    <div class="inline-block" style="width: var(--leftContainer)" />
+    <div
+      class="inline-block"
+      style="width: var(--leftContainer); min-width: 48px;"
+    />
     {#if $currentRoute !== "main"}
       <button
         on:click={() => {
