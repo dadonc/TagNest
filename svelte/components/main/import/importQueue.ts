@@ -72,6 +72,10 @@ export default async function startImportTasks() {
   }
 
   function startTasks() {
+    if (queue.length === 0) {
+      isRunning = false;
+      return;
+    }
     while (currentTasks < maxTasks && queue.length > 0) {
       const item = queue.shift();
       if (item) runItemTasks(item);
@@ -96,11 +100,6 @@ export default async function startImportTasks() {
       await finishItemImport(item.id, stepCount);
       currentTasks--;
       if (queue.length === 0) {
-        queue = fillQueue();
-      }
-      if (queue.length > 0) {
-        startTasks();
-      } else {
         isRunning = false;
         if (get(currentRoute) === "importMultiple") {
           currentRoute.set("main");

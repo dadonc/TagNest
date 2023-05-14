@@ -170,7 +170,6 @@ export const createVideoPreview = async (videoPath: string): Promise<void> => {
       const segmentDuration = 3; // seconds
       const segmentCount = 11; // segments plus one
       const details = await getVideoDetails(videoPath);
-      console.log("got video details", details);
       const savePath = (await getSavePathJson()).savePath;
       const actualSegmentCount =
         details.duration > segmentCount * segmentDuration
@@ -187,13 +186,9 @@ export const createVideoPreview = async (videoPath: string): Promise<void> => {
       for (const point of slicePoints) {
         await cutVideoSegment(videoPath, savePath, point, segmentDuration);
       }
-      console.log("cut video");
       createConcatTxt(videoPath, savePath, slicePoints);
-      console.log("created concat txt");
       await concatVideo(videoPath, savePath);
-      console.log("concatted video");
       delTempFiles(videoPath, savePath, slicePoints);
-      console.log("deleted temp files");
       resolve();
     } catch (e) {
       reject(e);

@@ -100,6 +100,10 @@
       videoElement.currentTime += 10;
     } else if (e.key == "ArrowLeft") {
       videoElement.currentTime -= 10;
+    } else if (e.key == "ArrowDown") {
+      videoElement.currentTime += 60;
+    } else if (e.key == "ArrowUp") {
+      videoElement.currentTime -= 60;
     }
   }}
 />

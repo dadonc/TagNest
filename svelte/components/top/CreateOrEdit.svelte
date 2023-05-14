@@ -73,10 +73,7 @@
         return i;
       });
       await save(tagString);
-      // todo - rmv
-      setTimeout(() => {
-        startImportTasks();
-      }, 100);
+      startImportTasks();
     }
   }
 

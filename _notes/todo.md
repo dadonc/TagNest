@@ -2,18 +2,16 @@
 
 
 ## Video
-start import tasks after adding
 Create preview inside /temp folder
 Save video previews under preview/video/${id}
 save video details
-hover itempreview for videos
 virtualization
 move new items into save folder
 fake fullScreen
 detailview preview on space keydown
 newest items first
-video: after import a wrong _preview path is tried to be loaded
 change image poster on leftside
+import folders with subfolders
 
 (item groups, pin tags/items)
 
