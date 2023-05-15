@@ -17,24 +17,25 @@
   $: thumbPath = `file://${$savePath}/previews/videos/${
     item.name?.split(".")[0]
   }_thumb.jpeg`;
+
+  let playPromise: Promise<void> | undefined;
 </script>
 
 <!-- svelte-ignore a11y-media-has-caption -->
 <div
   class="relative w-full h-full"
-  style={$currentRoute === "details"
-    ? "height: calc(var(--bottomContainer) - 1rem)"
-    : ""}
   on:mouseenter={() => {
     displayVideo = true;
   }}
-  on:mouseleave={() => {
+  on:mouseleave={async () => {
+    await playPromise;
     displayVideo = false;
   }}
   on:focus={() => {
     displayVideo = true;
   }}
-  on:blur={() => {
+  on:blur={async () => {
+    await playPromise;
     displayVideo = false;
   }}
 >
@@ -52,11 +53,14 @@
         videoIsLoaded = true;
       }}
       on:mouseenter={() => {
-        if (videoElement.paused) videoElement.play();
+        if (videoElement.paused) {
+          playPromise = videoElement.play();
+        }
         playIconElement.style.display = "none";
       }}
-      on:mouseleave={() => {
-        if (!videoElement.paused) videoElement.pause();
+      on:mouseleave={async () => {
+        await playPromise;
+        videoElement.pause();
         playIconElement.style.display = "block";
       }}
     />

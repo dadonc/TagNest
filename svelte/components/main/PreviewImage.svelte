@@ -6,12 +6,7 @@
   export let item: SingleItem;
 </script>
 
-<div
-  class="relative hoverContainer"
-  style={$currentRoute === "details"
-    ? "height: calc(var(--bottomContainer) - 1rem)"
-    : ""}
->
+<div class="relative hoverContainer">
   <img src={"file://" + item.file?.path} alt="" class="h-full" />
   {#if item.url}
     <a

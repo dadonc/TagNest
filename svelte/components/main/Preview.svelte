@@ -54,11 +54,12 @@
   }
 
   let intersects = false;
+  let isDetailView = $currentRoute === "details";
 </script>
 
 <div
   id={item.id}
-  use:useIntersectionObserver
+  use:useIntersectionObserver={isDetailView ? "bottomArea" : "mainArea"}
   on:enterViewport={() => {
     intersects = true;
   }}

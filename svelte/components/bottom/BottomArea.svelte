@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ItemPreview from "../main/Preview.svelte";
+  import Preview from "../main/Preview.svelte";
   import { currentRoute, selectedItems } from "../../stores/stateStore";
   import { handleKeydownDetailsView } from "../../utils";
   import type { SingleItem } from "../../stores/items";
@@ -28,12 +28,16 @@
 <svelte:window on:keydown={handleKeydownDetailsView} />
 
 <div
+  id="bottomArea"
   class="overflow-y-scroll"
   style="height: calc(var(--bottomContainer) - 0.5rem)"
 >
   {#each items as item}
-    <div class="inline-block">
-      <ItemPreview {item} {items} />
+    <div
+      class="inline-block"
+      style={"height: calc(var(--bottomContainer) - 1rem)"}
+    >
+      <Preview {item} {items} />
     </div>
   {/each}
 </div>
