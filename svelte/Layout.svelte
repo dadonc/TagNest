@@ -129,7 +129,10 @@
     &nbsp;
   </div>
   <div class="bg-base-300 mainContainer">
-    <div class="h-full p-2 overflow-scroll rounded-sm bg-base-100 slot">
+    <div
+      class="h-full p-2 overflow-scroll rounded-sm bg-base-100 slot"
+      id="mainArea"
+    >
       <slot name="mainContainer">No mainContainer</slot>
     </div>
   </div>

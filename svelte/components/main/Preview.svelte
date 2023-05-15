@@ -2,6 +2,7 @@
   import type { SingleItem } from "../../stores/items";
   import { selectedItems, currentRoute } from "../../stores/stateStore";
   import { classNames } from "../../utils";
+  import useIntersectionObserver from "../useIntersectionObserver";
   import BookmarkPreview from "./PreviewBookmark.svelte";
   import ImagePreview from "./PreviewImage.svelte";
   import PreviewPdf from "./PreviewPDF.svelte";
@@ -51,10 +52,19 @@
       $selectedItems.ids = [item.id];
     }
   }
+
+  let intersects = false;
 </script>
 
 <div
   id={item.id}
+  use:useIntersectionObserver
+  on:enterViewport={() => {
+    intersects = true;
+  }}
+  on:exitViewport={() => {
+    intersects = false;
+  }}
   on:click={selectItem}
   on:dblclick={(e) => {
     selectItem(e);
@@ -67,26 +77,28 @@
   }}
   class={classNames(
     isItemSelected ? "border border-blue-500" : "border border-transparent",
-    "flex items-center justify-center"
+    "flex items-center justify-center h-full w-full bg-base-300"
   )}
 >
-  {#if item.type === "image"}
-    <ImagePreview {item} />
-  {:else if item.type === "bookmark"}
-    <BookmarkPreview {item} />
-  {:else if item.type === "pdf"}
-    <PreviewPdf {item} />
-  {:else if item.type === "video"}
-    <PreviewVideo {item} />
-  {:else}
-    <div
-      class="flex flex-col items-center justify-center h-full"
-      on:dblclick={() => {
-        if (item.file?.path)
-          window.electron.openFileInDefaultApp(item.file?.path);
-      }}
-    >
-      <div class="text-sm text-gray-500">{item.name}</div>
-    </div>
+  {#if intersects}
+    {#if item.type === "image"}
+      <ImagePreview {item} />
+    {:else if item.type === "bookmark"}
+      <BookmarkPreview {item} />
+    {:else if item.type === "pdf"}
+      <PreviewPdf {item} />
+    {:else if item.type === "video"}
+      <PreviewVideo {item} />
+    {:else}
+      <div
+        class="flex flex-col items-center justify-center h-full"
+        on:dblclick={() => {
+          if (item.file?.path)
+            window.electron.openFileInDefaultApp(item.file?.path);
+        }}
+      >
+        <div class="text-sm text-gray-500">{item.name}</div>
+      </div>
+    {/if}
   {/if}
 </div>

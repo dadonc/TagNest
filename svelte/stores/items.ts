@@ -110,7 +110,7 @@ export async function getItem(id: string) {
 }
 
 export async function getItems() {
-  const x = await prisma.item.findMany({
+  const temp = await prisma.item.findMany({
     // where: {
     //   getsCurrentlyImported: false,
     // },
@@ -124,7 +124,12 @@ export async function getItems() {
     },
   });
   // TODO ask Chris - using "where" errors in for example RightEditSingle
-  return x.filter((item) => !item.getsCurrentlyImported);
+  const filtered = temp.filter((item) => !item.getsCurrentlyImported);
+  let test = filtered;
+  for (let i = 0; i < 1000; i++) {
+    test = test.concat(filtered);
+  }
+  return filtered;
 }
 
 async function getItemsDummy() {

@@ -6,7 +6,7 @@ save video details
 virtualization
 fake fullScreen
 detailview preview on space keydown
-change image poster on leftside
+change image poster on rightside
 import folders with subfolders
 
 combine library: move new items into save folder
@@ -21,6 +21,7 @@ make obvious that import is running on importMultiple page (spinner) on click on
 * rightArea limit preview image size
 
 (item groups, pin tags/items)
+tag groups (e.g. "bees"), change tag group order
 
 save bookmark previews as files instead of in database
 
