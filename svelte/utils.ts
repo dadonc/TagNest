@@ -193,3 +193,16 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
   document.getElementById($selectedItems.ids[0])?.scrollIntoView();
   selectedItems.set($selectedItems);
 };
+
+export async function possiblySaveVideoPreviewImage(filePath: string) {
+  const video = document.getElementById("previewVideo") as HTMLVideoElement;
+  if (video.currentTime === 0) return false;
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext("2d")?.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const dataURL = canvas.toDataURL("image/jpeg", 0.5);
+  const name = filePath.split("/").pop()?.split(".").shift() + "_thumb.jpeg";
+  await window.electron.saveVideoPreviewImage(dataURL, name);
+  return true;
+}

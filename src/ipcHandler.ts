@@ -144,4 +144,19 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   ipcMain.handle("getVideoDetails", async (event, videoPath) => {
     return true;
   });
+
+  ipcMain.handle("saveVideoPreviewImage", async (event, imgBase64, name) => {
+    const savePath = (await getSavePathJson()).savePath;
+    const outDir = path.join(savePath, "previews", "videos");
+    if (!fs.existsSync(outDir)) {
+      fs.mkdirSync(path.join(savePath, "previews"));
+      fs.mkdirSync(path.join(savePath, "previews", "videos"));
+    }
+    var buffer = Buffer.from(
+      imgBase64.slice("data:image/png;base64,".length),
+      "base64"
+    );
+
+    fs.writeFileSync(path.join(outDir, name), buffer);
+  });
 }

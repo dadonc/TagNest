@@ -36,6 +36,10 @@ export type ExposedInMainWorld = {
   getCurrentWorkingDirectory: () => Promise<string>;
   createVideoPreview: (videoPath: string, itemId: string) => Promise<void>;
   getVideoDetails: (videoPath: string) => Promise<void>;
+  saveVideoPreviewImage: (
+    imageBase64: string,
+    itemName: string
+  ) => Promise<void>;
 };
 
 const api: ExposedInMainWorld = {
@@ -63,6 +67,8 @@ const api: ExposedInMainWorld = {
     ipcRenderer.invoke("createVideoPreview", videoPath, itemId),
   getVideoDetails: (videoPath) =>
     ipcRenderer.invoke("getVideoDetails", videoPath),
+  saveVideoPreviewImage: (imageBase64, itemName) =>
+    ipcRenderer.invoke("saveVideoPreviewImage", imageBase64, itemName),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

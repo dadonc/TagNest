@@ -57,10 +57,8 @@
   function handleFullscreen() {
     if (document.fullscreenElement !== null) {
       document.exitFullscreen();
-      // videoContainer.setAttribute("data-fullscreen", "false");
     } else {
       videoContainer.requestFullscreen();
-      // videoContainer.setAttribute("data-fullscreen", "true");
     }
   }
 
@@ -116,7 +114,6 @@
 <div
   class="flex flex-col items-center justify-center h-full"
   bind:this={videoContainer}
-  id="videoContainer"
 >
   <div class="max-h-full">
     <!-- svelte-ignore a11y-media-has-caption -->

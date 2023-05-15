@@ -5,7 +5,7 @@ import {
   refreshDisplayedItems,
   type SingleItem,
 } from "../../../stores/items";
-import { currentRoute, currView } from "../../../stores/stateStore";
+import { currentRoute, currView, savePath } from "../../../stores/stateStore";
 
 export const importSteps = {
   video: {
@@ -16,6 +16,47 @@ export const importSteps = {
     2: async (item: SingleItem) => {
       await window.electron.getVideoDetails(item.file!.path);
       console.log("Got video details:", item.name);
+    },
+    3: async (item: SingleItem) => {
+      // creat video thumbnail
+      const $savePath = get(savePath);
+      const itemName = item.name?.split(".")[0];
+      // check if already exists
+      try {
+        const res = await fetch(
+          "file://" +
+            $savePath +
+            "/previews/videos/" +
+            itemName +
+            "_thumb.jpeg",
+          { method: "HEAD" }
+        );
+        if (res.ok) return;
+      } catch (err) {}
+      const video = document.createElement("video");
+      const extension = item.name?.split(".")[1];
+      video.src =
+        "file://" +
+        $savePath +
+        "/previews/videos/" +
+        itemName +
+        "_preview." +
+        extension;
+      video.load();
+      video.addEventListener("canplay", () => {
+        video.currentTime = 0.1;
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas
+          .getContext("2d")
+          ?.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataURL = canvas.toDataURL("image/jpeg", 0.5);
+        window.electron.saveVideoPreviewImage(
+          dataURL,
+          itemName + "_thumb.jpeg"
+        );
+      });
     },
   },
   external: {

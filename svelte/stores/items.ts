@@ -126,10 +126,10 @@ export async function getItems() {
   // TODO ask Chris - using "where" errors in for example RightEditSingle
   const filtered = temp.filter((item) => !item.getsCurrentlyImported);
   let test = filtered;
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 10000; i++) {
     test = test.concat(filtered);
   }
-  return filtered;
+  return test;
 }
 
 async function getItemsDummy() {

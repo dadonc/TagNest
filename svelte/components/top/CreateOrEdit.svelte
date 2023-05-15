@@ -12,6 +12,8 @@
   import { currentRoute } from "../../stores/stateStore";
   import startImportTasks from "../main/import/importQueue";
   import { tick } from "svelte";
+  import VideoPreviewImageChooser from "./VideoPreviewImageChooser.svelte";
+  import { possiblySaveVideoPreviewImage } from "../../utils";
 
   export let close: () => void;
   export let save: (tagString: string) => Promise<void> = async () => {};
@@ -41,6 +43,10 @@
   }
 
   async function updateOrCreate() {
+    let shouldReload = false;
+    if (itemType === "video") {
+      shouldReload = await possiblySaveVideoPreviewImage(path);
+    }
     if (existingItem) {
       save(tagString);
     } else {
@@ -59,8 +65,13 @@
         await tick();
         startImportTasks();
       }
-      refreshDisplayedItems();
       close();
+      if (!shouldReload) {
+        refreshDisplayedItems();
+      }
+    }
+    if (shouldReload) {
+      window.location.reload();
     }
   }
 
@@ -94,6 +105,13 @@
     {path}
     on:image-chosen={(ev) => {
       path = ev.detail.image;
+    }}
+  />
+{:else if existingItem?.type === "video" || itemType === "video"}
+  <VideoPreviewImageChooser
+    videoPath={path}
+    on:image-chosen={(ev) => {
+      wasChanged(true);
     }}
   />
 {:else}
