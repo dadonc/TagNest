@@ -3,10 +3,8 @@
 
 ## Video
 save video details
-virtualization
 fake fullScreen
 detailview preview on space keydown
-change image poster on rightside
 import folders with subfolders
 
 combine library: move new items into save folder

@@ -129,7 +129,7 @@ export async function getItems() {
   for (let i = 0; i < 10000; i++) {
     test = test.concat(filtered);
   }
-  return test;
+  return filtered;
 }
 
 async function getItemsDummy() {

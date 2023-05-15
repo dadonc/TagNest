@@ -52,11 +52,11 @@
         videoIsLoaded = true;
       }}
       on:mouseenter={() => {
-        videoElement.play();
+        if (videoElement.paused) videoElement.play();
         playIconElement.style.display = "none";
       }}
       on:mouseleave={() => {
-        videoElement.pause();
+        if (!videoElement.paused) videoElement.pause();
         playIconElement.style.display = "block";
       }}
     />
