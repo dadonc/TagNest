@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import type { SingleItem } from "../../stores/items";
   export let item: SingleItem;
+  import Play from "../../assets/feather/Play.svelte";
 
   let videoContainer: HTMLDivElement;
   let videoElement: HTMLVideoElement;
@@ -10,6 +11,7 @@
   let totalDurationSpan: HTMLSpanElement;
   let currentDurationSpan: HTMLSpanElement;
   let thumbElement: HTMLCanvasElement;
+  let playIconElement: HTMLSpanElement;
 
   onMount(() => {
     const resizeObserver = new ResizeObserver(resizeThumbElement);
@@ -115,7 +117,7 @@
   class="flex flex-col items-center justify-center h-full"
   bind:this={videoContainer}
 >
-  <div class="max-h-full">
+  <div class="relative max-h-full">
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
       class="m-auto"
@@ -125,6 +127,12 @@
       poster=""
       on:dblclick={handleFullscreen}
       on:click={play}
+      on:play={() => {
+        playIconElement.style.display = "none";
+      }}
+      on:pause={() => {
+        playIconElement.style.display = "block";
+      }}
       on:timeupdate={timeUpdate}
       on:loadedmetadata={() => {
         progressBar.max = videoElement.duration;
@@ -136,6 +144,11 @@
     >
       <source src={"file://" + item.file?.path} />
     </video>
+    <span
+      bind:this={playIconElement}
+      class="absolute inline-block w-8 h-8 p-2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm bg-base-300 text-base-content top-1/2 left-1/2"
+      ><Play className="w-4 h-4" /></span
+    >
     <div class="relative h-6">
       <progress
         on:mouseover={displayThumb}

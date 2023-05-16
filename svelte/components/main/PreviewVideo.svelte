@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
-  import { currentRoute, savePath } from "../../stores/stateStore";
+  import { savePath } from "../../stores/stateStore";
   import Play from "../../assets/feather/Play.svelte";
 
   export let item: SingleItem;
