@@ -12,9 +12,11 @@
   import BottomArea from "./components/bottom/BottomArea.svelte";
   import { currentRoute, filteredData, savePath } from "./stores/stateStore";
   import Settings from "./components/settings/Settings.svelte";
+  import { exitFakeFullscreen } from "./utils";
 
   onMount(async () => {
     startImportTasks();
+    exitFakeFullscreen();
     const savePath_ = await window.electron.getSavePath();
     savePath.set(savePath_);
   });

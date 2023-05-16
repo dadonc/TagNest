@@ -3,6 +3,7 @@
   import type { SingleItem } from "../../stores/items";
   export let item: SingleItem;
   import Play from "../../assets/feather/Play.svelte";
+  import { toggleFakeFullscreen } from "../../utils";
 
   let videoContainer: HTMLDivElement;
   let videoElement: HTMLVideoElement;
@@ -104,6 +105,8 @@
       videoElement.currentTime += 60;
     } else if (e.key == "ArrowUp") {
       videoElement.currentTime -= 60;
+    } else if (e.key == "f") {
+      handleFullscreen();
     }
   }}
 />
@@ -125,7 +128,7 @@
       style="max-height: calc(100% - 1.5rem);"
       bind:this={videoElement}
       poster=""
-      on:dblclick={handleFullscreen}
+      on:dblclick={toggleFakeFullscreen}
       on:click={play}
       on:play={() => {
         playIconElement.style.display = "none";
@@ -175,3 +178,13 @@
     </div>
   </div>
 </div>
+
+<style>
+  /* TODO: wtf refactor __all__ the CSS */
+  :global(.mainContainer) {
+    overflow: hidden;
+  }
+  :global(#mainArea) {
+    overflow: hidden;
+  }
+</style>

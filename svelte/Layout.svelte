@@ -130,7 +130,7 @@
   </div>
   <div class="bg-base-300 mainContainer">
     <div
-      class="h-full p-2 overflow-scroll rounded-sm bg-base-100 slot"
+      class="h-full overflow-scroll rounded-sm bg-base-100 slot"
       id="mainArea"
     >
       <slot name="mainContainer">No mainContainer</slot>
@@ -165,7 +165,6 @@
     on:dragend={removeDragHider}
   >
     <slot name="bottomDivider">No bottomDivider</slot>
-    &nbsp;
   </div>
   {#if canOpenBottom}
     <div class="bottomContainer">
@@ -180,6 +179,7 @@
   :global(:root) {
     --dividerWidth: 0.5rem;
     --bottomDividerHeight: 2rem;
+    --bottomAreaPadding: 0.5rem;
   }
 
   .main {
@@ -208,10 +208,12 @@
   }
 
   .topContainer,
-  .rightContainer,
-  .bottomContainer .slot,
-  .mainContainer .slot {
+  .rightContainer {
     @apply p-2;
+  }
+
+  .bottomContainer .slot {
+    padding: var(--bottomAreaPadding);
   }
 
   .leftContainer {

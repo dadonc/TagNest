@@ -40,6 +40,7 @@ export type ExposedInMainWorld = {
     imageBase64: string,
     itemName: string
   ) => Promise<void>;
+  enterFullscreen: () => void;
 };
 
 const api: ExposedInMainWorld = {
@@ -69,6 +70,7 @@ const api: ExposedInMainWorld = {
     ipcRenderer.invoke("getVideoDetails", videoPath),
   saveVideoPreviewImage: (imageBase64, itemName) =>
     ipcRenderer.invoke("saveVideoPreviewImage", imageBase64, itemName),
+  enterFullscreen: () => ipcRenderer.send("enterFullscreen"),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

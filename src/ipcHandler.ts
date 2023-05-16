@@ -159,4 +159,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
 
     fs.writeFileSync(path.join(outDir, name), buffer);
   });
+
+  ipcMain.on("enterFullscreen", () => {
+    mainWindow.setFullScreen(true);
+  });
 }

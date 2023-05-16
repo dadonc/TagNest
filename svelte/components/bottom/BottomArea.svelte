@@ -30,13 +30,10 @@
 <div
   id="bottomArea"
   class="overflow-y-scroll"
-  style="height: calc(var(--bottomContainer) - 0.5rem)"
+  style="height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2)"
 >
   {#each items as item}
-    <div
-      class="inline-block"
-      style={"height: calc(var(--bottomContainer) - 1rem)"}
-    >
+    <div class="inline-block h-full">
       <Preview {item} {items} />
     </div>
   {/each}

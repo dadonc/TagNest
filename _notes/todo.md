@@ -3,9 +3,9 @@
 
 ## Video
 save video details
-fake fullScreen
 detailview preview on space keydown
 import folders with subfolders
+autoplay videos on click, don't on arrows 
 
 combine library: move new items into save folder
 delete files on item delete

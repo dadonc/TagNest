@@ -11,6 +11,7 @@ import {
   filteredData,
   selectedItems,
 } from "./stores/stateStore";
+import { leftContainer, rightContainer, topContainer } from "./stores/cssStore";
 
 export function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -145,6 +146,7 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
 
   const step = 1;
   if (e.key === "Escape") {
+    exitFakeFullscreen();
     currentRoute.set("main");
   } else if (e.key === "Backspace" && e.metaKey) {
     const item = items.find(
@@ -205,4 +207,51 @@ export async function possiblySaveVideoPreviewImage(filePath: string) {
   const name = filePath.split("/").pop()?.split(".").shift() + "_thumb.jpeg";
   await window.electron.saveVideoPreviewImage(dataURL, name);
   return true;
+}
+
+export async function toggleFakeFullscreen() {
+  const isFullscreen = get(topContainer).currentVal === "0rem";
+  if (isFullscreen) {
+    exitFakeFullscreen();
+  } else {
+    enterFakeFullscreen();
+  }
+}
+
+export function exitFakeFullscreen() {
+  const isFullscreen = get(topContainer).currentVal === "0rem";
+  if (isFullscreen) {
+    topContainer.update((container) => {
+      return { ...container, currentVal: container.val };
+    });
+    rightContainer.update((container) => {
+      return { ...container, currentVal: container.val };
+    });
+    leftContainer.update((container) => {
+      return { ...container, currentVal: container.val };
+    });
+    document.documentElement.style.setProperty("--bottomDividerHeight", "2rem");
+    document.documentElement.style.setProperty("--bottomAreaPadding", "0.5rem");
+  }
+}
+
+function enterFakeFullscreen() {
+  window.electron.enterFullscreen();
+  topContainer.update((container) => {
+    return { ...container, currentVal: "0rem" };
+  });
+  rightContainer.update((container) => {
+    return {
+      ...container,
+      currentVal: "0rem",
+    };
+  });
+  leftContainer.update((container) => {
+    return {
+      ...container,
+      currentVal: "0rem",
+    };
+  });
+  document.documentElement.style.setProperty("--bottomDividerHeight", "0.5rem");
+  document.documentElement.style.setProperty("--bottomAreaPadding", "0rem");
 }
