@@ -8,7 +8,7 @@
 {#if $currentRoute !== "details"}
   <div class="inline-block" style="width: var(--leftContainer)" />
   <div
-    class="inline-flex items-center w-full h-full text-2xl"
+    class="inline-flex items-center w-full h-full"
     style="width: calc(100% - var(--leftContainer) - var(--rightContainer) - var(--dividerWidth) - var(--dividerWidth))"
   >
     <button
@@ -19,7 +19,7 @@
           return v;
         });
       }}
-      class="ml-2 mr-4">+</button
+      class="ml-2 mr-3 text-lg">+</button
     >
 
     <button
@@ -28,7 +28,8 @@
           v.zoomLvl = v.zoomLvl + 1;
           return v;
         });
-      }}>-</button
+      }}
+      class="text-lg">-</button
     >
     <div class="w-full text-sm text-center">
       {#if $currentRoute === "importMultiple"}

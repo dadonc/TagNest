@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
-  import { savePath } from "../../stores/stateStore";
+  import { currentRoute, savePath } from "../../stores/stateStore";
   import Play from "../../assets/feather/Play.svelte";
 
   export let item: SingleItem;
@@ -23,7 +23,10 @@
 
 <!-- svelte-ignore a11y-media-has-caption -->
 <div
-  class="relative w-full h-full"
+  class="relative flex items-center justify-center w-full h-full"
+  style={$currentRoute == "details"
+    ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2)"
+    : ""}
   on:mouseenter={() => {
     displayVideo = true;
   }}
@@ -42,7 +45,11 @@
   }}
 >
   {#if !displayVideo || !videoIsLoaded}
-    <img class="w-full h-full" src={thumbPath} alt="" />
+    <img
+      class={`w-full ${$currentRoute == "details" ? "h-full" : ""}`}
+      src={thumbPath}
+      alt=""
+    />
   {/if}
   {#if displayVideo}
     <video

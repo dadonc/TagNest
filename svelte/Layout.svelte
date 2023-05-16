@@ -212,8 +212,10 @@
     @apply p-2;
   }
 
+  /* TODO - this sucks so much - refactor */
   .bottomContainer .slot {
     padding: var(--bottomAreaPadding);
+    height: var(--bottomContainer);
   }
 
   .leftContainer {

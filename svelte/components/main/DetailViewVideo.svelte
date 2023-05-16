@@ -96,6 +96,7 @@
 <svelte:window
   on:keydown={(e) => {
     if (e.key === " ") {
+      e.preventDefault();
       play();
     } else if (e.key == "ArrowRight") {
       videoElement.currentTime += 10;
@@ -124,7 +125,7 @@
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
       id="videoPlayer"
-      style="max-height: calc(100% - 1rem + 1px);"
+      style="max-height: calc(100% - 1rem);"
       bind:this={videoElement}
       poster=""
       on:dblclick={toggleFakeFullscreen}
@@ -176,13 +177,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  /* TODO: wtf refactor __all__ the CSS */
-  :global(.mainContainer) {
-    overflow: hidden;
-  }
-  :global(#mainArea) {
-    overflow: hidden;
-  }
-</style>

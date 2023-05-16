@@ -1,5 +1,6 @@
 # Bugs
 
+refresh items after import multiple
 
 ## Video
 save video details
