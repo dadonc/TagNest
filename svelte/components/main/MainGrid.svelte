@@ -96,7 +96,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
-  <div class="myGrid" style={`--grid-cols-string: ${gridCols};`}>
+  <div class="p-1 myGrid" style={`--grid-cols-string: ${gridCols};`}>
     {#each items as item}
       <Preview {item} {items} />
     {/each}
@@ -109,5 +109,6 @@
     grid-template-columns: var(--grid-cols-string);
     grid-template-rows: 1;
     /* padding: 0.375rem; */
+    grid-gap: 0.25rem;
   }
 </style>

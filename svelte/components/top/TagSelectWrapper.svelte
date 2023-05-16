@@ -5,8 +5,6 @@
   export let tagString: string;
 </script>
 
-{#await $allTags}
-  <div />
-{:then tags}
+{#await $allTags then tags}
   <TagSelect bind:tagString {tags} />
 {/await}

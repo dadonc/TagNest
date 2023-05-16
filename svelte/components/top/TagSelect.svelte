@@ -11,6 +11,8 @@
 
   const tagStringCopy = tagString;
 
+  const placeholder = '<span class="text-gray-500">Tags<span>';
+
   let tagsHTML = "";
   $: {
     tagsHTML = tagString
@@ -35,7 +37,7 @@
         }
       })
       .join(", ");
-    if (tagString.length === 0) tagsHTML = "";
+    if (tagString.length === 0) tagsHTML = placeholder;
     tick().then(() => {
       // don't run on initial render
       if (tagStringCopy !== tagString) setEndOfContenteditable(textInput);
@@ -76,14 +78,20 @@
     tabindex="0"
     bind:this={textInput}
     class={classNames(
-      "w-full mt-2 input input-bordered outlineFuckery h-16 p-2 overflow-scroll caret-base-content",
+      "w-full mt-2 pl-4 input input-bordered outlineFuckery h-16 p-2 overflow-scroll caret-base-content",
       isAutoCompleteVisible ? "rounded-b-none" : ""
     )}
     on:input={handleKeydown}
     on:focus={() => {
       displayAutocomplete = true;
+      if (tagsHTML == placeholder) {
+        tagsHTML = "";
+      }
     }}
     on:blur={(event) => {
+      if (tagsHTML === "") {
+        tagsHTML = placeholder;
+      }
       if (
         !(
           event.relatedTarget &&

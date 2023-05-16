@@ -19,7 +19,7 @@
   {:else if $selectedItems.ids.length > 1}
     <RightEditMultiple {items} />
   {:else}
-    <div class="flex flex-col items-center justify-center h-full">
+    <div class="flex flex-col items-center justify-center h-full text-center">
       <div class="text-2xl font-bold">No item selected</div>
       <div class="text-sm text-gray-500">Select an item to edit it.</div>
     </div>

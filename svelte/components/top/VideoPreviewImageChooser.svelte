@@ -30,36 +30,43 @@
   }
 
   let isOpen = false;
+  let videoIsLoaded = false;
+
   $: thumbPath = `file://${$savePath}/previews/videos/${
     videoPath.split("/").pop()!.split(".")[0]
   }_thumb.jpeg`;
 </script>
 
-{#if !isOpen}
+{#if !isOpen || !videoIsLoaded}
   <img
-    class="w-full h-full"
+    class="w-full"
     src={thumbPath}
     alt=""
     on:keydown={() => {}}
     on:click={() => (isOpen = true)}
   />
-{:else}
+  <div class="h-4" />
+{/if}
+{#if isOpen}
   <div
-    class="flex flex-col items-center justify-center h-full"
     on:click={() => {
       isOpen = false;
+      videoIsLoaded = false;
       dispatch("image-chosen");
     }}
     on:keydown={() => {}}
+    class={`${videoIsLoaded ? "" : "hidden"}`}
   >
     <div class="max-h-full">
       <!-- svelte-ignore a11y-media-has-caption -->
       <video
-        class="m-auto"
-        style="max-height: calc(100% - 1.5rem);"
+        style="max-height: calc(100% - 1rem);"
         bind:this={videoElement}
         id="previewVideo"
         poster=""
+        on:loadeddata={() => {
+          videoIsLoaded = true;
+        }}
         on:loadedmetadata={() => {
           progressBar.max = videoElement.duration;
           currentDurationSpan.textContent = formatTime(
@@ -71,14 +78,14 @@
       >
         <source src={"file://" + videoPath} />
       </video>
-      <div class="relative h-6">
+      <div class="relative h-4">
         <progress
           on:mouseover={updateVideo}
           on:mousemove={updateVideo}
           on:mouseleave={() => {
             dispatch("image-chosen");
           }}
-          class="hidden w-full h-full"
+          class="absolute hidden w-full h-full"
           bind:this={progressBar}
           value="0"
           max="0"
@@ -86,7 +93,7 @@
           on:keydown={() => {}}
           on:focus={() => {}}
         />
-        <span class="absolute pointer-events-none right-1">
+        <span class="absolute text-xs pointer-events-none right-1">
           <span bind:this={currentDurationSpan} /> /
           <span bind:this={totalDurationSpan} />
         </span>

@@ -120,12 +120,11 @@
   class="flex flex-col items-center justify-center h-full"
   bind:this={videoContainer}
 >
-  <div class="relative max-h-full">
+  <div class="relative h-full">
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
-      class="m-auto"
       id="videoPlayer"
-      style="max-height: calc(100% - 1.5rem);"
+      style="max-height: calc(100% - 1rem + 1px);"
       bind:this={videoElement}
       poster=""
       on:dblclick={toggleFakeFullscreen}
@@ -146,20 +145,19 @@
       }}
     >
       <source src={"file://" + item.file?.path} />
-    </video>
-    <span
+    </video><span
       bind:this={playIconElement}
       class="absolute inline-block w-8 h-8 p-2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm bg-base-300 text-base-content top-1/2 left-1/2"
       ><Play className="w-4 h-4" /></span
     >
-    <div class="relative h-6">
+    <div class="relative h-4">
       <progress
         on:mouseover={displayThumb}
         on:mousemove={displayThumb}
         on:mouseleave={() => {
           thumbElement.style.display = "none";
         }}
-        class="hidden w-full h-full"
+        class="absolute hidden w-full h-full"
         bind:this={progressBar}
         value="0"
         max="0"
@@ -171,7 +169,7 @@
         bind:this={thumbElement}
         class="absolute top-0 left-0 z-50 hidden bg-transparent"
       />
-      <span class="absolute pointer-events-none right-1">
+      <span class="absolute text-xs pointer-events-none right-1">
         <span bind:this={currentDurationSpan} /> /
         <span bind:this={totalDurationSpan} />
       </span>

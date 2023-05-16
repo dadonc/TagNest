@@ -33,6 +33,7 @@ save bookmark previews as files instead of in database
 * delete files saved from url when clicking cancel
 * delete newly added bookmark if canceled before saving
 
+* rename files on item rename?
 
 ## Refactor
 * remove promise around itemStore
