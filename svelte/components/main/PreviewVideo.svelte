@@ -30,6 +30,7 @@
   on:mouseleave={async () => {
     await playPromise;
     displayVideo = false;
+    videoIsLoaded = false;
   }}
   on:focus={() => {
     displayVideo = true;
@@ -37,6 +38,7 @@
   on:blur={async () => {
     await playPromise;
     displayVideo = false;
+    videoIsLoaded = false;
   }}
 >
   {#if !displayVideo || !videoIsLoaded}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ItemPreview from "./Preview.svelte";
+  import Preview from "./Preview.svelte";
   import { currView } from "../../stores/stateStore";
   import {
     deleteItems,
@@ -98,7 +98,7 @@
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
   <div class="myGrid" style={`--grid-cols-string: ${gridCols};`}>
     {#each items as item}
-      <ItemPreview {item} {items} />
+      <Preview {item} {items} />
     {/each}
   </div>
 </div>
