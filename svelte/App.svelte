@@ -28,6 +28,8 @@
       if ($currentRoute === "settings") {
         $currentRoute = "main";
       }
+    } else if ((event.key === "j" && event.metaKey) || event.key === "º") {
+      window.electron.openDevTools();
     }
   };
 </script>

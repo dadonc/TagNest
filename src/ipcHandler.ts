@@ -164,4 +164,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   ipcMain.on("enterFullscreen", () => {
     mainWindow.setFullScreen(true);
   });
+
+  ipcMain.on("openDevTools", () => {
+    mainWindow.webContents.openDevTools();
+  });
 }

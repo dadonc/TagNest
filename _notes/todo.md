@@ -4,7 +4,6 @@
 what is item.file for bookmarks?
 set correct created.at for files
 refresh items after import multiple
-create keyboard shortcut to open devtools 
 rmv latestMigration from save.json
 show video details somewhere
 ## Video
