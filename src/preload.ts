@@ -35,7 +35,7 @@ export type ExposedInMainWorld = {
   setSavePath: (path: string) => Promise<void>;
   getCurrentWorkingDirectory: () => Promise<string>;
   createVideoPreview: (videoPath: string, itemId: string) => Promise<void>;
-  getVideoDetails: (videoPath: string) => Promise<void>;
+  saveVideoDetailsToItem: (videoPath: string, itemId: string) => Promise<void>;
   saveVideoPreviewImage: (
     imageBase64: string,
     itemName: string
@@ -66,8 +66,8 @@ const api: ExposedInMainWorld = {
     ipcRenderer.invoke("getCurrentWorkingDirectory"),
   createVideoPreview: (videoPath, itemId) =>
     ipcRenderer.invoke("createVideoPreview", videoPath, itemId),
-  getVideoDetails: (videoPath) =>
-    ipcRenderer.invoke("getVideoDetails", videoPath),
+  saveVideoDetailsToItem: (videoPath, itemId) =>
+    ipcRenderer.invoke("saveVideoDetailsToItem", videoPath, itemId),
   saveVideoPreviewImage: (imageBase64, itemName) =>
     ipcRenderer.invoke("saveVideoPreviewImage", imageBase64, itemName),
   enterFullscreen: () => ipcRenderer.send("enterFullscreen"),

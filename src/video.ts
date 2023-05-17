@@ -101,7 +101,7 @@ const concatVideo = (
   });
 };
 
-const getVideoDetails = (
+const getSomeVideoDetails = (
   videoPath: string
 ): Promise<{
   duration: number;
@@ -181,7 +181,7 @@ export const createVideoPreview = async (
     try {
       const segmentDuration = 3; // seconds
       const segmentCount = 11; // segments plus one
-      const details = await getVideoDetails(videoPath);
+      const details = await getSomeVideoDetails(videoPath);
       const savePath = (await getSavePathJson()).savePath;
       const actualSegmentCount =
         details.duration > segmentCount * segmentDuration
@@ -209,3 +209,62 @@ export const createVideoPreview = async (
     }
   });
 };
+
+type VideoDetails = {
+  duration: number;
+  width: number;
+  height: number;
+  aspectRatio: string;
+  metaBitrate: string;
+  bitrate: string;
+  fps: number;
+};
+
+export const getVideoDetails = (videoPath: string): Promise<VideoDetails> => {
+  return new Promise((resolve, reject) => {
+    const process = spawn(ffprobePath, [videoPath]);
+    let result: VideoDetails = {} as any;
+    process.stderr.on("data", (d: string) => {
+      const data = d.toString();
+      console.log(data);
+      if (data.indexOf("Duration:") !== -1) {
+        const durationStr = data.split("Duration: ")[1].split(",")[0];
+        let [h, m, s] = durationStr.split(":");
+        s = s.split(".")[0];
+        result["duration"] =
+          parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
+        result["metaBitrate"] = data.split("bitrate: ")[1]?.split("\n")[0];
+      }
+      if (data.indexOf("Stream #0:0") !== -1) {
+        const i = data.split("Stream")[1]?.split("\n")[0];
+        //Example for i:  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709), 1280x720 [SAR 1:1 DAR 16:9], 619 kb/s, 30 fps, 30 tbr, 15360 tbn, 60 tbc (default)
+        if (i) {
+          i.split(", ").forEach((s) => {
+            if (s.indexOf("kb/s") !== -1) {
+              result["bitrate"] = s;
+            } else if (s.indexOf("DAR") !== -1) {
+              result["aspectRatio"] = s.split("DAR ")[1].slice(0, -1);
+              result["width"] = Number(s.split("x")[0].trim());
+              result["height"] = Number(s.split("x")[1].split(" ")[0].trim());
+            } else if (s.indexOf("fps") !== -1) {
+              result["fps"] = Number(s.split(" ")[0].trim());
+            }
+          });
+        }
+      }
+    });
+
+    process.on("close", (code: string) => {
+      if (code == "0") {
+        resolve(result);
+      } else reject();
+    });
+  });
+};
+
+export async function saveVideoDetailsToItem(
+  videoPath: string,
+  itemId: string
+) {
+  const details = await getVideoDetails(videoPath);
+}

@@ -5,7 +5,7 @@ import {
   refreshDisplayedItems,
   type SingleItem,
 } from "../../../stores/items";
-import { currentRoute, currView, savePath } from "../../../stores/stateStore";
+import { currentRoute, savePath } from "../../../stores/stateStore";
 
 export const importSteps = {
   video: {
@@ -14,11 +14,10 @@ export const importSteps = {
       console.log("Created video preview:", item.name);
     },
     2: async (item: SingleItem) => {
-      await window.electron.getVideoDetails(item.file!.path);
-      console.log("Got video details:", item.name);
+      await window.electron.saveVideoDetailsToItem(item.file!.path, item.id);
     },
     3: async (item: SingleItem) => {
-      // creat video thumbnail
+      // create video preview thumbnail
       const $savePath = get(savePath);
       const itemName = item.name?.split(".")[0];
       // check if already exists

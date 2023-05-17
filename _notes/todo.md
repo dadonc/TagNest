@@ -1,10 +1,14 @@
 # Bugs
 
+
+what is item.file for bookmarks?
+set correct created.at for files
 refresh items after import multiple
-
 create keyboard shortcut to open devtools 
-
+rmv latestMigration from save.json
+fix add new video!
 ## Video
+flickering when changing video -> create image for first frame
 save video details
 detailview preview on space keydown
 import folders with subfolders

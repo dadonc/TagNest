@@ -54,10 +54,13 @@ model Bookmark {
 }
 
 model Video {
-  id        String @id @default(cuid())
-  width     Int?
-  height    Int?
-  duration  Int?
-  framerate Int?
-  Item      Item[]
+  id          String  @id @default(cuid())
+  duration    Int?
+  width       Int?
+  height      Int?
+  aspectRatio String?
+  metaBitrate String? // according to the video meta data
+  bitrate     String? // actual bitrate
+  fps         Int?
+  item        Item[]
 }

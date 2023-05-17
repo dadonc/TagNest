@@ -10,6 +10,8 @@ import { getSavePathJson, updateSavePathJson } from "./utils";
 import { isDev } from "./main";
 import { log as electronLog } from "electron-log";
 
+let latestMigration = "20230517130722_more_video";
+
 const log = (...args: any[]) => {
   if (isDev) {
     console.log(...args);
@@ -24,7 +26,9 @@ export async function getPrismaClient() {
     return prisma;
   }
 
+  // log("Save path location", path.join(process.resourcesPath, "save.json"));
   const savePathJson = await getSavePathJson();
+  // log("Save path json", savePathJson);
   const dbPath = path.join(savePathJson.savePath, "database.db");
   const dbUrl = "file:" + dbPath + "?connection_limit=1";
 
@@ -36,7 +40,6 @@ export async function getPrismaClient() {
     },
   });
 
-  let latestMigration = "";
   let needsMigration: boolean;
   const dbExists = fs.existsSync(dbPath);
   if (!dbExists) {
@@ -48,8 +51,8 @@ export async function getPrismaClient() {
     try {
       const latest: Migration[] =
         await prisma.$queryRaw`select * from _prisma_migrations order by finished_at`;
-      latestMigration = latest[latest.length - 1]?.migration_name;
-      needsMigration = latestMigration !== savePathJson.latestMigration;
+      const latestMigrationInDb = latest[latest.length - 1]?.migration_name;
+      needsMigration = latestMigration !== latestMigrationInDb;
     } catch (e) {
       log("ERROR:", e);
       needsMigration = true;

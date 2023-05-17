@@ -17,7 +17,7 @@ import {
 } from "./utils";
 import { getPrismaClient } from "./prisma";
 import { isDev } from "./main";
-import { createVideoPreview } from "./video";
+import { createVideoPreview, saveVideoDetailsToItem } from "./video";
 
 async function handlePrisma(arg: string) {
   try {
@@ -141,7 +141,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     return true;
   });
 
-  ipcMain.handle("getVideoDetails", async (event, videoPath) => {
+  ipcMain.handle("saveVideoDetailsToItem", async (event, videoPath, itemId) => {
+    await saveVideoDetailsToItem(videoPath, itemId);
     return true;
   });
 
