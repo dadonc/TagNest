@@ -5,7 +5,7 @@ import {
   refreshDisplayedItems,
   type SingleItem,
 } from "../../../stores/items";
-import { currentRoute, savePath } from "../../../stores/stateStore";
+import { currentRoute, settingsJson } from "../../../stores/stateStore";
 
 export const importSteps = {
   video: {
@@ -18,7 +18,7 @@ export const importSteps = {
     },
     3: async (item: SingleItem) => {
       // create video preview thumbnail
-      const $savePath = get(savePath);
+      const $savePath = get(settingsJson).savePath;
       const itemName = item.name?.split(".")[0];
       // check if already exists
       try {

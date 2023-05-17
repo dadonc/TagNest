@@ -3,6 +3,13 @@ export const VIDEO_EXTENSIONS = ["mp4", "m4v", "mpg", "mpeg", "ogg", "webm"];
 
 type ItemType = "bookmark" | "image" | "video" | "pdf" | "external";
 
+export type SettingsJson = {
+  savePath: string;
+  latestMigration: string;
+  oldSavePath?: string;
+  combineBehavior: "copy" | "move" | "separate";
+};
+
 export function getItemTypeFromExtension(
   extension: string | undefined
 ): ItemType {

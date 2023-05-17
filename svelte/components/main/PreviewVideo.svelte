@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
-  import { currentRoute, savePath } from "../../stores/stateStore";
+  import { currentRoute, settingsJson } from "../../stores/stateStore";
   import Play from "../../assets/feather/Play.svelte";
 
   export let item: SingleItem;
@@ -11,10 +11,10 @@
   let displayVideo = false;
   let videoIsLoaded = false;
 
-  $: videoPath = `file://${$savePath}/previews/videos/${
+  $: videoPath = `file://${$settingsJson.savePath}/previews/videos/${
     item.name?.split(".")[0]
   }_preview.${item.name!.split(".").pop()}`;
-  $: thumbPath = `file://${$savePath}/previews/videos/${
+  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${
     item.name?.split(".")[0]
   }_thumb.jpeg`;
 

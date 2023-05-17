@@ -2,6 +2,7 @@ import https from "https";
 import path from "path";
 import fs from "fs";
 import util from "util";
+import { SettingsJson } from "./gschert";
 
 // todo remove, and use promisified version, see below
 export function downloadImageFromUrl(
@@ -27,35 +28,34 @@ export function downloadImageFromUrl(
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
-type SaveJson = {
-  savePath: string;
-  latestMigration: string;
-  oldSavePath?: string;
-};
-export async function getSavePathJson(): Promise<SaveJson> {
+export async function getSettingsJson(): Promise<SettingsJson> {
   const filePath = path.join(process.resourcesPath, "save.json");
   if (fs.existsSync(filePath)) {
     const data = await readFileAsync(filePath, "utf8");
     return JSON.parse(data);
   } else {
-    return createSavePathJsonAndReturn(filePath);
+    return createSettingsJsonAndReturn(filePath);
   }
 }
 
-async function createSavePathJsonAndReturn(
+async function createSettingsJsonAndReturn(
   filePath: string
-): Promise<SaveJson> {
-  const initialData = { savePath: process.resourcesPath, latestMigration: "" };
+): Promise<SettingsJson> {
+  const initialData = {
+    savePath: process.resourcesPath,
+    latestMigration: "",
+    combineBehavior: "copy",
+  };
   const initialDataString = JSON.stringify(initialData, null, 2);
   await writeFileAsync(filePath, initialDataString, "utf8");
   const data = await readFileAsync(filePath, "utf8");
   return JSON.parse(data);
 }
 
-export async function updateSavePathJson(
-  newSavePathJson: SaveJson
-): Promise<SaveJson> {
-  const oldJson = await getSavePathJson();
+export async function updateSettingsJson(
+  newSavePathJson: SettingsJson
+): Promise<SettingsJson> {
+  const oldJson = await getSettingsJson();
   const newSaveString = JSON.stringify(
     { ...newSavePathJson, oldSavePath: oldJson.savePath },
     null,
@@ -104,7 +104,7 @@ export async function downloadImageAsBase64FromUrl(url: string) {
 }
 
 export async function getMhtmlPath(filename: string) {
-  const savePath = (await getSavePathJson()).savePath;
+  const savePath = (await getSettingsJson()).savePath;
   if (!fs.existsSync(path.join(savePath, "bookmarks", "mhtml"))) {
     if (!fs.existsSync(path.join(savePath, "bookmarks"))) {
       fs.mkdirSync(path.join(savePath, "bookmarks"));
@@ -115,7 +115,7 @@ export async function getMhtmlPath(filename: string) {
 }
 
 export async function getFaviconPath(faviconName: string) {
-  const savePath = (await getSavePathJson()).savePath;
+  const savePath = (await getSettingsJson()).savePath;
   if (!fs.existsSync(path.join(savePath, "bookmarks", "favicons"))) {
     if (!fs.existsSync(path.join(savePath, "bookmarks"))) {
       fs.mkdirSync(path.join(savePath, "bookmarks"));

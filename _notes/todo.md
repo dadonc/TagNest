@@ -8,7 +8,6 @@ rmv latestMigration from save.json
 show video details somewhere
 ## Video
 flickering when changing video -> create image for first frame
-save video details
 detailview preview on space keydown
 import folders with subfolders
 autoplay videos on click, don't on arrows 

@@ -2,6 +2,7 @@ import { derived, writable } from "svelte/store";
 import { items } from "./items";
 import { allTags } from "./tags";
 import type { Tag } from "@prisma/client";
+import type { SettingsJson } from "../../src/gschert";
 
 export const selectedItems = writable<{
   ids: string[];
@@ -112,4 +113,5 @@ export const currView = writable<CurrViewType>(
 
 type Route = "main" | "details" | "importMultiple" | "settings";
 export const currentRoute = writable<Route>("main");
-export const savePath = writable<string>("");
+
+export const settingsJson = writable<SettingsJson>();

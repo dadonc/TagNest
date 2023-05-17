@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import Alert from "./Alert.svelte";
-  import { currentRoute } from "../../stores/stateStore";
+  import { currentRoute, settingsJson } from "../../stores/stateStore";
   import ChevronLeft from "../../assets/feather/ChevronLeft.svelte";
+  import { get } from "svelte/store";
 
-  let wasChanged = false;
+  let wasSavePathChanged = false;
   let shouldRestart = false;
-  let savePath = "";
+  let savePath = $settingsJson.savePath;
   let oldSavePath = "";
-  onMount(async () => {
-    savePath = await window.electron.getSavePath();
-  });
+  let combineBehavior = $settingsJson.combineBehavior;
+
+  let showCombineBehaviorSaveButton = false;
 </script>
 
 <div class="h-6 bg-base-300" style="-webkit-app-region: drag;" />
@@ -36,12 +36,12 @@
         if (newPath && newPath !== savePath) {
           oldSavePath = savePath;
           savePath = newPath;
-          wasChanged = true;
+          wasSavePathChanged = true;
         }
       }}>Change path</button
     >
 
-    {#if wasChanged}
+    {#if wasSavePathChanged}
       <div class="p-4 mt-2 rounded bg-base-300">
         <p class="text-xl font-bold">Save changes?</p>
 
@@ -52,13 +52,14 @@
 
         <label class="line-through">
           <input type="checkbox" />
-          Move existing database and files to new location
+          Move existing database and files to new location if no database exists
+          there
         </label>
         <div class="mt-2 text-center">
           <button
             on:click={() => {
               savePath = oldSavePath;
-              wasChanged = false;
+              wasSavePathChanged = false;
             }}
           >
             <span class="text-primary">Cancel</span>
@@ -66,8 +67,9 @@
           <button
             class="btn btn-primary btn-sm"
             on:click={async () => {
-              await window.electron.setSavePath(savePath);
-              wasChanged = false;
+              $settingsJson.savePath = savePath;
+              await window.electron.updateSettingsJson(get(settingsJson));
+              wasSavePathChanged = false;
               shouldRestart = true;
             }}>Save</button
           >
@@ -86,10 +88,44 @@
       </div>
     {/if}
 
-    <!-- <div class="flex justify-center mt-8 gap-x-4">
-    <button class="btn btn-secondary">Cancel</button>
-
-    <button disabled={!wasChanged} class="btn btn-primary">Save</button>
-  </div> -->
+    <h2 class="mt-6 text-xl font-bold">Combine library</h2>
+    <p>
+      Do you want all files you add to be copied or moved to the data location?
+    </p>
+    <select
+      class="mt-2"
+      on:change={(e) => {
+        // @ts-ignore
+        if (e.target.value !== $settingsJson.combineBehavior) {
+          // @ts-ignore
+          combineBehavior = e.target.value;
+          showCombineBehaviorSaveButton = true;
+        } else {
+          showCombineBehaviorSaveButton = false;
+        }
+      }}
+    >
+      <option selected={combineBehavior === "copy"} value="copy">Copy</option>
+      <option selected={combineBehavior === "move"} value="move">Move</option>
+      <option selected={combineBehavior === "separate"} value="separate"
+        >Keep original path</option
+      >
+    </select>
+    {#if showCombineBehaviorSaveButton}
+      <div>
+        <label class="block my-2 line-through">
+          <input type="checkbox" />
+          Update existing files
+        </label>
+        <button
+          class="btn btn-primary btn-sm"
+          on:click={async () => {
+            $settingsJson.combineBehavior = combineBehavior;
+            await window.electron.updateSettingsJson(get(settingsJson));
+            showCombineBehaviorSaveButton = false;
+          }}>Save</button
+        >
+      </div>
+    {/if}
   </div>
 </div>

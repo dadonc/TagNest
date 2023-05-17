@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
+import type { SettingsJson } from "./gschert";
 
 export type ExposedInMainWorld = {
   prisma: (str: string) => Promise<any>;
@@ -30,9 +31,9 @@ export type ExposedInMainWorld = {
   ) => void;
   extractBookmarkImages: (fileName: string) => Promise<string[]>;
   readMhtml: (fileName: string) => Promise<string>;
-  getSavePath: () => Promise<string>;
+  getSettingsJson: () => Promise<SettingsJson>;
   getNewSavePath: () => Promise<string>;
-  setSavePath: (path: string) => Promise<void>;
+  updateSettingsJson: (json: SettingsJson) => Promise<void>;
   getCurrentWorkingDirectory: () => Promise<string>;
   createVideoPreview: (videoPath: string, itemId: string) => Promise<void>;
   saveVideoDetailsToItem: (videoPath: string, itemId: string) => Promise<void>;
@@ -60,9 +61,9 @@ const api: ExposedInMainWorld = {
   extractBookmarkImages: (fileName) =>
     ipcRenderer.invoke("extractBookmarkImages", fileName),
   readMhtml: (fileName) => ipcRenderer.invoke("readMhtml", fileName),
-  getSavePath: () => ipcRenderer.invoke("getSavePath"),
+  getSettingsJson: () => ipcRenderer.invoke("getSettingsJson"),
   getNewSavePath: () => ipcRenderer.invoke("getNewSavePath"),
-  setSavePath: (path) => ipcRenderer.invoke("setSavePath", path),
+  updateSettingsJson: (json) => ipcRenderer.invoke("updateSettingsJson", json),
   getCurrentWorkingDirectory: () =>
     ipcRenderer.invoke("getCurrentWorkingDirectory"),
   createVideoPreview: (videoPath, itemId) =>

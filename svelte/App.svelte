@@ -10,15 +10,19 @@
   import TopBar from "./components/top/TopBar.svelte";
   import startImportTasks from "./components/main/import/importQueue";
   import BottomArea from "./components/bottom/BottomArea.svelte";
-  import { currentRoute, filteredData, savePath } from "./stores/stateStore";
+  import {
+    currentRoute,
+    filteredData,
+    settingsJson,
+  } from "./stores/stateStore";
   import Settings from "./components/settings/Settings.svelte";
   import { exitFakeFullscreen } from "./utils";
 
   onMount(async () => {
     startImportTasks();
     exitFakeFullscreen();
-    const savePath_ = await window.electron.getSavePath();
-    savePath.set(savePath_);
+    const settingsJSON = await window.electron.getSettingsJson();
+    settingsJson.set(settingsJSON);
   });
 
   const handleKeyDown = (event: KeyboardEvent) => {

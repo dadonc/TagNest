@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { savePath } from "../../stores/stateStore";
+  import { settingsJson } from "../../stores/stateStore";
   export let videoPath: string;
   export let isCreateNew = false;
 
@@ -33,7 +33,7 @@
   let isOpen = isCreateNew;
   let videoIsLoaded = false;
 
-  $: thumbPath = `file://${$savePath}/previews/videos/${
+  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${
     videoPath.split("/").pop()!.split(".")[0]
   }_thumb.jpeg`;
 </script>

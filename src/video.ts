@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
-import { getSavePathJson } from "./utils";
+import { getSettingsJson } from "./utils";
 import { getPrismaClient } from "./prisma";
 
 const ffmpegPath = require("ffmpeg-static").replace(
@@ -183,7 +183,7 @@ export const createVideoPreview = async (
       const segmentDuration = 3; // seconds
       const segmentCount = 11; // segments plus one
       const details = await getSomeVideoDetails(videoPath);
-      const savePath = (await getSavePathJson()).savePath;
+      const savePath = (await getSettingsJson()).savePath;
       const actualSegmentCount =
         details.duration > segmentCount * segmentDuration
           ? segmentCount

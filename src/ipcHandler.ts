@@ -12,8 +12,8 @@ import { extractBookmarkImages } from "./bookmarks";
 import {
   downloadImageFromUrl,
   getMhtmlPath,
-  getSavePathJson,
-  updateSavePathJson,
+  getSettingsJson,
+  updateSettingsJson,
 } from "./utils";
 import { getPrismaClient } from "./prisma";
 import { isDev } from "./main";
@@ -82,7 +82,7 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
       const name = url.split("/").pop();
       const extension = name.split(".").pop();
       const type = getItemTypeFromExtension(extension);
-      const savePathJson = await getSavePathJson();
+      const savePathJson = await getSettingsJson();
       const localPath = path.join(savePathJson.savePath, name);
       downloadImageFromUrl(url, localPath, function (err) {
         const base64 = fs.readFileSync(localPath).toString("base64");
@@ -109,8 +109,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     return fs.readFileSync(path).toString();
   });
 
-  ipcMain.handle("getSavePath", async (event) => {
-    return (await getSavePathJson()).savePath;
+  ipcMain.handle("getSettingsJson", async (event) => {
+    return await getSettingsJson();
   });
 
   ipcMain.handle("getNewSavePath", (event) => {
@@ -122,9 +122,9 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     });
   });
 
-  ipcMain.handle("setSavePath", async (event, newPath) => {
-    const curr = await getSavePathJson();
-    await updateSavePathJson({ ...curr, savePath: newPath });
+  ipcMain.handle("updateSettingsJson", async (event, json) => {
+    const curr = await getSettingsJson();
+    await updateSettingsJson({ ...curr, ...json });
     return true;
   });
 
@@ -147,7 +147,7 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   });
 
   ipcMain.handle("saveVideoPreviewImage", async (event, imgBase64, name) => {
-    const savePath = (await getSavePathJson()).savePath;
+    const savePath = (await getSettingsJson()).savePath;
     const outDir = path.join(savePath, "previews", "videos");
     if (!fs.existsSync(outDir)) {
       fs.mkdirSync(path.join(savePath, "previews"));

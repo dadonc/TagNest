@@ -6,7 +6,7 @@ import path from "path";
 import { fork } from "child_process";
 import { app } from "electron";
 import { PrismaClient } from "@prisma/client";
-import { getSavePathJson, updateSavePathJson } from "./utils";
+import { getSettingsJson, updateSettingsJson } from "./utils";
 import { isDev } from "./main";
 import { log as electronLog } from "electron-log";
 
@@ -27,7 +27,7 @@ export async function getPrismaClient() {
   }
 
   // log("Save path location", path.join(process.resourcesPath, "save.json"));
-  const savePathJson = await getSavePathJson();
+  const savePathJson = await getSettingsJson();
   // log("Save path json", savePathJson);
   const dbPath = path.join(savePathJson.savePath, "database.db");
   const dbUrl = "file:" + dbPath + "?connection_limit=1";
@@ -79,7 +79,7 @@ export async function getPrismaClient() {
         dbUrl,
       });
 
-      updateSavePathJson({
+      updateSettingsJson({
         ...savePathJson,
         latestMigration,
       });
