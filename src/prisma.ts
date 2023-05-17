@@ -7,7 +7,16 @@ import { fork } from "child_process";
 import { app } from "electron";
 import { PrismaClient } from "@prisma/client";
 import { getSavePathJson, updateSavePathJson } from "./utils";
-import { log } from "electron-log";
+import { isDev } from "./main";
+import { log as electronLog } from "electron-log";
+
+const log = (...args: any[]) => {
+  if (isDev) {
+    console.log(...args);
+  } else {
+    electronLog(...args);
+  }
+};
 
 let prisma: PrismaClient;
 export async function getPrismaClient() {

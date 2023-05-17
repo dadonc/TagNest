@@ -2,6 +2,8 @@
 
 refresh items after import multiple
 
+create keyboard shortcut to open devtools 
+
 ## Video
 save video details
 detailview preview on space keydown
