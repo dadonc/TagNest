@@ -6,7 +6,7 @@ set correct created.at for files
 refresh items after import multiple
 create keyboard shortcut to open devtools 
 rmv latestMigration from save.json
-fix add new video!
+show video details somewhere
 ## Video
 flickering when changing video -> create image for first frame
 save video details

@@ -13,12 +13,12 @@
   import startImportTasks from "../main/import/importQueue";
   import { tick } from "svelte";
   import VideoPreviewImageChooser from "./VideoPreviewImageChooser.svelte";
-  import { possiblySaveVideoPreviewImage } from "../../utils";
+  import { saveVideoPreviewImage } from "../../utils";
 
   export let close: () => void;
   export let save: (tagString: string) => Promise<void> = async () => {};
   export let existingItem: SingleItem | undefined = undefined;
-
+  export let isCreateNew = false;
   export let isButtonDisabled = true;
   export let wasChanged: (tagsWerechanged?: boolean) => void = () => {};
 
@@ -45,7 +45,8 @@
   async function updateOrCreate() {
     let shouldReload = false;
     if (itemType === "video") {
-      shouldReload = await possiblySaveVideoPreviewImage(path);
+      await saveVideoPreviewImage(path);
+      shouldReload = true;
     }
     if (existingItem) {
       save(tagString);
@@ -109,6 +110,7 @@
   />
 {:else if existingItem?.type === "video" || itemType === "video"}
   <VideoPreviewImageChooser
+    {isCreateNew}
     videoPath={path}
     on:image-chosen={(ev) => {
       wasChanged(true);

@@ -196,9 +196,8 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
   selectedItems.set($selectedItems);
 };
 
-export async function possiblySaveVideoPreviewImage(filePath: string) {
+export async function saveVideoPreviewImage(filePath: string) {
   const video = document.getElementById("previewVideo") as HTMLVideoElement;
-  if (video.currentTime === 0) return false;
   const canvas = document.createElement("canvas");
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;

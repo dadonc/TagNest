@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { savePath } from "../../stores/stateStore";
   export let videoPath: string;
+  export let isCreateNew = false;
 
   let videoElement: HTMLVideoElement;
   let progressBar: HTMLProgressElement;
@@ -29,7 +30,7 @@
     currentDurationSpan.textContent = formatTime(videoElement.currentTime);
   }
 
-  let isOpen = false;
+  let isOpen = isCreateNew;
   let videoIsLoaded = false;
 
   $: thumbPath = `file://${$savePath}/previews/videos/${
@@ -37,7 +38,7 @@
   }_thumb.jpeg`;
 </script>
 
-{#if !isOpen || !videoIsLoaded}
+{#if !isCreateNew && (!isOpen || !videoIsLoaded)}
   <img
     class="w-full"
     src={thumbPath}
