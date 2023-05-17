@@ -2,6 +2,7 @@ import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import { getSavePathJson } from "./utils";
+import { getPrismaClient } from "./prisma";
 
 const ffmpegPath = require("ffmpeg-static").replace(
   "app.asar",
@@ -267,4 +268,17 @@ export async function saveVideoDetailsToItem(
   itemId: string
 ) {
   const details = await getVideoDetails(videoPath);
+  const prisma = await getPrismaClient();
+  return prisma.item.update({
+    where: {
+      id: itemId,
+    },
+    data: {
+      video: {
+        create: {
+          ...details,
+        },
+      },
+    },
+  });
 }
