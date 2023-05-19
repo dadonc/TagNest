@@ -43,7 +43,7 @@ save bookmark previews as files instead of in database
 ## Refactor
 * remove promise around itemStore
 * alsways create new items in database when adding items - updateOrCreate should only be update => should it?
-
+* support filenames with multiple dots ie. "file.name.jpg"
 ## TagSelect
 * after adding all tags and clicking backspace it jumps to the beginning of the line
 * cannot click in middle of tag to modify it

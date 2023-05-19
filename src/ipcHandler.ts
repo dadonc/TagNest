@@ -165,7 +165,30 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     mainWindow.setFullScreen(true);
   });
 
+  ipcMain.on("exitFullscreen", () => {
+    mainWindow.setFullScreen(false);
+  });
+
   ipcMain.on("openDevTools", () => {
     mainWindow.webContents.openDevTools();
+  });
+
+  ipcMain.on("closeDevTools", () => {
+    mainWindow.webContents.closeDevTools();
+  });
+
+  ipcMain.handle("copyFile", async (event, src, dest) => {
+    fs.copyFileSync(src, dest);
+    return true;
+  });
+
+  ipcMain.handle("moveFile", async (event, src, dest) => {
+    fs.renameSync(src, dest);
+    return true;
+  });
+
+  ipcMain.handle("deleteFile", async (event, path) => {
+    fs.unlinkSync(path);
+    return true;
   });
 }

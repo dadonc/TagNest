@@ -9,8 +9,8 @@
   //@ts-ignore
   let countImportSteps = importSteps[importItem.type]
     ? //@ts-ignore
-      importSteps[importItem.type].count
-    : 0;
+      importSteps[importItem.type].count + 1
+    : 1;
 
   async function selectAction(
     e: MouseEvent | KeyboardEvent,

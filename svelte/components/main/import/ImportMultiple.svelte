@@ -5,7 +5,7 @@
   import { deselectItems, handleKeydown } from "../../../utils";
 
   function importAll() {
-    importItems.set($importItems.map((i) => ({ ...i, importStep: 1 })));
+    importItems.set($importItems.map((i) => ({ ...i, importStep: 0 })));
     startImportTasks();
   }
 </script>

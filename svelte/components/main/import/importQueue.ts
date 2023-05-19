@@ -3,6 +3,7 @@ import {
   finishItemImport,
   importItems,
   refreshDisplayedItems,
+  updateFilePath,
   type SingleItem,
 } from "../../../stores/items";
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
@@ -99,15 +100,13 @@ export default async function startImportTasks() {
 
   function fillQueue() {
     return get(importItems).filter((item) => {
-      if (item.type in importSteps) {
-        // TODO ask Chris - how to type this
-        //@ts-ignore
-        const stepCount = Object.keys(importSteps[item.type]).length;
-        return item.importStep !== 0 && item.importStep <= stepCount;
-      } else {
-        if (item.importStep !== 0) finishItemImport(item.id, 0);
-        return false;
-      }
+      // TODO ask Chris - how to type this
+      //@ts-ignore
+      const stepCount = importSteps[item.type]
+        ? //@ts-ignore
+          Object.keys(importSteps[item.type]).length
+        : 0;
+      return item.importStep !== -1 && item.importStep <= stepCount;
     });
   }
 
@@ -128,6 +127,9 @@ export default async function startImportTasks() {
     // TODO ask Chris - why is this check needed
     if (item) {
       currentTasks++;
+      if (item.importStep === 0) {
+        item = await runCombineBehavior(item);
+      }
       for (let i = item.importStep; i <= stepCount; i++) {
         //@ts-ignore
         await importSteps[item.type][item.importStep](item);
@@ -150,4 +152,25 @@ export default async function startImportTasks() {
   }
 
   startTasks();
+}
+
+async function runCombineBehavior(item: SingleItem) {
+  const combineBehavior = get(settingsJson).combineBehavior;
+  if (combineBehavior === "separate" || item.type === "bookmark") {
+    item.importStep = 1;
+    return item;
+  }
+  const $savePath = get(settingsJson).savePath;
+  const itemName = item.name?.split(".")[0];
+  const extension = item.name?.split(".")[1];
+  const newPath = $savePath + "/" + itemName + "." + extension;
+  const oldPath = item.file!.path;
+  if (combineBehavior === "copy") {
+    await window.electron.copyFile(oldPath, newPath);
+  } else if (combineBehavior === "move") {
+    await window.electron.moveFile(oldPath, newPath);
+  }
+  item.importStep = 1;
+  await updateFilePath(item.fileId as string, newPath);
+  return item;
 }

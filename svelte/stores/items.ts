@@ -197,3 +197,14 @@ const currentImportItems = localStorage.getItem("importItems");
 export const importItems = writable<SingleItem[]>(
   currentImportItems ? JSON.parse(currentImportItems) : []
 );
+
+export async function updateFilePath(fileId: string, newPath: string) {
+  await prisma.file.update({
+    where: {
+      id: fileId,
+    },
+    data: {
+      path: newPath,
+    },
+  });
+}

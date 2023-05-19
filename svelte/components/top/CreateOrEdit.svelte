@@ -59,7 +59,7 @@
         path,
         tagString,
         type: itemType,
-        importStep: 1,
+        importStep: 0,
       });
       if (newItem) {
         $importItems = [...$importItems, newItem];
@@ -76,11 +76,11 @@
     }
   }
 
-  async function importItem() {
+  async function startItemsImport() {
     if (existingItem) {
       $importItems = $importItems.map((i) => {
         if (existingItem && i.id === existingItem.id) {
-          return { ...i, importStep: 1 };
+          return { ...i, importStep: 0 };
         }
         return i;
       });
@@ -150,7 +150,7 @@
 />
 {#if $currentRoute === "importMultiple"}
   <div class="flex justify-center mt-2 gap-x-2">
-    <button class="btn btn-primary" on:click={importItem}>Import</button>
+    <button class="btn btn-primary" on:click={startItemsImport}>Import</button>
   </div>
 {:else}
   <div class="flex justify-center mt-2 gap-x-2">

@@ -10,7 +10,7 @@ import { getSettingsJson, updateSettingsJson } from "./utils";
 import { isDev } from "./main";
 import { log as electronLog } from "electron-log";
 
-let latestMigration = "20230517130722_more_video";
+let latestMigration = "20230518062258_default_importstep";
 
 const log = (...args: any[]) => {
   if (isDev) {

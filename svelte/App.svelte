@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import Layout from "./Layout.svelte";
   import BottomBar from "./components/bottom/BottomBar.svelte";
   import LeftArea from "./components/left/LeftArea.svelte";
@@ -19,11 +19,13 @@
   import { exitFakeFullscreen } from "./utils";
 
   onMount(async () => {
-    startImportTasks();
     exitFakeFullscreen();
-    const settingsJSON = await window.electron.getSettingsJson();
-    settingsJson.set(settingsJSON);
+    let getSettingsJson = await window.electron.getSettingsJson();
+    settingsJson.set(getSettingsJson);
+    startImportTasks();
   });
+
+  let isDevToolsOpen = false;
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "," && event.metaKey) {
@@ -33,7 +35,11 @@
         $currentRoute = "main";
       }
     } else if ((event.key === "j" && event.metaKey) || event.key === "º") {
-      window.electron.openDevTools();
+      if (isDevToolsOpen) {
+        window.electron.closeDevTools();
+      } else {
+        window.electron.openDevTools();
+      }
     }
   };
 </script>

@@ -16,7 +16,7 @@ model Item {
   url                   String?
   note                  String?
   getsCurrentlyImported Boolean   @default(false)
-  importStep            Int       @default(0)
+  importStep            Int       @default(-1)
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
   file                  File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview, other itmes as main file
