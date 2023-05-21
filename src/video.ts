@@ -222,41 +222,48 @@ type VideoDetails = {
 };
 
 export const getVideoDetails = (videoPath: string): Promise<VideoDetails> => {
+  function extractData(data: string) {
+    let result: VideoDetails = {} as any;
+    if (data.indexOf("Duration:") !== -1) {
+      const durationStr = data.split("Duration: ")[1].split(",")[0];
+      let [h, m, s] = durationStr.split(":");
+      s = s.split(".")[0];
+      result["duration"] = parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
+    }
+    if (data.indexOf("bitrate: ") !== -1) {
+      result["metaBitrate"] = data.split("bitrate: ")[1]?.split("\n")[0];
+    }
+    if (data.indexOf("Stream #0:0") !== -1) {
+      const i = data.split("Stream")[1]?.split("\n")[0];
+      //Example for i:  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709), 1280x720 [SAR 1:1 DAR 16:9], 619 kb/s, 30 fps, 30 tbr, 15360 tbn, 60 tbc (default)
+      if (i) {
+        i.split(", ").forEach((s) => {
+          if (s.indexOf("kb/s") !== -1) {
+            result["bitrate"] = s;
+          } else if (s.indexOf("DAR") !== -1) {
+            result["aspectRatio"] = s.split("DAR ")[1].slice(0, -1);
+            result["width"] = Number(s.split("x")[0].trim());
+            result["height"] = Number(s.split("x")[1].split(" ")[0].trim());
+          } else if (s.indexOf("fps") !== -1) {
+            result["fps"] = Number(s.split(" ")[0].trim());
+          }
+        });
+      }
+    }
+    return result;
+  }
+
   return new Promise((resolve, reject) => {
     const process = spawn(ffprobePath, [videoPath]);
-    let result: VideoDetails = {} as any;
+    let data = "";
     process.stderr.on("data", (d: string) => {
-      const data = d.toString();
-      console.log(data);
-      if (data.indexOf("Duration:") !== -1) {
-        const durationStr = data.split("Duration: ")[1].split(",")[0];
-        let [h, m, s] = durationStr.split(":");
-        s = s.split(".")[0];
-        result["duration"] =
-          parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
-        result["metaBitrate"] = data.split("bitrate: ")[1]?.split("\n")[0];
-      }
-      if (data.indexOf("Stream #0:0") !== -1) {
-        const i = data.split("Stream")[1]?.split("\n")[0];
-        //Example for i:  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709), 1280x720 [SAR 1:1 DAR 16:9], 619 kb/s, 30 fps, 30 tbr, 15360 tbn, 60 tbc (default)
-        if (i) {
-          i.split(", ").forEach((s) => {
-            if (s.indexOf("kb/s") !== -1) {
-              result["bitrate"] = s;
-            } else if (s.indexOf("DAR") !== -1) {
-              result["aspectRatio"] = s.split("DAR ")[1].slice(0, -1);
-              result["width"] = Number(s.split("x")[0].trim());
-              result["height"] = Number(s.split("x")[1].split(" ")[0].trim());
-            } else if (s.indexOf("fps") !== -1) {
-              result["fps"] = Number(s.split(" ")[0].trim());
-            }
-          });
-        }
-      }
+      const stdData = d.toString();
+      data += stdData;
     });
 
     process.on("close", (code: string) => {
       if (code == "0") {
+        const result = extractData(data);
         resolve(result);
       } else reject();
     });
@@ -269,16 +276,17 @@ export async function saveVideoDetailsToItem(
 ) {
   const details = await getVideoDetails(videoPath);
   const prisma = await getPrismaClient();
+  const video = await prisma.video.create({
+    data: {
+      ...details,
+    },
+  });
   return prisma.item.update({
     where: {
       id: itemId,
     },
     data: {
-      video: {
-        create: {
-          ...details,
-        },
-      },
+      videoId: video.id,
     },
   });
 }

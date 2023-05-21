@@ -96,8 +96,6 @@ export default async function startImportTasks() {
   let currentTasks = 0;
   const maxTasks = 5;
 
-  let queue = fillQueue();
-
   function fillQueue() {
     return get(importItems).filter((item) => {
       // TODO ask Chris - how to type this
@@ -110,14 +108,33 @@ export default async function startImportTasks() {
     });
   }
 
-  function startTasks() {
-    if (queue.length === 0) {
-      isRunning = false;
-      return;
+  let queue: SingleItem[] = [];
+  let wasRunning = false;
+
+  async function startTasks() {
+    queue = fillQueue();
+
+    while (queue.length > 0) {
+      wasRunning = true;
+      while (currentTasks < maxTasks && queue.length > 0) {
+        const item = queue.shift();
+        if (item) runItemTasks(item);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
-    while (currentTasks < maxTasks && queue.length > 0) {
-      const item = queue.shift();
-      if (item) runItemTasks(item);
+
+    queue = fillQueue();
+    if (queue.length > 0) {
+      startTasks();
+    } else {
+      isRunning = false;
+      if (wasRunning) {
+        wasRunning = false;
+        refreshDisplayedItems("finishedItemsImport");
+      }
+      if (get(currentRoute) === "importMultiple") {
+        currentRoute.set("main");
+      }
     }
   }
 
@@ -135,19 +152,12 @@ export default async function startImportTasks() {
         await importSteps[item.type][item.importStep](item);
         importItems.update((items) => {
           const index = items.findIndex((i) => i.id === item.id);
-          items[index].importStep = item.importStep + 1;
+          items[index].importStep++;
           return items;
         });
       }
       await finishItemImport(item.id, stepCount);
       currentTasks--;
-      if (queue.length === 0) {
-        isRunning = false;
-        if (get(currentRoute) === "importMultiple") {
-          currentRoute.set("main");
-        }
-        refreshDisplayedItems("finishedItemsImport");
-      }
     }
   }
 

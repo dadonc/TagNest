@@ -1,6 +1,6 @@
 # Bugs
 
-
+don't save full path in database, only relative path
 what is item.file for bookmarks?
 set correct created.at for files
 refresh items after import multiple
@@ -8,11 +8,11 @@ rmv latestMigration from save.json
 show video details somewhere
 ## Video
 flickering when changing video -> create image for first frame
+fliockering when hovering over video?!
 detailview preview on space keydown
 import folders with subfolders
 autoplay videos on click, don't on arrows 
 
-combine library: move new items into save folder
 delete files on item delete
 How to work with item that are imported twice? (e.g. same file, different name)
 
