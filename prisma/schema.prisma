@@ -61,6 +61,6 @@ model Video {
   aspectRatio String?
   metaBitrate String? // according to the video meta data
   bitrate     String? // actual bitrate
-  fps         Int?
+  fps         Float?
   item        Item[]
 }

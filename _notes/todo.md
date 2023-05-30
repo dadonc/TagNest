@@ -1,9 +1,13 @@
 # Bugs
 
+
+* fix name extraction if more than one point in name
+* warnings because previews seem to be rendered while not visible
+* set correct created.at for files
+* save.json somehow gets corrupted after migration
+
 don't save full path in database, only relative path
 what is item.file for bookmarks?
-set correct created.at for files
-refresh items after import multiple
 rmv latestMigration from save.json
 show video details somewhere
 ## Video
