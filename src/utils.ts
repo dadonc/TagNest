@@ -2,7 +2,7 @@ import https from "https";
 import path from "path";
 import fs from "fs";
 import util from "util";
-import { SettingsJson } from "./gschert";
+import type { SettingsJson } from "./gschert";
 
 // todo remove, and use promisified version, see below
 export function downloadImageFromUrl(

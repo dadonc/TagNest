@@ -22,3 +22,9 @@ export function getItemTypeFromExtension(
   }
   return "external";
 }
+
+export function extractNameAndExtension(filePath: string) {
+  const name = filePath.split("/").pop()?.split(".").slice(0, -1).join(".");
+  const extension = filePath.split(".").pop();
+  return { name, extension };
+}

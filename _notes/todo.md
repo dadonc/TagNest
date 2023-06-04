@@ -6,10 +6,20 @@
 * set correct created.at for files
 * save.json somehow gets corrupted after migration
 
+Styling:
+Make selection more visible
+Decrease play symbol
+secondary fake fullscreen - force full video width
+
+Select preview frame on click - make larger?
+
 don't save full path in database, only relative path
 what is item.file for bookmarks?
 rmv latestMigration from save.json
 show video details somewhere
+allow creation of new window with same database
+
+rigth side - show items if multiple items are selected
 ## Video
 flickering when changing video -> create image for first frame
 fliockering when hovering over video?!

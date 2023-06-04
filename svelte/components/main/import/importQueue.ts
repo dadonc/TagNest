@@ -7,6 +7,7 @@ import {
   type SingleItem,
 } from "../../../stores/items";
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
+import { extractNameAndExtension } from "../../../../src/gschert";
 
 export const importSteps = {
   video: {
@@ -20,7 +21,7 @@ export const importSteps = {
     3: async (item: SingleItem) => {
       // create video preview thumbnail
       const $savePath = get(settingsJson).savePath;
-      const itemName = item.name?.split(".")[0];
+      const itemName = extractNameAndExtension(item.name!).name;
       // check if already exists
       try {
         const res = await fetch(
@@ -140,7 +141,10 @@ export default async function startImportTasks() {
 
   async function runItemTasks(item: SingleItem) {
     //@ts-ignore
-    const stepCount = Object.keys(importSteps[item.type]).length;
+    const stepCount = importSteps[item.type]
+      ? //@ts-ignore
+        Object.keys(importSteps[item.type]).length
+      : 0;
     // TODO ask Chris - why is this check needed
     if (item) {
       currentTasks++;
@@ -171,9 +175,8 @@ async function runCombineBehavior(item: SingleItem) {
     return item;
   }
   const $savePath = get(settingsJson).savePath;
-  const itemName = item.name?.split(".")[0];
-  const extension = item.name?.split(".")[1];
-  const newPath = $savePath + "/" + itemName + "." + extension;
+  const { name, extension } = extractNameAndExtension(item.name!);
+  const newPath = $savePath + "/" + name + "." + extension;
   const oldPath = item.file!.path;
   if (combineBehavior === "copy") {
     await window.electron.copyFile(oldPath, newPath);

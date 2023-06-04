@@ -12,6 +12,7 @@ import {
   selectedItems,
 } from "./stores/stateStore";
 import { leftContainer, rightContainer, topContainer } from "./stores/cssStore";
+import { extractNameAndExtension } from "../src/gschert";
 
 export function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -203,7 +204,7 @@ export async function saveVideoPreviewImage(filePath: string) {
   canvas.height = video.videoHeight;
   canvas.getContext("2d")?.drawImage(video, 0, 0, canvas.width, canvas.height);
   const dataURL = canvas.toDataURL("image/jpeg", 0.5);
-  const name = filePath.split("/").pop()?.split(".").shift() + "_thumb.jpeg";
+  const name = extractNameAndExtension(filePath).name + "_thumb.jpeg";
   await window.electron.saveVideoPreviewImage(dataURL, name);
   return true;
 }

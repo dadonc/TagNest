@@ -2,6 +2,7 @@ import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import { getSettingsJson } from "./utils";
+import { extractNameAndExtension } from "./gschert";
 import { getPrismaClient } from "./prisma";
 
 const ffmpegPath = require("ffmpeg-static").replace(
@@ -19,7 +20,7 @@ const cutVideoSegment = (
   startSecond: number,
   duration: number
 ): Promise<void> => {
-  const fileName = videoPath.split("/").pop()?.split(".")[0];
+  const fileName = extractNameAndExtension(videoPath).name;
   if (!fileName) throw new Error("Invalid videoPath");
   return new Promise((resolve, reject) => {
     try {
@@ -65,7 +66,7 @@ const concatVideo = (
     // -y overwrites output file if it exists
     try {
       const fileType = videoPath.split(".").pop() || "mp4";
-      const fileName = videoPath.split("/").pop()?.split(".")[0];
+      const fileName = extractNameAndExtension(videoPath).name;
       const txtPath = path.join(tempPath, fileName + "_cutPoints.txt");
       const outDir = path.join(savePath, "previews", "videos");
       if (!fs.existsSync(outDir)) {
@@ -142,7 +143,7 @@ const createConcatTxt = (
   startSeconds: number[]
 ) => {
   const videoExtension = videoPath.split(".").pop();
-  const fileName = videoPath.split("/").pop()?.split(".")[0];
+  const fileName = extractNameAndExtension(videoPath).name;
   if (!fileName) throw new Error("Invalid videoPath");
   const txt = startSeconds
     .map(
@@ -161,7 +162,7 @@ const delTempFiles = (
   savePath: string,
   startSeconds: number[]
 ) => {
-  const fileName = videoPath.split("/").pop()?.split(".")[0];
+  const fileName = extractNameAndExtension(videoPath).name;
   if (!fileName) throw new Error("Invalid videoPath");
   const videoExtension = videoPath.split(".").pop();
   startSeconds.forEach((s) =>

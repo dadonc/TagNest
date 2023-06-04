@@ -2,6 +2,7 @@
   import type { SingleItem } from "../../stores/items";
   import { currentRoute, settingsJson } from "../../stores/stateStore";
   import Play from "../../assets/feather/Play.svelte";
+  import { extractNameAndExtension } from "../../../src/gschert";
 
   export let item: SingleItem;
 
@@ -11,12 +12,9 @@
   let displayVideo = false;
   let videoIsLoaded = false;
 
-  $: videoPath = `file://${$settingsJson.savePath}/previews/videos/${
-    item.name?.split(".")[0]
-  }_preview.${item.name!.split(".").pop()}`;
-  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${
-    item.name?.split(".")[0]
-  }_thumb.jpeg`;
+  let { name, extension } = extractNameAndExtension(item.name!);
+  $: videoPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}`;
+  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${name}_thumb.jpeg`;
 
   let playPromise: Promise<void> | undefined;
 </script>

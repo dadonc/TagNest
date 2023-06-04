@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { settingsJson } from "../../stores/stateStore";
+  import { extractNameAndExtension } from "../../../src/gschert";
   export let videoPath: string;
   export let isCreateNew = false;
 
@@ -34,7 +35,7 @@
   let videoIsLoaded = false;
 
   $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${
-    videoPath.split("/").pop()!.split(".")[0]
+    extractNameAndExtension(videoPath).name
   }_thumb.jpeg`;
 </script>
 
