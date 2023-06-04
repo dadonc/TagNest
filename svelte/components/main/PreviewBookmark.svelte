@@ -7,7 +7,14 @@
 </script>
 
 <div class="relative hoverContainer">
-  <img src={item.file?.path} alt="" class="max-h-full" />
+  <img
+    src={item.file?.path}
+    alt=""
+    class="max-h-full"
+    style={$currentRoute == "details"
+      ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 2px)"
+      : ""}
+  />
   {#if item.url}
     <a
       target="_blank"
