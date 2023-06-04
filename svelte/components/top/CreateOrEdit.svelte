@@ -50,6 +50,9 @@
     }
     if (existingItem) {
       save(tagString);
+      if (existingItem.type === "bookmark") {
+        shouldReload = true;
+      }
     } else {
       const newName = name ? name : namePlaceholder ? namePlaceholder : "";
       const newItem = await createItem({

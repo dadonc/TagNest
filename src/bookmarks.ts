@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 import { downloadImageFromUrlPromisified, getFaviconPath } from "./utils";
 import { getPrismaClient } from "./prisma";
 type NewBookmark = {
@@ -62,7 +61,6 @@ export function extractBookmarkImages(mhtmlPath: string) {
     const type = part.slice(0, part.indexOf("\n"));
     const urlStart = part.indexOf("Content-Location: ");
     const urlEnd = part.indexOf("\n", urlStart);
-    const path = part.slice(urlStart, urlEnd);
     const base64 = part.slice(urlEnd + 3, part.indexOf("\n--") - 3);
     return `data:image/${type};base64,${base64}`;
   });

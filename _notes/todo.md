@@ -1,7 +1,6 @@
 # Bugs
 
 
-* fix name extraction if more than one point in name
 * warnings because previews seem to be rendered while not visible
 * set correct created.at for files
 * save.json somehow gets corrupted after migration
