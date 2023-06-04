@@ -1,17 +1,11 @@
 # Bugs
 
-
-* warnings because previews seem to be rendered while not visible
+* choose video preview on click 
 * set correct created.at for files
 * save.json somehow gets corrupted after migration
 
 Styling:
-Make selection more visible
-Decrease play symbol
 secondary fake fullscreen - force full video width
-
-Select preview frame on click - make larger?
-
 don't save full path in database, only relative path
 what is item.file for bookmarks?
 rmv latestMigration from save.json

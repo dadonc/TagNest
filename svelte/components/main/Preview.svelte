@@ -77,8 +77,8 @@
     }
   }}
   class={classNames(
-    isItemSelected ? "border border-blue-500" : "border border-transparent",
-    "flex items-center justify-center h-full w-full bg-base-300"
+    "flex items-center justify-center h-full w-full bg-base-100 border-4",
+    isItemSelected ? " border-blue-500" : "border-transparent"
   )}
 >
   {#if intersects}
