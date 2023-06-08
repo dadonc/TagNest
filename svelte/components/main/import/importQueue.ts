@@ -21,31 +21,26 @@ export const importSteps = {
     3: async (item: SingleItem) => {
       // create video preview thumbnail
       const $savePath = get(settingsJson).savePath;
-      const itemName = extractNameAndExtension(item.name!).name;
+      const { name, extension } = extractNameAndExtension(item.name!);
       // check if already exists
       try {
         const res = await fetch(
-          "file://" +
-            $savePath +
-            "/previews/videos/" +
-            itemName +
-            "_thumb.jpeg",
+          "file://" + $savePath + "/previews/videos/" + name + "_thumb.jpeg",
           { method: "HEAD" }
         );
         if (res.ok) return;
       } catch (err) {}
       const video = document.createElement("video");
-      const extension = item.name?.split(".")[1];
       video.src =
         "file://" +
         $savePath +
         "/previews/videos/" +
-        itemName +
+        name +
         "_preview." +
         extension;
       video.load();
       video.addEventListener("canplay", () => {
-        video.currentTime = 0.1;
+        video.currentTime = 0;
         const canvas = document.createElement("canvas");
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -53,10 +48,7 @@ export const importSteps = {
           .getContext("2d")
           ?.drawImage(video, 0, 0, canvas.width, canvas.height);
         const dataURL = canvas.toDataURL("image/jpeg", 0.5);
-        window.electron.saveVideoPreviewImage(
-          dataURL,
-          itemName + "_thumb.jpeg"
-        );
+        window.electron.saveVideoPreviewImage(dataURL, name + "_thumb.jpeg");
       });
     },
   },

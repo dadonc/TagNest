@@ -42,21 +42,21 @@
     videoIsLoaded = false;
   }}
 >
-  {#if !displayVideo || !videoIsLoaded}
-    <img
-      class={`w-full ${$currentRoute == "details" ? "h-full" : ""}`}
-      src={thumbPath}
-      alt=""
-    />
-  {/if}
+  <img
+    class={`w-full ${$currentRoute == "details" ? "h-full" : ""} ${
+      videoIsLoaded ? "absolute " : ""
+    }`}
+    src={thumbPath}
+    alt=""
+  />
   {#if displayVideo}
     <video
       muted
       loop
       bind:this={videoElement}
-      class={`w-full h-full ${videoIsLoaded ? "" : "hidden"} `}
+      class={`w-full h-full ${videoIsLoaded ? "z-10" : "hidden"} `}
       src={videoPath}
-      on:loadeddata={() => {
+      on:canplay={() => {
         videoIsLoaded = true;
       }}
       on:mouseenter={() => {

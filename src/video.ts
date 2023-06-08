@@ -84,6 +84,8 @@ const concatVideo = (
         txtPath,
         "-c",
         "copy",
+        // "-vf",
+        // "deflicker",
         // "-filter_complex",
         // "afade=t=out:st=1:overlap=1",
         outPath,
@@ -103,39 +105,39 @@ const concatVideo = (
   });
 };
 
-const getSomeVideoDetails = (
-  videoPath: string
-): Promise<{
-  duration: number;
-  bitrate: string;
-  info: string;
-}> => {
-  return new Promise((resolve, reject) => {
-    const process = spawn(ffprobePath, [videoPath]);
+// const getSomeVideoDetails = (
+//   videoPath: string
+// ): Promise<{
+//   duration: number;
+//   bitrate: string;
+//   info: string;
+// }> => {
+//   return new Promise((resolve, reject) => {
+//     const process = spawn(ffprobePath, [videoPath]);
 
-    process.stderr.on("data", (d: string) => {
-      const data = d.toString();
-      if (data.indexOf("Duration:") !== -1) {
-        try {
-          const durationStr = data.split("Duration: ")[1].split(",")[0];
-          let [h, m, s] = durationStr.split(":");
-          s = s.split(".")[0];
-          const duration = parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
-          const bitrate = data.split("bitrate: ")[1]?.split("\n")[0];
-          const info = data.split("Video: ")[1]?.split("\n")[0];
-          resolve({ duration, bitrate, info });
-        } catch (e) {
-          reject(e);
-        }
-      }
-    });
+//     process.stderr.on("data", (d: string) => {
+//       const data = d.toString();
+//       if (data.indexOf("Duration:") !== -1) {
+//         try {
+//           const durationStr = data.split("Duration: ")[1].split(",")[0];
+//           let [h, m, s] = durationStr.split(":");
+//           s = s.split(".")[0];
+//           const duration = parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
+//           const bitrate = data.split("bitrate: ")[1]?.split("\n")[0];
+//           const info = data.split("Video: ")[1]?.split("\n")[0];
+//           resolve({ duration, bitrate, info });
+//         } catch (e) {
+//           reject(e);
+//         }
+//       }
+//     });
 
-    process.on("close", (code: string) => {
-      if (code == "0") {
-      } else reject();
-    });
-  });
-};
+//     process.on("close", (code: string) => {
+//       if (code == "0") {
+//       } else reject();
+//     });
+//   });
+// };
 
 const createConcatTxt = (
   videoPath: string,
@@ -181,19 +183,19 @@ export const createVideoPreview = async (
 ): Promise<void> => {
   return new Promise(async (resolve, reject) => {
     try {
-      const segmentDuration = 3; // seconds
+      const segmentDuration = 2; // seconds
       const segmentCount = 11; // segments plus one
-      const details = await getSomeVideoDetails(videoPath);
+      const details = await getVideoDetails(videoPath);
       const savePath = (await getSettingsJson()).savePath;
       const actualSegmentCount =
         details.duration > segmentCount * segmentDuration
           ? segmentCount
-          : Math.ceil(segmentCount / 2);
+          : segmentCount / 2;
       const slicePoints: number[] = [];
       let step = details.duration / actualSegmentCount;
       let curr = step;
       for (let i = 0; i < actualSegmentCount; i++) {
-        slicePoints.push(curr);
+        slicePoints.push(Math.floor(curr));
         curr += step;
       }
       const tempPath = path.join(savePath, "temp");
@@ -207,6 +209,7 @@ export const createVideoPreview = async (
       delTempFiles(videoPath, tempPath, slicePoints);
       resolve();
     } catch (e) {
+      console.log("ERROR CATCHED", e);
       reject(e);
     }
   });
