@@ -193,8 +193,10 @@ export async function finishItemImport(id: string, importStep: number) {
   });
 }
 
+export type ImportItem = SingleItem & { lastImportStepUpdate?: number };
 const currentImportItems = localStorage.getItem("importItems");
-export const importItems = writable<SingleItem[]>(
+
+export const importItems = writable<ImportItem[]>(
   currentImportItems ? JSON.parse(currentImportItems) : []
 );
 

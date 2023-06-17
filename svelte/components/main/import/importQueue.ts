@@ -5,6 +5,7 @@ import {
   refreshDisplayedItems,
   updateFilePath,
   type SingleItem,
+  type ImportItem,
 } from "../../../stores/items";
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
@@ -97,24 +98,30 @@ export default async function startImportTasks() {
         ? //@ts-ignore
           Object.keys(importSteps[item.type]).length
         : 0;
-      return item.importStep !== -1 && item.importStep <= stepCount;
+      const correctStep =
+        item.importStep !== -1 && item.importStep <= stepCount;
+      const wasUpdatedRecently = item.lastImportStepUpdate
+        ? item.lastImportStepUpdate < Date.now() - 5 * 60 * 1000
+        : false;
+      return correctStep && !wasUpdatedRecently;
     });
   }
 
-  let queue: SingleItem[] = [];
+  let queue: ImportItem[] = [];
   let wasRunning = false;
 
   async function startTasks() {
     queue = fillQueue();
 
+    let promises = [];
     while (queue.length > 0) {
       wasRunning = true;
       while (currentTasks < maxTasks && queue.length > 0) {
         const item = queue.shift();
-        if (item) runItemTasks(item);
+        if (item) promises.push(runItemTasks(item));
       }
-      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
+    await Promise.all(promises);
 
     queue = fillQueue();
     if (queue.length > 0) {
@@ -131,7 +138,7 @@ export default async function startImportTasks() {
     }
   }
 
-  async function runItemTasks(item: SingleItem) {
+  async function runItemTasks(item: ImportItem) {
     //@ts-ignore
     const stepCount = importSteps[item.type]
       ? //@ts-ignore
@@ -149,6 +156,7 @@ export default async function startImportTasks() {
         importItems.update((items) => {
           const index = items.findIndex((i) => i.id === item.id);
           items[index].importStep++;
+          items[index].lastImportStepUpdate = Date.now();
           return items;
         });
       }
@@ -160,7 +168,7 @@ export default async function startImportTasks() {
   startTasks();
 }
 
-async function runCombineBehavior(item: SingleItem) {
+async function runCombineBehavior(item: ImportItem) {
   const combineBehavior = get(settingsJson).combineBehavior;
   if (combineBehavior === "separate" || item.type === "bookmark") {
     item.importStep = 1;

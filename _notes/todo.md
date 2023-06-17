@@ -1,5 +1,8 @@
 # Bugs
 
+current items aren't displayed while importing new items
+currViewStore: rmv route
+
 * choose video preview on click 
 * set correct created.at for files
 * save.json somehow gets corrupted after migration

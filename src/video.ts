@@ -73,7 +73,10 @@ const concatVideo = (
         fs.mkdirSync(path.join(savePath, "previews"));
         fs.mkdirSync(path.join(savePath, "previews", "videos"));
       }
-      const outPath = path.join(outDir, fileName + "_preview." + fileType);
+      const outPath = path.join(
+        outDir,
+        fileName + "_preview_flicker." + fileType
+      );
       const task = spawn(ffmpegPath, [
         "-y",
         "-f",
@@ -84,17 +87,14 @@ const concatVideo = (
         txtPath,
         "-c",
         "copy",
-        // "-vf",
-        // "deflicker",
-        // "-filter_complex",
-        // "afade=t=out:st=1:overlap=1",
         outPath,
       ]);
 
       task.stderr.on("data", (data: string) => {});
 
-      task.on("close", (code: string) => {
+      task.on("exit", async (code: string) => {
         if (code == "0") {
+          await deflicker(outPath);
           resolve();
         } else reject();
       });
@@ -104,6 +104,24 @@ const concatVideo = (
     }
   });
 };
+
+function deflicker(previewPath: string): Promise<void> {
+  // ffmpeg -i input.mp4 -vf deflicker output.mp4
+  return new Promise((resolve, reject) => {
+    const task = spawn(ffmpegPath, [
+      "-i",
+      previewPath,
+      "-vf",
+      "deflicker",
+      previewPath.replace("_flicker", ""),
+    ]);
+    task.on("exit", (code: string) => {
+      if (code == "0") {
+        fs.unlink(previewPath, () => resolve());
+      } else reject();
+    });
+  });
+}
 
 // const getSomeVideoDetails = (
 //   videoPath: string
@@ -193,7 +211,7 @@ export const createVideoPreview = async (
           : segmentCount / 2;
       const slicePoints: number[] = [];
       let step = details.duration / actualSegmentCount;
-      let curr = step;
+      let curr = 0;
       for (let i = 0; i < actualSegmentCount; i++) {
         slicePoints.push(Math.floor(curr));
         curr += step;
