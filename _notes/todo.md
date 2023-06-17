@@ -1,7 +1,15 @@
 # Bugs
 
+bug if an exisitng preview gets recreated
 current items aren't displayed while importing new items
+add tag to video without changing preview image
+
+
+hide play symbol until video is loaded
 currViewStore: rmv route
+
+delete files on item delete
+How to work with item that are imported twice? (e.g. same file, different name)
 
 * choose video preview on click 
 * set correct created.at for files
@@ -17,14 +25,11 @@ allow creation of new window with same database
 
 rigth side - show items if multiple items are selected
 ## Video
-flickering when changing video -> create image for first frame
-fliockering when hovering over video?!
 detailview preview on space keydown
 import folders with subfolders
-autoplay videos on click, don't on arrows 
+DetailviewVideo: autoplay videos on click, don't on arrows 
 
-delete files on item delete
-How to work with item that are imported twice? (e.g. same file, different name)
+
 
 "untagged" tag
 type filter - display only items of selected type

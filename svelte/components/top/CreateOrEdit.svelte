@@ -71,13 +71,11 @@
       }
       close();
       if (!shouldReload) {
-        // TODO - should this be here?
-        // refreshDisplayedItems();
+        refreshDisplayedItems();
       }
     }
     if (shouldReload) {
-      // TODO - should this be here?
-      // window.location.reload();
+      window.location.reload();
     }
   }
 

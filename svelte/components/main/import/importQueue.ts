@@ -111,6 +111,7 @@ export default async function startImportTasks() {
   let wasRunning = false;
 
   async function startTasks() {
+    console.log("start import tasks");
     queue = fillQueue();
 
     let promises = [];
@@ -139,6 +140,7 @@ export default async function startImportTasks() {
   }
 
   async function runItemTasks(item: ImportItem) {
+    console.log("run item tasks", item.name);
     //@ts-ignore
     const stepCount = importSteps[item.type]
       ? //@ts-ignore
@@ -151,8 +153,10 @@ export default async function startImportTasks() {
         item = await runCombineBehavior(item);
       }
       for (let i = item.importStep; i <= stepCount; i++) {
+        console.log("run step", i, "of", item.name);
         //@ts-ignore
         await importSteps[item.type][item.importStep](item);
+        console.log("finished step", item.importStep, "of", item.name);
         importItems.update((items) => {
           const index = items.findIndex((i) => i.id === item.id);
           items[index].importStep++;
