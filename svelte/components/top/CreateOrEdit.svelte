@@ -71,11 +71,13 @@
       }
       close();
       if (!shouldReload) {
-        refreshDisplayedItems();
+        // todo look into this
+        // refreshDisplayedItems();
       }
     }
     if (shouldReload) {
-      window.location.reload();
+      // todo look into this
+      // window.location.reload();
     }
   }
 

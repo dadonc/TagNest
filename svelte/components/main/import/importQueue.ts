@@ -121,8 +121,8 @@ export default async function startImportTasks() {
         const item = queue.shift();
         if (item) promises.push(runItemTasks(item));
       }
+      await Promise.all(promises); // why doesn't Promise.any not work?
     }
-    await Promise.all(promises);
 
     queue = fillQueue();
     if (queue.length > 0) {

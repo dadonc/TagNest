@@ -109,6 +109,7 @@ function deflicker(previewPath: string): Promise<void> {
   // ffmpeg -i input.mp4 -vf deflicker output.mp4
   return new Promise((resolve, reject) => {
     const task = spawn(ffmpegPath, [
+      "-y", // overwrite output file if it exists
       "-i",
       previewPath,
       "-vf",

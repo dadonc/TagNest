@@ -40,6 +40,7 @@ model Tag {
   id        String   @id @default(cuid())
   name      String   @unique
   createdAt DateTime @default(now())
+  // toto remove this
   isGroup   Boolean  @default(false)
   item      Item[]
 }

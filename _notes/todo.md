@@ -2,7 +2,8 @@
 
 bug if an exisitng preview gets recreated
 current items aren't displayed while importing new items
-add tag to video without changing preview image
+add tag to video without changing preview image, fix preview image selection
+
 
 
 hide play symbol until video is loaded
