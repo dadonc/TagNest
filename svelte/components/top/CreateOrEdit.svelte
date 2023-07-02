@@ -44,11 +44,11 @@
 
   async function updateOrCreate() {
     let shouldReload = false;
-    if (itemType === "video") {
-      await saveVideoPreviewImage(path);
-      shouldReload = true;
-    }
     if (existingItem) {
+      if (itemType === "video") {
+        await saveVideoPreviewImage(path);
+        shouldReload = true;
+      }
       save(tagString);
       if (existingItem.type === "bookmark") {
         shouldReload = true;

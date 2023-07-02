@@ -1,6 +1,10 @@
 # Bugs
 
-bug if an exisitng preview gets recreated
+increase import speed
+preview image not diplayed after import - only after reload
+delete files on item delete
+display video details somewhere
+
 current items aren't displayed while importing new items
 add tag to video without changing preview image, fix preview image selection
 

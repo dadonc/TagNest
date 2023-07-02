@@ -25,6 +25,10 @@ export type FilteredTag = Tag & {
   isDeselected: boolean;
 };
 
+export type TagTree = {
+  [key: string]: FilteredTag[] | TagTree;
+};
+
 export const filteredData = derived(
   [selectedTags, items, allTags],
   async ([$selectedTags, $items, $allTags]) => {

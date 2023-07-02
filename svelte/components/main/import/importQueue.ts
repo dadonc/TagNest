@@ -29,7 +29,10 @@ export const importSteps = {
           "file://" + $savePath + "/previews/videos/" + name + "_thumb.jpeg",
           { method: "HEAD" }
         );
-        if (res.ok) return;
+        if (res.ok) {
+          console.log("preview already exists");
+          return;
+        }
       } catch (err) {}
       const video = document.createElement("video");
       video.src =
@@ -40,17 +43,21 @@ export const importSteps = {
         "_preview." +
         extension;
       video.load();
-      video.addEventListener("canplay", () => {
-        video.currentTime = 0;
-        const canvas = document.createElement("canvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas
-          .getContext("2d")
-          ?.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const dataURL = canvas.toDataURL("image/jpeg", 0.5);
-        window.electron.saveVideoPreviewImage(dataURL, name + "_thumb.jpeg");
-      });
+      video.addEventListener(
+        "canplay",
+        () => {
+          video.currentTime = 0;
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          canvas
+            .getContext("2d")
+            ?.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const dataURL = canvas.toDataURL("image/jpeg", 0.5);
+          window.electron.saveVideoPreviewImage(dataURL, name + "_thumb.jpeg");
+        }
+        // { once: true } - black image bug?
+      );
     },
   },
   external: {

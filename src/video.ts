@@ -196,23 +196,21 @@ const delTempFiles = (
   fs.unlink(txtPath, () => {});
 };
 
-export const createVideoPreview = async (
-  videoPath: string,
-  itemId: string
-): Promise<void> => {
+export const createVideoPreview = async (videoPath: string): Promise<void> => {
   return new Promise(async (resolve, reject) => {
     try {
       const segmentDuration = 2; // seconds
       const segmentCount = 11; // segments plus one
+      const startOffset = 30;
       const details = await getVideoDetails(videoPath);
       const savePath = (await getSettingsJson()).savePath;
       const actualSegmentCount =
-        details.duration > segmentCount * segmentDuration
+        details.duration - startOffset > segmentCount * segmentDuration
           ? segmentCount
           : segmentCount / 2;
       const slicePoints: number[] = [];
-      let step = details.duration / actualSegmentCount;
-      let curr = 0;
+      let step = (details.duration - startOffset) / actualSegmentCount;
+      let curr = startOffset;
       for (let i = 0; i < actualSegmentCount; i++) {
         slicePoints.push(Math.floor(curr));
         curr += step;

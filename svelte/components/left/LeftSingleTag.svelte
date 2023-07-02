@@ -53,7 +53,7 @@
     on:click={() => toggleSelectTag(tag.id)}
   >
     <span>
-      {tag.name}
+      {tag.name.split(":").slice(-1)}
     </span>
     {#if !isSelected && !isDeSelected && tag.countAfterSelection !== 0}
       <span class="px-3 text-xs bg-accent rounded-3xl text-accent-content"
