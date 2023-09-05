@@ -2,7 +2,7 @@
   "name": "hbr",
   "productName": "Hobby Research Base",
   "version": "1.0.0",
-  "description": "HBR - tag files and download websites",
+  "description": "HBR - taggy tag tag",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -14,9 +14,9 @@
   "keywords": [],
   "author": {
     "name": "dadonc",
-    "email": "3952821+dadonc@users.noreply.github.com"
+    "email": "domenic@stritzl.com"
   },
-  "license": "MIT",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@electron-forge/cli": "^6.1.1",
     "@electron-forge/maker-deb": "^6.1.1",

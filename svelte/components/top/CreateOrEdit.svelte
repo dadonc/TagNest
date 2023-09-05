@@ -1,3 +1,4 @@
+<!-- TODO - This is a mess. Refactor this whole file -->
 <script lang="ts">
   import FileDragArea from "./FileDragArea.svelte";
   import {
@@ -21,6 +22,8 @@
   export let isCreateNew = false;
   export let isButtonDisabled = true;
   export let wasChanged: (tagsWerechanged?: boolean) => void = () => {};
+
+  let wasVideoPreviewUpdated = false;
 
   $: disabled = isButtonDisabled || (!name && !url && !path);
 
@@ -46,13 +49,16 @@
     let shouldReload = false;
     if (existingItem) {
       if (itemType === "video") {
-        await saveVideoPreviewImage(path);
+        if (wasVideoPreviewUpdated) {
+          await saveVideoPreviewImage(path);
+          shouldReload = true;
+        }
+      }
+      if (existingItem.type === "bookmark") {
+        // why need bookmarks reloading?
         shouldReload = true;
       }
       save(tagString);
-      if (existingItem.type === "bookmark") {
-        shouldReload = true;
-      }
     } else {
       const newName = name ? name : namePlaceholder ? namePlaceholder : "";
       const newItem = await createItem({
@@ -119,6 +125,7 @@
     videoPath={path}
     on:image-chosen={(ev) => {
       wasChanged(true);
+      wasVideoPreviewUpdated = true;
     }}
   />
 {:else}
