@@ -7,10 +7,24 @@
     type SingleItem,
   } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
+  import PreviewModal from "./PreviewModal.svelte";
 
   export let items: SingleItem[];
+  let isPreviewModalOpen = false;
+  let previewItem: SingleItem;
 
   $: gridCols = createGridColsString($currView.zoomLvl);
+
+  $: {
+    if ($selectedItems.ids.length === 1) {
+      if (isPreviewModalOpen) {
+        const item = items.find((item) => item.id === $selectedItems.ids[0]);
+        if (item) {
+          previewItem = item;
+        }
+      }
+    }
+  }
 
   const createGridColsString = (zoomLvl: number) => {
     let str = "";
@@ -24,6 +38,14 @@
     $selectedItems.ids = [];
   };
 
+  const handleKeydownExceptions = (e: KeyboardEvent) => {
+    const video = document.getElementById("videoPlayer") as HTMLVideoElement;
+    const isVideoPlaying = video && !video.paused;
+    if (isVideoPlaying) {
+      return true;
+    }
+  };
+
   const handleKeydown = async (e: KeyboardEvent) => {
     if (
       document.activeElement?.tagName === "INPUT" ||
@@ -33,12 +55,17 @@
     )
       return;
     if (e.key === "Escape") {
-      deselectItems();
+      if (!isPreviewModalOpen) {
+        deselectItems();
+      } else {
+        isPreviewModalOpen = false;
+      }
     } else if (e.key === "Backspace" && e.metaKey) {
       await deleteItems($selectedItems.ids);
       $selectedItems.ids = [];
       refreshDisplayedItems();
     } else if (e.key === "ArrowLeft") {
+      if (handleKeydownExceptions(e)) return;
       if ($selectedItems.ids.length == 1) {
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
@@ -49,6 +76,7 @@
         }
       }
     } else if (e.key === "ArrowRight") {
+      if (handleKeydownExceptions(e)) return;
       if ($selectedItems.ids.length == 1) {
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
@@ -89,11 +117,17 @@
     } else if ((e.key === "-" || e.key === "_") && e.metaKey && e.shiftKey) {
       e.preventDefault();
       $currView.zoomLvl++;
+    } else if (e.key === " ") {
+      if ($selectedItems.ids.length === 1) {
+        isPreviewModalOpen = true;
+      }
     }
   };
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
+
+<PreviewModal item={previewItem} isOpen={isPreviewModalOpen} />
 
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
   <div class="p-1 myGrid" style={`--grid-cols-string: ${gridCols};`}>
