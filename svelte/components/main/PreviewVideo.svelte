@@ -47,6 +47,7 @@
       videoIsLoaded ? "absolute " : ""
     }`}
     src={thumbPath}
+    id={`previewImage-${item.id}`}
     alt=""
   />
   {#if displayVideo}

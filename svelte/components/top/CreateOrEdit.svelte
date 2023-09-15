@@ -52,18 +52,18 @@
   }
 
   async function updateOrCreate() {
-    let shouldReload = false;
     if (existingItem) {
       if (itemType === "video") {
         if (wasVideoPreviewUpdated) {
           await saveVideoPreviewImage(path);
-          shouldReload = true;
+
+          const previewImg = document.getElementById(
+            `previewImage-${existingItem.id}`
+          ) as HTMLImageElement;
+          previewImg.src = previewImg.src + "?" + new Date().getTime();
         }
       }
-      if (existingItem.type === "bookmark") {
-        // why need bookmarks reloading?
-        shouldReload = true;
-      }
+
       await updateItem(existingItem, tagString);
       refreshDisplayedItems();
     } else {
@@ -83,17 +83,6 @@
         startImportTasks();
       }
       close();
-      if (!shouldReload) {
-        // todo look into this
-        // refreshDisplayedItems();
-      }
-    }
-    if (shouldReload) {
-      // todo look into this
-      console.log("reloading");
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
     }
   }
 

@@ -1,6 +1,7 @@
 # Bugs
 
-* don't reload app when updating items
+* importing an item crashes the app :O
+* selecting a tag and then removing it from an item doesn't remove the tag from selectedTags
 * creating items without a file hangs the importQueue
 * change the required inputs for creating items
 * item urls link to localhost   
@@ -14,6 +15,8 @@ How to work with item that are imported twice? (e.g. same file, different name)
 scroll to current position after closing detail view
 increase import speed  
 display video details somewhere  
+
+icons: tagfamily, import indicator
 
 improve video preview image selection
 deletion confimration dialog
