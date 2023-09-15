@@ -124,6 +124,7 @@
     box-shadow: none;
     outline: 1px solid;
     outline-offset: -2px;
-    @apply outline-primary;
+    /* @apply outline-primary; */
+    outline-color: hsl(var(--p));
   }
 </style>

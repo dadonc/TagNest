@@ -27,7 +27,7 @@
   export let isCreateNew = false;
 
   let wasVideoPreviewUpdated = false;
-  let isButtonDisabled = true;
+  let isButtonDisabled = !isCreateNew;
   $: disabled = isButtonDisabled || (!name && !url && !path);
 
   $: {

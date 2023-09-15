@@ -1,9 +1,5 @@
 <script lang="ts">
-  import {
-    type SingleItem,
-    updateItem,
-    refreshDisplayedItems,
-  } from "../../stores/items";
+  import { type SingleItem } from "../../stores/items";
   import { currentRoute } from "../../stores/stateStore";
   import CreateOrEdit from "../top/CreateOrEdit.svelte";
 

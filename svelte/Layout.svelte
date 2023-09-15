@@ -209,7 +209,8 @@
 
   .topContainer,
   .rightContainer {
-    @apply p-2;
+    /* @apply p-2; */
+    padding: 0.5rem;
   }
 
   /* TODO - this sucks so much - refactor */

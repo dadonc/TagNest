@@ -9,7 +9,7 @@
   <Modal {isOpen} {close}>
     <div slot="body">
       <h1 class="mt-2 mb-4 text-3xl text-center">Add new item</h1>
-      <CreateOrEdit isCreateNew={true} {close} isButtonDisabled={false} />
+      <CreateOrEdit isCreateNew={true} />
     </div>
   </Modal>
 {/if}
