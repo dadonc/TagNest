@@ -1,8 +1,13 @@
 <script lang="ts">
   import { importItems } from "../../stores/items";
-  import { currView, currentRoute } from "../../stores/stateStore";
+  import {
+    currView,
+    currentRoute,
+    filteredData,
+  } from "../../stores/stateStore";
 
   export let itemsCount: number;
+  $: $filteredData.then((data) => (itemsCount = data.items.length));
 </script>
 
 {#if $currentRoute !== "details"}

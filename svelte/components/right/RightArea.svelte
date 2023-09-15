@@ -1,10 +1,15 @@
 <script lang="ts">
-  import { currentRoute, selectedItems } from "../../stores/stateStore";
+  import {
+    currentRoute,
+    filteredData,
+    selectedItems,
+  } from "../../stores/stateStore";
   import { importItems, type SingleItem } from "../../stores/items";
   import RightEditSingle from "./RightEditSingle.svelte";
   import RightEditMultiple from "./RightEditMultiple.svelte";
 
   export let items: SingleItem[];
+  $: $filteredData.then((data) => (items = data.items));
 
   $: itemsToUse = $currentRoute === "importMultiple" ? $importItems : items;
 </script>

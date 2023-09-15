@@ -1,12 +1,17 @@
 <script lang="ts">
   import Preview from "../main/Preview.svelte";
-  import { currentRoute, selectedItems } from "../../stores/stateStore";
+  import {
+    currentRoute,
+    filteredData,
+    selectedItems,
+  } from "../../stores/stateStore";
   import { handleKeydownDetailsView } from "../../utils";
   import type { SingleItem } from "../../stores/items";
   import { onMount } from "svelte";
   import { bottomContainer, rightContainer } from "../../stores/cssStore";
 
   export let items: SingleItem[];
+  $: $filteredData.then((data) => (items = data.items));
 
   onMount(() => {
     $rightContainer.currentVal = "0px";

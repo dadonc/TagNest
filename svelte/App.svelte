@@ -18,11 +18,15 @@
   import Settings from "./components/settings/Settings.svelte";
   import { exitFakeFullscreen } from "./utils";
 
+  let isDataAvailable = false;
+  let data: Awaited<typeof $filteredData>;
   onMount(async () => {
     exitFakeFullscreen();
     let getSettingsJson = await window.electron.getSettingsJson();
     settingsJson.set(getSettingsJson);
     startImportTasks();
+    data = await $filteredData;
+    isDataAvailable = true;
   });
 
   let isDevToolsOpen = false;
@@ -49,28 +53,26 @@
 <main>
   {#if $currentRoute === "settings"}
     <Settings />
-  {:else}
-    {#await $filteredData then data}
-      <Layout>
-        <svelte:fragment slot="topContainer">
-          <TopBar />
-        </svelte:fragment>
-        <svelte:fragment slot="mainContainer">
-          <Main items={data.items} />
-        </svelte:fragment>
-        <svelte:fragment slot="rightContainer">
-          <RightArea items={data.items} />
-        </svelte:fragment>
-        <svelte:fragment slot="bottomDivider">
-          <BottomBar itemsCount={data.items.length} />
-        </svelte:fragment>
-        <svelte:fragment slot="bottomContainer">
-          <BottomArea items={data.items} />
-        </svelte:fragment>
-        <svelte:fragment slot="leftContainer">
-          <LeftArea tags={data.tags} />
-        </svelte:fragment>
-      </Layout>
-    {/await}
+  {:else if isDataAvailable}
+    <Layout>
+      <svelte:fragment slot="topContainer">
+        <TopBar />
+      </svelte:fragment>
+      <svelte:fragment slot="mainContainer">
+        <Main items={data.items} />
+      </svelte:fragment>
+      <svelte:fragment slot="rightContainer">
+        <RightArea items={data.items} />
+      </svelte:fragment>
+      <svelte:fragment slot="bottomDivider">
+        <BottomBar itemsCount={data.items.length} />
+      </svelte:fragment>
+      <svelte:fragment slot="bottomContainer">
+        <BottomArea items={data.items} />
+      </svelte:fragment>
+      <svelte:fragment slot="leftContainer">
+        <LeftArea tags={data.tags} />
+      </svelte:fragment>
+    </Layout>
   {/if}
 </main>

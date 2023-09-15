@@ -32,15 +32,16 @@ export type TagTree = {
 export const filteredData = derived(
   [selectedTags, items, allTags],
   async ([$selectedTags, $items, $allTags]) => {
-    let filteredItems = await $items;
+    let filteredItems = $items;
     const selectedTagIds = $selectedTags.selectedIds;
     const deselectedTagIds = $selectedTags.deselectedIds;
     if (selectedTagIds.length > 0) {
       filteredItems = filteredItems.filter((item) => {
         let itemHasAllTags = true;
-        selectedTagIds.forEach((tagId) => {
+        selectedTagIds.every((tagId) => {
           if (!item.tags.some((tag) => tag.id === tagId)) {
             itemHasAllTags = false;
+            return false;
           }
         });
         return itemHasAllTags;
@@ -52,7 +53,7 @@ export const filteredData = derived(
       });
     }
 
-    const allTags = await $allTags;
+    const allTags = $allTags;
     let filteredTags: FilteredTag[] = allTags
       .map((tag) => {
         const isDeselected = deselectedTagIds.includes(tag.id);
@@ -83,7 +84,6 @@ export const filteredData = derived(
     // deselect items if currently selected items are not in the filtered items
     selectedItems.update((selectedItems) => {
       return {
-        ...selectedItems,
         ids: selectedItems.ids.filter((id) =>
           filteredItems.some((item) => item.id === id)
         ),

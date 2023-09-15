@@ -3,8 +3,8 @@
   import { classNames } from "../../utils";
 
   export let tag: FilteredTag;
-  let isSelected = $selectedTags.selectedIds.includes(tag.id);
-  let isDeSelected = $selectedTags.deselectedIds.includes(tag.id);
+  $: isSelected = $selectedTags.selectedIds.includes(tag.id);
+  $: isDeSelected = $selectedTags.deselectedIds.includes(tag.id);
 
   function toggleSelectTag(id: string) {
     if (isDeSelected) {

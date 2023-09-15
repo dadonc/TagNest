@@ -3,11 +3,14 @@ import prisma from "../prisma";
 import type { SingleItem } from "./items";
 import { selectedTags } from "./stateStore";
 
-export const allTags = writable<ReturnType<typeof getTags>>(getTags());
+export const allTags = writable<Awaited<ReturnType<typeof getTags>>>(
+  await getTags()
+);
 
-function refreshTagsStore(src?: string) {
+async function refreshTagsStore(src?: string) {
   console.log("Refreshing tags store", src);
-  allTags.set(getTags());
+  const updatedTags = await getTags();
+  allTags.set(updatedTags);
 }
 
 export async function getTags() {
@@ -26,7 +29,7 @@ async function createTag({
       name,
     },
   });
-  if (!dontRefreshStore) refreshTagsStore();
+  // if (!dontRefreshStore) refreshTagsStore();
   return newTag;
 }
 
@@ -39,7 +42,7 @@ async function createTags(tagNames: string[]) {
         ).id
     )
   );
-  refreshTagsStore("createTags");
+  // refreshTagsStore("createTags");
   return newIds;
 }
 
@@ -66,7 +69,7 @@ async function possiblyDeleteSingleTag({
       },
     });
     if (!dontRefreshStore) {
-      refreshTagsStore("possiblyDeleteSingleTag");
+      // refreshTagsStore("possiblyDeleteSingleTag");
 
       selectedTags.update((tags) => {
         const selectedIds = tags.selectedIds.filter((id) => id !== deleted.id);
@@ -89,7 +92,7 @@ export async function possiblyDeleteTags(tagIds: string[]) {
       possiblyDeleteSingleTag({ id: tagId, dontRefreshStore: true })
     )
   );
-  refreshTagsStore("possiblyDeleteTags");
+  // refreshTagsStore("possiblyDeleteTags");
   return deletedTags;
 }
 
@@ -133,6 +136,7 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
       },
     },
   });
+  refreshTagsStore("updateItemTags");
 
   await possiblyDeleteTags(deletedTagIds);
 }

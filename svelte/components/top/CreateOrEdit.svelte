@@ -90,7 +90,10 @@
     }
     if (shouldReload) {
       // todo look into this
-      window.location.reload();
+      console.log("reloading");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
   }
 

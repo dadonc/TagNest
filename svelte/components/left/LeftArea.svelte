@@ -1,9 +1,15 @@
 <script lang="ts">
-  import LeftSingleTag from "./LeftSingleTag.svelte";
-  import type { FilteredTag, TagTree } from "../../stores/stateStore";
+  import {
+    filteredData,
+    type FilteredTag,
+    type TagTree,
+  } from "../../stores/stateStore";
   import LeftTagTree from "./LeftTagTree.svelte";
 
   export let tags: FilteredTag[];
+
+  let tagTree = getTreeStructure(tags);
+  $: $filteredData.then((data) => (tagTree = getTreeStructure(data.tags)));
 
   function getTreeStructure(tags: FilteredTag[]) {
     const tree: TagTree = {};
@@ -41,8 +47,6 @@
 
     return tree;
   }
-
-  let tagTree = getTreeStructure(tags);
 </script>
 
 <LeftTagTree {tagTree} indent={0} />

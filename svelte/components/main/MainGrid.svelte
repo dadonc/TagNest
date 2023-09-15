@@ -1,6 +1,6 @@
 <script lang="ts">
   import Preview from "./Preview.svelte";
-  import { currView } from "../../stores/stateStore";
+  import { currView, filteredData } from "../../stores/stateStore";
   import {
     deleteItems,
     refreshDisplayedItems,
@@ -12,6 +12,8 @@
   export let items: SingleItem[];
   let isPreviewModalOpen = false;
   let previewItem: SingleItem;
+
+  $: $filteredData.then((data) => (items = data.items));
 
   $: gridCols = createGridColsString($currView.zoomLvl);
 
@@ -131,7 +133,7 @@
 
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
   <div class="p-1 myGrid" style={`--grid-cols-string: ${gridCols};`}>
-    {#each items as item}
+    {#each items as item (item.id)}
       <Preview {item} {items} />
     {/each}
   </div>

@@ -2,7 +2,9 @@ import prisma from "../prisma";
 import { writable } from "svelte/store";
 import { possiblyDeleteTags, updateItemTags } from "./tags";
 
-export const items = writable<ReturnType<typeof getItems>>(getItems());
+export const items = writable<Awaited<ReturnType<typeof getItems>>>(
+  await getItems()
+);
 
 export async function createItem({
   name,
@@ -139,7 +141,8 @@ export type SingleItem = Awaited<ReturnType<typeof getItemsDummy>>;
 
 export async function refreshDisplayedItems(src?: string) {
   console.log("Refreshing item store", src);
-  items.set(getItems());
+  const newItems = await getItems();
+  items.set(newItems);
 }
 
 export async function deleteItem(id: string) {

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { TagTree } from "../../stores/stateStore";
   import LeftSingleTag from "./LeftSingleTag.svelte";
 
   export let tagTree: any;
