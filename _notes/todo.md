@@ -1,5 +1,9 @@
 # Bugs
 
+* don't reload app when updating items
+* creating items without a file hangs the importQueue
+* change the required inputs for creating items
+* item urls link to localhost   
 
 current items aren't displayed while importing new items  
 preview image not diplayed after import - only after reload  
@@ -8,8 +12,6 @@ delete files on item delete
 How to work with item that are imported twice? (e.g. same file, different name)
 
 scroll to current position after closing detail view
-detailpreview on space keydown
-
 increase import speed  
 display video details somewhere  
 
@@ -20,7 +22,7 @@ set correct created.at for files
 (reversable) order of items: name, date created/modified, type, size, tags
 save.json somehow gets corrupted after migration
 
-
+item sort: viewcount, last opened, created, 
 
 secondary fake fullscreen - force full video width
 don't save full path in database, only relative path

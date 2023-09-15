@@ -6,6 +6,7 @@
     deleteItem,
     importItems,
     refreshDisplayedItems,
+    updateItem,
     type SingleItem,
   } from "../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
@@ -16,15 +17,18 @@
   import VideoPreviewImageChooser from "./VideoPreviewImageChooser.svelte";
   import { saveVideoPreviewImage } from "../../utils";
 
-  export let close: () => void;
-  export let save: (tagString: string) => Promise<void> = async () => {};
-  export let existingItem: SingleItem | undefined = undefined;
+  export let originalItem: SingleItem | undefined = undefined;
+  const existingItem = originalItem
+    ? {
+        ...originalItem,
+        file: originalItem.file ? { ...originalItem.file } : null,
+      }
+    : undefined;
   export let isCreateNew = false;
-  export let isButtonDisabled = true;
   export let wasChanged: (tagsWerechanged?: boolean) => void = () => {};
 
   let wasVideoPreviewUpdated = false;
-
+  let isButtonDisabled = true;
   $: disabled = isButtonDisabled || (!name && !url && !path);
 
   $: {
@@ -42,6 +46,8 @@
         };
       }
       wasChanged(tagString !== existingItem.tags.map((t) => t.name).join(", "));
+      isButtonDisabled =
+        JSON.stringify(originalItem) === JSON.stringify(existingItem);
     }
   }
 
@@ -58,7 +64,8 @@
         // why need bookmarks reloading?
         shouldReload = true;
       }
-      save(tagString);
+      await updateItem(existingItem, tagString);
+      refreshDisplayedItems();
     } else {
       const newName = name ? name : namePlaceholder ? namePlaceholder : "";
       const newItem = await createItem({
@@ -83,7 +90,7 @@
     }
     if (shouldReload) {
       // todo look into this
-      // window.location.reload();
+      window.location.reload();
     }
   }
 
@@ -95,7 +102,7 @@
         }
         return i;
       });
-      await save(tagString);
+      await updateItem(existingItem, tagString);
       startImportTasks();
     }
   }
