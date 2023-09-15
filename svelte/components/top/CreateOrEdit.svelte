@@ -25,7 +25,6 @@
       }
     : undefined;
   export let isCreateNew = false;
-  export let wasChanged: (tagsWerechanged?: boolean) => void = () => {};
 
   let wasVideoPreviewUpdated = false;
   let isButtonDisabled = true;
@@ -45,9 +44,10 @@
           path,
         };
       }
-      wasChanged(tagString !== existingItem.tags.map((t) => t.name).join(", "));
+
       isButtonDisabled =
-        JSON.stringify(originalItem) === JSON.stringify(existingItem);
+        JSON.stringify(originalItem) === JSON.stringify(existingItem) &&
+        tagString === originalItem?.tags.map((t) => t.name).join(", ");
     }
   }
 
@@ -131,7 +131,7 @@
     {isCreateNew}
     videoPath={path}
     on:image-chosen={(ev) => {
-      wasChanged(true);
+      isButtonDisabled = false;
       wasVideoPreviewUpdated = true;
     }}
   />
@@ -173,7 +173,9 @@
   </div>
 {:else}
   <div class="flex justify-center mt-2 gap-x-2">
-    <button class="btn btn-tertiary" on:click={close}>Cancel</button>
+    {#if !existingItem}
+      <button class="btn btn-tertiary" on:click={close}>Cancel</button>
+    {/if}
     <button {disabled} class="btn btn-primary" on:click={updateOrCreate}
       >Save</button
     >
