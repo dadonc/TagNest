@@ -68,20 +68,18 @@ async function possiblyDeleteSingleTag({
         id,
       },
     });
-    if (!dontRefreshStore) {
-      // refreshTagsStore("possiblyDeleteSingleTag");
 
-      selectedTags.update((tags) => {
-        const selectedIds = tags.selectedIds.filter((id) => id !== deleted.id);
-        const deselectedIds = tags.deselectedIds.filter(
-          (id) => id !== deleted.id
-        );
-        return {
-          selectedIds,
-          deselectedIds,
-        };
-      });
-    }
+    selectedTags.update((tags) => {
+      const selectedIds = tags.selectedIds.filter((id) => id !== deleted.id);
+      const deselectedIds = tags.deselectedIds.filter(
+        (id) => id !== deleted.id
+      );
+      return {
+        selectedIds,
+        deselectedIds,
+      };
+    });
+
     return deleted;
   }
 }

@@ -1,6 +1,5 @@
 # Bugs
 
-* selecting a tag and then removing it from an item doesn't remove the tag from selectedTags
 * creating items without a file hangs the importQueue
 * change the required inputs for creating items
 * item urls link to localhost   
