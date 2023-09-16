@@ -162,7 +162,10 @@ export default async function startImportTasks() {
       for (let i = item.importStep; i <= stepCount; i++) {
         console.log("run step", i, "of", item.name);
         //@ts-ignore
-        await importSteps[item.type][item.importStep](item);
+        if (importSteps[item.type] && importSteps[item.type][item.importStep]) {
+          //@ts-ignore
+          await importSteps[item.type][item.importStep](item);
+        }
         console.log("finished step", item.importStep, "of", item.name);
         importItems.update((items) => {
           const index = items.findIndex((i) => i.id === item.id);
@@ -180,6 +183,7 @@ export default async function startImportTasks() {
 }
 
 async function runCombineBehavior(item: ImportItem) {
+  if (!item.file) return item;
   const combineBehavior = get(settingsJson).combineBehavior;
   if (combineBehavior === "separate" || item.type === "bookmark") {
     item.importStep = 1;
@@ -188,7 +192,7 @@ async function runCombineBehavior(item: ImportItem) {
   const $savePath = get(settingsJson).savePath;
   const { name, extension } = extractNameAndExtension(item.name!);
   const newPath = $savePath + "/" + name + "." + extension;
-  const oldPath = item.file!.path;
+  const oldPath = item.file.path;
   if (combineBehavior === "copy") {
     await window.electron.copyFile(oldPath, newPath);
   } else if (combineBehavior === "move") {

@@ -8,7 +8,7 @@
   const rotateChevron = (e: Event) => {
     const target = e.target as HTMLElement;
     const svg = target.children[0];
-    if (svg && svg.nodeName !== "svg") return;
+    if (!svg || !svg.classList || svg.nodeName !== "svg") return;
     if (svg.classList.contains("-rotate-90")) {
       svg.classList.remove("-rotate-90");
       svg.classList.add("rotate-180");

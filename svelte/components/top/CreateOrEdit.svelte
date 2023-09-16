@@ -16,6 +16,7 @@
   import { tick } from "svelte";
   import VideoPreviewImageChooser from "./VideoPreviewImageChooser.svelte";
   import { saveVideoPreviewImage } from "../../utils";
+  import { getItemTypeFromExtension } from "../../../src/gschert";
 
   export let originalItem: SingleItem | undefined = undefined;
   const existingItem = originalItem
@@ -75,7 +76,9 @@
         note,
         path,
         tagString,
-        type: itemType,
+        type: itemType
+          ? itemType
+          : getItemTypeFromExtension(path.split(".").pop()),
         importStep: 0,
       });
       if (newItem) {

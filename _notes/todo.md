@@ -1,11 +1,11 @@
 # Bugs
 
-* creating items without a file hangs the importQueue
-* change the required inputs for creating items
-* item urls link to localhost   
 * tagTree spacing is off
 * choose video preview image on click
 * pdf preview when creating an item?
+* AddItem: max preview dimensions
+* are item types updated when the file gets changed?
+
 
 "❤️ Favorite" - Tag
 

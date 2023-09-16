@@ -1,7 +1,7 @@
-export const IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
+export const IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "webp", "svg"];
 export const VIDEO_EXTENSIONS = ["mp4", "m4v", "mpg", "mpeg", "ogg", "webm"];
 
-type ItemType = "bookmark" | "image" | "video" | "pdf" | "external";
+type ItemType = "bookmark" | "image" | "video" | "pdf" | "external" | "noFile";
 
 export type SettingsJson = {
   savePath: string;
@@ -19,6 +19,8 @@ export function getItemTypeFromExtension(
     return "video";
   } else if (extension && extension.toLowerCase() === "pdf") {
     return "pdf";
+  } else if (!extension) {
+    return "noFile";
   }
   return "external";
 }

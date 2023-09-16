@@ -26,11 +26,22 @@ export async function createItem({
   getsCurrentlyImported?: boolean;
 }) {
   // TODO get file creation date
-  const fileId = await prisma.file.create({
-    data: {
-      path,
-    },
-  });
+
+  let fileConnectQuery = {};
+  if (path) {
+    const fileId = await prisma.file.create({
+      data: {
+        path,
+      },
+    });
+    fileConnectQuery = {
+      file: {
+        connect: {
+          id: fileId.id,
+        },
+      },
+    };
+  }
 
   const newItem = await prisma.item.create({
     data: {
@@ -40,11 +51,7 @@ export async function createItem({
       type,
       getsCurrentlyImported,
       importStep,
-      file: {
-        connect: {
-          id: fileId.id,
-        },
-      },
+      ...fileConnectQuery,
     },
   });
 
