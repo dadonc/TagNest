@@ -25,6 +25,7 @@
       }
     : undefined;
   export let isCreateNew = false;
+  export let close: () => void = () => {};
 
   let wasVideoPreviewUpdated = false;
   let isButtonDisabled = !isCreateNew;

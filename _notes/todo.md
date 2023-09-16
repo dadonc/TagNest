@@ -1,10 +1,18 @@
 # Bugs
 
-* importing an item crashes the app :O
 * selecting a tag and then removing it from an item doesn't remove the tag from selectedTags
 * creating items without a file hangs the importQueue
 * change the required inputs for creating items
 * item urls link to localhost   
+* tagTree spacing is off
+* choose video preview image on click
+* pdf preview when creating an item?
+
+"❤️ Favorite" - Tag
+
+drag to select multiple items
+
+white play icon with black border
 
 current items aren't displayed while importing new items  
 preview image not diplayed after import - only after reload  
@@ -16,7 +24,8 @@ scroll to current position after closing detail view
 increase import speed  
 display video details somewhere  
 
-icons: tagfamily, import indicator
+icons: import indicator
+Right click on item - "Show in Finder"
 
 improve video preview image selection
 deletion confimration dialog
