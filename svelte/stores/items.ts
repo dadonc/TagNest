@@ -169,30 +169,6 @@ export async function deleteItem(id: string) {
   return possiblyDeleteTags(tagIds || []);
 }
 
-export async function deleteItems(ids: string[]) {
-  const items = await prisma.item.findMany({
-    where: {
-      id: {
-        in: ids,
-      },
-    },
-    include: {
-      tags: true,
-    },
-  });
-  const tagIds = items.reduce((acc, item) => {
-    return [...acc, ...item.tags.map((tag) => tag.id)];
-  }, [] as string[]);
-  await prisma.item.deleteMany({
-    where: {
-      id: {
-        in: ids,
-      },
-    },
-  });
-  return possiblyDeleteTags(tagIds);
-}
-
 export async function finishItemImport(id: string, importStep: number) {
   importItems.update((items) => {
     return items.filter((item) => item.id !== id);

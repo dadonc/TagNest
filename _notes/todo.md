@@ -1,9 +1,7 @@
 # Bugs
 
 deletequeue
-    -//! rmv deleteItems and deleteItem references
-    -//! mv addToDeleteQueue 
-    cascade deletes, remove from prisma invocation
+    cascade deletes, remove from prisma item delete call invocation
     delete bookmark files
 
 

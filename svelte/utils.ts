@@ -1,10 +1,5 @@
 import { get } from "svelte/store";
-import {
-  deleteItems,
-  importItems,
-  refreshDisplayedItems,
-  type SingleItem,
-} from "./stores/items";
+import { importItems, type SingleItem } from "./stores/items";
 import {
   currentRoute,
   currView,
@@ -13,6 +8,7 @@ import {
 } from "./stores/stateStore";
 import { leftContainer, rightContainer, topContainer } from "./stores/cssStore";
 import { extractNameAndExtension } from "../src/gschert";
+import { addToDeleteQueue } from "./components/main/delete/DeleteQueue";
 
 export function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -97,14 +93,13 @@ export const handleKeydown = async (
   if (e.key === "Escape") {
     deselectItems();
   } else if (e.key === "Backspace" && e.metaKey) {
-    await deleteItems($selectedItems.ids);
+    addToDeleteQueue($selectedItems.ids);
     if (useImportItems) {
       importItems.update((items) =>
         items.filter((item) => !$selectedItems.ids.includes(item.id))
       );
     }
     $selectedItems.ids = [];
-    refreshDisplayedItems();
   } else if (e.key === "ArrowUp") {
     if ($selectedItems.ids.length == 1) {
       const item = items.find((item) => item.id === $selectedItems.ids[0]);
@@ -159,8 +154,7 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
         $selectedItems.ids = [items[index + step].id];
       }
     }
-    await deleteItems($selectedItems.ids);
-    refreshDisplayedItems();
+    addToDeleteQueue($selectedItems.ids);
   } else if (e.key === "ArrowLeft") {
     const video = document.getElementById("videoPlayer") as HTMLVideoElement;
     if (video && !video.paused) return;

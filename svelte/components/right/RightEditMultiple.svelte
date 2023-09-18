@@ -2,11 +2,11 @@
   import {
     type SingleItem,
     refreshDisplayedItems,
-    deleteItems,
     importItems,
   } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
   import { updateItemsTags } from "../../stores/tags";
+  import { addToDeleteQueue } from "../main/delete/DeleteQueue";
   import TagSelectWrapper from "../top/TagSelectWrapper.svelte";
 
   export let items: SingleItem[];
@@ -58,11 +58,10 @@
   <button
     class="mt-16 btn btn-error"
     on:click={async () => {
-      await deleteItems($selectedItems.ids);
+      addToDeleteQueue($selectedItems.ids);
       $importItems = $importItems.filter(
         (item) => !$selectedItems.ids.includes(item.id)
       );
-      refreshDisplayedItems();
     }}>Delete</button
   >
 </div>

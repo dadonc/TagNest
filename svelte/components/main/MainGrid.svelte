@@ -4,7 +4,7 @@
   import { type SingleItem } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
   import PreviewModal from "./PreviewModal.svelte";
-  import { addToDeleteQueue } from "./delete/startItemDelete";
+  import { addToDeleteQueue } from "./delete/DeleteQueue";
 
   export let items: SingleItem[];
   let isPreviewModalOpen = false;

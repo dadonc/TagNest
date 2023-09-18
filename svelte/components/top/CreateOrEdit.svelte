@@ -3,7 +3,6 @@
   import FileDragArea from "./FileDragArea.svelte";
   import {
     createItem,
-    deleteItem,
     importItems,
     refreshDisplayedItems,
     updateItem,
@@ -17,6 +16,7 @@
   import VideoPreviewImageChooser from "./VideoPreviewImageChooser.svelte";
   import { saveVideoPreviewImage } from "../../utils";
   import { getItemTypeFromExtension } from "../../../src/gschert";
+  import { addToDeleteQueue } from "../main/delete/DeleteQueue";
 
   export let originalItem: SingleItem | undefined = undefined;
   const existingItem = originalItem
@@ -186,8 +186,7 @@
           // TODO ask Chris - why do I need this?
           const existingItemId = existingItem.id;
           $importItems = $importItems.filter((i) => i.id !== existingItemId);
-          await deleteItem(existingItem.id);
-          refreshDisplayedItems();
+          addToDeleteQueue([existingItem.id]);
         }
       }}>Delete</button
     >
