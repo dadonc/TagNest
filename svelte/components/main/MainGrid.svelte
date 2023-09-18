@@ -1,13 +1,10 @@
 <script lang="ts">
   import Preview from "./Preview.svelte";
   import { currView, filteredData } from "../../stores/stateStore";
-  import {
-    deleteItems,
-    refreshDisplayedItems,
-    type SingleItem,
-  } from "../../stores/items";
+  import { type SingleItem } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
   import PreviewModal from "./PreviewModal.svelte";
+  import { addToDeleteQueue } from "./delete/startItemDelete";
 
   export let items: SingleItem[];
   let isPreviewModalOpen = false;
@@ -63,9 +60,8 @@
         isPreviewModalOpen = false;
       }
     } else if (e.key === "Backspace" && e.metaKey) {
-      await deleteItems($selectedItems.ids);
+      addToDeleteQueue($selectedItems.ids);
       $selectedItems.ids = [];
-      refreshDisplayedItems();
     } else if (e.key === "ArrowLeft") {
       if (handleKeydownExceptions(e)) return;
       if ($selectedItems.ids.length == 1) {

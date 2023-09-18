@@ -1,17 +1,32 @@
 # Bugs
 
+deletequeue
+    -//! rmv deleteItems and deleteItem references
+    -//! mv addToDeleteQueue 
+    cascade deletes, remove from prisma invocation
+    delete bookmark files
+
+
+handle already existing files
+scroll to item after closing detailview
+make item paths relative to database path
+
+* detailview - video is cut off
+* detailview preview of other items change size when selecting using the keyboard
+* space triggered detailview video - is cut off, change color of seek bar
 * tagTree spacing is off
 * choose video preview image on click
-* pdf preview when creating an item?
 * AddItem: max preview dimensions
 * are item types updated when the file gets changed?
+* white play icon with black border
 
 
+pdf preview when creating an item?
 "❤️ Favorite" - Tag
 
+filter and order
 drag to select multiple items
 
-white play icon with black border
 
 current items aren't displayed while importing new items  
 preview image not diplayed after import - only after reload  
@@ -22,6 +37,9 @@ How to work with item that are imported twice? (e.g. same file, different name)
 scroll to current position after closing detail view
 increase import speed  
 display video details somewhere  
+
+electron security warnings
+bump deps
 
 icons: import indicator
 Right click on item - "Show in Finder"
@@ -86,3 +104,7 @@ save bookmark previews as files instead of in database
 
 
 /Users/domenic/Projects/eTags/node_modules/electron/dist/Electron.app/Contents/Resources
+
+
+## Ideas
+Custom types for collectors, e.g. books, boardgames

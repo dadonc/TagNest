@@ -118,8 +118,9 @@ export default async function startImportTasks() {
   let wasRunning = false;
 
   async function startTasks() {
-    console.log("start import tasks");
     queue = fillQueue();
+    if (queue.length === 0) return;
+    console.log("start import tasks");
 
     let promises = [];
     while (queue.length > 0) {

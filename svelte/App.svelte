@@ -17,6 +17,7 @@
   } from "./stores/stateStore";
   import Settings from "./components/settings/Settings.svelte";
   import { exitFakeFullscreen } from "./utils";
+  import { startDeleteTasks } from "./components/main/delete/DeleteQueue";
 
   let isDataAvailable = false;
   let data: Awaited<typeof $filteredData>;
@@ -25,6 +26,7 @@
     let getSettingsJson = await window.electron.getSettingsJson();
     settingsJson.set(getSettingsJson);
     startImportTasks();
+    startDeleteTasks();
     data = await $filteredData;
     isDataAvailable = true;
   });

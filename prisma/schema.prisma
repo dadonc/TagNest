@@ -19,13 +19,13 @@ model Item {
   importStep            Int       @default(-1)
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
-  file                  File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview, other itmes as main file
+  file                  File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview, other items as main file
   fileId                String?
   tags                  Tag[]
-  type                  String // "bookmark" | "image" | "video" | "pdf" | "external";
+  type                  String // TODO:  "bookmark" | "image" | "video" | "pdf" | "external"| "noFile";
   bookmark              Bookmark? @relation(fields: [bookmarkId], references: [id])
   bookmarkId            String?
-  video                 Video?    @relation(fields: [videoId], references: [id])
+  video                 Video?    @relation(fields: [videoId], references: [id]) // TODO delete on cascade
   videoId               String?
 }
 

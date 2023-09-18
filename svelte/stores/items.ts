@@ -160,6 +160,11 @@ export async function deleteItem(id: string) {
     where: {
       id,
     },
+    include: {
+      file: true,
+      video: true,
+      bookmark: true,
+    },
   });
   return possiblyDeleteTags(tagIds || []);
 }
@@ -206,8 +211,19 @@ export async function finishItemImport(id: string, importStep: number) {
 export type ImportItem = SingleItem & { lastImportStepUpdate?: number };
 const currentImportItems = localStorage.getItem("importItems");
 
+// TODO - rename to importItemsStore
 export const importItems = writable<ImportItem[]>(
   currentImportItems ? JSON.parse(currentImportItems) : []
+);
+
+export type DeleteItem = SingleItem & {
+  deleteStep: number;
+  allStepsRun?: boolean;
+};
+const currentDeleteItems = localStorage.getItem("deleteItems");
+
+export const deleteItemsStore = writable<DeleteItem[]>(
+  currentDeleteItems ? JSON.parse(currentDeleteItems) : []
 );
 
 export async function updateFilePath(fileId: string, newPath: string) {

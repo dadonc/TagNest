@@ -8,7 +8,7 @@
   } from "./cssStore";
   import type { CssContainerType } from "../Types";
   import { currView } from "./stateStore";
-  import { importItems } from "./items";
+  import { deleteItemsStore, importItems } from "./items";
 
   onMount(async () => {
     leftContainer.subscribe((v) => {
@@ -55,6 +55,11 @@
     importItems.subscribe((v) => {
       const value = JSON.stringify(v);
       localStorage.setItem("importItems", value);
+    });
+
+    deleteItemsStore.subscribe((v) => {
+      const value = JSON.stringify(v);
+      localStorage.setItem("deleteItems", value);
     });
   });
 </script>

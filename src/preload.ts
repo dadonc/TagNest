@@ -38,6 +38,7 @@ export type ExposedInMainWorld = {
   createVideoPreview: (videoPath: string, itemId: string) => Promise<void>;
   saveVideoDetailsToItem: (videoPath: string, itemId: string) => Promise<void>;
   saveVideoPreviewImage: (
+    // todo: use file path instead of itemName
     imageBase64: string,
     itemName: string
   ) => Promise<void>;
@@ -45,8 +46,10 @@ export type ExposedInMainWorld = {
   exitFullscreen: () => void;
   openDevTools: () => void;
   closeDevTools: () => void;
+  // TODO: srcPath? destPath?
   copyFile: (src: string, dest: string) => Promise<void>;
   moveFile: (src: string, dest: string) => Promise<void>;
+  deleteFile: (path: string) => Promise<void>;
 };
 
 const api: ExposedInMainWorld = {
@@ -84,6 +87,7 @@ const api: ExposedInMainWorld = {
 
   copyFile: (src, dest) => ipcRenderer.invoke("copyFile", src, dest),
   moveFile: (src, dest) => ipcRenderer.invoke("moveFile", src, dest),
+  deleteFile: (path) => ipcRenderer.invoke("deleteFile", path),
 };
 
 contextBridge.exposeInMainWorld("electron", api);
