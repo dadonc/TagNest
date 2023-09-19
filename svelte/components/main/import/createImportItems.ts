@@ -11,7 +11,7 @@ export default function createImportItems(paths: string[]) {
       url: "",
       note: "",
       tagString: "",
-      importStep: -1,
+      importStep: 0,
     };
   });
   return Promise.all(items.map(async (item) => await createItem(item)));

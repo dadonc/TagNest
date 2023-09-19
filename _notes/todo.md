@@ -1,13 +1,18 @@
 # Bugs
 
 deletequeue
-    cascade deletes, remove from prisma item delete call invocation
+    fix bookmarks, what is item.file for bookmarks?
     delete bookmark files
 
-
+* are item types updated when the file gets changed? <- disallow this
 handle already existing files
+
+
+preview image not diplayed after import - only after reload  
+
 scroll to item after closing detailview
 make item paths relative to database path
+handle already existing bookmark
 
 * detailview - video is cut off
 * detailview preview of other items change size when selecting using the keyboard
@@ -15,7 +20,6 @@ make item paths relative to database path
 * tagTree spacing is off
 * choose video preview image on click
 * AddItem: max preview dimensions
-* are item types updated when the file gets changed?
 * white play icon with black border
 
 
@@ -26,13 +30,7 @@ filter and order
 drag to select multiple items
 
 
-current items aren't displayed while importing new items  
-preview image not diplayed after import - only after reload  
-
-delete files on item delete  
-How to work with item that are imported twice? (e.g. same file, different name)
-
-scroll to current position after closing detail view
+how is the temp filder next to db file used?
 increase import speed  
 display video details somewhere  
 
@@ -43,17 +41,14 @@ icons: import indicator
 Right click on item - "Show in Finder"
 
 improve video preview image selection
-deletion confimration dialog
+deletion confirmation dialog
 
 set correct created.at for files
 (reversable) order of items: name, date created/modified, type, size, tags
-save.json somehow gets corrupted after migration
 
 item sort: viewcount, last opened, created, 
 
 secondary fake fullscreen - force full video width
-don't save full path in database, only relative path
-what is item.file for bookmarks?
 rmv latestMigration from save.json
 allow creation of new window with same database
 
@@ -71,7 +66,7 @@ make obvious that import is running on importMultiple page (spinner) on click on
 * rightArea limit preview image size
 
 item groups, pin tags/items
-tag groups (e.g. "bees"), change tag group order
+change tag group order
 
 save bookmark previews as files instead of in database
 
@@ -81,7 +76,6 @@ save bookmark previews as files instead of in database
 
 * buttons pulsate if another button is clicked
 
-* delete files on item delete
 * delete files saved from url when clicking cancel
 * delete newly added bookmark if canceled before saving
 

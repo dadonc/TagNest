@@ -27,22 +27,6 @@ export async function createItem({
 }) {
   // TODO get file creation date
 
-  let fileConnectQuery = {};
-  if (path) {
-    const fileId = await prisma.file.create({
-      data: {
-        path,
-      },
-    });
-    fileConnectQuery = {
-      file: {
-        connect: {
-          id: fileId.id,
-        },
-      },
-    };
-  }
-
   const newItem = await prisma.item.create({
     data: {
       name,
@@ -51,10 +35,19 @@ export async function createItem({
       type,
       getsCurrentlyImported,
       importStep,
-      ...fileConnectQuery,
     },
   });
 
+  await prisma.file.create({
+    data: {
+      path,
+      item: {
+        connect: {
+          id: newItem.id,
+        },
+      },
+    },
+  });
   const item = await getItem(newItem.id);
   await updateItemTags(item!, tagString);
   return item;
@@ -69,26 +62,26 @@ async function getFileIdByPath(path: string) {
 }
 
 export async function updateItem(item: SingleItem, tagString: string) {
-  let fileId;
-  if (item.file) {
-    fileId = await getFileIdByPath(item.file.path);
-    if (!fileId) {
-      fileId = await prisma.file.create({
-        data: {
-          path: item.file.path,
-        },
-      });
-    }
-  }
-  let fileConnect = fileId
-    ? {
-        file: {
-          connect: {
-            id: fileId?.id,
-          },
-        },
-      }
-    : {};
+  // let fileId;
+  // if (item.file) {
+  //   fileId = await getFileIdByPath(item.file.path);
+  //   if (!fileId) {
+  //     fileId = await prisma.file.create({
+  //       data: {
+  //         path: item.file.path,
+  //       },
+  //     });
+  //   }
+  // }
+  // let fileConnect = fileId
+  //   ? {
+  //       file: {
+  //         connect: {
+  //           id: fileId?.id,
+  //         },
+  //       },
+  //     }
+  //   : {};
   prisma.item.update({
     where: {
       id: item.id,
@@ -99,7 +92,7 @@ export async function updateItem(item: SingleItem, tagString: string) {
       note: item.note,
       type: item.type,
       importStep: item.importStep,
-      ...fileConnect,
+      // ...fileConnect,
     },
   });
   return updateItemTags(item, tagString);
@@ -160,11 +153,6 @@ export async function deleteItem(id: string) {
     where: {
       id,
     },
-    include: {
-      file: true,
-      video: true,
-      bookmark: true,
-    },
   });
   return possiblyDeleteTags(tagIds || []);
 }
@@ -202,10 +190,10 @@ export const deleteItemsStore = writable<DeleteItem[]>(
   currentDeleteItems ? JSON.parse(currentDeleteItems) : []
 );
 
-export async function updateFilePath(fileId: string, newPath: string) {
+export async function updateFilePath(itemId: string, newPath: string) {
   await prisma.file.update({
     where: {
-      id: fileId,
+      itemId,
     },
     data: {
       path: newPath,

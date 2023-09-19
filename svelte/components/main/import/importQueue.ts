@@ -119,7 +119,10 @@ export default async function startImportTasks() {
 
   async function startTasks() {
     queue = fillQueue();
-    if (queue.length === 0) return;
+    if (queue.length === 0) {
+      isRunning = false;
+      return;
+    }
     console.log("start import tasks");
 
     let promises = [];
@@ -200,6 +203,6 @@ async function runCombineBehavior(item: ImportItem) {
     await window.electron.moveFile(oldPath, newPath);
   }
   item.importStep = 1;
-  await updateFilePath(item.fileId as string, newPath);
+  await updateFilePath(item.id, newPath);
   return item;
 }

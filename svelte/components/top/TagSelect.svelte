@@ -20,17 +20,15 @@
       .map((t) => t.trim())
       .map((t) => {
         let isExisting = false;
-        let isGroup = false;
         tags.forEach((tag) => {
           if (tag.name === t) {
             isExisting = true;
-            isGroup = tag.isGroup;
           }
         });
         if (isExisting) {
-          if (isGroup) {
-            return `<span class="text-blue-500">${t}</span>`;
-          }
+          // if (isGroup) {
+          //   return `<span class="text-blue-500">${t}</span>`;
+          // }
           return `<span class="text-green-500">${t}</span>`;
         } else {
           return `<span class="text-red-500">${t}</span>`;

@@ -14,6 +14,14 @@ npm init vite
 * Added TailwindCSS
 
 
+## Prisma
+Migration:
+```bash
+npx prisma migrate dev --name init
+```
+
+
+
 ## Interesting
 
 * Open in VSC: https://stackoverflow.com/a/68881419

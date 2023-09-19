@@ -297,17 +297,14 @@ export async function saveVideoDetailsToItem(
 ) {
   const details = await getVideoDetails(videoPath);
   const prisma = await getPrismaClient();
-  const video = await prisma.video.create({
+  await prisma.video.create({
     data: {
       ...details,
-    },
-  });
-  return prisma.item.update({
-    where: {
-      id: itemId,
-    },
-    data: {
-      videoId: video.id,
+      item: {
+        connect: {
+          id: itemId,
+        },
+      },
     },
   });
 }

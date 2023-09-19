@@ -19,29 +19,25 @@ model Item {
   importStep            Int       @default(-1)
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
-  file                  File?     @relation(fields: [fileId], references: [id]) // bookmarks use this for preview, other items as main file
-  fileId                String?
+  file                  File?
   tags                  Tag[]
   type                  String // TODO:  "bookmark" | "image" | "video" | "pdf" | "external"| "noFile";
-  bookmark              Bookmark? @relation(fields: [bookmarkId], references: [id])
-  bookmarkId            String?
-  video                 Video?    @relation(fields: [videoId], references: [id]) // TODO delete on cascade
-  videoId               String?
+  bookmark              Bookmark?
+  video                 Video?
 }
 
 model File {
   id        String   @id @default(cuid())
   path      String
   createdAt DateTime @default(now())
-  item      Item[]
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId    String   @unique
 }
 
 model Tag {
   id        String   @id @default(cuid())
   name      String   @unique
   createdAt DateTime @default(now())
-  // toto remove this
-  isGroup   Boolean  @default(false)
   item      Item[]
 }
 
@@ -51,7 +47,8 @@ model Bookmark {
   mhtmlFilename   String?
   text            String?
   screenshot      String?
-  item            Item[]
+  item            Item    @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId          String  @unique
 }
 
 model Video {
@@ -63,5 +60,6 @@ model Video {
   metaBitrate String? // according to the video meta data
   bitrate     String? // actual bitrate
   fps         Float?
-  item        Item[]
+  item        Item    @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId      String  @unique
 }
