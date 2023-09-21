@@ -1,8 +1,12 @@
 # Bugs
 
+bookmark refactor
+    * save screenshots
+    * update preview onchange
+
 deletequeue
-    fix bookmarks, what is item.file for bookmarks?
-    delete bookmark files
+
+    delete bookmark files, also on cancel
 
 * are item types updated when the file gets changed? <- disallow this
 handle already existing files
@@ -22,6 +26,7 @@ handle already existing bookmark
 * AddItem: max preview dimensions
 * white play icon with black border
 
+fix schema updates!
 
 pdf preview when creating an item?
 "❤️ Favorite" - Tag

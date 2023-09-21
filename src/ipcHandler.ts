@@ -11,7 +11,6 @@ import { IMAGE_EXTENSIONS, getItemTypeFromExtension } from "./gschert";
 import { extractBookmarkImages } from "./bookmarks";
 import {
   downloadImageFromUrl,
-  getMhtmlPath,
   getSettingsJson,
   updateSettingsJson,
 } from "./utils";
@@ -99,14 +98,12 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     shell.openPath(path);
   });
 
-  ipcMain.handle("extractBookmarkImages", async (event, mhtmlFilename) => {
-    const mhtmlPath = await getMhtmlPath(mhtmlFilename);
-    return extractBookmarkImages(mhtmlPath);
+  ipcMain.handle("extractBookmarkImages", async (event, mhtmlFilePath) => {
+    return extractBookmarkImages(mhtmlFilePath);
   });
 
-  ipcMain.handle("readMhtml", async (event, fileName) => {
-    const path = await getMhtmlPath(fileName);
-    return fs.readFileSync(path).toString();
+  ipcMain.handle("readFile", async (event, filePath) => {
+    return fs.readFileSync(filePath).toString();
   });
 
   ipcMain.handle("getSettingsJson", async (event) => {

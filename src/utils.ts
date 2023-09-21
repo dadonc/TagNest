@@ -103,24 +103,20 @@ export async function downloadImageAsBase64FromUrl(url: string) {
   });
 }
 
-export async function getMhtmlPath(filename: string) {
+export async function getBookmarksPath(filename: string) {
   const savePath = (await getSettingsJson()).savePath;
-  if (!fs.existsSync(path.join(savePath, "bookmarks", "mhtml"))) {
-    if (!fs.existsSync(path.join(savePath, "bookmarks"))) {
-      fs.mkdirSync(path.join(savePath, "bookmarks"));
-    }
-    fs.mkdirSync(path.join(savePath, "bookmarks", "mhtml"));
+  if (!fs.existsSync(path.join(savePath, "bookmarks"))) {
+    fs.mkdirSync(path.join(savePath, "bookmarks"));
   }
-  return path.join(savePath, "bookmarks", "mhtml", filename);
+  return path.join(savePath, "bookmarks", filename);
 }
 
 export async function getFaviconPath(faviconName: string) {
-  const savePath = (await getSettingsJson()).savePath;
-  if (!fs.existsSync(path.join(savePath, "bookmarks", "favicons"))) {
-    if (!fs.existsSync(path.join(savePath, "bookmarks"))) {
-      fs.mkdirSync(path.join(savePath, "bookmarks"));
-    }
-    fs.mkdirSync(path.join(savePath, "bookmarks", "favicons"));
+  console.log("getFaviconPath", faviconName);
+  const bookmarksPath = await getBookmarksPath("");
+  console.log("bookmarksPath", bookmarksPath);
+  if (!fs.existsSync(path.join(bookmarksPath, "favicons"))) {
+    fs.mkdirSync(path.join(bookmarksPath, "favicons"));
   }
-  return path.join(savePath, "bookmarks", "favicons", faviconName);
+  return path.join(bookmarksPath, "favicons", faviconName);
 }

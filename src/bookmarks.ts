@@ -4,21 +4,25 @@ import { getPrismaClient } from "./prisma";
 type NewBookmark = {
   title: string;
   url: string;
-  mhtmlFilename: string;
-  screenshot: string;
+  screenshotData: string;
   faviconUrl: string;
+  mhtmlPath: string;
 };
 
 export async function createItemWithBookmark({
   title,
   url,
-  mhtmlFilename,
-  screenshot,
+  screenshotData,
   faviconUrl,
+  mhtmlPath,
 }: NewBookmark) {
   // todo: extract text
-  const faviconFilename = await getOrDownloadFavicon(url, faviconUrl);
+
+  const faviconPath = await getOrDownloadFavicon(url, faviconUrl);
   const prisma = await getPrismaClient();
+  const screenshotPath = mhtmlPath.replace(".mhtml", ".png");
+  await saveImageFromString(screenshotData, screenshotPath);
+  console.log("saved screenshot", screenshotPath);
   try {
     const newItem = await prisma.item.create({
       data: {
@@ -27,14 +31,14 @@ export async function createItemWithBookmark({
         type: "bookmark",
         file: {
           create: {
-            path: screenshot,
+            path: mhtmlPath,
           },
         },
         bookmark: {
           create: {
-            mhtmlFilename,
-            screenshot,
-            faviconFilename,
+            previewImagePath: screenshotPath,
+            screenshotPath,
+            faviconPath,
           },
         },
       },
@@ -78,9 +82,13 @@ async function getOrDownloadFavicon(websiteUrl: string, faviconUrl: string) {
   const faviconName = website.replaceAll(".", "_") + "-favicon." + extension;
   const faviconPath = await getFaviconPath(faviconName);
   if (fs.existsSync(faviconPath)) {
-    return faviconName;
+    return faviconPath;
   } else {
     await downloadImageFromUrlPromisified(faviconUrl, faviconPath);
-    return faviconName;
+    return faviconPath;
   }
+}
+
+async function saveImageFromString(imageData: string, path: string) {
+  fs.writeFileSync(path, new Buffer(imageData, "base64"));
 }

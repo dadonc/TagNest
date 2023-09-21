@@ -6,7 +6,7 @@ import { BrowserWindow } from "electron";
 import Fastify, { FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
 import { createItemWithBookmark } from "./bookmarks";
-import { getMhtmlPath } from "./utils";
+import { getBookmarksPath } from "./utils";
 const pump = util.promisify(pipeline);
 
 const server: FastifyInstance = Fastify({});
@@ -58,13 +58,13 @@ export default function startServer(mainWindow: BrowserWindow) {
         .replaceAll("/", "-")
         .replaceAll(".", "_") + ".mhtml";
 
-    const mhtmlPath = await getMhtmlPath(fileName);
+    const mhtmlPath = await getBookmarksPath(fileName);
     await pump(data.file, fs.createWriteStream(mhtmlPath));
     const newItem = await createItemWithBookmark({
       title: data.fields.title.value,
       url: data.fields.url.value,
-      mhtmlFilename: fileName,
-      screenshot: data.fields.screenshot.value,
+      mhtmlPath,
+      screenshotData: data.fields.screenshot.value,
       faviconUrl: data.fields.favicon.value,
     });
     if (!newItem) {

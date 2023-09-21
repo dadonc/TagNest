@@ -7,9 +7,7 @@
   let html: string;
 
   onMount(async () => {
-    const mhtml = await window.electron.readMhtml(
-      item.bookmark?.mhtmlFilename as string
-    );
+    const mhtml = await window.electron.readFile(item.file!.path as string);
     let htmlDoc = mhtml2html.convert(mhtml);
     htmlDoc.window.document
       .querySelectorAll("a")
