@@ -3,19 +3,17 @@
   import type { SingleItem } from "../../stores/items";
 
   export let item: SingleItem;
-  export let path: string;
+  let path = "file://" + item.bookmark?.previewImagePath;
   let images: string[] = [];
   $: isExpanded = path ? false : true;
 
   const dispatch = createEventDispatcher();
 
   onMount(async () => {
-    if (item.bookmark?.mhtmlFilename) {
+    if (item.bookmark) {
       images = [
-        item.bookmark.screenshot as string,
-        ...(await window.electron.extractBookmarkImages(
-          item.bookmark?.mhtmlFilename
-        )),
+        ("file://" + item.bookmark.previewImagePath) as string,
+        ...(await window.electron.extractBookmarkImages(item.file!.path)),
       ];
     } else {
       console.error("No mhtmlFilename");
@@ -46,11 +44,22 @@
           on:keydown={(e) => {
             if (e.key === "Enter") {
               dispatch("image-chosen", { image });
+              if (!item.bookmark || !item.bookmark.screenshotPath) return;
               isExpanded = false;
             }
           }}
           on:click={() => {
             dispatch("image-chosen", { image });
+            if (!item.bookmark || !item.bookmark.screenshotPath) return;
+
+            let [header, imageData] = image.split(";base64,");
+            header = header.slice(0, -1);
+            const cleanedString = header + ";base64," + imageData;
+            window.electron.saveImageFromString({
+              imageBase64: cleanedString,
+              path: item.bookmark.screenshotPath,
+              isPreview: true,
+            });
             isExpanded = false;
           }}
         />

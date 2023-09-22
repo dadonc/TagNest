@@ -117,7 +117,6 @@
 {#if existingItem?.type === "bookmark"}
   <BookmarkPreviewImageChooser
     item={existingItem}
-    {path}
     on:image-chosen={(ev) => {
       path = ev.detail.image;
     }}

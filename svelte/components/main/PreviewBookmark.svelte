@@ -8,7 +8,7 @@
 
 <div class="relative hoverContainer">
   <img
-    src={item.file?.path}
+    src={"file://" + item.bookmark?.previewImagePath}
     alt=""
     class="max-h-full"
     style={$currentRoute == "details"

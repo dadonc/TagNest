@@ -20,8 +20,12 @@ export async function createItemWithBookmark({
 
   const faviconPath = await getOrDownloadFavicon(url, faviconUrl);
   const prisma = await getPrismaClient();
-  const screenshotPath = mhtmlPath.replace(".mhtml", ".png");
-  await saveImageFromString(screenshotData, screenshotPath);
+
+  const screenshotPath = await saveImageFromString({
+    imageBase64: screenshotData,
+    path: mhtmlPath,
+    isPreview: false,
+  });
   console.log("saved screenshot", screenshotPath);
   try {
     const newItem = await prisma.item.create({
@@ -89,6 +93,34 @@ async function getOrDownloadFavicon(websiteUrl: string, faviconUrl: string) {
   }
 }
 
-async function saveImageFromString(imageData: string, path: string) {
-  fs.writeFileSync(path, new Buffer(imageData, "base64"));
+export async function saveImageFromString(data: {
+  imageBase64: string;
+  path: string;
+  isPreview?: boolean;
+}) {
+  const { imageBase64: imageData, path, isPreview } = data;
+  var base64Image = imageData.replace(/^data:image\/\w+;base64,/, "");
+  const imageBuffer = Buffer.from(base64Image, "base64");
+
+  let extension = "";
+  if (imageData.includes("webp")) {
+    extension = "webp";
+  } else if (imageData.includes("png")) {
+    extension = "png";
+  } else if (imageData.includes("jpeg") || imageData.includes("jpg")) {
+    extension = "jpg";
+  }
+  let screenshotPath = path
+    .split(".")
+    .slice(0, -1)
+    .join(".")
+    // @ts-ignore
+    .replaceAll("#", "_")
+    .replaceAll("?", "_");
+  screenshotPath = isPreview
+    ? screenshotPath + "_preview." + extension
+    : screenshotPath + "." + extension;
+
+  fs.writeFile(screenshotPath, imageBuffer, function (err) {});
+  return screenshotPath;
 }

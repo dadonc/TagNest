@@ -50,6 +50,11 @@ export type ExposedInMainWorld = {
   copyFile: (src: string, dest: string) => Promise<void>;
   moveFile: (src: string, dest: string) => Promise<void>;
   deleteFile: (path: string) => Promise<void>;
+  saveImageFromString: (data: {
+    imageBase64: string;
+    path: string;
+    isPreview?: boolean;
+  }) => void;
 };
 
 const api: ExposedInMainWorld = {
@@ -88,6 +93,8 @@ const api: ExposedInMainWorld = {
   copyFile: (src, dest) => ipcRenderer.invoke("copyFile", src, dest),
   moveFile: (src, dest) => ipcRenderer.invoke("moveFile", src, dest),
   deleteFile: (path) => ipcRenderer.invoke("deleteFile", path),
+  saveImageFromString: (data) =>
+    ipcRenderer.invoke("saveImageFromString", data),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

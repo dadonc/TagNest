@@ -8,7 +8,7 @@ import {
 import fs from "fs";
 import path from "path";
 import { IMAGE_EXTENSIONS, getItemTypeFromExtension } from "./gschert";
-import { extractBookmarkImages } from "./bookmarks";
+import { extractBookmarkImages, saveImageFromString } from "./bookmarks";
 import {
   downloadImageFromUrl,
   getSettingsJson,
@@ -187,5 +187,9 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   ipcMain.handle("deleteFile", async (event, path) => {
     fs.unlinkSync(path);
     return true;
+  });
+
+  ipcMain.handle("saveImageFromString", async (event, data, path) => {
+    saveImageFromString(data);
   });
 }
