@@ -5,14 +5,14 @@
   export let item: SingleItem;
   let path = "file://" + item.bookmark?.previewImagePath;
   let images: string[] = [];
-  $: isExpanded = path ? false : true;
+  let isExpanded = false;
 
   const dispatch = createEventDispatcher();
 
   onMount(async () => {
     if (item.bookmark) {
       images = [
-        ("file://" + item.bookmark.previewImagePath) as string,
+        ("file://" + item.bookmark.screenshotPath) as string,
         ...(await window.electron.extractBookmarkImages(item.file!.path)),
       ];
     } else {
@@ -48,19 +48,31 @@
               isExpanded = false;
             }
           }}
-          on:click={() => {
-            dispatch("image-chosen", { image });
+          on:click={async () => {
             if (!item.bookmark || !item.bookmark.screenshotPath) return;
 
+            if (item.bookmark?.previewImagePath?.includes("_preview")) {
+              await window.electron.deleteFile(item.bookmark.previewImagePath);
+            }
+            if (image.includes("file://")) {
+              path = image;
+              isExpanded = false;
+              dispatch("image-chosen", {
+                newPreviewPath: image.replace("file://", ""),
+              });
+              return;
+            }
             let [header, imageData] = image.split(";base64,");
             header = header.slice(0, -1);
             const cleanedString = header + ";base64," + imageData;
-            window.electron.saveImageFromString({
+            const newPreviewPath = await window.electron.saveImageFromString({
               imageBase64: cleanedString,
               path: item.bookmark.screenshotPath,
               isPreview: true,
             });
             isExpanded = false;
+            path = "file://" + newPreviewPath;
+            dispatch("image-chosen", { newPreviewPath });
           }}
         />
       </div>

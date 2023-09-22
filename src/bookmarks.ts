@@ -117,10 +117,11 @@ export async function saveImageFromString(data: {
     // @ts-ignore
     .replaceAll("#", "_")
     .replaceAll("?", "_");
-  screenshotPath = isPreview
-    ? screenshotPath + "_preview." + extension
-    : screenshotPath + "." + extension;
 
+  if (isPreview) {
+    screenshotPath += "_preview_" + Date.now();
+  }
+  screenshotPath += "." + extension;
   fs.writeFile(screenshotPath, imageBuffer, function (err) {});
   return screenshotPath;
 }

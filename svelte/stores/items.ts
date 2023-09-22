@@ -98,6 +98,17 @@ export async function updateItem(item: SingleItem, tagString: string) {
   return updateItemTags(item, tagString);
 }
 
+export async function updateBookmarkPreviewImage(item: SingleItem) {
+  await prisma.bookmark.update({
+    where: {
+      itemId: item.id,
+    },
+    data: {
+      previewImagePath: item.bookmark?.previewImagePath,
+    },
+  });
+}
+
 export async function getItem(id: string) {
   return await prisma.item.findUnique({
     where: {

@@ -7,6 +7,7 @@
     refreshDisplayedItems,
     updateItem,
     type SingleItem,
+    updateBookmarkPreviewImage,
   } from "../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
   import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
@@ -46,6 +47,9 @@
           path,
         };
       }
+      if (existingItem.bookmark) {
+        existingItem.bookmark.previewImagePath = bookmarkPreviewImagePath;
+      }
 
       isButtonDisabled =
         JSON.stringify(originalItem) === JSON.stringify(existingItem) &&
@@ -58,12 +62,14 @@
       if (itemType === "video") {
         if (wasVideoPreviewUpdated) {
           await saveVideoPreviewImage(path);
-
           const previewImg = document.getElementById(
             `previewImage-${existingItem.id}`
           ) as HTMLImageElement;
-          previewImg.src = previewImg.src + "?" + new Date().getTime();
+          previewImg.src = previewImg.src + "?" + Date.now();
         }
+      }
+      if (itemType === "bookmark") {
+        await updateBookmarkPreviewImage(existingItem);
       }
 
       await updateItem(existingItem, tagString);
@@ -112,13 +118,17 @@
   let note = existingItem?.note ? existingItem.note : "";
   let path = existingItem?.file?.path ? existingItem.file.path : "";
   let itemType = existingItem?.type ? existingItem.type : "";
+  let bookmarkPreviewImagePath = existingItem?.bookmark?.previewImagePath
+    ? existingItem.bookmark.previewImagePath
+    : "";
 </script>
 
 {#if existingItem?.type === "bookmark"}
   <BookmarkPreviewImageChooser
     item={existingItem}
     on:image-chosen={(ev) => {
-      path = ev.detail.image;
+      bookmarkPreviewImagePath = ev.detail.newPreviewPath;
+      disabled = false;
     }}
   />
 {:else if existingItem?.type === "video" || itemType === "video"}

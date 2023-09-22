@@ -190,6 +190,6 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   });
 
   ipcMain.handle("saveImageFromString", async (event, data, path) => {
-    saveImageFromString(data);
+    return await saveImageFromString(data);
   });
 }

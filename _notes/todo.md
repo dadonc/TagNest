@@ -1,12 +1,14 @@
 # Bugs
 
 bookmark refactor
-    * save screenshots
-    * update preview onchange
+    * close dialog on create
+    * delete on cancel
+    * changinh image on deselecting without saving
+
+test preview image with video - why is setting it manually neccessary but not for bookmarks?
 
 deletequeue
-
-    delete bookmark files, also on cancel
+    delete bookmark files
 
 * are item types updated when the file gets changed? <- disallow this
 handle already existing files

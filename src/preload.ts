@@ -54,7 +54,7 @@ export type ExposedInMainWorld = {
     imageBase64: string;
     path: string;
     isPreview?: boolean;
-  }) => void;
+  }) => Promise<string>;
 };
 
 const api: ExposedInMainWorld = {
