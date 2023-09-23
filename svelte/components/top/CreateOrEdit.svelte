@@ -123,7 +123,7 @@
 </script>
 
 <div class="flex items-center justify-center">
-  <div class="w-1/2 h-1/2">
+  <div class="w-1/2 text-center h-1/2">
     {#if existingItem?.type === "bookmark"}
       <BookmarkPreviewImageChooser
         item={existingItem}
@@ -141,7 +141,7 @@
           wasVideoPreviewUpdated = true;
         }}
       />
-    {:else}
+    {:else if isCreateNew}
       <FileDragArea
         previewSrc={path ? "file://" + path : ""}
         on:close-modal={close}
@@ -154,6 +154,12 @@
           path = ev.detail.path;
         }}
       />
+    {:else if existingItem?.type === "image" && existingItem?.file?.path}
+      <img src={"file://" + existingItem.file.path} alt="" class="m-auto" />
+    {:else if existingItem}
+      <div class="mb-2">
+        Type: {existingItem.type}
+      </div>
     {/if}
   </div>
 </div>

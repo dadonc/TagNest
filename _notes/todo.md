@@ -1,16 +1,10 @@
 # Bugs
 
 
-test preview image with video - why is setting it manually neccessary but not for bookmarks?
-
-
-* are item types updated when the file gets changed? <- disallow this
 
 handle already existing files
-handle already existing bookmark
-
+handle already existing bookmarks
 make item paths relative to database path
-
 preview image not diplayed after import - only after reload, both bookmarks and import multiple
 
 scroll to item after closing detailview
@@ -23,7 +17,7 @@ scroll to item after closing detailview
 * AddItem: max preview dimensions
 * white play icon with black border
 
-fix schema updates!
+fix schema updates
 
 pdf preview when creating an item?
 "❤️ Favorite" - Tag
