@@ -11,6 +11,7 @@ import { currentRoute, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
 
 export const importSteps = {
+  // bookmark import steps are run before the bookmark is created
   video: {
     1: async (item: SingleItem) => {
       await window.electron.createVideoPreview(item.file!.path, item.id);

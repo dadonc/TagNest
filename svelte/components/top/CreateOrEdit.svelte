@@ -68,7 +68,9 @@
           previewImg.src = previewImg.src + "?" + Date.now();
         }
       }
-
+      if (isCreateNew) {
+        close();
+      }
       await updateItem(existingItem, tagString);
       refreshDisplayedItems();
     } else {
@@ -120,37 +122,41 @@
     : "";
 </script>
 
-{#if existingItem?.type === "bookmark"}
-  <BookmarkPreviewImageChooser
-    item={existingItem}
-    on:image-chosen={(ev) => {
-      bookmarkPreviewImagePath = ev.detail.newPreviewPath;
-      disabled = false;
-    }}
-  />
-{:else if existingItem?.type === "video" || itemType === "video"}
-  <VideoPreviewImageChooser
-    {isCreateNew}
-    videoPath={path}
-    on:image-chosen={(ev) => {
-      isButtonDisabled = false;
-      wasVideoPreviewUpdated = true;
-    }}
-  />
-{:else}
-  <FileDragArea
-    previewSrc={path ? "file://" + path : ""}
-    on:close-modal={close}
-    on:file-chosen={(ev) => {
-      itemType = ev.detail.itemType;
-      const name = ev.detail.path.split("/").pop();
-      if (namePlaceholder === "Name" && name) {
-        namePlaceholder = name;
-      }
-      path = ev.detail.path;
-    }}
-  />
-{/if}
+<div class="flex items-center justify-center">
+  <div class="w-1/2 h-1/2">
+    {#if existingItem?.type === "bookmark"}
+      <BookmarkPreviewImageChooser
+        item={existingItem}
+        on:image-chosen={(ev) => {
+          bookmarkPreviewImagePath = ev.detail.newPreviewPath;
+          disabled = false;
+        }}
+      />
+    {:else if existingItem?.type === "video" || itemType === "video"}
+      <VideoPreviewImageChooser
+        {isCreateNew}
+        videoPath={path}
+        on:image-chosen={(ev) => {
+          isButtonDisabled = false;
+          wasVideoPreviewUpdated = true;
+        }}
+      />
+    {:else}
+      <FileDragArea
+        previewSrc={path ? "file://" + path : ""}
+        on:close-modal={close}
+        on:file-chosen={(ev) => {
+          itemType = ev.detail.itemType;
+          const name = ev.detail.path.split("/").pop();
+          if (namePlaceholder === "Name" && name) {
+            namePlaceholder = name;
+          }
+          path = ev.detail.path;
+        }}
+      />
+    {/if}
+  </div>
+</div>
 <input
   bind:value={name}
   type="text"
@@ -192,7 +198,12 @@
           // TODO ask Chris - why do I need this?
           const existingItemId = existingItem.id;
           $importItems = $importItems.filter((i) => i.id !== existingItemId);
+          if (isCreateNew) {
+            // add newly created bookmark to the items store for the deletion process
+            await refreshDisplayedItems();
+          }
           addToDeleteQueue([existingItem.id]);
+          close();
         }
       }}>Delete</button
     >

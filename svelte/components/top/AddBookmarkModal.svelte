@@ -1,7 +1,12 @@
 <script lang="ts">
   import Modal from "../Modal.svelte";
-  import { getItem, type SingleItem } from "../../stores/items";
+  import {
+    getItem,
+    refreshDisplayedItems,
+    type SingleItem,
+  } from "../../stores/items";
   import CreateOrEdit from "./CreateOrEdit.svelte";
+  import { addToDeleteQueue } from "../main/delete/DeleteQueue";
   let isOpen = false;
   let item: SingleItem;
 
@@ -13,8 +18,11 @@
     }
   });
 
-  const close = () => {
+  const close = async () => {
     isOpen = false;
+    // add newly created bookmark to the items store for the deletion process
+    await refreshDisplayedItems();
+    addToDeleteQueue([item.id]);
   };
 </script>
 
@@ -22,7 +30,7 @@
   <Modal {isOpen} {close}>
     <div slot="body">
       <h1 class="mt-2 mb-4 text-3xl text-center">Add new item</h1>
-      <CreateOrEdit originalItem={item} />
+      <CreateOrEdit originalItem={item} {close} isCreateNew />
     </div>
   </Modal>
 {/if}

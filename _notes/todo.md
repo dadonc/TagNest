@@ -1,8 +1,5 @@
 # Bugs
 
-bookmark refactor
-    * close dialog on create
-    * delete on cancel
 
 test preview image with video - why is setting it manually neccessary but not for bookmarks?
 
