@@ -3,19 +3,17 @@
 
 test preview image with video - why is setting it manually neccessary but not for bookmarks?
 
-deletequeue
-    delete bookmark files
 
 * are item types updated when the file gets changed? <- disallow this
 
 handle already existing files
 handle already existing bookmark
 
+make item paths relative to database path
 
-preview image not diplayed after import - only after reload  
+preview image not diplayed after import - only after reload, both bookmarks and import multiple
 
 scroll to item after closing detailview
-make item paths relative to database path
 
 * detailview - video is cut off
 * detailview preview of other items change size when selecting using the keyboard
@@ -85,6 +83,8 @@ save bookmark previews as files instead of in database
 
 * rename files on item rename?
 
+
+Styling: window location buttons (red, yellow, green) - move down and left a bit
 ## Refactor
 * remove promise around itemStore
 * alsways create new items in database when adding items - updateOrCreate should only be update => should it?

@@ -36,6 +36,35 @@ const deleteSteps = {
       }
     },
   },
+  bookmark: {
+    1: async (item: SingleItem) => {
+      if (item.bookmark?.screenshotPath) {
+        window.electron.deleteFile(item.bookmark?.screenshotPath);
+      }
+    },
+    2: async (item: SingleItem) => {
+      if (
+        item.bookmark?.previewImagePath &&
+        item.bookmark?.previewImagePath !== item.bookmark?.screenshotPath
+      ) {
+        window.electron.deleteFile(item.bookmark?.previewImagePath);
+      }
+    },
+    3: async (item: SingleItem) => {
+      if (item.bookmark?.faviconPath) {
+        // check if not other icon is using the same favicon
+        const $items = get(items);
+        const otherItems = $items.filter(
+          (item_) =>
+            item_.id !== item.id &&
+            item_.bookmark?.faviconPath === item.bookmark?.faviconPath
+        );
+        if (otherItems.length === 0) {
+          window.electron.deleteFile(item.bookmark?.faviconPath);
+        }
+      }
+    },
+  },
 };
 
 let isRunning = false;
