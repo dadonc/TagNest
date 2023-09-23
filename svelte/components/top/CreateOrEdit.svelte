@@ -68,9 +68,6 @@
           previewImg.src = previewImg.src + "?" + Date.now();
         }
       }
-      if (itemType === "bookmark") {
-        await updateBookmarkPreviewImage(existingItem);
-      }
 
       await updateItem(existingItem, tagString);
       refreshDisplayedItems();

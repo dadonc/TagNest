@@ -1,6 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
-  import type { SingleItem } from "../../stores/items";
+  import {
+    updateBookmarkPreviewImage,
+    type SingleItem,
+  } from "../../stores/items";
 
   export let item: SingleItem;
   let path = "file://" + item.bookmark?.previewImagePath;
@@ -54,14 +57,19 @@
             if (item.bookmark?.previewImagePath?.includes("_preview")) {
               await window.electron.deleteFile(item.bookmark.previewImagePath);
             }
+            // If the image is already a file path, just use it
             if (image.includes("file://")) {
               path = image;
               isExpanded = false;
+              const newPreviewPath = image.replace("file://", "");
+              item.bookmark.previewImagePath = newPreviewPath;
+              await updateBookmarkPreviewImage(item);
               dispatch("image-chosen", {
-                newPreviewPath: image.replace("file://", ""),
+                newPreviewPath,
               });
               return;
             }
+            // Otherwise, save the image to a file and use that
             let [header, imageData] = image.split(";base64,");
             header = header.slice(0, -1);
             const cleanedString = header + ";base64," + imageData;
@@ -72,6 +80,9 @@
             });
             isExpanded = false;
             path = "file://" + newPreviewPath;
+            item.bookmark.previewImagePath = newPreviewPath;
+            await updateBookmarkPreviewImage(item);
+
             dispatch("image-chosen", { newPreviewPath });
           }}
         />

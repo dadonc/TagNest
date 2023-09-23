@@ -3,7 +3,6 @@
 bookmark refactor
     * close dialog on create
     * delete on cancel
-    * changinh image on deselecting without saving
 
 test preview image with video - why is setting it manually neccessary but not for bookmarks?
 
@@ -11,14 +10,15 @@ deletequeue
     delete bookmark files
 
 * are item types updated when the file gets changed? <- disallow this
+
 handle already existing files
+handle already existing bookmark
 
 
 preview image not diplayed after import - only after reload  
 
 scroll to item after closing detailview
 make item paths relative to database path
-handle already existing bookmark
 
 * detailview - video is cut off
 * detailview preview of other items change size when selecting using the keyboard
