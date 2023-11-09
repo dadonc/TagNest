@@ -1,5 +1,4 @@
 # Bugs
-* selecting an item without tags and then with tags doesn't clear shared tags to empty
 * detailview - video is cut off
 * detailview - bottom preview of other items change size when selecting using the keyboard
 * space triggered detailview video - is cut off, change color of seek bar

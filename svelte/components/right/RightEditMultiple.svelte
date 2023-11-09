@@ -11,11 +11,13 @@
 
   export let items: SingleItem[];
 
+  let itemsProcessed = 0;
   const sharedTags = $selectedItems.ids
     .map((id) => items.find((item) => item.id === id))
     .reduce((acc, item) => {
       if (item) {
-        if (acc.length === 0) {
+        itemsProcessed++;
+        if (acc.length === 0 && itemsProcessed === 1) {
           return item.tags.map((tag) => tag.name);
         }
         return acc.filter((tagName) =>
