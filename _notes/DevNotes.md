@@ -20,8 +20,5 @@ Migration:
 npx prisma migrate dev --name init
 ```
 
-
-
-## Interesting
-
-* Open in VSC: https://stackoverflow.com/a/68881419
+## Notes
+/Users/domenic/Projects/eTags/node_modules/electron/dist/Electron.app/Contents/Resources

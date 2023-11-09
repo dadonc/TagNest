@@ -148,6 +148,21 @@ export async function getItems() {
 async function getItemsDummy() {
   return (await getItems())[0];
 }
+
+export async function getItemByPath(path: string) {
+  const item = await prisma.item.findFirst({
+    where: {
+      file: {
+        path,
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
+  if (!item) return;
+  return await getItem(item.id);
+}
 export type SingleItem = Awaited<ReturnType<typeof getItemsDummy>>;
 
 export async function refreshDisplayedItems(src?: string) {

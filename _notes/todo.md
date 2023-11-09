@@ -1,100 +1,86 @@
 # Bugs
-
-
-
-handle already existing files
-handle already existing bookmarks
-make item paths relative to database path
-preview image not diplayed after import - only after reload, both bookmarks and import multiple
-
-scroll to item after closing detailview
-
+* selecting an item without tags and then with tags doesn't clear shared tags to empty
 * detailview - video is cut off
-* detailview preview of other items change size when selecting using the keyboard
+* detailview - bottom preview of other items change size when selecting using the keyboard
 * space triggered detailview video - is cut off, change color of seek bar
 * tagTree spacing is off
+* fix schema updates, does save.json get corrputed?
+
+
+# TODO
+* handle already existing files
+    - handle single import
+    - handle multiple imports
+    - display on import page
+    - handle already existing bookmarks
+* make item paths relative to database path
+* preview image not diplayed after import - only after reload, both bookmarks and import multiple
+* scroll to item after closing detailview
 * choose video preview image on click
-* AddItem: max preview dimensions
-* white play icon with black border
-
-fix schema updates
-
-pdf preview when creating an item?
-"❤️ Favorite" - Tag
-
-filter and order
-drag to select multiple items
-
-
-how is the temp filder next to db file used?
-increase import speed  
-display video details somewhere  
-
-electron security warnings
-bump deps
-
-icons: import indicator
-Right click on item - "Show in Finder"
-
-improve video preview image selection
-deletion confirmation dialog
-
-set correct created.at for files
-(reversable) order of items: name, date created/modified, type, size, tags
-
-item sort: viewcount, last opened, created, 
-
-secondary fake fullscreen - force full video width
-rmv latestMigration from save.json
-allow creation of new window with same database
-
-rigth side - show items if multiple items are selected
-
-hide play symbol until video is loaded
-import folders with subfolders
-DetailviewVideo: autoplay videos on click, don't on arrows 
-
-"untagged" tag
-type filter - display only items of selected type
-
-make obvious that import is running on importMultiple page (spinner) on click on "import all" don't change items that are already getting imported, deactivate button if all are already getting imported?
-"external" items and pdfs overflow on the x axis
+* fix import view
+  - import folders with subfolders
+  - don't change items that are already getting imported, deactivate button if all are already getting imported?
+  - disable already existing items
+* import indicator
+* deletion confirmation dialog
+* DetailviewVideo: autoplay videos on click, don't on arrows 
+* "external" items and pdfs overflow on the x axis
 * rightArea limit preview image size
-
-item groups, pin tags/items
-change tag group order
-
-save bookmark previews as files instead of in database
+* delete newly added bookmark files if canceled before saving
+* right side - show items if multiple items are selected
+* secondary fake fullscreen - force full video width
 
 
-* iframe - rmv webfonts
+## TODO secondary
+* pdf preview when creating an item?
+* "❤️ Favorite" - Tag
+* item order
+    - (reversable) order of items: name, date created/modified, type, size, tags, viewcount, last opened
+    - set correct created.at for files
+    - increase viewcount on detail view
+    - type filter - display only items of selected type
+* drag to select multiple items
+* increase import speed  
+* display video details somewhere  
+* Right click on item - "Show in Finder"
+* allow creation of new window with same database
+* "untagged" tag
 * bottom area preview - allow arrow up/down to navigate - https://developer.mozilla.org/en-US/docs/Web/API/Element/getClientRects
-
-* buttons pulsate if another button is clicked
-
-* delete files saved from url when clicking cancel
-* delete newly added bookmark if canceled before saving
-
-* rename files on item rename?
+* rename files on item rename pref toggle
+* undo deletion
 
 
-Styling: window location buttons (red, yellow, green) - move down and left a bit
-## Refactor
+## TODO tertiary
+* change tag group order
+* "Pin" items - always appear at top if a tag is selected and the items are inside the collection?
+* item groups, pin tags/items
+* Notion-like notes
+
+
+## Styling
+* window location buttons (red, yellow, green) - move down and left a bit
+* font sizes
+* white play icon with black border
+* hide play symbol until video is loaded
+
+## Refactor/Improvements
 * remove promise around itemStore
-* alsways create new items in database when adding items - updateOrCreate should only be update => should it?
-* support filenames with multiple dots ie. "file.name.jpg"
+* refactor CreateOrEdit
+  - possibly: alsways create new items in database when adding items - updateOrCreate should only be update => should it?
 * currViewStore: rmv route
 * rmv .env?
 * rename "src" folder to "electron"?
+* tests: https://github.com/spaceagetv/electron-playwright-helpers
+* electron security warnings
+* bump deps
+* rmv latestMigration from save.json
+* iframe - rmv webfonts
 
 ## TagSelect
 * after adding all tags and clicking backspace it jumps to the beginning of the line
 * cannot click in middle of tag to modify it
 
-
-
-/Users/domenic/Projects/eTags/node_modules/electron/dist/Electron.app/Contents/Resources
-
-
 ## Ideas
-Custom types for collectors, e.g. books, boardgames
+* Custom types for collectors, e.g. books, boardgames
+* Open in VSC: https://stackoverflow.com/a/68881419
+
