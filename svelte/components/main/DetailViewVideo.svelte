@@ -117,10 +117,7 @@
   <source src={"file://" + item.file?.path} />
 </video>
 
-<div
-  class="flex flex-col items-center justify-center h-full"
-  bind:this={videoContainer}
->
+<div class="flex" bind:this={videoContainer}>
   <div class="relative">
     <!-- svelte-ignore a11y-media-has-caption -->
     <video

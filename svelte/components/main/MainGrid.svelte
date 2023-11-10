@@ -56,8 +56,6 @@
     if (e.key === "Escape") {
       if (!isPreviewModalOpen) {
         deselectItems();
-      } else {
-        isPreviewModalOpen = false;
       }
     } else if (e.key === "Backspace" && e.metaKey) {
       addToDeleteQueue($selectedItems.ids);
@@ -125,7 +123,7 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<PreviewModal item={previewItem} isOpen={isPreviewModalOpen} />
+<PreviewModal item={previewItem} bind:isOpen={isPreviewModalOpen} />
 
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
   <div class="p-1 myGrid" style={`--grid-cols-string: ${gridCols};`}>

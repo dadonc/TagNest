@@ -1,9 +1,8 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
   export let isOpen = false;
-  export let closeOnClickOutside = false;
+  export let closeOnClickOutside = true;
   export let close: () => void;
-  export let isFullscreen = false;
 </script>
 
 {#if isOpen}
@@ -26,18 +25,8 @@
     class={`transition-opacity duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg`}
     style="z-index: 99999;"
   >
-    <div
-      class={"w-full p-2 overflow-scroll rounded modalMaxDimensions bg-base-100 " +
-        (isFullscreen ? "" : "md:w-3/4 lg:w-1/2")}
-    >
+    <div class="h-full overflow-scroll rounded">
       <slot name="body" />
     </div>
   </div>
 {/if}
-
-<style>
-  .modalMaxDimensions {
-    height: calc(100vh - 2rem);
-    width: calc(100vw - 2rem);
-  }
-</style>

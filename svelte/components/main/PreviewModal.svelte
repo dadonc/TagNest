@@ -7,7 +7,12 @@
 </script>
 
 {#if isOpen}
-  <Modal {isOpen} close={() => {}} isFullscreen={true}>
+  <Modal
+    {isOpen}
+    close={() => {
+      isOpen = false;
+    }}
+  >
     <div slot="body" class="h-full">
       <DetailView {item} />
     </div>

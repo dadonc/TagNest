@@ -1,9 +1,13 @@
 # Bugs
-* detailview - video is cut off
 * detailview - bottom preview of other items change size when selecting using the keyboard
-* space triggered detailview video - is cut off, change color of seek bar
+* space triggered detailview video 
+  - video flickers - see previewvideo for fix
+  - change color of seek bar
+  - orange border around window
 * tagTree spacing is off
 * fix schema updates, does save.json get corrputed?
+* preview image not displayed after import - only after reload, both bookmarks and import multiple
+
 
 
 # TODO
@@ -13,7 +17,6 @@
     - display on import page
     - handle already existing bookmarks
 * make item paths relative to database path
-* preview image not diplayed after import - only after reload, both bookmarks and import multiple
 * scroll to item after closing detailview
 * choose video preview image on click
 * fix import view
