@@ -9,7 +9,7 @@
 </script>
 
 {#if $currentRoute === "main"}
-  <MainGrid {items} />
+  <MainGrid {items} focusedItemId={$selectedItems.ids[0]} />
 {:else if $currentRoute === "details"}
   {#each items as item}
     {#if item.id === $selectedItems.ids[0]}

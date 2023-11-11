@@ -249,3 +249,7 @@ function enterFakeFullscreen() {
   document.documentElement.style.setProperty("--bottomDividerHeight", "0.5rem");
   document.documentElement.style.setProperty("--bottomAreaPadding", "0rem");
 }
+
+export function getPxfromRem(rem: number) {
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}

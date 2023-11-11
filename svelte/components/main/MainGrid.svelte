@@ -5,8 +5,24 @@
   import { selectedItems } from "../../stores/stateStore";
   import PreviewModal from "./PreviewModal.svelte";
   import { addToDeleteQueue } from "./delete/DeleteQueue";
+  import { onMount, tick } from "svelte";
+  import { topContainer } from "../../stores/cssStore";
+  import { getPxfromRem } from "../../utils";
 
   export let items: SingleItem[];
+  export let focusedItemId: string | undefined = undefined;
+
+  onMount(async () => {
+    if (focusedItemId) {
+      setTimeout(() => {
+        const focusedItem = document.getElementById(focusedItemId!);
+        document.getElementById("mainArea")!.scrollTop =
+          focusedItem!.offsetTop -
+          getPxfromRem(Number($topContainer.val.slice(0, -3)));
+      }, 0);
+    }
+  });
+
   let isPreviewModalOpen = false;
   let previewItem: SingleItem;
 

@@ -19,7 +19,6 @@
     - display on import page
     - handle already existing bookmarks
 * make item paths relative to database path
-* scroll to item after closing detailview
 * choose video preview image on click
 * fix import view
   - import folders with subfolders
