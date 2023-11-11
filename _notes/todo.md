@@ -1,13 +1,15 @@
 # Bugs
 * detailview - bottom preview of other items change size when selecting using the keyboard
 * space triggered detailview video 
-  - video flickers - see previewvideo for fix
   - change color of seek bar
   - orange border around window
+  - fullscreen is broken
+    - not full
+    - doesn't exit cleanly 
 * tagTree spacing is off
-* fix schema updates, does save.json get corrputed?
 * preview image not displayed after import - only after reload, both bookmarks and import multiple
-
+* window location buttons (red, yellow, green) - move down and left a bit
+* grid wrap around on arrow last item, first item
 
 
 # TODO
@@ -50,6 +52,8 @@
 * bottom area preview - allow arrow up/down to navigate - https://developer.mozilla.org/en-US/docs/Web/API/Element/getClientRects
 * rename files on item rename pref toggle
 * undo deletion
+* update server and ui
+  - fix schema updates, does save.json get corrputed? 
 
 
 ## TODO tertiary
@@ -60,7 +64,6 @@
 
 
 ## Styling
-* window location buttons (red, yellow, green) - move down and left a bit
 * font sizes
 * white play icon with black border
 * hide play symbol until video is loaded

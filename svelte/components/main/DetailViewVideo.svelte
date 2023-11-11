@@ -4,6 +4,8 @@
   export let item: SingleItem;
   import Play from "../../assets/feather/Play.svelte";
   import { toggleFakeFullscreen } from "../../utils";
+  import { extractNameAndExtension } from "../../../src/gschert";
+  import { settingsJson } from "../../stores/stateStore";
 
   let videoContainer: HTMLDivElement;
   let videoElement: HTMLVideoElement;
@@ -91,6 +93,10 @@
       videoElement.offsetHeight * thumbRatio
     );
   }
+
+  let videoIsLoaded = false;
+  let { name } = extractNameAndExtension(item.name!);
+  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${name}_thumb.jpeg`;
 </script>
 
 <svelte:window
@@ -119,14 +125,21 @@
 
 <div class="flex" bind:this={videoContainer}>
   <div class="relative">
+    {#if !videoIsLoaded}
+      <img style="max-height: calc(100% - 1rem);" src={thumbPath} alt="" />
+    {/if}
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
       id="videoPlayer"
       style="max-height: calc(100% - 1rem);"
+      class={videoIsLoaded ? "" : "hidden"}
       bind:this={videoElement}
-      poster=""
+      poster={thumbPath}
       on:dblclick={toggleFakeFullscreen}
       on:click={play}
+      on:canplay={() => {
+        videoIsLoaded = true;
+      }}
       on:play={() => {
         playIconElement.style.display = "none";
       }}
