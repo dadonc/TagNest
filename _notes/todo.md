@@ -1,5 +1,5 @@
 # Bugs
-* detailview - bottom preview of other items change size when selecting using the keyboard
+* detailview - bottom preview of other items change size when selecting using the keyboard, too small if bottombar gets smaller in fullscreen
 * space triggered detailview video 
   - change color of seek bar
   - orange border around window
@@ -8,9 +8,13 @@
     - doesn't exit cleanly 
 * tagTree spacing is off
 * preview image not displayed after import - only after reload, both bookmarks and import multiple
+  - if multiple items are imported, the previewImage of the last one isn't displayed
 * window location buttons (red, yellow, green) - move down and left a bit
 * grid wrap around on arrow last item, first item
-
+* importqueue  
+  - starts on reload even if import was not started
+  - importing one item imports them all
+  - import indicator is displayed even if no import is running
 
 # TODO
 * handle already existing files
@@ -24,7 +28,6 @@
   - import folders with subfolders
   - don't change items that are already getting imported, deactivate button if all are already getting imported?
   - disable already existing items
-* import indicator
 * deletion confirmation dialog
 * DetailviewVideo: autoplay videos on click, don't on arrows 
 * "external" items and pdfs overflow on the x axis
@@ -53,6 +56,7 @@
 * undo deletion
 * update server and ui
   - fix schema updates, does save.json get corrputed? 
+* tag specific times on videos
 
 
 ## TODO tertiary

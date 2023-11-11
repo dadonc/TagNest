@@ -5,6 +5,7 @@
   import { importItems } from "../../stores/items";
   import AddBookmarkModal from "./AddBookmarkModal.svelte";
   import AddModal from "./AddModal.svelte";
+  import LoaderCircle from "./LoaderCircle.svelte";
 
   let showAddModal = false;
 
@@ -15,6 +16,13 @@
   window.electron.onOpenAddItem(() => {
     showAddModal = true;
   });
+
+  let initialImportItems = $importItems.length;
+  $: {
+    if ($importItems.length > initialImportItems) {
+      initialImportItems = $importItems.length;
+    }
+  }
 </script>
 
 <div class="flex items-center justify-between h-full">
@@ -36,8 +44,9 @@
     {/if}
   </div>
   <div class="flex items-center h-4 text-xs">
-    <span>
+    <span class="flex justify-center h-4">
       {#if $importItems.length > 0}
+        <LoaderCircle />
         <button
           on:click={() => {
             if ($currentRoute !== "importMultiple") {
@@ -45,9 +54,11 @@
               selectedItems.set({ ids: [] });
             }
           }}
-          class="mr-4"
+          class="ml-1 mr-4 font-bold"
         >
-          Import: {$importItems.length}
+          Importing: {initialImportItems -
+            $importItems.length +
+            1}/{initialImportItems}
         </button>
       {/if}
     </span>
