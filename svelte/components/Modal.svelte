@@ -3,6 +3,7 @@
   export let isOpen = false;
   export let closeOnClickOutside = true;
   export let close: () => void;
+  export let isFullWidth = true;
 </script>
 
 {#if isOpen}
@@ -25,7 +26,11 @@
     class={`transition-opacity duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg`}
     style="z-index: 99999;"
   >
-    <div class="h-full overflow-scroll rounded">
+    <div
+      class={`${
+        isFullWidth ? "w-full" : ""
+      } h-full overflow-scroll rounded flex flex-col justify-center`}
+    >
       <slot name="body" />
     </div>
   </div>

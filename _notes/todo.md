@@ -1,11 +1,10 @@
 # Bugs when showing Jessi
 * Don't break the app if the database folder is deleted
 * Preview and detailview of last imported item
-* Space preview of bookmarks too narrow
-* Add modal broken
 * fold in members of tag group is broken
 * tag spacing is off
 * red, yellow, green icons are off
+* dark mode grid view url link on bookmark hover
 
 # Bugs
 * space triggered detailview video 
@@ -27,6 +26,8 @@
   - import indicator is displayed even if no import is running
 * Error occurred in handler for 'deleteFile': Error: ENOENT: no such file or directory, unlink '/Users/domenic/Downloads/t4/Stadtbienen   Auftakt Imkerkurs 2022   Teil 1 (720p_30fps_H264-192kbit_AAC).mp4'
 * Save mhtml after ublock is finished?! Exactly like it is seen by the user
+* bookmark detail view: display image until mhtml is loaded?
+* detailview bottom preview images size changes after selecting the next item 
 
 # TODO
 * handle already existing files
@@ -81,7 +82,7 @@
 * Notion-like notes
 * adblocker for mhtml
 * highlight things inside mhtml and pdf files
-
+* trash bin
 
 ## Styling
 * font sizes

@@ -13,7 +13,7 @@ Version 1.0
 * Landing page
   * Impressum, AGB, Datenschutz, relatively large contact button/email in footer
 * Demo functionality: two builds, 30 items, when trying to add more items modal with email and link to landing page appears
-* Payment/license: gumroad or stripe/paddle, no license key? email as license key?
+* Payment/license: gumroad or stripe/paddle or lemonsqueezy, fastspring, no license key? email as license key?
 
 Version 1.1
 * Affiliate links

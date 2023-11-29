@@ -93,13 +93,11 @@
             clip-rule="evenodd"
           />
         </svg>
-        <div class="flex mt-4 text-sm leading-6 text-gray-600">
-          <button class="text-primary" on:click={openFileChooser}
-            >Upload a file</button
+        <div class="text-sm text-gray-600">
+          <button class="text-primary" on:click={openFileChooser}>Choose</button
           >
-          <p class="pl-1">or drag and drop</p>
+          <p class="pl-1">or drag and drop a file</p>
         </div>
-        <p class="text-xs leading-5 text-gray-600">images,</p>
       </div>
     </div>
   </div>
