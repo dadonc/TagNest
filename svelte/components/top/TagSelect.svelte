@@ -120,9 +120,9 @@
   .outlineFuckery:focus {
     /* Fucking tailwind/forms and DaisyUI */
     box-shadow: none;
-    outline: 1px solid;
+    outline: 2px solid;
     outline-offset: -2px;
-    /* @apply outline-primary; */
-    outline-color: hsl(var(--p));
+    /*TODO - use variable here*/
+    outline-color: #2563eb;
   }
 </style>

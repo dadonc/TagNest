@@ -1,13 +1,13 @@
 # Bugs when showing Jessi
 * Don't break the app if the database folder is deleted
 * Preview and detailview of last imported item
-* fold in members of tag group is broken
+* fold in members of tag group is broken -> cannot click on caret
 * tag spacing is off
 * red, yellow, green icons are off
 * dark mode grid view url link on bookmark hover
-* tag select has a different border
 
 # Bugs
+* tag select looses border radius after tag was selected
 * space triggered detailview video 
   - change color of seek bar
   - fullscreen is broken
@@ -90,6 +90,7 @@
 * hide play symbol until video is loaded
 
 ## Refactor/Improvements
+* remove daisyui
 * remove promise around itemStore
 * refactor CreateOrEdit
   - possibly: alsways create new items in database when adding items - updateOrCreate should only be update => should it?

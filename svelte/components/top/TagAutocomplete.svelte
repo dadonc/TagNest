@@ -77,7 +77,7 @@
 
 {#if isAutoCompleteVisible}
   <div
-    class="absolute w-full border-2 border-t-0 rounded-lg rounded-t-none bg-base-300 border-primary"
+    class="absolute w-full overflow-hidden border-2 border-t-0 rounded-lg rounded-t-none bg-base-300 borderColorFuckery"
   >
     <ul>
       {#each matchesToShow as match, i}
@@ -99,3 +99,10 @@
     </ul>
   </div>
 {/if}
+
+<style>
+  .borderColorFuckery {
+    /* TODO - use variable */
+    border-color: #2563eb;
+  }
+</style>
