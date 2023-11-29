@@ -5,11 +5,11 @@
 * tag spacing is off
 * red, yellow, green icons are off
 * dark mode grid view url link on bookmark hover
+* tag select has a different border
 
 # Bugs
 * space triggered detailview video 
   - change color of seek bar
-  - orange border around window
   - fullscreen is broken
     - not full
     - doesn't exit cleanly 

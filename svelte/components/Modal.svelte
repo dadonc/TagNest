@@ -23,7 +23,7 @@
       }
     }}
     transition:fade={{ duration: 200 }}
-    class={`transition-opacity duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg`}
+    class={`transition-opacity duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg focus:outline-none`}
     style="z-index: 99999;"
   >
     <div
