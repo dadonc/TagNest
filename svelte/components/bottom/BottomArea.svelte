@@ -34,8 +34,8 @@
 
 <div
   id="bottomArea"
-  class="overflow-y-scroll"
-  style="height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2)"
+  class=""
+  style="height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 + 4px)"
 >
   {#each items as item}
     <div class="inline-block h-full">

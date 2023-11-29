@@ -12,7 +12,7 @@
     alt=""
     class=""
     style={$currentRoute == "details"
-      ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 2px)"
+      ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2)"
       : ""}
   />
   {#if item.url}

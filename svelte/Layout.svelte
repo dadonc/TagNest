@@ -13,11 +13,11 @@
   let canOpenRight = true;
   $: canOpenBottom = $currentRoute === "details";
 
-  let gridColString = canOpenRight
+  $: gridColString = canOpenRight
     ? "var(--leftContainer) var(--dividerWidth) auto var(--dividerWidth) var(--rightContainer)"
     : "var(--leftContainer) var(--dividerWidth) auto var(--dividerWidth)";
 
-  let gridRowString = canOpenBottom
+  $: gridRowString = canOpenBottom
     ? "var(--topContainer) auto var(--bottomDividerHeight) var(--bottomContainer);"
     : "var(--topContainer) auto var(--bottomDividerHeight)";
 
@@ -179,7 +179,7 @@
   :global(:root) {
     --dividerWidth: 0.5rem;
     --bottomDividerHeight: 2rem;
-    --bottomAreaPadding: 0.5rem;
+    --bottomAreaPadding: 0.25rem;
   }
 
   .main {
@@ -217,6 +217,7 @@
   .bottomContainer .slot {
     padding: var(--bottomAreaPadding);
     height: var(--bottomContainer);
+    overflow: scroll;
   }
 
   .leftContainer {

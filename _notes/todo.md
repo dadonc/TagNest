@@ -1,20 +1,32 @@
+# Bugs when showing Jessi
+* Don't break the app if the database folder is deleted
+* Preview and detailview of last imported item
+* Space preview of bookmarks too narrow
+* Add modal broken
+* fold in members of tag group is broken
+* tag spacing is off
+* red, yellow, green icons are off
+
 # Bugs
-* detailview - bottom preview of other items change size when selecting using the keyboard, too small if bottombar gets smaller in fullscreen
 * space triggered detailview video 
   - change color of seek bar
   - orange border around window
   - fullscreen is broken
     - not full
     - doesn't exit cleanly 
+  - wrap around on last/first item
 * tagTree spacing is off
 * preview image not displayed after import - only after reload, both bookmarks and import multiple
   - if multiple items are imported, the previewImage of the last one isn't displayed
+  - detailview?
 * window location buttons (red, yellow, green) - move down and left a bit
 * grid wrap around on arrow last item, first item
 * importqueue  
   - starts on reload even if import was not started
   - importing one item imports them all
   - import indicator is displayed even if no import is running
+* Error occurred in handler for 'deleteFile': Error: ENOENT: no such file or directory, unlink '/Users/domenic/Downloads/t4/Stadtbienen   Auftakt Imkerkurs 2022   Teil 1 (720p_30fps_H264-192kbit_AAC).mp4'
+* Save mhtml after ublock is finished?! Exactly like it is seen by the user
 
 # TODO
 * handle already existing files
@@ -35,6 +47,7 @@
 * delete newly added bookmark files if canceled before saving
 * right side - show items if multiple items are selected
 * secondary fake fullscreen - force full video width
+* detailview - arrow down to select next item
 
 
 ## TODO secondary
@@ -57,13 +70,17 @@
 * update server and ui
   - fix schema updates, does save.json get corrputed? 
 * tag specific times on videos
-
+* right sidebar as a modal if clicking command + i
+* move db isnt implemented
 
 ## TODO tertiary
+* Searchbar, including tag toggle
 * change tag group order
 * "Pin" items - always appear at top if a tag is selected and the items are inside the collection?
 * item groups, pin tags/items
 * Notion-like notes
+* adblocker for mhtml
+* highlight things inside mhtml and pdf files
 
 
 ## Styling
@@ -83,12 +100,17 @@
 * bump deps
 * rmv latestMigration from save.json
 * iframe - rmv webfonts
+* video deflicker step takes long - make secondary import queue?
+* detailview bottom: remove var(--bottomAreaPadding), change paddings
 
 ## TagSelect
 * after adding all tags and clicking backspace it jumps to the beginning of the line
 * cannot click in middle of tag to modify it
 
 ## Ideas
+* "Collections" !!! - only display items and tags that are inside the collection - grid with different collections as main screen e.g. "books", "boardgames", "movies", "music"
+  - local and private pinterest
 * Custom types for collectors, e.g. books, boardgames
 * Open in VSC: https://stackoverflow.com/a/68881419
-
+* Mobile application? Full rewrite
+* create subtitles for videos and make searchable

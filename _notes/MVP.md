@@ -9,13 +9,16 @@ Version 1.0
 * Import - better overview, indicator
 * Chrome extension
 * Update application functionality (server, migration, client)
+  * Custom server endpoint, download new version?
 * Landing page
-* Demo functionality
-* Payment/license
+  * Impressum, AGB, Datenschutz, relatively large contact button/email in footer
+* Demo functionality: two builds, 30 items, when trying to add more items modal with email and link to landing page appears
+* Payment/license: gumroad or stripe/paddle, no license key? email as license key?
 
 Version 1.1
 * Affiliate links
 * Analytics
+* Students/developing countries discount
 
 Version 1.2
 * Order tag groups
