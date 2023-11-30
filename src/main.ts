@@ -22,6 +22,10 @@ const createWindow = () => {
       webSecurity: isDev ? false : true,
     },
     titleBarStyle: "hidden",
+    trafficLightPosition: {
+      x: 16,
+      y: 16,
+    },
   });
 
   if (isDev) {

@@ -3,7 +3,6 @@
 * Preview and detailview of last imported item
 * fold in members of tag group is broken -> cannot click on caret
 * tag spacing is off
-* red, yellow, green icons are off
 * dark mode grid view url link on bookmark hover
 
 # Bugs
