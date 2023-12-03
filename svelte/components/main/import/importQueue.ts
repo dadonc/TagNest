@@ -44,9 +44,8 @@ export const importSteps = {
         "_preview." +
         extension;
       video.load();
-      video.addEventListener(
-        "canplay",
-        () => {
+      await new Promise((resolve) => {
+        video.addEventListener("canplay", async () => {
           video.currentTime = 0;
           const canvas = document.createElement("canvas");
           canvas.width = video.videoWidth;
@@ -55,10 +54,18 @@ export const importSteps = {
             .getContext("2d")
             ?.drawImage(video, 0, 0, canvas.width, canvas.height);
           const dataURL = canvas.toDataURL("image/jpeg", 0.5);
-          window.electron.saveVideoPreviewImage(dataURL, name + "_thumb.jpeg");
-        }
-        // { once: true } - black image bug?
-      );
+          await window.electron.saveVideoPreviewImage(
+            dataURL,
+            name + "_thumb.jpeg"
+          );
+          // TODO hacky solution, without this the image is black before the app is reloaded
+          // this happens if a single video is imported
+          // I don't know why this happens, because saveVideoPreviewImage is sync
+          setTimeout(() => {
+            resolve(true);
+          }, 1000);
+        });
+      });
     },
   },
   external: {
