@@ -28,7 +28,7 @@
   >
     <div
       class={`${
-        isFullWidth ? "w-full" : ""
+        isFullWidth ? "w-full" : "max-w-xl"
       } h-full overflow-scroll rounded flex flex-col justify-center`}
     >
       <slot name="body" />

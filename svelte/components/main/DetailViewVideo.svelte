@@ -76,8 +76,8 @@
       renderPos < 0
         ? 0
         : renderPos > 1 - thumbRatio
-        ? 1 - thumbRatio
-        : renderPos;
+          ? 1 - thumbRatio
+          : renderPos;
     thumbElement.style.left = `${renderPos * 100}%`;
     thumbElement.style.display = "block";
 
@@ -123,8 +123,8 @@
   <source src={"file://" + item.file?.path} />
 </video>
 
-<div class="flex" bind:this={videoContainer}>
-  <div class="relative">
+<div class="flex items-center h-full" bind:this={videoContainer}>
+  <div class="relative max-h-full">
     {#if !videoIsLoaded}
       <img style="max-height: calc(100% - 1rem);" src={thumbPath} alt="" />
     {/if}

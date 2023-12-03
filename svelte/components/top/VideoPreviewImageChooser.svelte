@@ -87,7 +87,7 @@
           on:mouseleave={() => {
             dispatch("image-chosen");
           }}
-          class="absolute hidden w-full h-full"
+          class="absolute left-0 hidden w-full h-full"
           bind:this={progressBar}
           value="0"
           max="0"
