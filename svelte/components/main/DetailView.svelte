@@ -21,6 +21,8 @@
       <DetailViewPdf {item} />
     {:else if item.type === "video"}
       <DetailViewVideo {item} />
+    {:else}
+      <p>Unknown type</p>
     {/if}
   </div>
 {/key}

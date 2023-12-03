@@ -11,7 +11,6 @@
   import { bottomContainer, rightContainer } from "../../stores/cssStore";
 
   export let items: SingleItem[];
-  $: $filteredData.then((data) => (items = data.items));
 
   onMount(() => {
     $rightContainer.currentVal = "0px";

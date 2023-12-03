@@ -9,7 +9,6 @@
   import RightEditMultiple from "./RightEditMultiple.svelte";
 
   export let items: SingleItem[];
-  $: $filteredData.then((data) => (items = data.items));
 
   $: itemsToUse = $currentRoute === "importMultiple" ? $importItems : items;
 </script>

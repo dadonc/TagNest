@@ -26,8 +26,6 @@
   let isPreviewModalOpen = false;
   let previewItem: SingleItem;
 
-  $: $filteredData.then((data) => (items = data.items));
-
   $: gridCols = createGridColsString($currView.zoomLvl);
 
   $: {

@@ -21,6 +21,8 @@
 
   let isDataAvailable = false;
   let data: Awaited<typeof $filteredData>;
+  $: $filteredData.then((filtered) => (data = filtered));
+
   onMount(async () => {
     exitFakeFullscreen();
     let getSettingsJson = await window.electron.getSettingsJson();

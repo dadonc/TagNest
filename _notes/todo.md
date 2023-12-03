@@ -1,9 +1,11 @@
 # Bugs when showing Jessi
 * Don't break the app if the database folder is deleted
-* detailview of last imported item
 * fold in members of tag group is broken -> cannot click on caret
 * tag spacing is off
 * dark mode grid view url link on bookmark hover
+* add video modal is broken
+* detailview video is broken
+* detailview video bottom preview moves
 
 # Bugs
 * tag select looses border radius after tag was selected
