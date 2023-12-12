@@ -1,5 +1,4 @@
 # Bugs when showing Jessi
-* detailview video bottom preview moves
 * Don't break the app if the database folder is deleted
 * fold in members of tag group is broken -> cannot click on caret
 * tag spacing is off
@@ -7,7 +6,7 @@
 * addmodal disappears if a video preview is chosen
 
 # Bugs
-* tag select looses border radius after tag was selected
+* tag select sometimes (?) looses border radius after tag was selected(?)
 * space triggered detailview video 
   - change color of seek bar
   - fullscreen is broken
@@ -30,6 +29,7 @@
 * detailview bottom preview images size changes after selecting the next item 
 
 # TODO
+* videos save last position if switching videos in detailview?
 * handle already existing files
     - handle single import
     - handle multiple imports

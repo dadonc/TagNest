@@ -34,7 +34,7 @@
 <div
   id="bottomArea"
   class=""
-  style="height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 + 4px)"
+  style="height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2)"
 >
   {#each items as item}
     <div class="inline-block h-full">
