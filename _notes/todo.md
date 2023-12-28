@@ -33,6 +33,7 @@ recreate video preview with changed settings
 toggle to display tag on PreviewItems in gridview, exclude already selected/filtered for tags
 
 # Bugs when showing Jessi
+* cancel creation of items - is everything deleted? especially bookmarks?
 * Don't break the app if the database folder is deleted
 * fold in members of tag group is broken -> cannot click on caret
 * tag spacing is off

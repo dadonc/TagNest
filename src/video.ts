@@ -14,13 +14,28 @@ const ffprobePath = require("ffprobe-static").path.replace(
   "app.asar.unpacked"
 );
 
+const escapeFileName = (name: string) => {
+  //@ts-ignore
+  let fileName = name.replaceAll("`", "__--__--__");
+  //@ts-ignore
+  fileName = fileName.replaceAll("'", "__--__--__");
+  return fileName;
+};
+
+const unescapeFileName = (name: string) => {
+  //@ts-ignore
+  let fileName = name.replaceAll("__--__--__", "'");
+  return fileName;
+};
+
 const cutVideoSegment = (
   videoPath: string,
   savePath: string,
   startSecond: number,
   duration: number
 ): Promise<void> => {
-  const fileName = extractNameAndExtension(videoPath).name;
+  let fileName = extractNameAndExtension(videoPath).name || "";
+  fileName = escapeFileName(fileName);
   if (!fileName) throw new Error("Invalid videoPath");
   return new Promise((resolve, reject) => {
     try {
@@ -66,7 +81,8 @@ const concatVideo = (
     // -y overwrites output file if it exists
     try {
       const fileType = videoPath.split(".").pop() || "mp4";
-      const fileName = extractNameAndExtension(videoPath).name;
+      let fileName = extractNameAndExtension(videoPath).name || "";
+      fileName = escapeFileName(fileName);
       const txtPath = path.join(tempPath, fileName + "_cutPoints.txt");
       const outDir = path.join(savePath, "previews", "videos");
       if (!fs.existsSync(outDir)) {
@@ -114,7 +130,7 @@ function deflicker(previewPath: string): Promise<void> {
       previewPath,
       "-vf",
       "deflicker",
-      previewPath.replace("_flicker", ""),
+      unescapeFileName(previewPath.replace("_flicker", "")),
     ]);
     task.on("exit", (code: string) => {
       if (code == "0") {
@@ -164,7 +180,8 @@ const createConcatTxt = (
   startSeconds: number[]
 ) => {
   const videoExtension = videoPath.split(".").pop();
-  const fileName = extractNameAndExtension(videoPath).name;
+  let fileName = extractNameAndExtension(videoPath).name || "";
+  fileName = escapeFileName(fileName);
   if (!fileName) throw new Error("Invalid videoPath");
   const txt = startSeconds
     .map(
@@ -183,7 +200,8 @@ const delTempFiles = (
   savePath: string,
   startSeconds: number[]
 ) => {
-  const fileName = extractNameAndExtension(videoPath).name;
+  let fileName = extractNameAndExtension(videoPath).name || "";
+  fileName = escapeFileName(fileName);
   if (!fileName) throw new Error("Invalid videoPath");
   const videoExtension = videoPath.split(".").pop();
   startSeconds.forEach((s) =>
