@@ -50,7 +50,7 @@ const cutVideoSegment = (
         } else reject();
       });
     } catch (e) {
-      console.log("ERROR CATCHED", e);
+      console.log("ERROR CATCHED in function cutVideoSegment", e);
       reject(e);
     }
   });
@@ -99,7 +99,7 @@ const concatVideo = (
         } else reject();
       });
     } catch (e) {
-      console.log("ERROR CATCHED", e);
+      console.log("ERROR CATCHED in function concatVideo", e);
       reject(e);
     }
   });
@@ -226,7 +226,7 @@ export const createVideoPreview = async (videoPath: string): Promise<void> => {
       delTempFiles(videoPath, tempPath, slicePoints);
       resolve();
     } catch (e) {
-      console.log("ERROR CATCHED", e);
+      console.log("ERROR CATCHED in function createVideoPreview", e);
       reject(e);
     }
   });

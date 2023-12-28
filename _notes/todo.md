@@ -1,9 +1,40 @@
+display duration and quality on video thumbnails
+video detail view cass is broken: in a window filling the full screen (not fullscreen, the green "+")
+video timeline hover preview is too large
+back button should jump to last detail view, separate home button
+some videos cannot be imported
+vertical video preview images and previews are too high
+shuffle button
+
+display import progress somewhere other than the console.
+Clear import status right top corner after import is finished
+
+performance problems while import is running:
+ - video preview should start instantly
+ - video preview image takes too lang to load if one scrolls fast
+ - update video timeline thumbs don't update pften enough
+
+
+
+recreate video preview with changed settings
+  - ui, set start delay
+  - if new position was marked, recreate video preview inlcuding the new position
+
+
 # Bugs when showing Jessi
 * Don't break the app if the database folder is deleted
 * fold in members of tag group is broken -> cannot click on caret
 * tag spacing is off
 * dark mode grid view url link on bookmark hover
 * addmodal disappears if a video preview is chosen
+* import view is fucking broken
+* import problem of video file - see untitled folder
+  * ImportQueue.ts:159 Uncaught (in promise) Error: Error invoking remote method 'createVideoPreview': reply was never sent
+* check for duplicates
+
+* what happens if the app is quit or reloaded and only the first import step has run?
+
+reload queue after deleting an item - hanged after i deleted an item that didn't work 
 
 # Bugs
 * tag select sometimes (?) looses border radius after tag was selected(?)
@@ -27,8 +58,13 @@
 * Save mhtml after ublock is finished?! Exactly like it is seen by the user
 * bookmark detail view: display image until mhtml is loaded?
 * detailview bottom preview images size changes after selecting the next item 
+* allow paths to hidden folders
+* import queue is shared between different databases
+
 
 # TODO
+* improve settings screen with explanations, increase topbar height
+* make numer of simultaneous imports configurable
 * videos save last position if switching videos in detailview?
 * handle already existing files
     - handle single import
@@ -38,6 +74,7 @@
 * make item paths relative to database path
 * choose video preview image on click
 * fix import view
+  - checkbox with "Update view as soon as an item becomes available"?
   - import folders with subfolders
   - don't change items that are already getting imported, deactivate button if all are already getting imported?
   - disable already existing items
@@ -53,7 +90,8 @@
 
 ## TODO secondary
 * pdf preview when creating an item?
-* "❤️ Favorite" - Tag
+* "❤️ Favorite" - Tag, icon - always displayed at the top
+  * downranked, upranked buttons
 * item order
     - (reversable) order of items: name, date created/modified, type, size, tags, viewcount, last opened
     - set correct created.at for files
@@ -90,6 +128,7 @@
 * hide play symbol until video is loaded
 
 ## Refactor/Improvements
+* creater a model "Type" isnide the schema linking to video/bookmark etc
 * remove daisyui
 * remove promise around itemStore
 * refactor CreateOrEdit
