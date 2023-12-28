@@ -2,10 +2,13 @@
   import Plus from "../../assets/feather/Plus.svelte";
   import ChevronLeft from "../../assets/feather/ChevronLeft.svelte";
   import { currentRoute, selectedItems } from "../../stores/stateStore";
+  import { items } from "../../stores/items";
+
   import { importItems } from "../../stores/items";
   import AddBookmarkModal from "./AddBookmarkModal.svelte";
   import AddModal from "./AddModal.svelte";
   import LoaderCircle from "./LoaderCircle.svelte";
+  import ShuffleIcon from "../../assets/ShuffleIcon.svelte";
 
   let showAddModal = false;
 
@@ -22,6 +25,18 @@
     if ($importItems.length > initialImportItems) {
       initialImportItems = $importItems.length;
     }
+  }
+
+  async function shuffleItems() {
+    function shuffleArray(array: any[]) {
+      // https://stackoverflow.com/a/12646864
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    $items = shuffleArray($items);
   }
 </script>
 
@@ -42,6 +57,9 @@
         <ChevronLeft className="h-4 w-4" />
       </button>
     {/if}
+    <button on:click={shuffleItems} class="p-2">
+      <ShuffleIcon className="h-5 w-5 text-base-content" />
+    </button>
   </div>
   <div class="flex items-center h-4 text-xs">
     <span class="flex justify-center h-4">

@@ -111,7 +111,7 @@
   on:dragover|preventDefault
   style={`--gridColString: ${gridColString}; --gridRowString: ${gridRowString};`}
 >
-  <div class="topContainer bg-base-300">
+  <div class="pt-1 topContainer bg-base-300">
     <slot name="topContainer">No topContainer</slot>
   </div>
   <div class=" bg-base-300 leftContainer">
@@ -207,7 +207,6 @@
     overflow: scroll;
   }
 
-  .topContainer,
   .rightContainer {
     /* @apply p-2; */
     padding: 0.5rem;

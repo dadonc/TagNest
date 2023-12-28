@@ -1,7 +1,6 @@
 back button should jump to last detail view, separate home button
 some videos cannot be imported
 vertical video preview images and previews are too high
-shuffle button
 addBookmark modal is broken
 
 space preview
@@ -24,7 +23,7 @@ recreate video preview with changed settings
   - if new position was marked, recreate video preview inlcuding the new position
 
 
-toggle to display tag on PreviewItems, exclude already selected/filtered for tags
+toggle to display tag on PreviewItems in gridview, exclude already selected/filtered for tags
 
 # Bugs when showing Jessi
 * Don't break the app if the database folder is deleted
