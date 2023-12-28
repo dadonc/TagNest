@@ -11,6 +11,8 @@ space preview
 display import progress somewhere other than the console.
 Clear import status right top corner after import is finished
 
+app crashes if a file is deleted that is getting imported
+
 performance problems while import is running:
  - video preview should start instantly
  - video preview image takes too lang to load if one scrolls fast

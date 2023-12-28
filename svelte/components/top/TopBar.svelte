@@ -57,9 +57,11 @@
         <ChevronLeft className="h-4 w-4" />
       </button>
     {/if}
-    <button on:click={shuffleItems} class="p-2">
-      <ShuffleIcon className="h-5 w-5 text-base-content" />
-    </button>
+    {#if $currentRoute == "main"}
+      <button on:click={shuffleItems} class="p-2">
+        <ShuffleIcon className="h-5 w-5 text-base-content" />
+      </button>
+    {/if}
   </div>
   <div class="flex items-center h-4 text-xs">
     <span class="flex justify-center h-4">

@@ -123,7 +123,7 @@
 </script>
 
 <div class="flex items-center justify-center">
-  <div class="w-1/2 text-center h-1/2">
+  <div class="text-center">
     {#if existingItem?.type === "bookmark"}
       <BookmarkPreviewImageChooser
         item={existingItem}

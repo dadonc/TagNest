@@ -18,11 +18,15 @@
 
   let playPromise: Promise<void> | undefined;
 
-  let durationString = formatTime(item.video!.duration as number);
-  let resolutionString = getVideoResolutionDescription(
-    item.video!.width as number,
-    item.video!.height as number
-  );
+  let durationString = item.video?.duration
+    ? formatTime(item.video!.duration as number)
+    : "";
+  let resolutionString = item.video?.width
+    ? getVideoResolutionDescription(
+        item.video!.width as number,
+        item.video!.height as number
+      )
+    : "";
 </script>
 
 <!-- svelte-ignore a11y-media-has-caption -->
