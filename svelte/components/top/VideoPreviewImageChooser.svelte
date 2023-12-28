@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { settingsJson } from "../../stores/stateStore";
   import { extractNameAndExtension } from "../../../src/gschert";
+  import { formatTime } from "../../utils";
   export let videoPath: string;
   export let isCreateNew = false;
 
@@ -11,12 +12,6 @@
   let currentDurationSpan: HTMLSpanElement;
 
   const dispatch = createEventDispatcher();
-
-  function formatTime(seconds: number) {
-    const date = new Date(0);
-    date.setSeconds(seconds);
-    return date.toISOString().split("T")[1].split(".")[0];
-  }
 
   function seek(e: MouseEvent) {
     const rect = progressBar.getBoundingClientRect();

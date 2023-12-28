@@ -118,6 +118,7 @@ export async function getItem(id: string) {
       file: true,
       tags: true,
       bookmark: true,
+      video: true,
     },
   });
 }
@@ -131,6 +132,7 @@ export async function getItems() {
       file: true,
       tags: true,
       bookmark: true,
+      video: true,
     },
     orderBy: {
       createdAt: "desc",

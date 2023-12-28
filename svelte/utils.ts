@@ -253,3 +253,35 @@ function enterFakeFullscreen() {
 export function getPxfromRem(rem: number) {
   return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
+
+export function formatTime(seconds: number) {
+  const date = new Date(0);
+  date.setSeconds(seconds);
+  return date.toISOString().split("T")[1].split(".")[0];
+}
+
+export function getVideoResolutionDescription(width: number, height: number) {
+  let w = width;
+  let h = height;
+  if (width < height) {
+    w = height;
+    h = width;
+  }
+  if (w <= 320 || h <= 240) {
+    return "240p";
+  } else if (w <= 480 || h <= 360) {
+    return "360p";
+  } else if (w <= 640 || h <= 480) {
+    return "480p";
+  } else if (w <= 1280 || h <= 720) {
+    return "720p";
+  } else if (w <= 1920 || h <= 1080) {
+    return "1080p";
+  } else if (w <= 2560 || h <= 1440) {
+    return "1440p";
+  } else if (w <= 3840 || h <= 2160) {
+    return "4K";
+  } else if (w <= 7680 || h <= 4320) {
+    return "8K";
+  }
+}

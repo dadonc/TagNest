@@ -1,10 +1,11 @@
-display duration and quality on video thumbnails
-video detail view cass is broken: in a window filling the full screen (not fullscreen, the green "+")
+video detail view css is broken: in a window filling the full screen (not fullscreen, the green "+")
 video timeline hover preview is too large
 back button should jump to last detail view, separate home button
 some videos cannot be imported
 vertical video preview images and previews are too high
 shuffle button
+
+addBookmark modal is broken
 
 display import progress somewhere other than the console.
 Clear import status right top corner after import is finished
@@ -128,6 +129,8 @@ reload queue after deleting an item - hanged after i deleted an item that didn't
 * hide play symbol until video is loaded
 
 ## Refactor/Improvements
+* only include db fields that are used in the interface. E.g. in getItem all the video information is not necessary
+* Should getVideoResolutionDescription() be saved in the db or calculated on the fly?
 * creater a model "Type" isnide the schema linking to video/bookmark etc
 * remove daisyui
 * remove promise around itemStore

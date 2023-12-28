@@ -3,11 +3,11 @@
   import { currentRoute, settingsJson } from "../../stores/stateStore";
   import Play from "../../assets/feather/Play.svelte";
   import { extractNameAndExtension } from "../../../src/gschert";
+  import { formatTime, getVideoResolutionDescription } from "../../utils";
 
   export let item: SingleItem;
 
   let videoElement: HTMLVideoElement;
-  let playIconElement: HTMLSpanElement;
 
   let displayVideo = false;
   let videoIsLoaded = false;
@@ -17,6 +17,12 @@
   $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${name}_thumb.jpeg`;
 
   let playPromise: Promise<void> | undefined;
+
+  let durationString = formatTime(item.video!.duration as number);
+  let resolutionString = getVideoResolutionDescription(
+    item.video!.width as number,
+    item.video!.height as number
+  );
 </script>
 
 <!-- svelte-ignore a11y-media-has-caption -->
@@ -64,18 +70,24 @@
         if (videoElement.paused) {
           playPromise = videoElement.play();
         }
-        playIconElement.style.display = "none";
       }}
       on:mouseleave={async () => {
         await playPromise;
         videoElement.pause();
-        playIconElement.style.display = "block";
       }}
     />
   {/if}
   <span
-    bind:this={playIconElement}
-    class="absolute inline-block w-5 h-5 transform -translate-x-1/2 -translate-y-1/2 rounded-sm text-base-content top-1/2 left-1/2"
-    ><Play className="w-4 h-4" /></span
+    class="absolute inline-block w-5 h-5 transform -translate-x-1/2 -translate-y-1/2 bg-black rounded-sm text-base-content top-1/2 left-1/2"
+    ><Play className="w-4 h-4 text-white p-1" /></span
+  >
+  <span
+    class="absolute inline-block p-1 text-xs text-white bg-black rounded-sm bottom-1 right-1"
+    >{durationString}</span
+  >
+
+  <span
+    class="absolute inline-block p-1 text-xs text-white bg-black rounded-sm top-1 right-1"
+    >{resolutionString}</span
   >
 </div>

@@ -3,7 +3,7 @@
   import type { SingleItem } from "../../stores/items";
   export let item: SingleItem;
   import Play from "../../assets/feather/Play.svelte";
-  import { toggleFakeFullscreen } from "../../utils";
+  import { formatTime, toggleFakeFullscreen } from "../../utils";
   import { extractNameAndExtension } from "../../../src/gschert";
   import { settingsJson } from "../../stores/stateStore";
 
@@ -45,12 +45,6 @@
   function timeUpdate() {
     progressBar.value = videoElement.currentTime;
     currentDurationSpan.textContent = formatTime(videoElement.currentTime);
-  }
-
-  function formatTime(seconds: number) {
-    const date = new Date(0);
-    date.setSeconds(seconds);
-    return date.toISOString().split("T")[1].split(".")[0];
   }
 
   function seek(e: MouseEvent) {
