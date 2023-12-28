@@ -260,13 +260,17 @@ export const getVideoDetails = (videoPath: string): Promise<VideoDetails> => {
       if (i) {
         i.split(", ").forEach((s) => {
           if (s.indexOf("kb/s") !== -1) {
-            result["bitrate"] = s.split("kb/s")[0].trim() + "kb/s"; // rmv (default) or (forced) if present
+            if (!result["bitrate"])
+              result["bitrate"] = s.split("kb/s")[0].trim() + "kb/s"; // rmv (default) or (forced) if present
           } else if (s.indexOf("DAR") !== -1) {
-            result["aspectRatio"] = s.split("DAR ")[1].slice(0, -1);
-            result["width"] = Number(s.split("x")[0].trim());
-            result["height"] = Number(s.split("x")[1].split(" ")[0].trim());
+            if (!result["aspectRatio"])
+              result["aspectRatio"] = s.split("DAR ")[1].slice(0, -1);
+            if (!result["width"])
+              result["width"] = Number(s.split("x")[0].trim());
+            if (!result["height"])
+              result["height"] = Number(s.split("x")[1].split(" ")[0].trim());
           } else if (s.indexOf("fps") !== -1) {
-            result["fps"] = Number(s.split(" ")[0].trim());
+            if (!result["fps"]) result["fps"] = Number(s.split(" ")[0].trim());
           }
         });
       }

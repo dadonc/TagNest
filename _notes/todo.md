@@ -1,3 +1,8 @@
+escape "`" from video titles
+
+skip duplicates
+fix fullscreen
+
 back button should jump to last detail view, separate home button
 some videos cannot be imported
 vertical video preview images and previews are too high
@@ -69,6 +74,7 @@ reload queue after deleting an item - hanged after i deleted an item that didn't
 
 
 # TODO
+add "open in finder" to context menu
 * improve settings screen with explanations, increase topbar height
 * make numer of simultaneous imports configurable
 * videos save last position if switching videos in detailview?
