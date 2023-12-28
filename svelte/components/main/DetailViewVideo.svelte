@@ -33,7 +33,7 @@
     }px)`;
   }
 
-  let thumbRatio = 0.35;
+  let thumbRatio = 0.2;
   function play() {
     if (videoElement.paused || videoElement.ended) {
       videoElement.play();
@@ -117,8 +117,8 @@
   <source src={"file://" + item.file?.path} />
 </video>
 
-<div class="flex items-center h-full" bind:this={videoContainer}>
-  <div class="relative max-h-full">
+<div class="flex items-center w-full h-full" bind:this={videoContainer}>
+  <div class="relative h-full max-w-full m-auto">
     {#if !videoIsLoaded}
       <img style="max-height: calc(100% - 1rem);" src={thumbPath} alt="" />
     {/if}

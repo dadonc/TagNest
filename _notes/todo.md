@@ -1,11 +1,13 @@
-video detail view css is broken: in a window filling the full screen (not fullscreen, the green "+")
-video timeline hover preview is too large
 back button should jump to last detail view, separate home button
 some videos cannot be imported
 vertical video preview images and previews are too high
 shuffle button
-
 addBookmark modal is broken
+
+space preview
+  - show video preview whan opening 
+  - center vertically
+  - add white background (see bookmark of chatgpt page)
 
 display import progress somewhere other than the console.
 Clear import status right top corner after import is finished
@@ -21,6 +23,8 @@ recreate video preview with changed settings
   - ui, set start delay
   - if new position was marked, recreate video preview inlcuding the new position
 
+
+toggle to display tag on PreviewItems, exclude already selected/filtered for tags
 
 # Bugs when showing Jessi
 * Don't break the app if the database folder is deleted

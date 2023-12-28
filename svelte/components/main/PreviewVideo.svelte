@@ -87,7 +87,7 @@
   >
 
   <span
-    class="absolute inline-block p-1 text-xs text-white bg-black rounded-sm top-1 right-1"
+    class="absolute inline-block p-1 text-xs text-white bg-black rounded-sm top-1 left-1"
     >{resolutionString}</span
   >
 </div>

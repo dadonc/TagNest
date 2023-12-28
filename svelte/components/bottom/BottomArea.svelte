@@ -1,10 +1,6 @@
 <script lang="ts">
   import Preview from "../main/Preview.svelte";
-  import {
-    currentRoute,
-    filteredData,
-    selectedItems,
-  } from "../../stores/stateStore";
+  import { currentRoute, selectedItems } from "../../stores/stateStore";
   import { handleKeydownDetailsView } from "../../utils";
   import type { SingleItem } from "../../stores/items";
   import { onMount } from "svelte";
@@ -34,7 +30,7 @@
 <div
   id="bottomArea"
   class=""
-  style="height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2)"
+  style="height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 3)"
 >
   {#each items as item}
     <div class="inline-block h-full">
