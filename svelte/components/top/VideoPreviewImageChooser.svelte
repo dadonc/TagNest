@@ -36,7 +36,7 @@
 
 {#if !isCreateNew && (!isOpen || !videoIsLoaded)}
   <img
-    class="w-full"
+    class="max-w-full w-52"
     src={thumbPath}
     alt=""
     on:keydown={() => {}}
@@ -54,7 +54,7 @@
     on:keydown={() => {}}
     class={`${videoIsLoaded ? "" : "hidden"}`}
   >
-    <div class="max-h-full">
+    <div class="max-w-full max-h-full w-52">
       <!-- svelte-ignore a11y-media-has-caption -->
       <video
         style="max-height: calc(100% - 1rem);"

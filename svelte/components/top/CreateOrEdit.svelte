@@ -230,7 +230,7 @@
 {#if existingItem}
   <div class="flex justify-center">
     <button
-      class="mt-16 btn btn-error"
+      class="mt-4"
       on:click={async () => {
         if (existingItem) {
           if (itemWasReplacedWithExisting) {

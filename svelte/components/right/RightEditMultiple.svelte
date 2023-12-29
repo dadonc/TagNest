@@ -58,7 +58,7 @@
 </div>
 <div class="flex justify-center">
   <button
-    class="mt-16 btn btn-error"
+    class="mt-4 btn btn-error"
     on:click={async () => {
       addToDeleteQueue($selectedItems.ids);
       $importItems = $importItems.filter(

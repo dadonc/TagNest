@@ -198,7 +198,7 @@ export default async function startImportTasks() {
 }
 
 async function runCombineBehavior(item: ImportItem) {
-  if (!item.file) return item;
+  if (!item.file || !item.file.path) return item;
   const combineBehavior = get(settingsJson).combineBehavior;
   if (combineBehavior === "separate" || item.type === "bookmark") {
     item.importStep = 1;

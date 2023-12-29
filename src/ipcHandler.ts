@@ -185,7 +185,11 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   });
 
   ipcMain.handle("deleteFile", async (event, path) => {
-    fs.unlinkSync(path);
+    if (path) {
+      fs.unlinkSync(path);
+    } else {
+      console.log("\nNo file deleted. No path provided\n");
+    }
     return true;
   });
 

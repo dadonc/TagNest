@@ -1,4 +1,3 @@
-skip duplicates
 fix fullscreen
 
 rename file if the same name already exists but the sizes differ

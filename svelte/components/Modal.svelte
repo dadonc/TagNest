@@ -23,14 +23,10 @@
       }
     }}
     transition:fade={{ duration: 200 }}
-    class={`transition-opacity duration-200 absolute top-0 bottom-0 left-0 grid place-items-center w-screen h-screen bg-fadeBg focus:outline-none`}
+    class={`transition-opacity duration-200 fixed overflow-scroll top-0 bottom-0 left-0 right-0 grid place-items-center bg-fadeBg focus:outline-none`}
     style="z-index: 99999;"
   >
-    <div
-      class={`${
-        isFullWidth ? "w-full" : "max-w-xl"
-      } h-full overflow-scroll rounded flex flex-col justify-center`}
-    >
+    <div class={`${isFullWidth ? "w-full" : "max-w-xl"} m-8 p-8 rounded`}>
       <slot name="body" />
     </div>
   </div>
