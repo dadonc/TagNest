@@ -4,6 +4,8 @@
   import { currentRoute } from "../../stores/stateStore";
   import { importItems } from "../../stores/items";
   import createImportItems from "../main/import/createImportItems";
+  import { itemAlreadyExists } from "../../utils";
+  import startImportTasks from "../main/import/importQueue";
 
   export let previewSrc: string = "";
   const dispatch = createEventDispatcher();
@@ -58,11 +60,15 @@
 
     window.electron.onChosenFiles(async (_, filePaths) => {
       dispatch("close-modal");
-      const newItems = await createImportItems(filePaths);
+      const filteredPaths = filePaths.filter((p) => {
+        return !itemAlreadyExists(p);
+      });
+      const newItems = await createImportItems(filteredPaths);
       // TODO ask Chris - how to type this
       // @ts-ignore
       $importItems = [...$importItems, ...newItems];
-      $currentRoute = "importMultiple";
+      startImportTasks();
+      // $currentRoute = "importMultiple";
     });
     return () => {
       window.electron.removeChosenFileListener();

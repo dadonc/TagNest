@@ -15,11 +15,11 @@
   import startImportTasks from "../main/import/importQueue";
   import { tick } from "svelte";
   import VideoPreviewImageChooser from "./VideoPreviewImageChooser.svelte";
-  import { saveVideoPreviewImage } from "../../utils";
   import {
-    extractNameAndExtension,
-    getItemTypeFromExtension,
-  } from "../../../src/gschert";
+    indexOfAlreadyExistingItem,
+    saveVideoPreviewImage,
+  } from "../../utils";
+  import { getItemTypeFromExtension } from "../../../src/gschert";
   import { addToDeleteQueue } from "../main/delete/DeleteQueue";
 
   export let originalItem: SingleItem | undefined = undefined;
@@ -114,24 +114,12 @@
 
   function replaceItemWithExistingIfNecessary(newPath: string) {
     if (newPath) {
-      const { name: newName, extension: newExtension } =
-        extractNameAndExtension(newPath);
-      const index = $items.findIndex((otherItem) => {
-        // TODO - check file size!
-        // TODO rename if file size differs but names are the same
-        if (otherItem.file?.path) {
-          const { name: otherItemName, extension: otherItemExtension } =
-            extractNameAndExtension(otherItem.file.path);
-
-          return (
-            otherItemName === newName && otherItemExtension === newExtension
-          );
-        }
-      });
+      const index = indexOfAlreadyExistingItem(newPath);
       if (index !== -1) {
-        console.warn("Item already exists in items store", newName);
         existingItem = $items[index];
         originalItem = structuredClone(existingItem);
+        console.log("Item already exists in items store", existingItem.name);
+
         isCreateNew = false;
         itemWasReplacedWithExisting = true;
 

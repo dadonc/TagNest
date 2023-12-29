@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { importItems, type SingleItem } from "./stores/items";
+import { importItems, items, type SingleItem } from "./stores/items";
 import {
   currentRoute,
   currView,
@@ -284,4 +284,24 @@ export function getVideoResolutionDescription(width: number, height: number) {
   } else if (w <= 7680 || h <= 4320) {
     return "8K";
   }
+}
+
+export function indexOfAlreadyExistingItem(newPath: string) {
+  const { name: newName, extension: newExtension } =
+    extractNameAndExtension(newPath);
+  const index = get(items).findIndex((otherItem) => {
+    // TODO - check file size!
+    // TODO rename if file size differs but names are the same
+    if (otherItem.file?.path) {
+      const { name: otherItemName, extension: otherItemExtension } =
+        extractNameAndExtension(otherItem.file.path);
+      return otherItemName === newName && otherItemExtension === newExtension;
+    }
+  });
+  return index;
+}
+
+export function itemAlreadyExists(newPath: string) {
+  const index = indexOfAlreadyExistingItem(newPath);
+  return index !== -1;
 }
