@@ -1,3 +1,5 @@
+// TODO - This is a mess. Refactor this whole file
+
 import { get } from "svelte/store";
 import {
   finishItemImport,

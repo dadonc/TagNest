@@ -1,4 +1,4 @@
-<!-- TODO - This is a mess. Refactor this whole file -->
+<!-- TODO - WTF. This is a mess. Refactor this whole file -->
 <script lang="ts">
   import FileDragArea from "./FileDragArea.svelte";
   import {
@@ -7,7 +7,7 @@
     refreshDisplayedItems,
     updateItem,
     type SingleItem,
-    updateBookmarkPreviewImage,
+    items,
   } from "../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
   import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
@@ -16,17 +16,21 @@
   import { tick } from "svelte";
   import VideoPreviewImageChooser from "./VideoPreviewImageChooser.svelte";
   import { saveVideoPreviewImage } from "../../utils";
-  import { getItemTypeFromExtension } from "../../../src/gschert";
+  import {
+    extractNameAndExtension,
+    getItemTypeFromExtension,
+  } from "../../../src/gschert";
   import { addToDeleteQueue } from "../main/delete/DeleteQueue";
 
   export let originalItem: SingleItem | undefined = undefined;
-  const existingItem = originalItem
+  let existingItem = originalItem
     ? {
         ...originalItem,
         file: originalItem.file ? { ...originalItem.file } : null,
       }
     : undefined;
   export let isCreateNew = false;
+  export let itemWasReplacedWithExisting = false;
   export let close: () => void = () => {};
 
   let wasVideoPreviewUpdated = false;
@@ -68,7 +72,7 @@
           previewImg.src = previewImg.src + "?" + Date.now();
         }
       }
-      if (isCreateNew) {
+      if (isCreateNew || itemWasReplacedWithExisting) {
         close();
       }
       await updateItem(existingItem, tagString);
@@ -105,6 +109,45 @@
       });
       await updateItem(existingItem, tagString);
       startImportTasks();
+    }
+  }
+
+  function replaceItemWithExistingIfNecessary(newPath: string) {
+    if (newPath) {
+      const { name: newName, extension: newExtension } =
+        extractNameAndExtension(newPath);
+      const index = $items.findIndex((otherItem) => {
+        // TODO - check file size!
+        // TODO rename if file size differs but names are the same
+        if (otherItem.file?.path) {
+          const { name: otherItemName, extension: otherItemExtension } =
+            extractNameAndExtension(otherItem.file.path);
+
+          return (
+            otherItemName === newName && otherItemExtension === newExtension
+          );
+        }
+      });
+      if (index !== -1) {
+        console.warn("Item already exists in items store", newName);
+        existingItem = $items[index];
+        originalItem = structuredClone(existingItem);
+        isCreateNew = false;
+        itemWasReplacedWithExisting = true;
+
+        name = existingItem ? existingItem.name : "";
+        namePlaceholder = name ? name : "Name";
+        url = existingItem?.url ? existingItem.url : "";
+        tagString = existingItem
+          ? existingItem.tags.map((t) => t.name).join(", ")
+          : "";
+        note = existingItem?.note ? existingItem.note : "";
+        path = existingItem?.file?.path ? existingItem.file.path : "";
+        itemType = existingItem?.type ? existingItem.type : "";
+        bookmarkPreviewImagePath = existingItem?.bookmark?.previewImagePath
+          ? existingItem.bookmark.previewImagePath
+          : "";
+      }
     }
   }
 
@@ -152,6 +195,7 @@
             namePlaceholder = name;
           }
           path = ev.detail.path;
+          replaceItemWithExistingIfNecessary(ev.detail.path);
         }}
       />
     {:else if existingItem?.type === "image" && existingItem?.file?.path}
@@ -191,7 +235,7 @@
       <button class="btn btn-tertiary" on:click={close}>Cancel</button>
     {/if}
     <button {disabled} class="btn btn-primary" on:click={updateOrCreate}
-      >Save</button
+      >{isCreateNew ? "Create" : "Save"}</button
     >
   </div>
 {/if}
@@ -201,6 +245,10 @@
       class="mt-16 btn btn-error"
       on:click={async () => {
         if (existingItem) {
+          if (itemWasReplacedWithExisting) {
+            close();
+            return;
+          }
           // TODO ask Chris - why do I need this?
           const existingItemId = existingItem.id;
           $importItems = $importItems.filter((i) => i.id !== existingItemId);
@@ -211,7 +259,7 @@
           addToDeleteQueue([existingItem.id]);
           close();
         }
-      }}>Delete</button
+      }}>{itemWasReplacedWithExisting ? "Cancel" : "Delete"}</button
     >
   </div>
   <div class="h-4" />

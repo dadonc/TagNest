@@ -1,10 +1,13 @@
-escape "`" from video titles
-
 skip duplicates
 fix fullscreen
 
+rename file if the same name already exists but the sizes differ
+save filesizes to db
+handle existing bookmark
+
+AddModal single video: top is cut off, save button is too low, video has focus and closing the modal on ESC doesn't work
+
 back button should jump to last detail view, separate home button
-some videos cannot be imported
 vertical video preview images and previews are too high
 addBookmark modal is broken
 
@@ -16,7 +19,10 @@ space preview
 display import progress somewhere other than the console.
 Clear import status right top corner after import is finished
 
-app crashes if a file is deleted that is getting imported
+If a file is in the importqueue the app is closed, the file gets deleted, the app is restarted, the 
+app crashes because the file is not found.
+
+rewrite preview image creation, (save button is disabled if the image gets changed)
 
 performance problems while import is running:
  - video preview should start instantly
@@ -29,8 +35,8 @@ recreate video preview with changed settings
   - ui, set start delay
   - if new position was marked, recreate video preview inlcuding the new position
 
+toggle rightbar on command+i
 
-toggle to display tag on PreviewItems in gridview, exclude already selected/filtered for tags
 
 # Bugs when showing Jessi
 * cancel creation of items - is everything deleted? especially bookmarks?
@@ -75,7 +81,9 @@ reload queue after deleting an item - hanged after i deleted an item that didn't
 
 
 # TODO
-add "open in finder" to context menu
+* highlight handle to change left and right bar sizes - see spotify
+* toggle to display tag on PreviewItems in gridview, exclude already selected/filtered for tags
+* add "open in finder" to context menu
 * improve settings screen with explanations, increase topbar height
 * make numer of simultaneous imports configurable
 * videos save last position if switching videos in detailview?
@@ -170,3 +178,4 @@ add "open in finder" to context menu
 * Open in VSC: https://stackoverflow.com/a/68881419
 * Mobile application? Full rewrite
 * create subtitles for videos and make searchable
+* export files ordered like the user wants them, e.g. tags for folders
