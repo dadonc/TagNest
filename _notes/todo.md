@@ -1,40 +1,34 @@
 fix fullscreen
 
-rename file if the same name already exists but the sizes differ
-save filesizes to db
-handle existing bookmark
-
-AddModal single video: top is cut off, save button is too low, video has focus and closing the modal on ESC doesn't work
-
-back button should jump to last detail view, separate home button
-vertical video preview images and previews are too high
-addBookmark modal is broken
-
 space preview
   - show video preview whan opening 
   - center vertically
   - add white background (see bookmark of chatgpt page)
 
-display import progress somewhere other than the console.
-Clear import status right top corner after import is finished
-
-If a file is in the importqueue the app is closed, the file gets deleted, the app is restarted, the 
-app crashes because the file is not found.
-
 rewrite preview image creation, (save button is disabled if the image gets changed)
+
+recreate video preview with changed settings
+  - ui, set start delay
+  - if new position was marked, recreate video preview inlcuding the new position
+
+
+rename file if the same name already exists but the sizes differ
+save filesizes to db
+
+back button should jump to last detail view, separate home button
+vertical video preview images and previews are too high
+
+
+handle existing bookmark
+addBookmark modal is broken
+
 
 performance problems while import is running:
  - video preview should start instantly
  - video preview image takes too lang to load if one scrolls fast
  - update video timeline thumbs don't update pften enough
 
-
-
-recreate video preview with changed settings
-  - ui, set start delay
-  - if new position was marked, recreate video preview inlcuding the new position
-
-toggle rightbar on command+i
+toggle rightbar on command+i (or should this be a modal?)
 
 
 # Bugs when showing Jessi
@@ -54,6 +48,8 @@ toggle rightbar on command+i
 reload queue after deleting an item - hanged after i deleted an item that didn't work 
 
 # Bugs
+* If a file is in the importqueue the app is closed, the file gets deleted, the app is restarted, the 
+app crashes because the file is not found.
 * tag select sometimes (?) looses border radius after tag was selected(?)
 * space triggered detailview video 
   - change color of seek bar
@@ -71,15 +67,13 @@ reload queue after deleting an item - hanged after i deleted an item that didn't
   - starts on reload even if import was not started
   - importing one item imports them all
   - import indicator is displayed even if no import is running
-* Error occurred in handler for 'deleteFile': Error: ENOENT: no such file or directory, unlink '/Users/domenic/Downloads/t4/Stadtbienen   Auftakt Imkerkurs 2022   Teil 1 (720p_30fps_H264-192kbit_AAC).mp4'
-* Save mhtml after ublock is finished?! Exactly like it is seen by the user
 * bookmark detail view: display image until mhtml is loaded?
-* detailview bottom preview images size changes after selecting the next item 
 * allow paths to hidden folders
 * import queue is shared between different databases
 
 
 # TODO
+* display import progress somewhere other than the console.
 * highlight handle to change left and right bar sizes - see spotify
 * toggle to display tag on PreviewItems in gridview, exclude already selected/filtered for tags
 * add "open in finder" to context menu

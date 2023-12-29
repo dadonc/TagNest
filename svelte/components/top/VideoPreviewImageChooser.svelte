@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import { settingsJson } from "../../stores/stateStore";
   import { extractNameAndExtension } from "../../../src/gschert";
   import { formatTime } from "../../utils";
@@ -10,6 +10,12 @@
   let progressBar: HTMLProgressElement;
   let totalDurationSpan: HTMLSpanElement;
   let currentDurationSpan: HTMLSpanElement;
+
+  onMount(() => {
+    // Somehow the focus is lost, this is necessary, otherwise closing the modal with escape won't work
+    const modal = document.getElementById("modal")!;
+    if (modal) modal.focus();
+  });
 
   const dispatch = createEventDispatcher();
 
@@ -88,7 +94,7 @@
           max="0"
           on:click={seek}
           on:keydown={() => {}}
-          on:focus={() => {}}
+          on:focus={(e) => {}}
         />
         <span class="absolute text-xs pointer-events-none right-1">
           <span bind:this={currentDurationSpan} /> /

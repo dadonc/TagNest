@@ -11,6 +11,7 @@
   <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
   <div
     tabindex="0"
+    id="modal"
     autofocus
     on:click={(e) => {
       if (closeOnClickOutside && e.target === e.currentTarget) {
