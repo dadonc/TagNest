@@ -44,7 +44,7 @@
   <div class="flex items-center">
     <div
       class="inline-block"
-      style="width: var(--leftContainer); min-width: 5rem;"
+      style="width: var(--leftContainer); min-width: 4.5rem;"
     />
     {#if $currentRoute !== "main"}
       <button
@@ -82,7 +82,10 @@
         </button>
       {/if}
     </span>
-    <button on:click={handleToggleAddModal} class="w-4 h-4 mr-2 text-green-700">
+    <button
+      on:click={handleToggleAddModal}
+      class="w-4 h-4 mr-4 text-base-content"
+    >
       <Plus />
     </button>
   </div>

@@ -1,9 +1,3 @@
-play icon isn't centered
-
-delete files in detailview bottomarea?
-detailview bottom area arrow nav
-scrolltoitem in grid view on arrows change
-
 space preview
   - show video preview whan opening 
   - center vertically
@@ -19,6 +13,9 @@ recreate video preview with changed settings
 back button should jump to last detail view, separate home button
 vertical video preview images and previews are too high
 
+delete files in detailview bottomarea?
+detailview bottom area arrow nav
+scrolltoitem in grid view on arrows change
 
 rename file if the same name already exists but the sizes differ, if the name and size are the same check using a hash
 save filesizes to db

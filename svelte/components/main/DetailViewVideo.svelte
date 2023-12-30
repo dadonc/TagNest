@@ -170,7 +170,7 @@
     <button
       on:click={() => videoContainer.requestFullscreen()}
       bind:this={maximizeIconElement}
-      class="absolute flex items-center justify-center w-5 h-5 p-0 rounded-sm cursor-pointer bg-base-300 text-base-content hover:bg-base-content hover:text-base-300 top-2 right-2"
+      class="absolute flex items-center justify-center w-6 h-6 p-0 rounded-sm cursor-pointer bg-base-300 text-base-content hover:bg-base-content hover:text-base-300 top-2 right-2"
       ><Maximize className="w-4 h-4" /></button
     >
     <div class="relative h-4">

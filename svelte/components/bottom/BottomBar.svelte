@@ -24,7 +24,7 @@
           return v;
         });
       }}
-      class="ml-2 mr-3 text-lg">+</button
+      class="ml-2 mr-3 text-2xl">+</button
     >
 
     <button
@@ -34,7 +34,7 @@
           return v;
         });
       }}
-      class="text-lg">-</button
+      class="text-3xl">-</button
     >
     <div class="w-full text-sm text-center">
       {#if $currentRoute === "importMultiple"}
