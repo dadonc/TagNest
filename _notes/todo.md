@@ -132,6 +132,7 @@ app crashes because the file is not found.
 * tag specific times on videos
 * right sidebar as a modal if clicking command + i
 * move db isnt implemented
+* settings switch dark/light/system mode
 
 ## TODO tertiary
 * Searchbar, including tag toggle
