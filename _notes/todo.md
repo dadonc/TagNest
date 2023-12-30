@@ -1,4 +1,8 @@
 fix fullscreen
+shuffle button min width when fake fullscreen it touches the traffic light
+black dot in bottom left corner if the bottombar is minimized
+"real" fullscreen - icon on the seekbar
+dont make window fullsize when using fake fullscreen
 
 space preview
   - show video preview whan opening 
@@ -12,12 +16,15 @@ recreate video preview with changed settings
   - if new position was marked, recreate video preview inlcuding the new position
 
 
-rename file if the same name already exists but the sizes differ
-save filesizes to db
-
 back button should jump to last detail view, separate home button
 vertical video preview images and previews are too high
 
+
+rename file if the same name already exists but the sizes differ, if the name and size are the same check using a hash
+save filesizes to db
+
+
+https://www.w3schools.com/howto/howto_js_image_magnifier_glass.asp
 
 handle existing bookmark
 addBookmark modal is broken

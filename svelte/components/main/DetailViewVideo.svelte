@@ -118,7 +118,7 @@
 </video>
 
 <div class="flex items-center w-full h-full" bind:this={videoContainer}>
-  <div class="relative h-full max-w-full m-auto">
+  <div class="relative flex flex-col justify-center h-full max-w-full m-auto">
     {#if !videoIsLoaded}
       <img style="max-height: calc(100% - 1rem);" src={thumbPath} alt="" />
     {/if}
