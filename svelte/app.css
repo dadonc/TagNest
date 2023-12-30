@@ -52,3 +52,31 @@ this code was injected by uBlock Origin on
 .news-article__newsletter {
   display: none !important;
 }
+
+/* Hide video preview info if preview is too small: resolution, playicon, duration */
+
+.bottomContainer {
+  container-name: bottomContainer;
+  container-type: size;
+}
+
+@container bottomContainer (max-height: 6rem) {
+  .playIcon {
+    display: none;
+  }
+}
+
+@container bottomContainer (max-height: 5rem) {
+  .resolutionString {
+    display: none;
+  }
+}
+
+@container bottomContainer (max-height: 4rem) {
+  .durationString {
+    display: none;
+  }
+  .playIcon {
+    display: block;
+  }
+}
