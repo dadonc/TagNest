@@ -90,10 +90,6 @@
     );
   }
 
-  function handleFullscreenClick() {
-    videoContainer.requestFullscreen();
-  }
-
   let videoIsLoaded = false;
   let { name } = extractNameAndExtension(item.name!);
   $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${name}_thumb.jpeg`;
@@ -119,8 +115,10 @@
   on:fullscreenchange={() => {
     if (document.fullscreenElement === null) {
       maximizeIconElement.classList.remove("hidden");
+      videoContainer.classList.add("flex");
     } else {
       maximizeIconElement.classList.add("hidden");
+      videoContainer.classList.remove("flex");
     }
   }}
 />
@@ -130,7 +128,7 @@
   <source src={"file://" + item.file?.path} />
 </video>
 
-<div class="w-full h-full" bind:this={videoContainer}>
+<div class="flex items-center w-full h-full" bind:this={videoContainer}>
   <div class="relative flex flex-col justify-center h-full max-w-full m-auto">
     {#if !videoIsLoaded}
       <img style="max-height: calc(100% - 1rem);" src={thumbPath} alt="" />
@@ -163,13 +161,14 @@
       }}
     >
       <source src={"file://" + item.file?.path} />
-    </video><span
+    </video>
+    <span
       bind:this={playIconElement}
       class="absolute flex items-center justify-center w-8 h-8 p-2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm bg-base-300 text-base-content top-1/2 left-1/2"
       ><Play className="w-4 h-4" /></span
     >
     <button
-      on:click={handleFullscreenClick}
+      on:click={() => videoContainer.requestFullscreen()}
       bind:this={maximizeIconElement}
       class="absolute flex items-center justify-center w-5 h-5 p-0 rounded-sm cursor-pointer bg-base-300 text-base-content hover:bg-base-content hover:text-base-300 top-2 right-2"
       ><Maximize className="w-4 h-4" /></button
