@@ -44,7 +44,7 @@
   <div class="flex items-center">
     <div
       class="inline-block"
-      style="width: var(--leftContainer); min-width: 48px;"
+      style="width: var(--leftContainer); min-width: 5rem;"
     />
     {#if $currentRoute !== "main"}
       <button

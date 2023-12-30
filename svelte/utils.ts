@@ -230,7 +230,7 @@ export function exitFakeFullscreen() {
 }
 
 function enterFakeFullscreen() {
-  window.electron.enterFullscreen();
+  // window.electron.enterFullscreen();
   topContainer.update((container) => {
     return { ...container, currentVal: "0rem" };
   });
