@@ -4,6 +4,10 @@ black dot in bottom left corner if the bottombar is minimized
 "real" fullscreen - icon on the seekbar
 dont make window fullsize when using fake fullscreen
 
+delete files in detailview bottomarea?
+detailview bottom area arrow nav
+scrolltoitem in grid view on arrows change
+
 space preview
   - show video preview whan opening 
   - center vertically

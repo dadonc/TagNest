@@ -29,11 +29,12 @@
 
 <div
   id="bottomArea"
-  class=""
-  style="height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 3)"
+  style={$currentRoute == "details"
+    ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 0.5rem)"
+    : ""}
 >
   {#each items as item}
-    <div class="inline-block h-full">
+    <div class="inline-block">
       <Preview {item} {items} />
     </div>
   {/each}

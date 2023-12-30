@@ -168,7 +168,7 @@
   </div>
   {#if canOpenBottom}
     <div class="bottomContainer">
-      <div class={$bottomContainer.currentVal === "0px" ? "" : "slot"}>
+      <div class={`${$bottomContainer.currentVal === "0px" ? "" : "slot"}`}>
         <slot name="bottomContainer" />
       </div>
     </div>

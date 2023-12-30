@@ -55,9 +55,15 @@
 
   let intersects = false;
   let isDetailView = $currentRoute === "details";
+
+  let maxHeightStyle =
+    $currentRoute == "details"
+      ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem)"
+      : "";
 </script>
 
 <div
+  style="scroll-margin-top: 0.5rem;"
   id={item.id}
   use:useIntersectionObserver={isDetailView ? "bottomArea" : "mainArea"}
   on:enterViewport={() => {
@@ -83,13 +89,13 @@
 >
   {#if intersects}
     {#if item.type === "image"}
-      <ImagePreview {item} />
+      <ImagePreview {item} {maxHeightStyle} />
     {:else if item.type === "bookmark"}
-      <BookmarkPreview {item} />
+      <BookmarkPreview {item} {maxHeightStyle} />
     {:else if item.type === "pdf"}
-      <PreviewPdf {item} />
+      <PreviewPdf {item} {maxHeightStyle} />
     {:else if item.type === "video"}
-      <PreviewVideo {item} />
+      <PreviewVideo {item} {maxHeightStyle} />
     {:else}
       <div
         class="flex flex-col items-center justify-center h-full"

@@ -1,9 +1,9 @@
 <script lang="ts">
   import Link from "../../assets/feather/Link.svelte";
   import type { SingleItem } from "../../stores/items";
-  import { currentRoute } from "../../stores/stateStore";
 
   export let item: SingleItem;
+  export let maxHeightStyle: string;
 </script>
 
 <div class="relative hoverContainer">
@@ -11,9 +11,7 @@
     src={"file://" + item.bookmark?.previewImagePath}
     alt=""
     class="max-h-full"
-    style={$currentRoute == "details"
-      ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2)"
-      : ""}
+    style={maxHeightStyle}
   />
   {#if item.url}
     <a

@@ -6,6 +6,7 @@
   import { formatTime, getVideoResolutionDescription } from "../../utils";
 
   export let item: SingleItem;
+  export let maxHeightStyle: string;
 
   let videoElement: HTMLVideoElement;
 
@@ -30,10 +31,8 @@
 </script>
 
 <div
-  class="relative flex items-center justify-center w-full h-full"
-  style={$currentRoute == "details"
-    ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2)"
-    : ""}
+  class="relative flex items-center justify-center w-full"
+  style={maxHeightStyle}
   on:mouseenter={() => {
     displayVideo = true;
   }}
@@ -55,6 +54,7 @@
     class={`w-full ${$currentRoute == "details" ? "max-h-full" : ""} ${
       videoIsLoaded ? "absolute" : ""
     }`}
+    style={maxHeightStyle}
     src={thumbPath}
     id={`previewImage-${item.id}`}
     alt=""
@@ -66,6 +66,7 @@
       bind:this={videoElement}
       class={`w-full max-h-full ${videoIsLoaded ? "z-10" : "hidden"} `}
       src={videoPath}
+      style={maxHeightStyle}
       on:canplay={() => {
         videoIsLoaded = true;
       }}
