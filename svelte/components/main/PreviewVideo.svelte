@@ -82,16 +82,16 @@
     />
   {/if}
   <span
-    class="absolute inline-block w-5 h-5 transform -translate-x-1/2 -translate-y-1/2 bg-black rounded-sm playIcon text-base-content top-1/2 left-1/2"
+    class="absolute inline-block w-5 h-5 transform -translate-x-1/2 -translate-y-1/2 rounded-sm bg-neutral playIcon text-base-content top-1/2 left-1/2"
     ><Play className="w-4 h-4 text-white p-1" /></span
   >
   <span
-    class="absolute inline-block p-1 text-xs text-white bg-black rounded-sm durationString bottom-1 right-1"
+    class="absolute inline-block p-1 text-xs text-white rounded-sm bg-neutral durationString bottom-1 right-1"
     >{durationString}</span
   >
 
   <span
-    class="absolute inline-block p-1 text-xs text-white bg-black rounded-sm resolutionString top-1 left-1"
+    class="absolute inline-block p-1 text-xs text-white rounded-sm bg-neutral resolutionString top-1 left-1"
     >{resolutionString}</span
   >
 </div>

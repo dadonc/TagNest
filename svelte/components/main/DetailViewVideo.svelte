@@ -192,7 +192,7 @@
         bind:this={thumbElement}
         class="absolute top-0 left-0 z-50 hidden bg-transparent"
       />
-      <span class="absolute text-xs pointer-events-none right-1">
+      <span class="absolute text-xs text-gray-200 pointer-events-none right-1">
         <span bind:this={currentDurationSpan} /> /
         <span bind:this={totalDurationSpan} />
       </span>

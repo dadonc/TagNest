@@ -1,4 +1,4 @@
-"real" fullscreen - icon on the seekbar
+play icon isn't centered
 
 delete files in detailview bottomarea?
 detailview bottom area arrow nav
@@ -167,6 +167,7 @@ app crashes because the file is not found.
 * iframe - rmv webfonts
 * video deflicker step takes long - make secondary import queue?
 * detailview bottom: remove var(--bottomAreaPadding), change paddings
+* DetailViewVideo: move fullscreen button to the top right of the video
 
 ## TagSelect
 * after adding all tags and clicking backspace it jumps to the beginning of the line
