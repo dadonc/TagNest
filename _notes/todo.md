@@ -1,7 +1,19 @@
+fix vertical video:
+  - sizing
+  - autoplay
+
+resolution string is not displayed correctly
+
+fast prefs context menu in topbar
+  show titles toggle
+  show reolution toggle
+  show tags toggle
+  show play symbol toggle
+
 space preview
   - show video preview whan opening 
-  - center vertically
   - add white background (see bookmark of chatgpt page)
+  - jump to start from last position
 
 rewrite preview image creation, (save button is disabled if the image gets changed)
 
@@ -140,6 +152,7 @@ app crashes because the file is not found.
 * adblocker for mhtml
 * highlight things inside mhtml and pdf files
 * trash bin
+* support audio files
 
 ## Styling
 * font sizes
@@ -178,3 +191,4 @@ app crashes because the file is not found.
 * Mobile application? Full rewrite
 * create subtitles for videos and make searchable
 * export files ordered like the user wants them, e.g. tags for folders
+* custom order: order grid using drag and drop
