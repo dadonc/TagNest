@@ -4,7 +4,6 @@ fix vertical video:
 
 if multiple videos are selected, show all their details on the right side
 grid up down arrows jump to top/bottom
-jump 5 Minutes on option+arrow up/down
 
 resolution string is not displayed correctly
 
@@ -14,10 +13,6 @@ fast prefs context menu in topbar
   show tags toggle
   show play symbol toggle
 
-space preview
-  - show video preview whan opening 
-  - add white background (see bookmark of chatgpt page)
-  - jump to start from last position
 
 rewrite preview image creation, (save button is disabled if the image gets changed)
 
@@ -41,8 +36,12 @@ save filesizes to db
 
 https://www.w3schools.com/howto/howto_js_image_magnifier_glass.asp
 
-handle existing bookmark
-addBookmark modal is broken
+
+bookmarks:
+  handle existing bookmark
+  addBookmark modal is broken
+  bookmark space preview is broken (see bookmark of chatgpt page)
+  show screenshot until page is rendered in detailview
 
 
 performance problems while import is running:
@@ -50,7 +49,6 @@ performance problems while import is running:
  - video preview image takes too lang to load if one scrolls fast
  - update video timeline thumbs don't update pften enough
 
-toggle rightbar on command+i (or should this be a modal?)
 
 
 # Bugs when showing Jessi

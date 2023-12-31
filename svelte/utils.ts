@@ -305,3 +305,25 @@ export function itemAlreadyExists(newPath: string) {
   const index = indexOfAlreadyExistingItem(newPath);
   return index !== -1;
 }
+
+// LAYOUT
+
+export const toggleRight = () => {
+  const $rightContainer = get(rightContainer);
+  if ($rightContainer.currentVal === "0px") {
+    $rightContainer.currentVal = $rightContainer.val;
+  } else {
+    $rightContainer.currentVal = "0px";
+  }
+  rightContainer.set($rightContainer);
+};
+
+export const toggleLeft = () => {
+  const $leftContainer = get(leftContainer);
+  if ($leftContainer.currentVal === "0px") {
+    $leftContainer.currentVal = $leftContainer.val;
+  } else {
+    $leftContainer.currentVal = "0px";
+  }
+  leftContainer.set($leftContainer);
+};

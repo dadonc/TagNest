@@ -7,7 +7,7 @@
     bottomContainer,
   } from "./stores/cssStore";
   import StoreRenderer from "./stores/StoreRenderer.svelte";
-  import { classNames } from "./utils";
+  import { classNames, toggleLeft, toggleRight } from "./utils";
   import { currentRoute } from "./stores/stateStore";
 
   let canOpenRight = true;
@@ -33,21 +33,6 @@
     }
   });
 
-  const toggleLeft = () => {
-    if ($leftContainer.currentVal === "0px") {
-      $leftContainer.currentVal = $leftContainer.val;
-    } else {
-      $leftContainer.currentVal = "0px";
-    }
-  };
-  const toggleRight = () => {
-    if (!canOpenRight) return;
-    if ($rightContainer.currentVal === "0px") {
-      $rightContainer.currentVal = $rightContainer.val;
-    } else {
-      $rightContainer.currentVal = "0px";
-    }
-  };
   const toggleBottom = () => {
     if (!canOpenBottom) return;
     if ($bottomContainer.currentVal === "0px") {

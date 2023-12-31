@@ -1,13 +1,13 @@
 <script lang="ts">
   import Preview from "./Preview.svelte";
-  import { currView, filteredData } from "../../stores/stateStore";
+  import { currView, currentRoute } from "../../stores/stateStore";
   import { type SingleItem } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
   import PreviewModal from "./PreviewModal.svelte";
   import { addToDeleteQueue } from "./delete/DeleteQueue";
   import { onMount, tick } from "svelte";
   import { topContainer } from "../../stores/cssStore";
-  import { getPxfromRem } from "../../utils";
+  import { getPxfromRem, toggleLeft, toggleRight } from "../../utils";
 
   export let items: SingleItem[];
   export let focusedItemId: string | undefined = undefined;
@@ -135,6 +135,14 @@
       if ($selectedItems.ids.length === 1) {
         isPreviewModalOpen = true;
       }
+    } else if (e.key === "Enter") {
+      if ($selectedItems.ids.length === 1) {
+        $currentRoute = "details";
+      }
+    } else if (e.key === "i" && e.metaKey) {
+      toggleRight();
+    } else if (e.key === "b" && e.metaKey) {
+      toggleLeft();
     }
   };
 </script>
