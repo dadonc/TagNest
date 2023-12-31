@@ -5,9 +5,9 @@
   import { selectedItems } from "../../stores/stateStore";
   import PreviewModal from "./PreviewModal.svelte";
   import { addToDeleteQueue } from "./delete/DeleteQueue";
-  import { onMount, tick } from "svelte";
+  import { onMount } from "svelte";
   import { topContainer } from "../../stores/cssStore";
-  import { getPxfromRem, toggleLeft, toggleRight } from "../../utils";
+  import { getPxfromRem } from "../../utils";
 
   export let items: SingleItem[];
   export let focusedItemId: string | undefined = undefined;
@@ -139,10 +139,6 @@
       if ($selectedItems.ids.length === 1) {
         $currentRoute = "details";
       }
-    } else if (e.key === "i" && e.metaKey) {
-      toggleRight();
-    } else if (e.key === "b" && e.metaKey) {
-      toggleLeft();
     }
   };
 </script>

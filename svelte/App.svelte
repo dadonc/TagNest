@@ -16,7 +16,7 @@
     settingsJson,
   } from "./stores/stateStore";
   import Settings from "./components/settings/Settings.svelte";
-  import { exitFakeFullscreen } from "./utils";
+  import { exitFakeFullscreen, toggleLeft, toggleRight } from "./utils";
   import { startDeleteTasks } from "./components/main/delete/DeleteQueue";
 
   let isDataAvailable = false;
@@ -48,6 +48,10 @@
       } else {
         window.electron.openDevTools();
       }
+    } else if (event.key === "i" && event.metaKey) {
+      toggleRight();
+    } else if (event.key === "b" && event.metaKey) {
+      toggleLeft();
     }
   };
 </script>
