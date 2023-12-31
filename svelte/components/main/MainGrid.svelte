@@ -82,6 +82,8 @@
           const index = items.indexOf(item);
           if (index > 0) {
             $selectedItems.ids = [items[index - 1].id];
+          } else {
+            $selectedItems.ids = [items[items.length - 1].id];
           }
         }
       }
@@ -93,6 +95,8 @@
           const index = items.indexOf(item);
           if (index < items.length - 1) {
             $selectedItems.ids = [items[index + 1].id];
+          } else {
+            $selectedItems.ids = [items[0].id];
           }
         }
       }

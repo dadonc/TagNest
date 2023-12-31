@@ -5,6 +5,7 @@
   import DetailViewVideo from "./DetailViewVideo.svelte";
 
   export let item: SingleItem;
+  export let isSpacePreview = false;
 </script>
 
 {#key item.id}
@@ -20,7 +21,7 @@
     {:else if item.type === "pdf"}
       <DetailViewPdf {item} />
     {:else if item.type === "video"}
-      <DetailViewVideo {item} />
+      <DetailViewVideo {item} {isSpacePreview} />
     {:else}
       <p>Unknown type</p>
     {/if}

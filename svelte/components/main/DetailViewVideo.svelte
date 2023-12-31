@@ -1,12 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import type { SingleItem } from "../../stores/items";
-  export let item: SingleItem;
   import Play from "../../assets/feather/Play.svelte";
   import { formatTime, toggleFakeFullscreen } from "../../utils";
   import { extractNameAndExtension } from "../../../src/gschert";
   import { settingsJson } from "../../stores/stateStore";
   import Maximize from "../../assets/feather/Maximize.svelte";
+
+  export let item: SingleItem;
+  export let isSpacePreview = false;
 
   let videoContainer: HTMLDivElement;
   let videoElement: HTMLVideoElement;
@@ -91,23 +93,28 @@
   }
 
   let videoIsLoaded = false;
-  let { name } = extractNameAndExtension(item.name!);
+  let wasPreviewHidden = false;
+  $: showActionElements =
+    !isSpacePreview || (isSpacePreview && wasPreviewHidden);
+  let { name, extension } = extractNameAndExtension(item.name!);
   $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${name}_thumb.jpeg`;
+  $: previewPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}`;
 </script>
 
 <svelte:window
   on:keydown={(e) => {
+    e.preventDefault();
     if (e.key === " ") {
-      e.preventDefault();
+      wasPreviewHidden = true;
       play();
     } else if (e.key == "ArrowRight") {
       videoElement.currentTime += 10;
     } else if (e.key == "ArrowLeft") {
       videoElement.currentTime -= 10;
     } else if (e.key == "ArrowDown") {
-      videoElement.currentTime += 60;
-    } else if (e.key == "ArrowUp") {
       videoElement.currentTime -= 60;
+    } else if (e.key == "ArrowUp") {
+      videoElement.currentTime += 60;
     } else if (e.key == "f") {
       handleFullscreen();
     }
@@ -130,14 +137,33 @@
 
 <div class="flex items-center w-full h-full" bind:this={videoContainer}>
   <div class="relative flex flex-col justify-center h-full max-w-full m-auto">
-    {#if !videoIsLoaded}
-      <img style="max-height: calc(100% - 1rem);" src={thumbPath} alt="" />
+    {#if isSpacePreview && !wasPreviewHidden}
+      <!-- svelte-ignore a11y-media-has-caption -->
+      <video
+        autoplay
+        loop
+        on:click={() => {
+          wasPreviewHidden = true;
+          play();
+        }}
+        poster={thumbPath}
+        class={`max-w-full max-h-full`}
+        src={previewPath}
+      />
+    {/if}
+    {#if !isSpacePreview && !videoIsLoaded}
+      <img style={"max-height: calc(100% - 1rem);"} src={thumbPath} alt="" />
     {/if}
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
       id="videoPlayer"
-      style="max-height: calc(100% - 1rem);"
-      class={videoIsLoaded ? "" : "hidden"}
+      style={isSpacePreview
+        ? "max-w-full max-h-full"
+        : "max-height: calc(100% - 1rem);"}
+      class={(!isSpacePreview && videoIsLoaded) ||
+      (isSpacePreview && wasPreviewHidden)
+        ? ""
+        : "hidden"}
       bind:this={videoElement}
       poster={thumbPath}
       on:dblclick={toggleFakeFullscreen}
@@ -157,7 +183,6 @@
         currentDurationSpan.textContent = formatTime(videoElement.currentTime);
         totalDurationSpan.textContent = formatTime(videoElement.duration);
         resizeThumbElement();
-        progressBar.classList.remove("hidden");
       }}
     >
       <source src={"file://" + item.file?.path} />
@@ -170,17 +195,18 @@
     <button
       on:click={() => videoContainer.requestFullscreen()}
       bind:this={maximizeIconElement}
-      class="absolute flex items-center justify-center w-6 h-6 p-0 rounded-sm cursor-pointer bg-base-300 text-base-content hover:bg-base-content hover:text-base-300 top-2 right-2"
-      ><Maximize className="w-4 h-4" /></button
+      class={showActionElements
+        ? "absolute flex items-center justify-center w-6 h-6 p-0 rounded-sm cursor-pointer bg-base-300 text-base-content hover:bg-base-content hover:text-base-300 top-2 right-2"
+        : "hidden"}><Maximize className="w-4 h-4" /></button
     >
-    <div class="relative h-4">
+    <div class={showActionElements ? "relative h-4" : "opacity-0 h-4"}>
       <progress
         on:mouseover={displayThumb}
         on:mousemove={displayThumb}
         on:mouseleave={() => {
           thumbElement.style.display = "none";
         }}
-        class="absolute hidden w-full h-full"
+        class="absolute w-full h-4"
         bind:this={progressBar}
         value="0"
         max="0"
@@ -192,9 +218,11 @@
         bind:this={thumbElement}
         class="absolute top-0 left-0 z-50 hidden bg-transparent"
       />
-      <span class="absolute text-xs text-gray-200 pointer-events-none right-1">
-        <span bind:this={currentDurationSpan} /> /
-        <span bind:this={totalDurationSpan} />
+      <span
+        class="absolute font-mono text-xs text-gray-200 pointer-events-none right-1"
+      >
+        <span bind:this={currentDurationSpan}>00:00:00</span> /
+        <span bind:this={totalDurationSpan}>00:00:00</span>
       </span>
     </div>
   </div>

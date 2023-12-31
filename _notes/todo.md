@@ -2,6 +2,10 @@ fix vertical video:
   - sizing
   - autoplay
 
+if multiple videos are selected, show all their details on the right side
+grid up down arrows jump to top/bottom
+jump 5 Minutes on option+arrow up/down
+
 resolution string is not displayed correctly
 
 fast prefs context menu in topbar
@@ -24,6 +28,8 @@ recreate video preview with changed settings
 
 back button should jump to last detail view, separate home button
 vertical video preview images and previews are too high
+
+order + sort
 
 delete files in detailview bottomarea?
 detailview bottom area arrow nav

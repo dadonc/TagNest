@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
   import { currentRoute, settingsJson } from "../../stores/stateStore";
-  import Play from "../../assets/feather/Play.svelte";
   import { extractNameAndExtension } from "../../../src/gschert";
   import { formatTime, getVideoResolutionDescription } from "../../utils";
 

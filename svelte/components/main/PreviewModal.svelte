@@ -14,7 +14,7 @@
     }}
   >
     <div slot="body" class="h-full">
-      <DetailView {item} />
+      <DetailView {item} isSpacePreview={true} />
     </div>
   </Modal>
 {/if}
