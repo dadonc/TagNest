@@ -10,6 +10,7 @@
   import TagSelectWrapper from "../top/TagSelectWrapper.svelte";
 
   export let items: SingleItem[];
+  export let modalClose: () => void = () => {};
 
   let itemsProcessed = 0;
   const sharedTags = $selectedItems.ids
@@ -38,6 +39,7 @@
     refreshDisplayedItems();
   };
   const close = () => {
+    modalClose();
     refreshDisplayedItems();
   };
 </script>

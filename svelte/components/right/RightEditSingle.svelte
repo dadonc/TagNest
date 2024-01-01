@@ -5,6 +5,7 @@
   import CreateOrEdit from "../top/CreateOrEdit.svelte";
 
   export let item: SingleItem;
+  export let close: () => void = () => {};
 </script>
 
 {#key item}
@@ -14,7 +15,7 @@
     <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
   {/if}
 
-  <CreateOrEdit originalItem={item} />
+  <CreateOrEdit originalItem={item} {close} />
   {#if item.type == "video"}
     <div class="p-2 text-base rounded bg-base-200">
       <div class="font-bold">Video details</div>

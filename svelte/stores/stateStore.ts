@@ -124,12 +124,14 @@ type contextMenuStoreType = {
   x: number;
   y: number;
   isContextMenuOpen: boolean;
+  openModal: "videoThumbnail" | "videoPreview" | "editItem" | "editItems" | "";
 };
 
 const emptyContextMenu: contextMenuStoreType = {
   x: 0,
   y: 0,
   isContextMenuOpen: false,
+  openModal: "",
 };
 
 export const contextMenuStore =

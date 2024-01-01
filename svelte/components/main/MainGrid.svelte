@@ -12,6 +12,7 @@
   import { onMount } from "svelte";
   import { topContainer } from "../../stores/cssStore";
   import { deselectItems, getPxfromRem } from "../../utils";
+  import ActionModal from "./ActionModal.svelte";
 
   export let items: SingleItem[];
   export let focusedItemId: string | undefined = undefined;
@@ -147,6 +148,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <PreviewModal item={previewItem} bind:isOpen={isPreviewModalOpen} />
+<ActionModal />
 
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
   <div class="p-1 myGrid" style={`--grid-cols-string: ${gridCols};`}>

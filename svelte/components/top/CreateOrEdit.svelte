@@ -72,9 +72,8 @@
           previewImg.src = previewImg.src + "?" + Date.now();
         }
       }
-      if (isCreateNew || itemWasReplacedWithExisting) {
-        close();
-      }
+      // TODO - is this correct? Is correct if no problems arise
+      close();
       await updateItem(existingItem, tagString);
       refreshDisplayedItems();
     } else {
