@@ -119,3 +119,18 @@ type Route = "main" | "details" | "importMultiple" | "settings";
 export const currentRoute = writable<Route>("main");
 
 export const settingsJson = writable<SettingsJson>();
+
+type contextMenuStoreType = {
+  x: number;
+  y: number;
+  isContextMenuOpen: boolean;
+};
+
+const emptyContextMenu: contextMenuStoreType = {
+  x: 0,
+  y: 0,
+  isContextMenuOpen: false,
+};
+
+export const contextMenuStore =
+  writable<contextMenuStoreType>(emptyContextMenu);

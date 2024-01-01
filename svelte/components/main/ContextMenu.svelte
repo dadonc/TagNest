@@ -1,27 +1,21 @@
 <script lang="ts">
-  import { clickedOutsideContextMenu, getPxfromRem } from "../../utils";
-
-  export let contextMenuX = 0;
-  export let contextMenuY = 0;
-  export let isContextMenuOpen = false;
+  import { contextMenuStore } from "../../stores/stateStore";
+  import { possibylCloseContextMenu, getPxfromRem } from "../../utils";
 
   let contextMenuWidth = getPxfromRem(8); // w-32
 
-  $: shouldOpenLeft = contextMenuX + contextMenuWidth < window.innerWidth;
+  $: shouldOpenLeft =
+    $contextMenuStore.x + contextMenuWidth < window.innerWidth;
   $: pos = shouldOpenLeft
-    ? `top: ${contextMenuY}px; left: ${contextMenuX}px`
-    : `top: ${contextMenuY}px; left: ${contextMenuX - contextMenuWidth}px`;
+    ? `top: ${$contextMenuStore.y}px; left: ${$contextMenuStore.x}px`
+    : `top: ${$contextMenuStore.y}px; left: ${
+        $contextMenuStore.x - contextMenuWidth
+      }px`;
 </script>
 
-<svelte:window
-  on:click={(e) => {
-    if (clickedOutsideContextMenu(e)) {
-      isContextMenuOpen = false;
-    }
-  }}
-/>
+<svelte:window on:click={possibylCloseContextMenu} />
 
-{#if isContextMenuOpen}
+{#if $contextMenuStore.isContextMenuOpen}
   <div id="contextMenu" class="absolute z-20 w-32 bg-red-500" style={pos}>
     hullo
   </div>

@@ -1,6 +1,7 @@
 import { get } from "svelte/store";
 import { importItems, items, type SingleItem } from "./stores/items";
 import {
+  contextMenuStore,
   currentRoute,
   currView,
   filteredData,
@@ -328,12 +329,14 @@ export const toggleLeft = () => {
   leftContainer.set($leftContainer);
 };
 
-export const clickedOutsideContextMenu = (e: MouseEvent) => {
+export const possibylCloseContextMenu = (e: MouseEvent) => {
   if (e && e.target) {
     const target = e.target as HTMLElement;
     if (target.matches("#contextMenu, #contextMenu *")) {
       return false;
     }
   }
-  return true;
+  const menuStore = get(contextMenuStore);
+  menuStore.isContextMenuOpen = false;
+  contextMenuStore.set(menuStore);
 };

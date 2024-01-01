@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
-  import { selectedItems, currentRoute } from "../../stores/stateStore";
-  import { classNames, clickedOutsideContextMenu } from "../../utils";
+  import {
+    selectedItems,
+    currentRoute,
+    contextMenuStore,
+  } from "../../stores/stateStore";
+  import { classNames, possibylCloseContextMenu } from "../../utils";
   import useIntersectionObserver from "../useIntersectionObserver";
   import BookmarkPreview from "./PreviewBookmark.svelte";
   import ImagePreview from "./PreviewImage.svelte";
@@ -10,10 +14,6 @@
 
   export let item: SingleItem;
   export let items: SingleItem[];
-
-  export let contextMenuX = 0;
-  export let contextMenuY = 0;
-  export let isContextMenuOpen = false;
 
   $: isItemSelected =
     $selectedItems.ids.filter((id) => id === item.id).length > 0;
@@ -73,9 +73,9 @@
     if (!isItemSelected) {
       selectItem(event);
     }
-    contextMenuX = event.clientX;
-    contextMenuY = event.clientY;
-    isContextMenuOpen = true;
+    $contextMenuStore.x = event.clientX;
+    $contextMenuStore.y = event.clientY;
+    $contextMenuStore.isContextMenuOpen = true;
   }
 </script>
 
@@ -91,9 +91,7 @@
   }}
   on:click={(e) => {
     selectItem(e);
-    if (clickedOutsideContextMenu(e)) {
-      isContextMenuOpen = false;
-    }
+    possibylCloseContextMenu(e);
   }}
   on:dblclick={(e) => {
     selectItem(e);

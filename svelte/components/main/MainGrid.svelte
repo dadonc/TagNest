@@ -1,6 +1,10 @@
 <script lang="ts">
   import Preview from "./Preview.svelte";
-  import { currView, currentRoute } from "../../stores/stateStore";
+  import {
+    contextMenuStore,
+    currView,
+    currentRoute,
+  } from "../../stores/stateStore";
   import { type SingleItem } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
   import PreviewModal from "./PreviewModal.svelte";
@@ -8,7 +12,6 @@
   import { onMount } from "svelte";
   import { topContainer } from "../../stores/cssStore";
   import { deselectItems, getPxfromRem } from "../../utils";
-  import ContextMenu from "./ContextMenu.svelte";
 
   export let items: SingleItem[];
   export let focusedItemId: string | undefined = undefined;
@@ -66,7 +69,7 @@
       return;
     if (e.key === "Escape") {
       if (!isPreviewModalOpen) {
-        isContextMenuOpen = false;
+        $contextMenuStore.isContextMenuOpen = false;
         deselectItems();
       }
     } else if (e.key === "Backspace" && e.metaKey) {
@@ -139,10 +142,6 @@
       }
     }
   };
-
-  let contextMenuX = 0;
-  let contextMenuY = 0;
-  let isContextMenuOpen = false;
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -150,16 +149,9 @@
 <PreviewModal item={previewItem} bind:isOpen={isPreviewModalOpen} />
 
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
-  <ContextMenu bind:contextMenuX bind:contextMenuY bind:isContextMenuOpen />
   <div class="p-1 myGrid" style={`--grid-cols-string: ${gridCols};`}>
     {#each items as item (item.id)}
-      <Preview
-        {item}
-        {items}
-        bind:contextMenuX
-        bind:contextMenuY
-        bind:isContextMenuOpen
-      />
+      <Preview {item} {items} />
     {/each}
   </div>
 </div>
