@@ -2,8 +2,12 @@ fix vertical video:
   - sizing
   - autoplay
 
-if multiple videos are selected, show all their details on the right side
+if multiple videos are selected, show all their details on the right side, click on one of the details to select the video
 grid up down arrows jump to top/bottom
+
+"compare items" in context menu - easy to delete thw worse one
+delete confirm modal
+drag to reoarder tags, or order alphabetically, default order by count
 
 resolution string is not displayed correctly
 

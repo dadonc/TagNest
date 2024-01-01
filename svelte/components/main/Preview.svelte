@@ -1,14 +1,19 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
   import { selectedItems, currentRoute } from "../../stores/stateStore";
-  import { classNames } from "../../utils";
+  import { classNames, clickedOutsideContextMenu } from "../../utils";
   import useIntersectionObserver from "../useIntersectionObserver";
   import BookmarkPreview from "./PreviewBookmark.svelte";
   import ImagePreview from "./PreviewImage.svelte";
   import PreviewPdf from "./PreviewPDF.svelte";
   import PreviewVideo from "./PreviewVideo.svelte";
+
   export let item: SingleItem;
   export let items: SingleItem[];
+
+  export let contextMenuX = 0;
+  export let contextMenuY = 0;
+  export let isContextMenuOpen = false;
 
   $: isItemSelected =
     $selectedItems.ids.filter((id) => id === item.id).length > 0;
@@ -60,6 +65,18 @@
     $currentRoute == "details"
       ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem)"
       : "";
+
+  function openContextMenu(event: MouseEvent) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (!isItemSelected) {
+      selectItem(event);
+    }
+    contextMenuX = event.clientX;
+    contextMenuY = event.clientY;
+    isContextMenuOpen = true;
+  }
 </script>
 
 <div
@@ -72,16 +89,18 @@
   on:exitViewport={() => {
     intersects = false;
   }}
-  on:click={selectItem}
+  on:click={(e) => {
+    selectItem(e);
+    if (clickedOutsideContextMenu(e)) {
+      isContextMenuOpen = false;
+    }
+  }}
   on:dblclick={(e) => {
     selectItem(e);
     $currentRoute = "details";
   }}
-  on:keydown={(e) => {
-    if (e.key === "Enter") {
-      selectItem(e);
-    }
-  }}
+  on:keydown={() => {}}
+  on:contextmenu={openContextMenu}
   class={classNames(
     "flex items-center justify-center h-full w-full bg-base-100 border-4",
     isItemSelected ? " border-blue-500" : "border-transparent"

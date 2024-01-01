@@ -327,3 +327,13 @@ export const toggleLeft = () => {
   }
   leftContainer.set($leftContainer);
 };
+
+export const clickedOutsideContextMenu = (e: MouseEvent) => {
+  if (e && e.target) {
+    const target = e.target as HTMLElement;
+    if (target.matches("#contextMenu, #contextMenu *")) {
+      return false;
+    }
+  }
+  return true;
+};
