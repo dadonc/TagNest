@@ -52,7 +52,7 @@
             $contextMenuStore.openModal = "videoThumbnail";
           }}
         >
-          Recreate Thumbnail
+          Change Thumbnail
         </button>
         <button
           class="py-1 mx-2 text-left border-b w-44 text-base-content hover:bg-base-300 border-base-content"

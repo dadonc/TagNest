@@ -1,3 +1,9 @@
+rewrite preview image creation:
+  * move seekbar to current thumb position
+  * store thumb position in db
+  * use same component for right sidebar
+  * disable save button if no changes were made
+
 fix vertical video:
   - sizing
   - autoplay
@@ -18,7 +24,6 @@ fast prefs context menu in topbar
   show play symbol toggle
 
 
-rewrite preview image creation, (save button is disabled if the image gets changed)
 
 recreate video preview with changed settings
   - ui, set start delay

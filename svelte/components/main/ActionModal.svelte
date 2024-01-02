@@ -4,6 +4,7 @@
   import { contextMenuStore, selectedItems } from "../../stores/stateStore";
   import RightEditSingle from "../right/RightEditSingle.svelte";
   import RightEditMultiple from "../right/RightEditMultiple.svelte";
+  import ModalVideoThumb from "../top/ModalVideoThumb.svelte";
 
   $: isOpen = $contextMenuStore.openModal !== "";
   $: isSingleItemSelected = $selectedItems.ids.length === 1;
@@ -43,6 +44,9 @@
       {#if isSingleItemSelected && item}
         {#if $contextMenuStore.openModal === "editItem"}
           <RightEditSingle {item} {close} />
+        {/if}
+        {#if $contextMenuStore.openModal === "videoThumbnail" && item.type === "video" && item.file}
+          <ModalVideoThumb {close} {item} />
         {/if}
       {/if}
       {#if !isSingleItemSelected && currentlySelectedItems}
