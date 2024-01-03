@@ -46,6 +46,9 @@
     let actualPos = (e.pageX - progressRect.left) / progressBar.offsetWidth;
     videoElement.currentTime = actualPos * videoElement.duration;
     currentDurationSpan.textContent = formatTime(videoElement.currentTime);
+    if (videoElement.currentTime !== TEST_THUMB_TIMING) {
+      saveDisabled = false;
+    }
   }
 
   async function saveNewThumb() {
@@ -58,7 +61,7 @@
   }
 
   let videoIsLoaded = false;
-  let saveDisabled = false;
+  let saveDisabled = true;
   let videoPath = item.file!.path;
   $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${
     extractNameAndExtension(videoPath).name

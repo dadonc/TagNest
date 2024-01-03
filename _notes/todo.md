@@ -2,7 +2,6 @@ rewrite preview image creation:
   * increase modal size
   * store thumb position in db, save default when importing, update when changing
   * use same component for right sidebar
-  * disable save button if no changes were made
 
 fix vertical video:
   - sizing
@@ -11,7 +10,7 @@ fix vertical video:
 if multiple videos are selected, show all their details on the right side, click on one of the details to select the video
 grid up down arrows jump to top/bottom
 
-"compare items" in context menu - easy to delete thw worse one
+"compare items" in context menu - easy to delete the worse one
 delete confirm modal
 drag to reoarder tags, or order alphabetically, default order by count
 

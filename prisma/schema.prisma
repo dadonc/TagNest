@@ -35,10 +35,11 @@ model File {
 }
 
 model Tag {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
+  id        String      @id @default(cuid())
+  name      String      @unique
+  createdAt DateTime    @default(now())
   item      Item[]
+  videoMark VideoMark[]
 }
 
 model Bookmark {
@@ -53,14 +54,28 @@ model Bookmark {
 }
 
 model Video {
-  id          String  @id @default(cuid())
-  duration    Int?
-  width       Int?
-  height      Int?
-  aspectRatio String?
-  metaBitrate String? // according to the video meta data
-  bitrate     String? // actual bitrate
-  fps         Float?
-  item        Item    @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  itemId      String  @unique
+  id           String      @id @default(cuid())
+  duration     Int?
+  width        Int?
+  height       Int?
+  aspectRatio  String?
+  metaBitrate  String? // according to the video meta data
+  bitrate      String? // actual bitrate
+  fps          Float?
+  item         Item        @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId       String      @unique
+  previewMarks VideoMark[] @relation(name: "previewMarks")
+  marks        VideoMark[] @relation(name: "marks")
+  thumbTime    Float? // the time of the thumbnail
+}
+
+model VideoMark {
+  id      String  @id @default(cuid())
+  mark    Float
+  Video   Video?  @relation(name: "marks", fields: [videoId], references: [id], onDelete: Cascade)
+  videoId String?
+  Video2  Video?  @relation(name: "previewMarks", fields: [videoId], references: [id], onDelete: Cascade)
+  note    String?
+  tag     Tag?    @relation(fields: [tagId], references: [id])
+  tagId   String?
 }
