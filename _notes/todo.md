@@ -1,6 +1,6 @@
 rewrite preview image creation:
-  * move seekbar to current thumb position
-  * store thumb position in db
+  * increase modal size
+  * store thumb position in db, save default when importing, update when changing
   * use same component for right sidebar
   * disable save button if no changes were made
 

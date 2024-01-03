@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from "svelte";
   import { settingsJson } from "../../stores/stateStore";
   import { extractNameAndExtension } from "../../../src/gschert";
   import { formatTime, saveVideoPreviewImage } from "../../utils";
@@ -10,19 +9,36 @@
 
   let videoElement: HTMLVideoElement;
   let progressBar: HTMLProgressElement;
+  let progressContainer: HTMLDivElement;
   let totalDurationSpan: HTMLSpanElement;
   let currentDurationSpan: HTMLSpanElement;
 
-  //   onMount(() => {
-  //     // Somehow the focus is lost, this is necessary, otherwise closing the modal with escape won't work
-  //     const modal = document.getElementById("modal")!;
-  //     if (modal) modal.focus();
-  //   });
+  const TEST_THUMB_TIMING = 50;
 
   function seek(e: MouseEvent) {
     const rect = progressBar.getBoundingClientRect();
     const pos = (e.pageX - rect.left) / progressBar.offsetWidth;
     videoElement.currentTime = pos * videoElement.duration;
+  }
+
+  function addMarker() {
+    const marker = document.createElement("span");
+    marker.classList.add(
+      "absolute",
+      "inline-block",
+      "w-1",
+      "h-full",
+      "bg-red-500",
+      "left-0",
+      "z-10",
+      "pointer-events-none"
+    );
+    marker.style.left = `${(TEST_THUMB_TIMING / videoElement.duration) * 100}%`;
+    progressContainer.appendChild(marker);
+
+    videoElement.currentTime += TEST_THUMB_TIMING;
+    progressBar.value = videoElement.currentTime;
+    currentDurationSpan.textContent = formatTime(videoElement.currentTime);
   }
 
   function updateVideo(e: MouseEvent) {
@@ -39,8 +55,6 @@
     ) as HTMLImageElement;
     previewImg.src = previewImg.src + "?" + Date.now();
     close();
-    //   await updateItem(existingItem, tagString);
-    //   refreshDisplayedItems();
   }
 
   let videoIsLoaded = false;
@@ -70,12 +84,13 @@
       progressBar.max = videoElement.duration;
       currentDurationSpan.textContent = formatTime(videoElement.currentTime);
       totalDurationSpan.textContent = formatTime(videoElement.duration);
+      addMarker();
       progressBar.classList.remove("hidden");
     }}
   >
     <source src={"file://" + videoPath} />
   </video>
-  <div class="relative h-4">
+  <div class="relative h-4" bind:this={progressContainer}>
     <progress
       on:mouseover={updateVideo}
       on:mousemove={updateVideo}
@@ -88,7 +103,7 @@
       on:focus={(e) => {}}
     />
     <span
-      class="absolute font-mono text-xs text-gray-200 pointer-events-none right-1"
+      class="absolute z-20 font-mono text-xs text-gray-200 pointer-events-none right-1"
     >
       <span bind:this={currentDurationSpan} /> /
       <span bind:this={totalDurationSpan} />
