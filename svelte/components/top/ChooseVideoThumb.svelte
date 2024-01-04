@@ -21,6 +21,7 @@
     const rect = progressBar.getBoundingClientRect();
     const pos = (e.pageX - rect.left) / progressBar.offsetWidth;
     videoElement.currentTime = pos * videoElement.duration;
+    progressBar.value = videoElement.currentTime;
     userClicked = !userClicked;
   }
 
@@ -100,7 +101,7 @@
       progressBar.max = videoElement.duration;
       currentDurationSpan.textContent = formatTime(videoElement.currentTime);
       totalDurationSpan.textContent = formatTime(videoElement.duration);
-      addMarker();
+      // addMarker();
       progressBar.classList.remove("hidden");
     }}
   >
@@ -110,7 +111,7 @@
     <progress
       on:mouseover={updateVideo}
       on:mousemove={updateVideo}
-      class="absolute left-0 hidden w-full h-full"
+      class="absolute left-0 hidden w-full h-full bg-white cursor-pointer"
       bind:this={progressBar}
       value="0"
       max="0"

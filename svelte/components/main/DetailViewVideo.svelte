@@ -211,7 +211,7 @@
         on:mouseleave={() => {
           thumbElement.style.display = "none";
         }}
-        class="absolute w-full h-4"
+        class="absolute w-full h-4 cursor-pointer"
         bind:this={progressBar}
         value="0"
         max="0"

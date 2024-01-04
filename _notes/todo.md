@@ -1,19 +1,7 @@
-rewrite preview image creation:
-  * increase modal size
-  * store thumb position in db, save default when importing, update when changing
-  * use same component for right sidebar
-    * fix progress bar
 
 fix vertical video:
   - sizing
   - autoplay
-
-if multiple videos are selected, show all their details on the right side, click on one of the details to select the video
-grid up down arrows jump to top/bottom
-
-"compare items" in context menu - easy to delete the worse one
-delete confirm modal
-drag to reoarder tags, or order alphabetically, default order by count
 
 resolution string is not displayed correctly
 
@@ -23,17 +11,32 @@ fast prefs context menu in topbar
   show tags toggle
   show play symbol toggle
 
-
-
 recreate video preview with changed settings
   - ui, set start delay
   - if new position was marked, recreate video preview inlcuding the new position
 
-
 back button should jump to last detail view, separate home button
 vertical video preview images and previews are too high
 
+deletion confirm modal
+
+if multiple videos are selected, show all their details on the right side, click on one of the details to select the video
+grid up down arrows jump to top/bottom
+
+"compare items" in context menu - easy to delete the worse one
+delete confirm modal
+drag to reoarder tags, or order alphabetically, default order by count
+
+
+
+video thumbnail creation:
+  * increase modal size
+  * store thumb position in db, save default when importing, update when changing
+
+
 order + sort
+
+tooltip when hovering shuffle button
 
 delete files in detailview bottomarea?
 detailview bottom area arrow nav

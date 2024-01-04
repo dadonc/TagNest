@@ -174,7 +174,7 @@
           extractNameAndExtension(path).name
         }_thumb.jpeg`}
         alt=""
-        class="m-auto"
+        class="m-auto cursor-pointer"
       />
     {:else if isCreateNew}
       <FileDragArea
