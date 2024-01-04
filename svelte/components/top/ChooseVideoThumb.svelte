@@ -61,7 +61,18 @@
       `previewImage-${item.id}`
     ) as HTMLImageElement;
     previewImg.src = previewImg.src + "?" + Date.now();
+
     close();
+
+    // update right sidebar preview image
+    setTimeout(() => {
+      const sidebarPreviewImg = document.getElementById(
+        `rightSidebarPreviewImage-${item.id}`
+      ) as HTMLImageElement;
+      if (sidebarPreviewImg) {
+        sidebarPreviewImg.src = sidebarPreviewImg.src + "?" + Date.now();
+      }
+    }, 0);
   }
 
   let videoIsLoaded = false;
@@ -73,12 +84,10 @@
 </script>
 
 {#if !videoIsLoaded}
-  <img class="max-w-full w-52" src={thumbPath} alt="" on:keydown={() => {}} />
-  <div class="h-4" />
+  <img class="max-w-full" src={thumbPath} alt="" on:keydown={() => {}} />
 {/if}
 
 <div class="max-w-full max-h-full">
-  <!-- svelte-ignore a11y-media-has-caption -->
   <video
     bind:this={videoElement}
     class={`${videoIsLoaded ? "" : "hidden"}`}

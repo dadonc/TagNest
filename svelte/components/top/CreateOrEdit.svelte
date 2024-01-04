@@ -169,6 +169,7 @@
       <img
         on:click={() => (isChooseVideoThumbOpen = true)}
         on:keydown={() => {}}
+        id={`rightSidebarPreviewImage-${existingItem.id}`}
         src={`file://${$settingsJson.savePath}/previews/videos/${
           extractNameAndExtension(path).name
         }_thumb.jpeg`}

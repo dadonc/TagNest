@@ -2,10 +2,7 @@ rewrite preview image creation:
   * increase modal size
   * store thumb position in db, save default when importing, update when changing
   * use same component for right sidebar
-    * remove flicker
     * fix progress bar
-    * update image in right sidebar when changing
-    * stop changing image when user clicks on the seekbar
 
 fix vertical video:
   - sizing

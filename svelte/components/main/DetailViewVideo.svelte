@@ -138,7 +138,6 @@
   }}
 />
 
-<!-- svelte-ignore a11y-media-has-caption -->
 <video class="hidden" bind:this={videoElementHidden}>
   <source src={"file://" + item.file?.path} />
 </video>
@@ -146,7 +145,6 @@
 <div class="flex items-center w-full h-full" bind:this={videoContainer}>
   <div class="relative flex flex-col justify-center h-full max-w-full m-auto">
     {#if isSpacePreview && !wasPreviewHidden}
-      <!-- svelte-ignore a11y-media-has-caption -->
       <video
         autoplay
         loop
@@ -162,7 +160,6 @@
     {#if !isSpacePreview && !videoIsLoaded}
       <img style={"max-height: calc(100% - 1rem);"} src={thumbPath} alt="" />
     {/if}
-    <!-- svelte-ignore a11y-media-has-caption -->
     <video
       id="videoPlayer"
       style={isSpacePreview
