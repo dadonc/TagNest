@@ -11,17 +11,20 @@
   } from "../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
   import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
-  import { currentRoute } from "../../stores/stateStore";
+  import { currentRoute, settingsJson } from "../../stores/stateStore";
   import startImportTasks from "../main/import/importQueue";
   import { tick } from "svelte";
-  import VideoPreviewImageChooser from "./VideoPreviewImageChooser.svelte";
   import {
     indexOfAlreadyExistingItem,
     saveVideoPreviewImage,
   } from "../../utils";
-  import { getItemTypeFromExtension } from "../../../src/gschert";
+  import {
+    extractNameAndExtension,
+    getItemTypeFromExtension,
+  } from "../../../src/gschert";
   import { addToDeleteQueue } from "../main/delete/DeleteQueue";
 
+  export let isChooseVideoThumbOpen = false;
   export let originalItem: SingleItem | undefined = undefined;
   let existingItem = originalItem
     ? {
@@ -162,14 +165,15 @@
           disabled = false;
         }}
       />
-    {:else if existingItem?.type === "video" || itemType === "video"}
-      <VideoPreviewImageChooser
-        {isCreateNew}
-        videoPath={path}
-        on:image-chosen={(ev) => {
-          isButtonDisabled = false;
-          wasVideoPreviewUpdated = true;
-        }}
+    {:else if existingItem?.type === "video" && existingItem?.file?.path}
+      <img
+        on:click={() => (isChooseVideoThumbOpen = true)}
+        on:keydown={() => {}}
+        src={`file://${$settingsJson.savePath}/previews/videos/${
+          extractNameAndExtension(path).name
+        }_thumb.jpeg`}
+        alt=""
+        class="m-auto"
       />
     {:else if isCreateNew}
       <FileDragArea

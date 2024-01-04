@@ -1,7 +1,7 @@
 <svelte:options immutable={true} />
 
 <script lang="ts">
-  import { onMount, tick } from "svelte";
+  import { onMount } from "svelte";
   import Layout from "./Layout.svelte";
   import BottomBar from "./components/bottom/BottomBar.svelte";
   import LeftArea from "./components/left/LeftArea.svelte";

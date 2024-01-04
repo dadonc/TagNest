@@ -15,10 +15,13 @@
 
   const TEST_THUMB_TIMING = 50;
 
+  let userClicked = false;
+
   function seek(e: MouseEvent) {
     const rect = progressBar.getBoundingClientRect();
     const pos = (e.pageX - rect.left) / progressBar.offsetWidth;
     videoElement.currentTime = pos * videoElement.duration;
+    userClicked = !userClicked;
   }
 
   function addMarker() {
@@ -42,6 +45,7 @@
   }
 
   function updateVideo(e: MouseEvent) {
+    if (userClicked) return;
     const progressRect = progressBar.getBoundingClientRect();
     let actualPos = (e.pageX - progressRect.left) / progressBar.offsetWidth;
     videoElement.currentTime = actualPos * videoElement.duration;
