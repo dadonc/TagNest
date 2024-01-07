@@ -1,3 +1,9 @@
+recreate video preview with changed settings
+  - cache bust video preview!
+  - only enable button if position is chosen
+  - default to recreate thumb?
+  - make action queue for video preview creation
+
 
 fix vertical video:
   - sizing
@@ -11,12 +17,8 @@ fast prefs context menu in topbar
   show tags toggle
   show play symbol toggle
 
-recreate video preview with changed settings
-  - ui, set start delay
-  - if new position was marked, recreate video preview inlcuding the new position
 
 back button should jump to last detail view, separate home button
-vertical video preview images and previews are too high
 
 deletion confirm modal
 
@@ -61,8 +63,9 @@ performance problems while import is running:
  - video preview image takes too lang to load if one scrolls fast
  - update video timeline thumbs don't update pften enough
 
+rename and reorder source files
 
-
+select multiple items in grid view using mouse drag
 # Bugs when showing Jessi
 * cancel creation of items - is everything deleted? especially bookmarks?
 * Don't break the app if the database folder is deleted

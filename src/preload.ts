@@ -55,6 +55,7 @@ export type ExposedInMainWorld = {
     path: string;
     isPreview?: boolean;
   }) => Promise<string>;
+  recreateVideoPreview: (videoPath: string, offset: number) => Promise<void>;
 };
 
 const api: ExposedInMainWorld = {
@@ -95,6 +96,8 @@ const api: ExposedInMainWorld = {
   deleteFile: (path) => ipcRenderer.invoke("deleteFile", path),
   saveImageFromString: (data) =>
     ipcRenderer.invoke("saveImageFromString", data),
+  recreateVideoPreview: (videoPath, offset) =>
+    ipcRenderer.invoke("recreateVideoPreview", videoPath, offset),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

@@ -196,4 +196,9 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   ipcMain.handle("saveImageFromString", async (event, data, path) => {
     return await saveImageFromString(data);
   });
+
+  ipcMain.handle("recreateVideoPreview", async (event, videoPath, offset) => {
+    await createVideoPreview(videoPath, offset);
+    return true;
+  });
 }

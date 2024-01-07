@@ -214,12 +214,15 @@ const delTempFiles = (
   fs.unlink(txtPath, () => {});
 };
 
-export const createVideoPreview = async (videoPath: string): Promise<void> => {
+export const createVideoPreview = async (
+  videoPath: string,
+  offset?: number
+): Promise<void> => {
   return new Promise(async (resolve, reject) => {
     try {
       const segmentDuration = 2; // seconds
       const segmentCount = 11; // segments plus one
-      const startOffset = 30;
+      const startOffset = offset ? offset : 30;
       const details = await getVideoDetails(videoPath);
       const savePath = (await getSettingsJson()).savePath;
       const actualSegmentCount =

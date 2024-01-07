@@ -12,8 +12,6 @@
 
 {#key item}
   {#if isChooseVideoThumbOpen}
-    <h1 class="mt-2 mb-4 text-3xl text-center">Choose Thumbnail</h1>
-
     <ChooseVideoThumb
       {item}
       close={() => {

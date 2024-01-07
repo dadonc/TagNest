@@ -6,6 +6,7 @@
 
   export let item: SingleItem;
   export let close: () => void = () => {};
+  let recreateThumb = false;
 
   let videoElement: HTMLVideoElement;
   let progressBar: HTMLProgressElement;
@@ -25,26 +26,6 @@
     userClicked = !userClicked;
   }
 
-  function addMarker() {
-    const marker = document.createElement("span");
-    marker.classList.add(
-      "absolute",
-      "inline-block",
-      "w-1",
-      "h-full",
-      "bg-red-500",
-      "left-0",
-      "z-10",
-      "pointer-events-none"
-    );
-    marker.style.left = `${(TEST_THUMB_TIMING / videoElement.duration) * 100}%`;
-    progressContainer.appendChild(marker);
-
-    videoElement.currentTime += TEST_THUMB_TIMING;
-    progressBar.value = videoElement.currentTime;
-    currentDurationSpan.textContent = formatTime(videoElement.currentTime);
-  }
-
   function updateVideo(e: MouseEvent) {
     if (userClicked) return;
     const progressRect = progressBar.getBoundingClientRect();
@@ -56,24 +37,19 @@
     }
   }
 
-  async function saveNewThumb() {
-    await saveVideoPreviewImage(videoPath);
-    const previewImg = document.getElementById(
-      `previewImage-${item.id}`
-    ) as HTMLImageElement;
-    previewImg.src = previewImg.src + "?" + Date.now();
-
-    close();
-
-    // update right sidebar preview image
-    setTimeout(() => {
-      const sidebarPreviewImg = document.getElementById(
-        `rightSidebarPreviewImage-${item.id}`
+  async function createNewPreview() {
+    if (recreateThumb) {
+      await saveVideoPreviewImage(videoPath);
+      const previewImg = document.getElementById(
+        `previewImage-${item.id}`
       ) as HTMLImageElement;
-      if (sidebarPreviewImg) {
-        sidebarPreviewImg.src = sidebarPreviewImg.src + "?" + Date.now();
-      }
-    }, 0);
+      previewImg.src = previewImg.src + "?" + Date.now();
+    }
+    await window.electron.recreateVideoPreview(
+      item.file!.path,
+      videoElement.currentTime
+    );
+    close();
   }
 
   let videoIsLoaded = false;
@@ -84,13 +60,13 @@
   }_thumb.jpeg`;
 </script>
 
-<h1 class="mt-2 mb-4 text-3xl text-center">Choose Thumbnail</h1>
-
 {#if !videoIsLoaded}
   <img class="max-w-full" src={thumbPath} alt="" on:keydown={() => {}} />
 {/if}
 
 <div class="max-w-full max-h-full">
+  <h1 class="mt-2 text-3xl text-center">Recerate Preview</h1>
+  <h2 class="mt-1 mb-4 text-xl text-center">Choose first frame of preview</h2>
   <video
     bind:this={videoElement}
     class={`${videoIsLoaded ? "" : "hidden"}`}
@@ -129,11 +105,17 @@
     </span>
   </div>
 </div>
+
+<label class="my-4">
+  <input type="checkbox" bind:checked={recreateThumb} />
+  <span class="text-base-content">Save first frame as new thumbnail</span>
+</label>
+
 <div class="flex justify-center mt-2 gap-x-2">
   <button class="btn btn-tertiary" on:click={close}>Cancel</button>
   <button
     disabled={saveDisabled}
-    on:click={saveNewThumb}
-    class="btn btn-primary">Save</button
+    on:click={createNewPreview}
+    class="btn btn-primary">Create preview</button
   >
 </div>

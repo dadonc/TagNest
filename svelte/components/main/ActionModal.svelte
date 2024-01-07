@@ -5,6 +5,7 @@
   import RightEditSingle from "../right/RightEditSingle.svelte";
   import RightEditMultiple from "../right/RightEditMultiple.svelte";
   import ChooseVideoThumb from "../top/ChooseVideoThumb.svelte";
+  import RegenerateVideoPreview from "../top/RegenerateVideoPreview.svelte";
 
   $: isOpen = $contextMenuStore.openModal !== "";
   $: isSingleItemSelected = $selectedItems.ids.length === 1;
@@ -47,6 +48,9 @@
         {/if}
         {#if $contextMenuStore.openModal === "videoThumbnail" && item.type === "video" && item.file}
           <ChooseVideoThumb {close} {item} />
+        {/if}
+        {#if $contextMenuStore.openModal === "videoPreview" && item.type === "video" && item.file}
+          <RegenerateVideoPreview {close} {item} />
         {/if}
       {/if}
       {#if !isSingleItemSelected && currentlySelectedItems}
