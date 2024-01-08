@@ -91,6 +91,7 @@
 {/if}
 
 <div class="max-w-full max-h-full">
+  <!-- svelte-ignore a11y-media-has-caption -->
   <video
     bind:this={videoElement}
     class={`${videoIsLoaded ? "" : "hidden"}`}

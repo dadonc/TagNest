@@ -67,6 +67,7 @@
 <div class="max-w-full max-h-full">
   <h1 class="mt-2 text-3xl text-center">Recerate Preview</h1>
   <h2 class="mt-1 mb-4 text-xl text-center">Choose first frame of preview</h2>
+  <!-- svelte-ignore a11y-media-has-caption -->
   <video
     bind:this={videoElement}
     class={`${videoIsLoaded ? "" : "hidden"}`}
