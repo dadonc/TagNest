@@ -17,6 +17,7 @@ fast prefs context menu in topbar
   show tags toggle
   show play symbol toggle
 
+* right click on tag: deselect all tags other than this one
 
 back button should jump to last detail view, separate home button
 
@@ -211,3 +212,6 @@ app crashes because the file is not found.
 * create subtitles for videos and make searchable
 * export files ordered like the user wants them, e.g. tags for folders
 * custom order: order grid using drag and drop
+* S3 compliant object storage like from AWS S3, Wasabi or MinIO
+* undo/redo
+* Use the name to store tags. Adding the tag "test" to an item with the name "abc.jpg" should rename abc.jpg to "abc[test].jpg"
