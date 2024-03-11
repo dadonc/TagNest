@@ -4,7 +4,7 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 // https://vitejs.dev/config
 export default defineConfig({
   build: {
-    target: "node18",
+    // target: "esnext",
     rollupOptions: {
       external: [
         "@prisma/client",
