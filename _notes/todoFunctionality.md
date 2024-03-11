@@ -3,6 +3,8 @@
 ## Bugs/Issues
 * hint when hovering over shuffle button
 * "Settings" screen: height of topbar
+* preview: pdf, external, text, video
+* Make URL clickable in right sidebar
 
 ## Revised plan
 •	Developing the application (01.06.24)
@@ -52,6 +54,7 @@
 Probably out of scope:
 * Search
 * Import view - better overview, indicator
+* autogenerate type tags
 
 
 
