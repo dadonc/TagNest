@@ -7,9 +7,11 @@
   } from "../../stores/stateStore";
   import { classNames, possibylCloseContextMenu } from "../../utils";
   import useIntersectionObserver from "../useIntersectionObserver";
+  import PreviewAudio from "./PreviewAudio.svelte";
   import BookmarkPreview from "./PreviewBookmark.svelte";
   import ImagePreview from "./PreviewImage.svelte";
   import PreviewPdf from "./PreviewPDF.svelte";
+  import PreviewText from "./PreviewText.svelte";
   import PreviewVideo from "./PreviewVideo.svelte";
 
   export let item: SingleItem;
@@ -113,6 +115,10 @@
       <PreviewPdf {item} {maxHeightStyle} />
     {:else if item.type === "video"}
       <PreviewVideo {item} {maxHeightStyle} />
+    {:else if item.type === "audio"}
+      <PreviewAudio {item} {maxHeightStyle} />
+    {:else if item.type === "text"}
+      <PreviewText {item} {maxHeightStyle} />
     {:else}
       <div
         class="flex flex-col items-center justify-center h-full"

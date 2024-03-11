@@ -21,9 +21,10 @@ model Item {
   updatedAt             DateTime  @updatedAt
   file                  File?
   tags                  Tag[]
-  type                  String // TODO:  "bookmark" | "image" | "video" | "pdf" | "external"| "noFile";
+  type                  String // TODO:  "bookmark" | "image" | "video" | "pdf" | "external"| "noFile" | "audio" | "text";
   bookmark              Bookmark?
   video                 Video?
+  audio                 Audio?
 }
 
 model File {
@@ -53,6 +54,16 @@ model Bookmark {
   itemId           String  @unique
 }
 
+model Audio {
+  id        String      @id @default(cuid())
+  duration  Int?
+  item      Item        @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId    String      @unique
+  marks     VideoMark[] @relation(name: "audioMarks")
+  thumbTime Float? // the time of the thumbnail
+  VideoMark VideoMark[]
+}
+
 model Video {
   id           String      @id @default(cuid())
   duration     Int?
@@ -78,4 +89,7 @@ model VideoMark {
   note    String?
   tag     Tag?    @relation(fields: [tagId], references: [id])
   tagId   String?
+  audio   Audio?  @relation(name: "audioMarks", fields: [audioId], references: [id])
+  audioId String?
+  Audio   Audio?  @relation(fields: [audioId], references: [id])
 }
