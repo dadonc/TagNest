@@ -333,3 +333,42 @@ export async function saveVideoDetailsToItem(
     },
   });
 }
+
+async function getAudioLength(audioPath: string): Promise<number> {
+  return new Promise((resolve, reject) => {
+    // https://stackoverflow.com/a/22243834
+    const process = spawn(ffprobePath, [
+      "-i",
+      audioPath,
+      "-show_entries",
+      "format=duration",
+      "-v",
+      "quiet",
+    ]);
+    let duration = "";
+    process.stdout.on("data", (d: string) => {
+      duration = d.toString().slice(d.indexOf("=") + 1, d.indexOf("\n["));
+    });
+
+    process.on("close", (code: string, d: string) => {
+      if (code == "0") {
+        resolve(Number(duration));
+      } else reject();
+    });
+  });
+}
+
+export async function saveAudioLengthToItem(audioPath: string, itemId: string) {
+  const duration = await getAudioLength(audioPath);
+  const prisma = await getPrismaClient();
+  return await prisma.audio.create({
+    data: {
+      duration,
+      item: {
+        connect: {
+          id: itemId,
+        },
+      },
+    },
+  });
+}

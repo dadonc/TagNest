@@ -6,6 +6,7 @@
 </script>
 
 <div class="select-none" style={maxHeightStyle}>
+  {item.audio?.duration}
   {item.name}
   type: {item.type}
 </div>

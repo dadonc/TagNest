@@ -70,6 +70,12 @@ export const importSteps = {
       });
     },
   },
+  audio: {
+    1: async (item: SingleItem) => {
+      await window.electron.saveAudioLengthToItem(item.file!.path, item.id);
+      console.log("Saved audio length:", item.name);
+    },
+  },
   external: {
     1: async (item: SingleItem) => {
       return new Promise((resolve) => {

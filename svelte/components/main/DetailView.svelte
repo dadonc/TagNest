@@ -3,6 +3,8 @@
   import DetailViewPdf from "./DetailViewPDF.svelte";
   import DetailViewBookmark from "./DetailViewBookmark.svelte";
   import DetailViewVideo from "./DetailViewVideo.svelte";
+  import DetailViewImage from "./DetailViewImage.svelte";
+  import DetailViewAudio from "./DetailViewAudio.svelte";
 
   export let item: SingleItem;
   export let isSpacePreview = false;
@@ -13,15 +15,13 @@
     {#if item.type === "bookmark"}
       <DetailViewBookmark {item} />
     {:else if item.type === "image"}
-      <img
-        src={`file://${item.file?.path}`}
-        alt={item.name}
-        class="max-h-full"
-      />
+      <DetailViewImage {item} />
     {:else if item.type === "pdf"}
       <DetailViewPdf {item} />
     {:else if item.type === "video"}
       <DetailViewVideo {item} {isSpacePreview} />
+    {:else if item.type === "audio"}
+      <DetailViewAudio {item} />
     {:else}
       <p>Unknown type</p>
     {/if}

@@ -1,19 +1,8 @@
 # TODO/Timeline
 
-## Initial plan 
-* Initial literature review and assessments for this module
-* cleanup and refactor codebase
-* support different item types: pdf, groups, audio, text, other
-* rewrite chrome extension
-* top area: quicksettings, home and back buttons
-* settings view
-* user highlights: video timestamps, highlights in bookmarks
-* item order
-* bugs
-* styling
-* interviews
-    * landing page for user evaluation
-* handle existing files, make paths relative
+## Bugs/Issues
+* hint when hovering over shuffle button
+* "Settings" screen: height of topbar
 
 ## Revised plan
 •	Developing the application (01.06.24)
@@ -41,6 +30,23 @@
     o	More literature and existing application research
     o	Finalizing the thesis
  
+
+## Initial plan 
+* Initial literature review and assessments for this module
+* cleanup and refactor codebase
+* support different item types: pdf, groups, audio, text, other
+* rewrite chrome extension
+* top area: quicksettings, home and back buttons
+* settings view
+* user highlights: video timestamps, highlights in bookmarks
+* item order
+* bugs
+* styling
+* interviews
+    * landing page for user evaluation
+* handle existing files, make paths relative
+
+
 
 
 Probably out of scope:

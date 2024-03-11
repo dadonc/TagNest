@@ -16,7 +16,11 @@ import {
 } from "./utils";
 import { getPrismaClient } from "./prisma";
 import { isDev } from "./main";
-import { createVideoPreview, saveVideoDetailsToItem } from "./video";
+import {
+  createVideoPreview,
+  saveAudioLengthToItem,
+  saveVideoDetailsToItem,
+} from "./video";
 
 async function handlePrisma(arg: string) {
   try {
@@ -200,5 +204,9 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   ipcMain.handle("recreateVideoPreview", async (event, videoPath, offset) => {
     await createVideoPreview(videoPath, offset);
     return true;
+  });
+
+  ipcMain.handle("saveAudioLengthToItem", async (event, audioPath, itemId) => {
+    return await saveAudioLengthToItem(audioPath, itemId);
   });
 }
