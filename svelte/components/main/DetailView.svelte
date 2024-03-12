@@ -5,6 +5,7 @@
   import DetailViewVideo from "./DetailViewVideo.svelte";
   import DetailViewImage from "./DetailViewImage.svelte";
   import DetailViewAudio from "./DetailViewAudio.svelte";
+  import DetailViewText from "./DetailViewText.svelte";
 
   export let item: SingleItem;
   export let isSpacePreview = false;
@@ -22,6 +23,8 @@
       <DetailViewVideo {item} {isSpacePreview} />
     {:else if item.type === "audio"}
       <DetailViewAudio {item} />
+    {:else if item.type === "text"}
+      <DetailViewText {item} />
     {:else}
       <p>Unknown type</p>
     {/if}

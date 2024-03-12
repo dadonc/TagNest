@@ -106,10 +106,6 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     return extractBookmarkImages(mhtmlFilePath);
   });
 
-  ipcMain.handle("readFile", async (event, filePath) => {
-    return fs.readFileSync(filePath).toString();
-  });
-
   ipcMain.handle("getSettingsJson", async (event) => {
     return await getSettingsJson();
   });
@@ -178,6 +174,14 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     mainWindow.webContents.closeDevTools();
   });
 
+  ipcMain.handle("readFile", async (event, filePath) => {
+    return fs.readFileSync(filePath).toString();
+  });
+
+  ipcMain.handle("writeFile", async (event, filePath, content) => {
+    return fs.writeFileSync(filePath, content);
+  });
+
   ipcMain.handle("copyFile", async (event, src, dest) => {
     fs.copyFileSync(src, dest);
     return true;
@@ -217,7 +221,7 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     return await prisma.text.create({
       data: {
         preview: textPreview,
-        words: Math.floor(text.length / 5),
+        words: Math.round(text.length / 5),
         item: {
           connect: {
             id: itemId,

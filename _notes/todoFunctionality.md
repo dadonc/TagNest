@@ -6,6 +6,7 @@
 * preview: pdf, external, text, video
 * Make URL clickable in right sidebar
 * Quicksettings: show name, date changed etc
+* rename files if item gets renamed?
 
 ## Revised plan
 •	Developing the application (01.06.24)

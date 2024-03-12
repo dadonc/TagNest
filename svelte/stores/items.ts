@@ -232,3 +232,15 @@ export async function updateFilePath(itemId: string, newPath: string) {
     },
   });
 }
+
+export async function updateTextInfos(item: SingleItem, text: string) {
+  await prisma.text.update({
+    where: {
+      itemId: item.id,
+    },
+    data: {
+      preview: text.slice(0, 200),
+      words: Math.round(text.length / 5),
+    },
+  });
+}

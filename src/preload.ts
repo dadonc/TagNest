@@ -30,7 +30,6 @@ export type ExposedInMainWorld = {
     ) => void
   ) => void;
   extractBookmarkImages: (mhtmlFilePath: string) => Promise<string[]>;
-  readFile: (filePath: string) => Promise<string>;
   getSettingsJson: () => Promise<SettingsJson>;
   getNewSavePath: () => Promise<string>;
   updateSettingsJson: (json: SettingsJson) => Promise<void>;
@@ -47,6 +46,8 @@ export type ExposedInMainWorld = {
   openDevTools: () => void;
   closeDevTools: () => void;
   // TODO: srcPath? destPath?
+  readFile: (filePath: string) => Promise<string>;
+  writeFile: (filePath: string, data: string) => Promise<void>;
   copyFile: (src: string, dest: string) => Promise<void>;
   moveFile: (src: string, dest: string) => Promise<void>;
   deleteFile: (path: string) => Promise<void>;
@@ -75,7 +76,6 @@ const api: ExposedInMainWorld = {
   onOpenAddBookmark: (callback) => ipcRenderer.on("openAddBookmark", callback),
   extractBookmarkImages: (mhtmlFilePath) =>
     ipcRenderer.invoke("extractBookmarkImages", mhtmlFilePath),
-  readFile: (filePath) => ipcRenderer.invoke("readFile", filePath),
   getSettingsJson: () => ipcRenderer.invoke("getSettingsJson"),
   getNewSavePath: () => ipcRenderer.invoke("getNewSavePath"),
   updateSettingsJson: (json) => ipcRenderer.invoke("updateSettingsJson", json),
@@ -93,6 +93,9 @@ const api: ExposedInMainWorld = {
   openDevTools: () => ipcRenderer.send("openDevTools"),
   closeDevTools: () => ipcRenderer.send("closeDevTools"),
 
+  readFile: (filePath) => ipcRenderer.invoke("readFile", filePath),
+  writeFile: (filePath, data) =>
+    ipcRenderer.invoke("writeFile", filePath, data),
   copyFile: (src, dest) => ipcRenderer.invoke("copyFile", src, dest),
   moveFile: (src, dest) => ipcRenderer.invoke("moveFile", src, dest),
   deleteFile: (path) => ipcRenderer.invoke("deleteFile", path),
