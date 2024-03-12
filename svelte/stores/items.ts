@@ -239,7 +239,7 @@ export async function updateTextInfos(item: SingleItem, text: string) {
       itemId: item.id,
     },
     data: {
-      preview: text.slice(0, 200),
+      preview: text.slice(0, 100),
       words: Math.round(text.length / 5),
     },
   });

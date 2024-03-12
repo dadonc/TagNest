@@ -216,7 +216,7 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
 
   ipcMain.handle("saveTextInfoToItem", async (event, textPath, itemId) => {
     const text = fs.readFileSync(textPath).toString();
-    const textPreview = text.slice(0, 200);
+    const textPreview = text.slice(0, 100);
     const prisma = await getPrismaClient();
     return await prisma.text.create({
       data: {
