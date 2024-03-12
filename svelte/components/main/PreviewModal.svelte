@@ -13,7 +13,7 @@
       isOpen = false;
     }}
   >
-    <div slot="body" class="h-full">
+    <div slot="body" class="h-full bg-base-100">
       <DetailView {item} isSpacePreview={true} />
     </div>
   </Modal>

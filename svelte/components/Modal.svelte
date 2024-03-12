@@ -4,6 +4,16 @@
   export let closeOnClickOutside = true;
   export let close: () => void;
   export let isFullWidth = true;
+
+  function possiblyBlur() {
+    const el = document.activeElement as HTMLElement;
+    if (el.contentEditable === "true") {
+      el.blur();
+      document.getElementById("modal")?.focus();
+      return true;
+    }
+    return false;
+  }
 </script>
 
 {#if isOpen}
@@ -20,7 +30,7 @@
     }}
     on:keydown={(e) => {
       if (e.key === "Escape") {
-        close();
+        possiblyBlur() || close();
       }
     }}
     transition:fade={{ duration: 200 }}

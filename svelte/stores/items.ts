@@ -243,4 +243,11 @@ export async function updateTextInfos(item: SingleItem, text: string) {
       words: Math.round(text.length / 5),
     },
   });
+  const newItem = await getItem(item.id);
+  items.update((items) => {
+    return items.filter((i) => i.id !== item.id);
+  });
+  items.update((items) => {
+    return items.concat(newItem!);
+  });
 }

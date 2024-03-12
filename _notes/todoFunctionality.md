@@ -7,6 +7,8 @@
 * Make URL clickable in right sidebar
 * Quicksettings: show name, date changed etc
 * rename files if item gets renamed?
+* preview size: text
+* AddModal: "Tags" background hint text
 
 ## Revised plan
 •	Developing the application (01.06.24)
