@@ -13,6 +13,7 @@
   import PreviewPdf from "./PreviewPDF.svelte";
   import PreviewText from "./PreviewText.svelte";
   import PreviewVideo from "./PreviewVideo.svelte";
+  import PreviewExternal from "./PreviewExternal.svelte";
 
   export let item: SingleItem;
   export let items: SingleItem[];
@@ -97,6 +98,10 @@
   }}
   on:dblclick={(e) => {
     selectItem(e);
+    if ($selectedItems.ids.length === 1) {
+      const clickedItem = items.find((i) => i.id === item.id);
+      if (clickedItem && clickedItem.type === "external") return;
+    }
     $currentRoute = "details";
   }}
   on:keydown={() => {}}
@@ -119,6 +124,8 @@
       <PreviewAudio {item} {maxHeightStyle} />
     {:else if item.type === "text"}
       <PreviewText {item} {maxHeightStyle} />
+    {:else if item.type === "external"}
+      <PreviewExternal {item} {maxHeightStyle} />
     {:else}
       <div
         class="flex flex-col items-center justify-center h-full"

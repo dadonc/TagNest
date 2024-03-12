@@ -1,6 +1,10 @@
 # TODO/Timeline
 
 ## Bugs/Issues
+* Max width of text items - see bottom bar in detailview
+* update item store on delete in detailview bottom bar
+* min height detailview pdf (see space preview)
+
 * hint when hovering over shuffle button
 * "Settings" screen: height of topbar
 * preview: pdf, external, text, video
@@ -10,11 +14,26 @@
 * preview size: text
 * AddModal: "Tags" background hint text
 
+* Preview of "Unkown type" - add button to open in finder or default application
+
+* Intro wizard
+    * choose save location
+    * copy or link files
+    * fill with example data?
+
+Video bugs:
+* MarianneFilm.m4v import fails
+* Beamerlift_Ruckeln_preview.MOV - no preview. Videodetails on right hand side are broken
+* hide video quality if invalid (see Beamerlift_Ruckeln_preview.MOV)
+
+* item preview for additem modal
+* action queue for external file previews - always show the preview not the icon. Create new when app starts
+
 ## Revised plan
 •	Developing the application (01.06.24)
-    o	Cleanup and refactor codebase, fix some bugs
+    o	✅ Cleanup and refactor codebase, fix some bugs
     o	Support different item types: video, PDF, audio, text and other
-    o	Support choosable preview images for bookmarks and videos
+    o	✅ Support choosable preview images for bookmarks and videos
     o	(Re)write chrome extension
     o	Context menu, deletion modal
     o	User highlights: video timestamps, highlights in bookmarks

@@ -4,6 +4,8 @@ import {
   globalShortcut,
   dialog,
   shell,
+  app,
+  nativeImage,
 } from "electron";
 import fs from "fs";
 import path from "path";
@@ -229,5 +231,29 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
         },
       },
     });
+  });
+
+  ipcMain.handle("saveFilePreview", async (event, filePath) => {
+    const folderPath = path.join((await getSettingsJson()).savePath, "icons");
+    if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
+
+    const filePreviewPath = path.join(
+      folderPath,
+      path.basename(filePath) + ".png"
+    );
+    const filePreview = await nativeImage.createThumbnailFromPath(filePath, {
+      width: 256,
+      height: 256,
+    });
+    fs.writeFileSync(filePreviewPath, filePreview.toPNG());
+
+    const iconPath = path.join(folderPath, filePath.split(".").pop() + ".png");
+    if (!fs.existsSync(iconPath)) {
+      app.getFileIcon(filePath, { size: "normal" }).then((icon) => {
+        console.log(icon.getSize());
+        fs.writeFileSync(iconPath, icon.toPNG());
+      });
+    }
+    return;
   });
 }

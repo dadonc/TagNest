@@ -84,30 +84,12 @@ export const importSteps = {
   },
   external: {
     1: async (item: SingleItem) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          console.log("step 1:", item.name);
-          resolve("step 1");
-        }, 3000);
-      });
+      await window.electron.saveFilePreview(item.file!.path);
     },
-
-    2: async (item: SingleItem) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          console.log("step 2:", item.name);
-          resolve("step 2");
-        }, 3000);
-      });
-    },
-
-    3: async (item: SingleItem) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          console.log("step 3:", item.name);
-          resolve("step 3");
-        }, 3000);
-      });
+  },
+  pdf: {
+    1: async (item: SingleItem) => {
+      await window.electron.saveFilePreview(item.file!.path);
     },
   },
 };

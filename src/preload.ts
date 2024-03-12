@@ -59,6 +59,8 @@ export type ExposedInMainWorld = {
   recreateVideoPreview: (videoPath: string, offset: number) => Promise<void>;
   saveAudioLengthToItem: (audioPath: string, itemId: string) => Promise<void>;
   saveTextInfoToItem: (textPath: string, itemId: string) => Promise<void>;
+
+  saveFilePreview: (filePath: string) => Promise<void>;
 };
 
 const api: ExposedInMainWorld = {
@@ -108,6 +110,9 @@ const api: ExposedInMainWorld = {
     ipcRenderer.invoke("saveAudioLengthToItem", audioPath, itemId),
   saveTextInfoToItem: (textPath, itemId) =>
     ipcRenderer.invoke("saveTextInfoToItem", textPath, itemId),
+
+  saveFilePreview: (filePath) =>
+    ipcRenderer.invoke("saveFilePreview", filePath),
 };
 
 contextBridge.exposeInMainWorld("electron", api);
