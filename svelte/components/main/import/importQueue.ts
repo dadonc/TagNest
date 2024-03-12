@@ -76,6 +76,12 @@ export const importSteps = {
       console.log("Saved audio length:", item.name);
     },
   },
+  text: {
+    1: async (item: SingleItem) => {
+      await window.electron.saveTextInfoToItem(item.file!.path, item.id);
+      console.log("Saved text infos to item", item.name);
+    },
+  },
   external: {
     1: async (item: SingleItem) => {
       return new Promise((resolve) => {

@@ -5,6 +5,7 @@
 * "Settings" screen: height of topbar
 * preview: pdf, external, text, video
 * Make URL clickable in right sidebar
+* Quicksettings: show name, date changed etc
 
 ## Revised plan
 •	Developing the application (01.06.24)
@@ -55,6 +56,7 @@ Probably out of scope:
 * Search
 * Import view - better overview, indicator
 * autogenerate type tags
+* undo/redo
 
 
 
@@ -67,7 +69,6 @@ Probably out of scope:
 
 * main top area: settings
 * details top area: "home" button, back button
-* audio: audio player with controls
 
 * fix/limit settings view
 

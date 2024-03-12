@@ -209,4 +209,21 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   ipcMain.handle("saveAudioLengthToItem", async (event, audioPath, itemId) => {
     return await saveAudioLengthToItem(audioPath, itemId);
   });
+
+  ipcMain.handle("saveTextInfoToItem", async (event, textPath, itemId) => {
+    const text = fs.readFileSync(textPath).toString();
+    const textPreview = text.slice(0, 200);
+    const prisma = await getPrismaClient();
+    return await prisma.text.create({
+      data: {
+        preview: textPreview,
+        words: Math.floor(text.length / 5),
+        item: {
+          connect: {
+            id: itemId,
+          },
+        },
+      },
+    });
+  });
 }

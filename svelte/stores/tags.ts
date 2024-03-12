@@ -153,6 +153,7 @@ export async function updateItemsTags(itemIds: string[], tagString: string) {
       bookmark: true,
       video: true,
       audio: true,
+      text: true,
     },
   });
   // Don't use Promise.all because tags should be created before the next item gets processed

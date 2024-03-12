@@ -25,6 +25,7 @@ model Item {
   bookmark              Bookmark?
   video                 Video?
   audio                 Audio?
+  text                  text?
 }
 
 model File {
@@ -62,6 +63,14 @@ model Audio {
   marks     VideoMark[] @relation(name: "audioMarks")
   thumbTime Float? // the time of the thumbnail
   VideoMark VideoMark[]
+}
+
+model text {
+  id      String @id @default(cuid())
+  preview String
+  words   Int    @default(0)
+  item    Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId  String @unique
 }
 
 model Video {
