@@ -33,12 +33,7 @@
     class="relative flex flex-col items-center justify-center w-full h-full select-none"
     style={maxHeightStyle}
   >
-    {#if !isHovered}
-      <img class="absolute" src={iconPath} alt="" />
-      <img class="opacity-0" src={previewPath} alt="" />
-    {:else}
-      <img src={previewPath} alt="" />
-    {/if}
+    <img src={previewPath} alt="" />
 
     <div class="absolute bottom-0 w-full p-2 mt-2 bg-base-300">
       {item.name}

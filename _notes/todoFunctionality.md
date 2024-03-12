@@ -5,7 +5,7 @@
 * update item store on delete in detailview bottom bar
 * min height detailview pdf (see space preview)
 
-* hint when hovering over shuffle button
+* tooltip when hovering over shuffle button
 * "Settings" screen: height of topbar
 * preview: pdf, external, text, video
 * Make URL clickable in right sidebar

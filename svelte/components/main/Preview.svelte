@@ -127,13 +127,8 @@
     {:else if item.type === "external"}
       <PreviewExternal {item} {maxHeightStyle} />
     {:else}
-      <div
-        class="flex flex-col items-center justify-center h-full"
-        on:dblclick={() => {
-          if (item.file?.path)
-            window.electron.openFileInDefaultApp(item.file?.path);
-        }}
-      >
+      <div class="flex flex-col items-center justify-center h-full bg-base-300">
+        <div class="text-sm text-gray-500">Unknown file type</div>
         <div class="text-sm text-gray-500">{item.name}</div>
       </div>
     {/if}
