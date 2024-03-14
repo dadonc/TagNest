@@ -2,7 +2,7 @@
   import { importItems } from "../../../stores/items";
   import ImportItemLine from "./ImportItemLine.svelte";
   import startImportTasks from "./importQueue";
-  import { deselectItems, handleKeydown } from "../../../utils";
+  import { deselectItems, handleKeydownImportView } from "../../../utils";
 
   function importAll() {
     importItems.set($importItems.map((i) => ({ ...i, importStep: 0 })));
@@ -10,7 +10,7 @@
   }
 </script>
 
-<svelte:window on:keydown={(e) => handleKeydown(e, true)} />
+<svelte:window on:keydown={(e) => handleKeydownImportView(e, true)} />
 <div
   on:click={deselectItems}
   on:keydown={deselectItems}

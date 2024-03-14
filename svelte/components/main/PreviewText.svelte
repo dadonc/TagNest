@@ -39,7 +39,9 @@
   <div class="absolute inline-block mb-8 whitespace-pre-wrap">
     {item.text?.preview}
   </div>
-  <div class="absolute bottom-0 right-0 p-2 font-bold text-right bg-base-300">
+  <div
+    class="absolute bottom-0 right-0 h-8 p-2 font-bold text-right bg-base-300"
+  >
     {item.text?.words} words
   </div>
 </div>

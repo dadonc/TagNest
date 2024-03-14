@@ -4,6 +4,9 @@ import fs from "fs";
 import util from "util";
 import type { SettingsJson } from "./gschert";
 
+// @ts-ignore
+const resourcesPath = process.resourcesPath;
+
 // todo remove, and use promisified version, see below
 export function downloadImageFromUrl(
   url: string,
@@ -29,7 +32,7 @@ const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
 export async function getSettingsJson(): Promise<SettingsJson> {
-  const filePath = path.join(process.resourcesPath, "save.json");
+  const filePath = path.join(resourcesPath, "save.json");
   if (fs.existsSync(filePath)) {
     const data = await readFileAsync(filePath, "utf8");
     return JSON.parse(data);
@@ -42,7 +45,7 @@ async function createSettingsJsonAndReturn(
   filePath: string
 ): Promise<SettingsJson> {
   const initialData = {
-    savePath: process.resourcesPath,
+    savePath: resourcesPath,
     latestMigration: "",
     combineBehavior: "copy",
   };
@@ -62,7 +65,7 @@ export async function updateSettingsJson(
     2
   );
   await writeFileAsync(
-    path.join(process.resourcesPath, "save.json"),
+    path.join(resourcesPath, "save.json"),
     newSaveString,
     "utf8"
   );
@@ -90,7 +93,7 @@ export function downloadImageFromUrlPromisified(url: string, dest: string) {
 
 export async function downloadImageAsBase64FromUrl(url: string) {
   const extension = url.split(".").pop();
-  const tempPath = path.join(process.resourcesPath, "temp." + extension);
+  const tempPath = path.join(resourcesPath, "temp." + extension);
   return new Promise<string>((resolve, reject) => {
     downloadImageFromUrl(url, tempPath, (err) => {
       if (err) {

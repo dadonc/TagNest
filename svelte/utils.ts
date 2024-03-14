@@ -73,7 +73,7 @@ export const deselectItems = () => {
 };
 
 // todo use this in all locations
-export const handleKeydown = async (
+export const handleKeydownImportView = async (
   e: KeyboardEvent,
   useImportItems: boolean = false
 ) => {
@@ -146,6 +146,8 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
     exitFakeFullscreen();
     currentRoute.set("main");
   } else if (e.key === "Backspace" && e.metaKey) {
+    // TODO wtf. what the fuck is going on
+
     const item = items.find(
       (item) => item.id === $selectedItems.ids[$selectedItems.ids.length - 1]
     );
@@ -155,6 +157,7 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
         $selectedItems.ids = [items[index + step].id];
       }
     }
+
     addToDeleteQueue($selectedItems.ids);
   } else if (e.key === "ArrowLeft") {
     const video = document.getElementById("videoPlayer") as HTMLVideoElement;

@@ -1,9 +1,10 @@
 # TODO/Timeline
 
 ## Bugs/Issues
+* delete in detailview bottom bar
+
 * ellipsis for text in long filenames in item preview
 * url symbol for all previews
-* update item store on delete in detailview bottom bar
 * Spacepreview close textpreview on "x" click
 
 * close pdf on ESC; pdfjs is broken on space preview
