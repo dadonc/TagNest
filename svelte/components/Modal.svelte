@@ -37,7 +37,8 @@
     class={`transition-opacity duration-200 fixed overflow-scroll top-0 bottom-0 left-0 right-0 grid place-items-center bg-fadeBg focus:outline-none`}
     style="z-index: 99999;"
   >
-    <div class={`${isFullWidth ? "w-full" : "max-w-xl"} m-8 rounded`}>
+    <!-- m-8 -->
+    <div class={`${isFullWidth ? "w-full" : "max-w-xl"} rounded`}>
       <slot name="body" />
     </div>
   </div>

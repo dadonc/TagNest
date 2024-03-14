@@ -13,7 +13,7 @@
 </script>
 
 {#key item.id}
-  <div class="flex items-center justify-center h-full">
+  <div class={`flex items-center justify-center max-h-full h-full`}>
     {#if item.type === "bookmark"}
       <DetailViewBookmark {item} />
     {:else if item.type === "image"}

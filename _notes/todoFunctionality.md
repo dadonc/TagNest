@@ -1,6 +1,9 @@
 # TODO/Timeline
 
 ## Bugs/Issues
+* only show title of external and pdf on hover
+* update text preview on hover
+
 * close pdf on ESC
 * pdfjs is broken on space preview
 * space preview transparant background, "x" to close
