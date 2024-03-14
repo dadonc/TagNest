@@ -20,7 +20,7 @@
 </script>
 
 <div
-  class="w-full h-full overflow-hidden broder-2 border-neutral-300 bg-base-300"
+  class="w-full h-full overflow-hidden border-2 border-base-300"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
 >
@@ -30,9 +30,11 @@
   >
     <img src={previewPath} alt="" />
 
-    <div class="absolute bottom-0 w-full p-2 mt-2 bg-base-300">
-      {item.name}
-    </div>
+    {#if isHovered}
+      <div class="absolute bottom-0 w-full p-2 mt-2 bg-base-300">
+        {item.name}
+      </div>
+    {/if}
     <div class="h-4"></div>
     <span
       class="absolute inline-block p-1 text-xs text-white rounded-sm bg-neutral durationString top-1 left-1"
