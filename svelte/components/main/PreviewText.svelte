@@ -23,13 +23,14 @@
   }
 </script>
 
+<!-- aspect ratio is based on the pdf/external preview -->
 <div
-  class="relative w-full h-full p-1 overflow-hidden border-2 border-base-300 bg-base-300 text-ellipsis"
+  class="relative p-1 overflow-hidden border-2 border-base-300 bg-base-300 text-ellipsis"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
-  style={maxHeightStyle + "; aspect-ratio: 75.45/100.99;"}
+  style={maxHeightStyle + "; aspect-ratio: 0.725"}
 >
-  <div class="inline-block max-h-full mb-8 whitespace-pre-wrap">
+  <div class="inline-block mb-8 whitespace-pre-wrap">
     {item.text?.preview}
   </div>
   <div class="absolute bottom-0 right-0 p-2 font-bold text-right bg-base-300">

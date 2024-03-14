@@ -2,8 +2,6 @@
 
 ## Bugs/Issues
 * update item store on delete in detailview bottom bar
-
-
 * Spacepreview close textpreview on "x" click
 
 * close pdf on ESC; pdfjs is broken on space preview
