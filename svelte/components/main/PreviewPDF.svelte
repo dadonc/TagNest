@@ -35,7 +35,6 @@
         {item.name}
       </div>
     {/if}
-    <div class="h-4"></div>
     <span
       class="absolute inline-block p-1 text-xs text-white rounded-sm bg-neutral durationString top-1 left-1"
       >PDF</span

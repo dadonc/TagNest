@@ -1,13 +1,11 @@
 # TODO/Timeline
 
 ## Bugs/Issues
-* fix bottombar preview: text, external, pdf
+* fix detailview bottombar preview: text, external, pdf
 * Spacepreview close textpreview on "x" click
 
-* close pdf on ESC
-* pdfjs is broken on space preview
-* space preview transparent background
-* Max width of text items - see bottom bar in detailview
+* close pdf on ESC; pdfjs is broken on space preview
+* space preview transparent background?
 * update item store on delete in detailview bottom bar
 
 * "Settings" screen: height of topbar
