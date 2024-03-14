@@ -244,10 +244,13 @@ export async function updateTextInfos(item: SingleItem, text: string) {
     },
   });
   const newItem = await getItem(item.id);
+  if (!newItem) return;
   items.update((items) => {
-    return items.filter((i) => i.id !== item.id);
-  });
-  items.update((items) => {
-    return items.concat(newItem!);
+    return items.map((i) => {
+      if (i.id !== item.id) {
+        return i;
+      }
+      return newItem;
+    });
   });
 }

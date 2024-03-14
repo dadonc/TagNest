@@ -1,25 +1,21 @@
 # TODO/Timeline
 
 ## Bugs/Issues
-* only show title of external and pdf on hover
-* update text preview on hover
+* fix bottombar preview: text, external, pdf
+* Spacepreview close textpreview on "x" click
 
 * close pdf on ESC
 * pdfjs is broken on space preview
-* space preview transparant background, "x" to close
+* space preview transparent background
 * Max width of text items - see bottom bar in detailview
 * update item store on delete in detailview bottom bar
-* min height detailview pdf (see space preview)
 
 * "Settings" screen: height of topbar
-* preview: pdf, external, text, video
 * Make URL clickable in right sidebar
 * Quicksettings: show name, date changed etc
 * rename files if item gets renamed?
-* preview size: text
 * AddModal: "Tags" background hint text
 
-* Preview of "Unkown type" - add button to open in finder or default application
 
 * Intro wizard
     * choose save location
@@ -31,8 +27,7 @@ Video bugs:
 * Beamerlift_Ruckeln_preview.MOV - no preview. Videodetails on right hand side are broken
 * hide video quality if invalid (see Beamerlift_Ruckeln_preview.MOV)
 
-* item preview for additem modal
-* action queue for external file previews - always show the preview not the icon. Create new when app starts
+* item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
 
 ## Revised plan
 •	Developing the application (01.06.24)

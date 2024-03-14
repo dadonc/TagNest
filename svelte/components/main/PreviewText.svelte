@@ -1,12 +1,32 @@
 <script lang="ts">
-  import type { SingleItem } from "../../stores/items";
+  import { updateTextInfos, type SingleItem } from "../../stores/items";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
+
+  let isHovered = false;
+
+  $: update(isHovered);
+
+  async function update(isHovered: boolean) {
+    if (isHovered) {
+      const t = await window.electron.readFile(item.file!.path);
+      const newPreview = t.slice(0, 100);
+      const newWordCount = Math.round(t.length / 5);
+      if (
+        item.text?.preview !== newPreview ||
+        item.text?.words !== newWordCount
+      ) {
+        updateTextInfos(item, t);
+      }
+    }
+  }
 </script>
 
 <div
-  class="relative w-full h-full p-1 overflow-hidden broder-2 border-neutral-300 bg-base-300 text-ellipsis"
+  class="relative w-full h-full p-1 overflow-hidden broder-2 border-base-300 bg-base-300 text-ellipsis"
+  on:mouseenter={() => (isHovered = true)}
+  on:mouseleave={() => (isHovered = false)}
   style={maxHeightStyle}
 >
   <div class="max-h-full mb-8 whitespace-pre-wrap">
