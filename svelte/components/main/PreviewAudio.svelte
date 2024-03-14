@@ -24,7 +24,7 @@
 </script>
 
 <div
-  class="w-full h-full broder-2 border-neutral-300 bg-base-300"
+  class="w-full h-full border-2 border-neutral-300 bg-base-300"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   on:mousedown={() => {

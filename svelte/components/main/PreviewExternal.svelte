@@ -33,7 +33,7 @@
     class="relative flex flex-col items-center justify-center w-full h-full select-none"
     style={maxHeightStyle}
   >
-    <img src={previewPath} alt="" />
+    <img src={previewPath} alt="" style={maxHeightStyle} />
     {#if isHovered}
       <div class="absolute bottom-0 w-full p-2 mt-2 text-ellipsis bg-base-300">
         {item.name}

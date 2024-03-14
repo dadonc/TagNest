@@ -24,12 +24,12 @@
 </script>
 
 <div
-  class="relative w-full h-full p-1 overflow-hidden broder-2 border-base-300 bg-base-300 text-ellipsis"
+  class="relative w-full h-full p-1 overflow-hidden border-2 border-base-300 bg-base-300 text-ellipsis"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
-  style={maxHeightStyle}
+  style={maxHeightStyle + "; aspect-ratio: 75.45/100.99;"}
 >
-  <div class="max-h-full mb-8 whitespace-pre-wrap">
+  <div class="inline-block max-h-full mb-8 whitespace-pre-wrap">
     {item.text?.preview}
   </div>
   <div class="absolute bottom-0 right-0 p-2 font-bold text-right bg-base-300">
