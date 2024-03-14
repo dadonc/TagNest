@@ -58,7 +58,7 @@
       </button>
     {/if}
     {#if $currentRoute == "main"}
-      <button on:click={shuffleItems} class="p-2">
+      <button on:click={shuffleItems} class="p-2" title="Shuffle items">
         <ShuffleIcon className="h-5 w-5 text-base-content" />
       </button>
     {/if}
@@ -83,6 +83,7 @@
       {/if}
     </span>
     <button
+      title="Add item"
       on:click={handleToggleAddModal}
       class="w-4 h-4 mr-4 text-base-content"
     >

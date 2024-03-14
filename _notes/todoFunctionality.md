@@ -1,11 +1,13 @@
 # TODO/Timeline
 
 ## Bugs/Issues
+* close pdf on ESC
+* pdfjs is broken on space preview
+* space preview transparant background, "x" to close
 * Max width of text items - see bottom bar in detailview
 * update item store on delete in detailview bottom bar
 * min height detailview pdf (see space preview)
 
-* tooltip when hovering over shuffle button
 * "Settings" screen: height of topbar
 * preview: pdf, external, text, video
 * Make URL clickable in right sidebar
