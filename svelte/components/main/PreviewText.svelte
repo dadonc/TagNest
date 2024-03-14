@@ -1,5 +1,6 @@
 <script lang="ts">
   import { updateTextInfos, type SingleItem } from "../../stores/items";
+  import { currentRoute } from "../../stores/stateStore";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
@@ -25,12 +26,17 @@
 
 <!-- aspect ratio is based on the pdf/external preview -->
 <div
-  class="relative p-1 overflow-hidden border-2 border-base-300 bg-base-300 text-ellipsis"
+  class="relative w-full h-full p-1 overflow-hidden border-2 border-base-300 bg-base-300 text-ellipsis"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   style={maxHeightStyle + "; aspect-ratio: 0.725"}
 >
-  <div class="inline-block mb-8 whitespace-pre-wrap">
+  {#if $currentRoute == "details"}
+    <!-- Because the item.text is positioned absolutely this preview doesn't have any size in the BottomArea preview -->
+    <div class="w-screen"></div>
+  {/if}
+
+  <div class="absolute inline-block mb-8 whitespace-pre-wrap">
     {item.text?.preview}
   </div>
   <div class="absolute bottom-0 right-0 p-2 font-bold text-right bg-base-300">

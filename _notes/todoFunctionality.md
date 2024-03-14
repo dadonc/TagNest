@@ -1,6 +1,8 @@
 # TODO/Timeline
 
 ## Bugs/Issues
+* ellipsis for text in long filenames in item preview
+* url symbol for all previews
 * update item store on delete in detailview bottom bar
 * Spacepreview close textpreview on "x" click
 

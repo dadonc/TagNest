@@ -107,7 +107,7 @@
   on:keydown={() => {}}
   on:contextmenu={openContextMenu}
   class={classNames(
-    "flex items-center justify-center h-full w-full border-4 ",
+    "flex items-center justify-center h-full w-full border-4 select-none ",
     isItemSelected ? "border-blue-500" : "border-transparent"
   )}
 >
