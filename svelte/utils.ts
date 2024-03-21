@@ -146,19 +146,19 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
     exitFakeFullscreen();
     currentRoute.set("main");
   } else if (e.key === "Backspace" && e.metaKey) {
-    // TODO wtf. what the fuck is going on
+    await addToDeleteQueue($selectedItems.ids);
 
-    const item = items.find(
+    // Select the next item
+    const lastItemToDeleteIndex = items.findIndex(
       (item) => item.id === $selectedItems.ids[$selectedItems.ids.length - 1]
     );
-    if (item) {
-      const index = items.indexOf(item);
-      if (index + step < items.length) {
-        $selectedItems.ids = [items[index + step].id];
+    if (lastItemToDeleteIndex) {
+      if (lastItemToDeleteIndex + step < items.length) {
+        $selectedItems.ids = [items[lastItemToDeleteIndex + step].id];
+      } else {
+        if (items[0]) $selectedItems.ids = [items[0].id];
       }
     }
-
-    addToDeleteQueue($selectedItems.ids);
   } else if (e.key === "ArrowLeft") {
     const video = document.getElementById("videoPlayer") as HTMLVideoElement;
     if (video && !video.paused) return;
