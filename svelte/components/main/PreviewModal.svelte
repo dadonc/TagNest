@@ -22,10 +22,9 @@
       <button
         title="Close preview modal"
         on:click={() => {
-          console.log("clicked");
           isOpen = false;
         }}
-        class="absolute text-base-content right-4 top-4"
+        class="absolute z-50 text-base-content right-4 top-4"
         style="-webkit-app-region: no-drag;"
       >
         <Plus className="w-6 h-6 rotate-45" />

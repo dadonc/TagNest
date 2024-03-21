@@ -12,4 +12,4 @@ Plan for the next two weeks:
 
 ## Report 2
 The last two weeks I have
-*
+* Fixed some bugs: deletion of items in the DetailView, space preview, and others

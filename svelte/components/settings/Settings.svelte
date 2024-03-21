@@ -13,7 +13,7 @@
   let showCombineBehaviorSaveButton = false;
 </script>
 
-<div class="h-6 bg-base-300" style="-webkit-app-region: drag;" />
+<div class="h-12 bg-base-300" style="-webkit-app-region: drag;" />
 <button
   on:click={() => {
     $currentRoute = "main";

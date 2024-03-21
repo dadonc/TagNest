@@ -1,27 +1,10 @@
 # TODO/Timeline
 
-## Bugs/Issues
+## Bugs
 
-* ellipsis for text in long filenames in item preview
-* url symbol for all previews
-* Spacepreview close textpreview on "x" click
-
+* tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
-* space preview transparent background?
 
-* "Settings" screen: height of topbar
-* Make URL clickable in right sidebar
-* Quicksettings: show name, date changed etc
-* rename files if item gets renamed?
-* AddModal: "Tags" background hint text
-
-
-* Intro wizard
-    * choose save location
-    * copy or link files
-    * fill with example data?
-
-* item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
 
 ## Revised plan
 •	Developing the application (01.06.24)
@@ -48,7 +31,23 @@
     o	Creating a poster and video of the application
     o	More literature and existing application research
     o	Finalizing the thesis
- 
+
+## Other TODO
+* Intro wizard
+    * choose save location
+    * copy or link files
+    * fill with example data?
+* Fix settings screen
+
+## Improvments
+* details top area: "home" button, back button
+* Make URL clickable in right sidebar
+* Quicksettings in top bar: show name, date changed, etc
+* ellipsis for text in long filenames in item preview
+* url symbol for all previews
+* item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
+* option in settings: rename files if item gets renamed
+
 
 ## Initial plan 
 * Initial literature review and assessments for this module
@@ -77,25 +76,13 @@ Probably out of scope:
 
 
 * transcode videos to a supported format ( e.g. :"m4v","mov","avi" into "mp4" or "webm" )
-
 * item groups
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview
-* pdfs: preview of the first page
-* other files: default icon or, if possible, a preview of the default icon/application on the user's system
+
 * right click on an item opens a context menu: edit item, show file in finder, open in default application, open in browser, delete item
 
-* main top area: settings
-* details top area: "home" button, back button
-
+* main top area: quick settings, order, home button, back button
 * fix/limit settings view
-
-* keyboard nav
-
-* landing page for user evaluation
-
-* users should be able to use the application without reading the documentation
-
-
 * tag input bug
 * Handle already existing files
 * Make paths relative
