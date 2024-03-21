@@ -5,6 +5,11 @@
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
 
+* colors video: bg hover time (light), bg progressbar (dark)
+
+* toggle right sidebar on shift+cmd+b
+
+* main grid scrollbar is inside the rightmost items
 
 ## Revised plan
 •	Developing the application (01.06.24)

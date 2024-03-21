@@ -12,4 +12,5 @@ Plan for the next two weeks:
 
 ## Report 2
 The last two weeks I have
+* Added support for video files: the preview in the grid shows a thumbnail and on hover a videopreview of the video gets played. The detail view shows the video and allows the user to play it. Both views display a preview image if a user hovers over the seekbar which shows the frame at the currently hovered position in the video.
 * Fixed some bugs: deletion of items in the DetailView, space preview, and others
