@@ -1,7 +1,6 @@
 # TODO/Timeline
 
 ## Bugs/Issues
-* delete in detailview bottom bar
 
 * ellipsis for text in long filenames in item preview
 * url symbol for all previews
@@ -21,11 +20,6 @@
     * choose save location
     * copy or link files
     * fill with example data?
-
-Video bugs:
-* MarianneFilm.m4v import fails
-* Beamerlift_Ruckeln_preview.MOV - no preview. Videodetails on right hand side are broken
-* hide video quality if invalid (see Beamerlift_Ruckeln_preview.MOV)
 
 * item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
 
@@ -82,6 +76,7 @@ Probably out of scope:
 
 
 
+* transcode videos to a supported format ( e.g. :"m4v","mov","avi" into "mp4" or "webm" )
 
 * item groups
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview

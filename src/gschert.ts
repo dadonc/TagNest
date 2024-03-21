@@ -1,13 +1,14 @@
 export const IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "webp", "svg"];
 const VIDEO_EXTENSIONS = [
   "mp4",
-  "m4v",
   "mpg",
   "mpeg",
   "ogg",
   "webm",
-  "mov",
-  "avi",
+  "3gp",
+  // "m4v",
+  // "mov",
+  // "avi",
 ];
 const AUDIO_EXTENSIONS = ["mp3", "wav", "flac", "ogg", "m4a"];
 const TEXT_EXTENSIONS = ["txt", "md"];
