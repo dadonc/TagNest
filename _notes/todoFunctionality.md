@@ -2,14 +2,17 @@
 
 ## Bugs
 
+* colors video: bg hover time (light), bg progressbar (dark)
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
-
-* colors video: bg hover time (light), bg progressbar (dark)
-
-* toggle right sidebar on shift+cmd+b
-
 * main grid scrollbar is inside the rightmost items
+* add bookmark modal is broken
+
+
+* right sidebar 
+    - decrease preview size
+    - preview external files
+
 
 ## Revised plan
 •	Developing the application (01.06.24)
@@ -48,6 +51,11 @@
 ## Improvments
 * details top area: "home" button, back button
 * Make URL clickable in right sidebar
+* right sidebar - save on command + s
+* toggle right sidebar on shift+cmd+b
+* list of keyboard shortcuts
+* main grid: select multiple items using the keyboard
+* detailview bottom bar: support up and down arrows
 * Quicksettings in top bar: show name, date changed, etc
 * ellipsis for text in long filenames in item preview
 * url symbol for all previews

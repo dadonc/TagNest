@@ -1,6 +1,11 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
-  import { currentRoute, settingsJson } from "../../stores/stateStore";
+  import {
+    currView,
+    currentRoute,
+    selectedItems,
+    settingsJson,
+  } from "../../stores/stateStore";
   import { extractNameAndExtension } from "../../../src/gschert";
   import { formatTime, getVideoResolutionDescription } from "../../utils";
 
@@ -62,11 +67,9 @@
     thumbElement.style.display = "block";
 
     const context = thumbElement.getContext("2d");
-    let actualPos = (e.pageX - progressRect.left) / progressBar.offsetWidth;
-    actualPos = actualPos < 0 ? 0 : actualPos;
 
     if (videoElementHidden.duration) {
-      videoElementHidden.currentTime = actualPos * videoElementHidden.duration;
+      videoElementHidden.currentTime = seek(e);
       videoElementHidden.addEventListener(
         "seeked",
         function onSeeked() {
@@ -90,9 +93,10 @@
   }
 
   function seek(e: MouseEvent) {
-    const rect = progressBar.getBoundingClientRect();
-    const pos = (e.pageX - rect.left) / progressBar.offsetWidth;
-    videoElementHidden.currentTime = pos * videoElementHidden.duration;
+    const progressRect = progressBar.getBoundingClientRect();
+    let actualPos = (e.pageX - progressRect.left) / progressBar.offsetWidth;
+    actualPos = actualPos < 0 ? 0 : actualPos;
+    return actualPos * videoElementHidden.duration;
   }
 </script>
 
@@ -180,6 +184,11 @@
         if (videoElement.paused) {
           playPromise = videoElement.play();
         }
+      }}
+      on:click={(e) => {
+        $selectedItems.ids = [item.id];
+        $currView.jumpToVideoTime = seek(e);
+        $currentRoute = "details";
       }}
       class="absolute bottom-0 z-50 w-full h-6 cursor-pointer"
       bind:this={progressBar}

@@ -4,7 +4,7 @@
   import Play from "../../assets/feather/Play.svelte";
   import { formatTime, toggleFakeFullscreen } from "../../utils";
   import { extractNameAndExtension } from "../../../src/gschert";
-  import { settingsJson } from "../../stores/stateStore";
+  import { currView, settingsJson } from "../../stores/stateStore";
   import Maximize from "../../assets/feather/Maximize.svelte";
 
   export let item: SingleItem;
@@ -21,7 +21,10 @@
   let playIconElement: HTMLSpanElement;
   let maximizeIconElement: HTMLSpanElement;
 
+  let directJumpToTime = 0;
   onMount(() => {
+    directJumpToTime = $currView.jumpToVideoTime || 0;
+    $currView.jumpToVideoTime = 0;
     const resizeObserver = new ResizeObserver(resizeThumbElement);
     resizeObserver.observe(videoElement);
     () => {
@@ -184,6 +187,11 @@
       on:click={play}
       on:canplay={() => {
         videoIsLoaded = true;
+        if (directJumpToTime) {
+          videoElement.currentTime = directJumpToTime;
+          directJumpToTime = 0;
+          videoElement.play();
+        }
       }}
       on:play={() => {
         playIconElement.style.display = "none";

@@ -96,9 +96,10 @@ export const filteredData = derived(
   }
 );
 
+// TODO move into antoher store that doesn't get saved in local storage
 type CurrViewType = {
   zoomLvl: number;
-  // TODO move into antoher store that doesn't get saved in local storage
+  jumpToVideoTime?: number; // used to directly jump to a specific timestamp in the video if user clicks on the seekbar of a video in the gridview
   // selectionType: "grid";
   // detailsType: CurrViewDetailsType;
   // focusedAction?: CurrViewActionsType;
@@ -124,6 +125,7 @@ type contextMenuStoreType = {
   x: number;
   y: number;
   isContextMenuOpen: boolean;
+  // todo do I need to store the modal type here?
   openModal: "videoThumbnail" | "videoPreview" | "editItem" | "editItems" | "";
 };
 
