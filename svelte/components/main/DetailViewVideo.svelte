@@ -17,6 +17,7 @@
   let totalDurationSpan: HTMLSpanElement;
   let currentDurationSpan: HTMLSpanElement;
   let thumbElement: HTMLCanvasElement;
+  let thumbTimeElement: HTMLSpanElement;
   let playIconElement: HTMLSpanElement;
   let maximizeIconElement: HTMLSpanElement;
 
@@ -33,7 +34,7 @@
     thumbElement.width = videoElement.offsetWidth * thumbRatio;
     thumbElement.height = videoElement.offsetHeight * thumbRatio;
     thumbElement.style.top = `calc(-${
-      videoElement.offsetHeight * thumbRatio
+      videoElement.offsetHeight * thumbRatio + 24
     }px)`;
   }
 
@@ -90,6 +91,11 @@
       videoElement.offsetWidth * thumbRatio,
       videoElement.offsetHeight * thumbRatio
     );
+
+    thumbTimeElement.style.display = "block";
+    thumbTimeElement.textContent = formatTime(videoElementHidden.currentTime);
+    thumbTimeElement.style.left = `calc(${renderPos * 100}% + ${(videoElement.offsetWidth * thumbRatio) / 2}px - ${thumbTimeElement.offsetWidth / 2}px)`; // center the time element
+    thumbTimeElement.style.top = `-24px`;
   }
 
   let videoIsLoaded = false;
@@ -213,6 +219,7 @@
         on:mousemove={displayThumb}
         on:mouseleave={() => {
           thumbElement.style.display = "none";
+          thumbTimeElement.style.display = "none";
         }}
         class="absolute w-full h-4 cursor-pointer"
         bind:this={progressBar}
@@ -226,6 +233,11 @@
         bind:this={thumbElement}
         class="absolute top-0 left-0 z-50 hidden bg-transparent"
       />
+      <span
+        bind:this={thumbTimeElement}
+        class="absolute top-0 left-0 z-50 hidden p-1 font-mono text-xs text-gray-200 bg-base-100"
+      >
+      </span>
       <span
         class="absolute font-mono text-xs text-gray-200 pointer-events-none right-1"
       >

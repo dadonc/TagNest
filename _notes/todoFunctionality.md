@@ -38,6 +38,7 @@
     * copy or link files
     * fill with example data?
 * Fix settings screen
+* Import list: better overview
 
 ## Improvments
 * details top area: "home" button, back button
