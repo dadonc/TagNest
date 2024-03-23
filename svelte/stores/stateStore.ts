@@ -108,6 +108,22 @@ export const filteredData = derived(
       })
       .filter((tag) => tag.totalCount > 0 || tag.isDeselected);
 
+    // sort tags by count
+    filteredTags = filteredTags.sort((a, b) => {
+      if (a.countAfterSelection < b.countAfterSelection) {
+        return -1;
+      } else if (a.countAfterSelection > b.countAfterSelection) {
+        return 1;
+      } else if (a.countAfterDeselection == b.countAfterDeselection) {
+        if (a.countAfterDeselection < b.countAfterDeselection) {
+          return -1;
+        } else if (a.countAfterDeselection > b.countAfterDeselection) {
+          return 1;
+        }
+      }
+      return 0;
+    });
+
     // deselect items if currently selected items are not in the filtered items
     selectedItems.update((selectedItems) => {
       return {
