@@ -29,9 +29,36 @@ export type TagTree = {
   [key: string]: FilteredTag[] | TagTree;
 };
 
+type CurrViewType = {
+  zoomLvl: number;
+  jumpToVideoTime?: number; // used to directly jump to a specific timestamp in the video if user clicks on the seekbar of a video in the gridview
+  viewType: "grid" | "list";
+  orderDirection: "desc" | "asc";
+  orderBy:
+    | "createdAt"
+    | "updatedAt"
+    | "name"
+    | "fileSize"
+    | "countOpened"
+    | "shuffle";
+};
+
+const emptyCurrView: CurrViewType = {
+  zoomLvl: 3,
+  jumpToVideoTime: 0,
+  viewType: "grid",
+  orderDirection: "desc",
+  orderBy: "createdAt",
+};
+
+const currentCurrView = localStorage.getItem("currView");
+export const currView = writable<CurrViewType>(
+  currentCurrView ? JSON.parse(currentCurrView) : emptyCurrView
+);
+
 export const filteredData = derived(
-  [selectedTags, items, allTags],
-  async ([$selectedTags, $items, $allTags]) => {
+  [selectedTags, items, allTags, currView],
+  async ([$selectedTags, $items, $allTags, $currView]) => {
     let filteredItems = $items;
     const selectedTagIds = $selectedTags.selectedIds;
     const deselectedTagIds = $selectedTags.deselectedIds;
@@ -89,38 +116,56 @@ export const filteredData = derived(
         ),
       };
     });
+
+    // order items by the current selected order
+    if ($currView.orderBy !== "shuffle") {
+      filteredItems = filteredItems.sort((a, b) => {
+        if ($currView.orderBy === "name") {
+          if (a.name && b.name && a.name < b.name) {
+            if ($currView.orderDirection === "asc") {
+              return -1;
+            }
+            return 1;
+          } else if (a.name && b.name && a.name > b.name) {
+            if ($currView.orderDirection === "asc") {
+              return 1;
+            }
+            return -1;
+          }
+        } else if ($currView.orderBy === "createdAt") {
+          if (a.createdAt < b.createdAt) {
+            if ($currView.orderDirection === "asc") {
+              return -1;
+            }
+            return 1;
+          } else if (a.createdAt > b.createdAt) {
+            if ($currView.orderDirection === "asc") {
+              return 1;
+            }
+            return -1;
+          }
+        } else if ($currView.orderBy === "updatedAt") {
+          if (a.updatedAt < b.updatedAt) {
+            if ($currView.orderDirection === "asc") {
+              return -1;
+            }
+            return 1;
+          } else if (a.updatedAt > b.updatedAt) {
+            if ($currView.orderDirection === "asc") {
+              return 1;
+            }
+            return -1;
+          }
+        }
+        return 0;
+      });
+    }
+
     return {
       items: filteredItems,
       tags: filteredTags,
     };
   }
-);
-
-type CurrViewType = {
-  zoomLvl: number;
-  jumpToVideoTime?: number; // used to directly jump to a specific timestamp in the video if user clicks on the seekbar of a video in the gridview
-  viewType: "grid" | "list";
-  orderDirection: "desc" | "asc";
-  orderBy:
-    | "createdAt"
-    | "updatedAt"
-    | "name"
-    | "fileSize"
-    | "countOpened"
-    | "shuffle";
-};
-
-const emptyCurrView: CurrViewType = {
-  zoomLvl: 3,
-  jumpToVideoTime: 0,
-  viewType: "grid",
-  orderDirection: "desc",
-  orderBy: "createdAt",
-};
-
-const currentCurrView = localStorage.getItem("currView");
-export const currView = writable<CurrViewType>(
-  currentCurrView ? JSON.parse(currentCurrView) : emptyCurrView
 );
 
 type Route = "main" | "details" | "importMultiple" | "settings";

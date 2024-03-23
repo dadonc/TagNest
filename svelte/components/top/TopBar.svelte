@@ -2,13 +2,11 @@
   import Plus from "../../assets/feather/Plus.svelte";
   import ChevronLeft from "../../assets/feather/ChevronLeft.svelte";
   import { currentRoute, selectedItems } from "../../stores/stateStore";
-  import { items } from "../../stores/items";
 
   import { importItems } from "../../stores/items";
   import AddBookmarkModal from "./AddBookmarkModal.svelte";
   import AddModal from "./AddModal.svelte";
   import LoaderCircle from "./LoaderCircle.svelte";
-  import ShuffleIcon from "../../assets/feather/ShuffleIcon.svelte";
   import ItemOrder from "./ItemOrder.svelte";
   import QuickSettings from "./QuickSettings.svelte";
 
@@ -27,18 +25,6 @@
     if ($importItems.length > initialImportItems) {
       initialImportItems = $importItems.length;
     }
-  }
-
-  async function shuffleItems() {
-    function shuffleArray(array: any[]) {
-      // https://stackoverflow.com/a/12646864
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-    $items = shuffleArray($items);
   }
 </script>
 
@@ -62,9 +48,6 @@
     {#if $currentRoute == "main"}
       <QuickSettings />
       <ItemOrder />
-      <button on:click={shuffleItems} class="p-2" title="Shuffle items">
-        <ShuffleIcon className="h-4 w-4 text-base-content" />
-      </button>
     {/if}
   </div>
   <div class="flex items-center h-4 text-xs">

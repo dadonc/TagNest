@@ -17,7 +17,7 @@
   {#if $currView.viewType === "grid"}
     <MainGrid {items} focusedItemId={$selectedItems.ids[0]} />
   {:else if $currView.viewType === "list"}
-    <MainList {items} focusedItemId={$selectedItems.ids[0]} />
+    <MainList {items} />
   {/if}
 {:else if $currentRoute === "details"}
   {#each items as item}

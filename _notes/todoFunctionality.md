@@ -1,5 +1,10 @@
 # TODO/Timeline
 
+orderBy:
+* save fileSize, update on text item change and on hover of external files (if changed, update updatedAt)
+* set dateAdded to date of file creation
+* update countOpened in DetailView
+
 ## Bugs
 
 * add bookmark modal is broken

@@ -1,21 +1,34 @@
 <script lang="ts">
+  import { tick } from "svelte";
   import type { SingleItem } from "../../stores/items";
   import Grid from "gridjs-svelte";
 
   export let items: SingleItem[];
+  let data: any[] = [];
 
-  $: data = items.map((item) => {
-    return {
-      id: item.id,
-      name: item.name,
-      createdAt: item.createdAt.toDateString(),
-      updatedAt: item.updatedAt.toDateString(),
-      type: item.type,
-      url: item.url,
-      note: item.note,
-    };
-  });
-  export let focusedItemId: string | undefined = undefined;
+  let instance: any;
+  $: updateData(items);
+
+  async function updateData(items: SingleItem[]) {
+    data = items.map((item) => {
+      return {
+        id: item.id,
+        name: item.name,
+        createdAt: item.createdAt.toDateString(),
+        updatedAt: item.updatedAt.toDateString(),
+        type: item.type,
+        url: item.url,
+        note: item.note,
+      };
+    });
+
+    await tick();
+    // TODO: This is a workaround to force render the grid after data is updated
+    setTimeout(() => {
+      instance?.forceRender();
+    }, 200);
+  }
+  // export let focusedItemId: string | undefined = undefined;
 </script>
 
 <!-- {#each items as item}
@@ -26,9 +39,11 @@
 
 {#if data}
   <Grid
+    bind:instance
     {data}
     sort={true}
     resizable={true}
+    autoWidth={true}
     on:rowClick={(row) => {
       console.log(row);
       console.log(JSON.stringify(row));
