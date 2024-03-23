@@ -14,6 +14,7 @@
       return {
         id: item.id,
         name: item.name,
+        countOpened: item.countOpened,
         createdAt: item.createdAt.toDateString(),
         updatedAt: item.updatedAt.toDateString(),
         type: item.type,

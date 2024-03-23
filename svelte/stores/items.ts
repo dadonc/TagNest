@@ -243,14 +243,33 @@ export async function updateTextInfos(item: SingleItem, text: string) {
       words: Math.round(text.length / 5),
     },
   });
-  const newItem = await getItem(item.id);
+  replaceItemInStore(item.id);
+}
+
+async function replaceItemInStore(itemId: string) {
+  const newItem = await getItem(itemId);
   if (!newItem) return;
   items.update((items) => {
     return items.map((i) => {
-      if (i.id !== item.id) {
+      if (i.id !== itemId) {
         return i;
       }
       return newItem;
     });
   });
+}
+
+export async function increaseCountOpened(item: SingleItem) {
+  console.log("increasing count opened for", item.id);
+  await prisma.item.update({
+    where: {
+      id: item.id,
+    },
+    data: {
+      countOpened: {
+        increment: 1,
+      },
+    },
+  });
+  item.countOpened++;
 }

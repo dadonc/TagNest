@@ -48,7 +48,7 @@
 {#if $currView.orderBy !== "shuffle"}
   <button
     on:click={changeDirection}
-    class=""
+    class="p-2"
     title={$currView.orderDirection === "asc" ? "Ascending" : "Descending"}
   >
     {#if $currView.orderDirection === "asc"}
@@ -58,9 +58,13 @@
     {/if}
   </button>
 {:else}
-  <div class="w-3"></div>
+  <div class="w-3 p-2"></div>
 {/if}
-<button on:click={shuffleItems} class="p-2" title="Shuffle items">
+<button
+  on:click={shuffleItems}
+  class="p-2 cursor-pointer"
+  title="Shuffle items"
+>
   <ShuffleIcon className="h-4 w-4 text-base-content" />
 </button>
 

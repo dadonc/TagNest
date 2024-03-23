@@ -172,6 +172,18 @@ export const filteredData = derived(
             }
             return -1;
           }
+        } else if ($currView.orderBy === "countOpened") {
+          if (a.countOpened < b.countOpened) {
+            if ($currView.orderDirection === "asc") {
+              return -1;
+            }
+            return 1;
+          } else if (a.countOpened > b.countOpened) {
+            if ($currView.orderDirection === "asc") {
+              return 1;
+            }
+            return -1;
+          }
         }
         return 0;
       });

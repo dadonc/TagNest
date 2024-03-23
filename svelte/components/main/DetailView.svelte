@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SingleItem } from "../../stores/items";
+  import { increaseCountOpened, type SingleItem } from "../../stores/items";
   import DetailViewPdf from "./DetailViewPDF.svelte";
   import DetailViewBookmark from "./DetailViewBookmark.svelte";
   import DetailViewVideo from "./DetailViewVideo.svelte";
@@ -10,6 +10,8 @@
 
   export let item: SingleItem;
   export let isSpacePreview = false;
+
+  $: increaseCountOpened(item);
 </script>
 
 {#key item.id}
