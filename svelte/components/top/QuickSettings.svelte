@@ -1,11 +1,11 @@
 <script lang="ts">
-  let display: "grid" | "list" = "grid";
+  import { currView } from "../../stores/stateStore";
 
   function changeDisplay() {
-    display = display === "grid" ? "list" : "grid";
+    $currView.viewType = $currView.viewType === "grid" ? "list" : "grid";
   }
 </script>
 
 <button on:click={changeDisplay} class="w-8 mr-4">
-  {display}
+  {$currView.viewType}
 </button>
