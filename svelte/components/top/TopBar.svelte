@@ -8,7 +8,9 @@
   import AddBookmarkModal from "./AddBookmarkModal.svelte";
   import AddModal from "./AddModal.svelte";
   import LoaderCircle from "./LoaderCircle.svelte";
-  import ShuffleIcon from "../../assets/ShuffleIcon.svelte";
+  import ShuffleIcon from "../../assets/feather/ShuffleIcon.svelte";
+  import ItemOrder from "./ItemOrder.svelte";
+  import QuickSettings from "./QuickSettings.svelte";
 
   let showAddModal = false;
 
@@ -58,8 +60,10 @@
       </button>
     {/if}
     {#if $currentRoute == "main"}
+      <QuickSettings />
+      <ItemOrder />
       <button on:click={shuffleItems} class="p-2" title="Shuffle items">
-        <ShuffleIcon className="h-5 w-5 text-base-content" />
+        <ShuffleIcon className="h-4 w-4 text-base-content" />
       </button>
     {/if}
   </div>

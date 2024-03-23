@@ -96,19 +96,26 @@ export const filteredData = derived(
   }
 );
 
-// TODO move into antoher store that doesn't get saved in local storage
 type CurrViewType = {
   zoomLvl: number;
   jumpToVideoTime?: number; // used to directly jump to a specific timestamp in the video if user clicks on the seekbar of a video in the gridview
-  // selectionType: "grid";
-  // detailsType: CurrViewDetailsType;
-  // focusedAction?: CurrViewActionsType;
+  viewType: "grid" | "list";
+  orderDirection: "desc" | "asc";
+  orderBy:
+    | "createdAt"
+    | "updatedAt"
+    | "name"
+    | "fileSize"
+    | "countOpened"
+    | "shuffle";
 };
 
 const emptyCurrView: CurrViewType = {
   zoomLvl: 3,
-  // selectionType: "grid",
-  // detailsType: "image",
+  jumpToVideoTime: 0,
+  viewType: "grid",
+  orderDirection: "desc",
+  orderBy: "createdAt",
 };
 
 const currentCurrView = localStorage.getItem("currView");

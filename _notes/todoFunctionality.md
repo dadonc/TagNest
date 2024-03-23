@@ -25,7 +25,7 @@
     o	(Re)write chrome extension
     o	Context menu, deletion modal
     o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar
-    o	Item order
+    o	Item order: file size, date added, date updated, name
 •	Polishing the application (01.07.24)
     o	Fixes and improvements
     o	Improve styling
