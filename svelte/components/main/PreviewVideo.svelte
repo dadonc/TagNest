@@ -157,8 +157,8 @@
     >
       <source src={"file://" + item.file?.path} />
     </video>
+    <!-- svelte-ignore a11y-media-has-caption -->
     <video
-      muted
       loop
       bind:this={videoElement}
       class={`w-full max-h-full ${videoIsLoaded ? "z-10" : "hidden"} `}

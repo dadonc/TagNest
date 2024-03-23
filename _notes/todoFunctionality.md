@@ -2,11 +2,14 @@
 
 ## Bugs
 
+* add bookmark modal is broken
 * colors video: bg hover time (light), bg progressbar (dark)
+
+
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
+
 * main grid scrollbar is inside the rightmost items
-* add bookmark modal is broken
 
 
 * right sidebar 
@@ -17,11 +20,11 @@
 ## Revised plan
 •	Developing the application (01.06.24)
     o	✅ Cleanup and refactor codebase, fix some bugs
-    o	Support different item types: video, PDF, audio, text and other
+    o	✅ Support different item types: video, PDF, audio, text and other
     o	✅ Support choosable preview images for bookmarks and videos
     o	(Re)write chrome extension
     o	Context menu, deletion modal
-    o	User highlights: video timestamps, highlights in bookmarks
+    o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar
     o	Item order
 •	Polishing the application (01.07.24)
     o	Fixes and improvements
@@ -56,7 +59,7 @@
 * list of keyboard shortcuts
 * main grid: select multiple items using the keyboard
 * detailview bottom bar: support up and down arrows
-* Quicksettings in top bar: show name, date changed, etc
+* Quicksettings in top bar: show name, date changed, mute video preview
 * ellipsis for text in long filenames in item preview
 * url symbol for all previews
 * item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
