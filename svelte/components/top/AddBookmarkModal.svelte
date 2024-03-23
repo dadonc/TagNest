@@ -31,9 +31,9 @@
 </script>
 
 {#if isOpen}
-  <Modal {isOpen} {close}>
-    <div slot="body">
-      <h1 class="mt-2 mb-4 text-3xl text-center">Add new item</h1>
+  <Modal {isOpen} {close} isFullWidth={false}>
+    <div slot="body" class="px-8 py-4 rounded bg-base-100">
+      <h1 class="mt-2 mb-2 text-3xl text-center">Add new item</h1>
       <CreateOrEdit originalItem={item} close={closeAfterSave} isCreateNew />
     </div>
   </Modal>

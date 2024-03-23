@@ -1,12 +1,15 @@
 <script lang="ts">
   import Link from "../../assets/feather/Link.svelte";
   import type { SingleItem } from "../../stores/items";
+  import PreviewTypeInfo from "./gschert/PreviewTypeInfo.svelte";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
 </script>
 
-<div class="relative hoverContainer">
+<div
+  class="relative flex items-center justify-center w-full h-full border-2 hoverContainer border-base-300"
+>
   <img
     src={"file://" + item.bookmark?.previewImagePath}
     alt=""
@@ -22,6 +25,7 @@
       <Link />
     </a>
   {/if}
+  <PreviewTypeInfo type={item.type} />
 </div>
 
 <style>

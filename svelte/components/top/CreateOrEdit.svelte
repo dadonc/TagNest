@@ -203,7 +203,7 @@
   bind:value={name}
   type="text"
   placeholder={namePlaceholder}
-  class="w-full mt-2 input input-bordered"
+  class="w-full mt-6 input input-bordered"
 />
 <input
   bind:value={url}

@@ -1,16 +1,18 @@
 <script lang="ts">
+  import { extractNameAndExtension } from "../../../src/gschert";
   import type { SingleItem } from "../../stores/items";
   import { settingsJson } from "../../stores/stateStore";
+  import PreviewName from "./gschert/PreviewName.svelte";
+  import PreviewTypeInfo from "./gschert/PreviewTypeInfo.svelte";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
 
   let isHovered = false;
-  let extension = item.file?.path.split(".").pop();
-
+  const { name, extension } = extractNameAndExtension(item.file?.path || "");
   $: fetchNewPreview(isHovered);
 
-  $: iconPath = `file://${$settingsJson.savePath}/icons/${extension}.png`;
+  // $: iconPath = `file://${$settingsJson.savePath}/icons/${extension}.png`;
   $: previewPath = `file://${$settingsJson.savePath}/icons/${item.file?.path.split("/").pop()}.png`;
 
   async function fetchNewPreview(isHovered: boolean) {
@@ -22,7 +24,7 @@
 </script>
 
 <div
-  class="w-full h-full overflow-hidden border-2 border-base-300"
+  class="w-full h-full border-2 border-base-300"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   on:dblclick={() => {
@@ -30,18 +32,15 @@
   }}
 >
   <div
-    class="relative flex flex-col items-center justify-center w-full h-full select-none"
+    class="relative flex flex-col justify-between w-full h-full select-none"
     style={maxHeightStyle}
   >
+    <!-- Center -->
+    <div>&nbsp;</div>
     <img src={previewPath} alt="" style={maxHeightStyle} />
-    {#if isHovered}
-      <div class="absolute bottom-0 w-full p-2 mt-2 text-ellipsis bg-base-300">
-        {item.name}
-      </div>
+    {#if isHovered || true}
+      <PreviewName {name} />
     {/if}
-    <span
-      class="absolute inline-block p-1 text-xs text-white rounded-sm bg-neutral durationString top-1 left-1"
-      >{extension}</span
-    >
+    <PreviewTypeInfo type={extension} />
   </div>
 </div>

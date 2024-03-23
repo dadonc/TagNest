@@ -10,7 +10,6 @@ increase countOpened when opening external file or external link
 
 ## Bugs
 
-* add bookmark modal is broken
 * colors video: bg hover time (light), bg progressbar (dark)
 
 
@@ -22,7 +21,7 @@ increase countOpened when opening external file or external link
 
 * right sidebar 
     - decrease preview size
-    - preview external files
+    - preview external files and pdfs
 
 
 ## Revised plan

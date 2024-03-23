@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
   import { settingsJson } from "../../stores/stateStore";
+  import PreviewName from "./gschert/PreviewName.svelte";
+  import PreviewTypeInfo from "./gschert/PreviewTypeInfo.svelte";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
@@ -31,13 +33,8 @@
     <img src={previewPath} alt="" style={maxHeightStyle} />
 
     {#if isHovered}
-      <div class="absolute bottom-0 w-full p-2 mt-2 bg-base-300">
-        {item.name}
-      </div>
+      <PreviewName name={item.name || ""} />
     {/if}
-    <span
-      class="absolute inline-block p-1 text-xs text-white rounded-sm bg-neutral durationString top-1 left-1"
-      >PDF</span
-    >
+    <PreviewTypeInfo type={item.type} />
   </div>
 </div>
