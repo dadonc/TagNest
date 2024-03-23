@@ -11,6 +11,9 @@
 
   function setOrderBy(e: Event) {
     $currView.orderBy = (e.target as HTMLSelectElement).value as any;
+    if ($currView.orderBy === "shuffle") {
+      shuffleItems();
+    }
   }
 
   async function shuffleItems() {
@@ -41,7 +44,8 @@
   <option selected={$currView.orderBy === "countOpened"} value="countOpened"
     >Count opened</option
   >
-  <option selected={$currView.orderBy === "shuffle"} value="shuffle">---</option
+  <option selected={$currView.orderBy === "shuffle"} value="shuffle"
+    >Random</option
   >
 </select>
 
@@ -58,15 +62,14 @@
     {/if}
   </button>
 {:else}
-  <div class="w-3 p-2"></div>
+  <button
+    on:click={shuffleItems}
+    class="p-2 cursor-pointer"
+    title="Shuffle items"
+  >
+    <ShuffleIcon className="h-4 w-4 text-base-content" />
+  </button>
 {/if}
-<button
-  on:click={shuffleItems}
-  class="p-2 cursor-pointer"
-  title="Shuffle items"
->
-  <ShuffleIcon className="h-4 w-4 text-base-content" />
-</button>
 
 <style>
   select {

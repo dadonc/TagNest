@@ -6,6 +6,8 @@ orderBy:
 * keep updatedAt for files in sync
 * does updatedAt of items get updated after tags are changed?
 
+increase countOpened when opening external file or external link
+
 ## Bugs
 
 * add bookmark modal is broken
@@ -56,6 +58,7 @@ orderBy:
     * fill with example data?
 * Fix settings screen
 * Import list: better overview
+* List of keyboard shortcuts
 
 ## Improvments
 * details top area: "home" button, back button
