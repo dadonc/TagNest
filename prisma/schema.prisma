@@ -30,12 +30,13 @@ model Item {
 }
 
 model File {
-  id        String   @id @default(cuid())
-  path      String
-  createdAt DateTime @default(now())
-  size      Int      @default(0)
-  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  itemId    String   @unique
+  id      String   @id @default(cuid())
+  path    String
+  created DateTime @default(now())
+  updated DateTime @default(now())
+  size    Int      @default(0)
+  item    Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId  String   @unique
 }
 
 model Tag {

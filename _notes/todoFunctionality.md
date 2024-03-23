@@ -1,8 +1,10 @@
 # TODO/Timeline
 
 orderBy:
-* save fileSize, update on text item change and on hover of external files (if changed, update updatedAt)
-* set dateAdded to date of file creation
+* update fileSize, dateUpdated on text item change and on hover of external files (if changed, update updatedAt) -> make action queue on startup?
+* order by date created of file
+* keep updatedAt for files in sync
+* does updatedAt of items get updated after tags are changed?
 
 ## Bugs
 
@@ -29,7 +31,7 @@ orderBy:
     o	(Re)write chrome extension
     o	Context menu, deletion modal
     o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar
-    o	Item order: file size, date added, date updated, name
+    o	Item order: file size, date added, date updated, name, countOpenings
 •	Polishing the application (01.07.24)
     o	Fixes and improvements
     o	Improve styling

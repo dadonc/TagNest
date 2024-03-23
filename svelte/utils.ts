@@ -343,3 +343,19 @@ export const possibylCloseContextMenu = (e: MouseEvent) => {
   menuStore.isContextMenuOpen = false;
   contextMenuStore.set(menuStore);
 };
+
+export function convertFileSize(bytes: number) {
+  const sizeInKB = bytes / 1024;
+  const sizeInMB = bytes / (1024 * 1024);
+  const sizeInGB = bytes / (1024 * 1024 * 1024);
+
+  if (sizeInGB >= 1) {
+    return sizeInGB.toFixed(2) + " GB";
+  } else if (sizeInMB >= 1) {
+    return sizeInMB.toFixed(2) + " MB";
+  } else if (sizeInKB >= 1) {
+    return sizeInKB.toFixed(2) + " KB";
+  } else {
+    return bytes + " B";
+  }
+}

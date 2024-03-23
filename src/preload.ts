@@ -61,6 +61,10 @@ export type ExposedInMainWorld = {
   saveTextInfoToItem: (textPath: string, itemId: string) => Promise<void>;
 
   saveFilePreview: (filePath: string) => Promise<void>;
+
+  getFileDatesAndSize: (
+    path: string
+  ) => Promise<{ size: number; updated: number; created: number }>;
 };
 
 const api: ExposedInMainWorld = {
@@ -113,6 +117,9 @@ const api: ExposedInMainWorld = {
 
   saveFilePreview: (filePath) =>
     ipcRenderer.invoke("saveFilePreview", filePath),
+
+  getFileDatesAndSize: (path) =>
+    ipcRenderer.invoke("getFileDatesAndSize", path),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

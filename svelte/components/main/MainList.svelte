@@ -2,6 +2,7 @@
   import { tick } from "svelte";
   import type { SingleItem } from "../../stores/items";
   import Grid from "gridjs-svelte";
+  import { convertFileSize } from "../../utils";
 
   export let items: SingleItem[];
   let data: any[] = [];
@@ -15,8 +16,9 @@
         id: item.id,
         name: item.name,
         countOpened: item.countOpened,
-        createdAt: item.createdAt.toDateString(),
-        updatedAt: item.updatedAt.toDateString(),
+        size: convertFileSize(item.file?.size || 0),
+        createdAt: item.file!.created.toDateString(),
+        updatedAt: item.file!.updated.toDateString(),
         type: item.type,
         url: item.url,
         note: item.note,

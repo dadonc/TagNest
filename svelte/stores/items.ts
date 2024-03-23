@@ -25,7 +25,7 @@ export async function createItem({
   importStep: number;
   getsCurrentlyImported?: boolean;
 }) {
-  // TODO get file creation date
+  // TODO get file creation date and size
 
   const newItem = await prisma.item.create({
     data: {
@@ -38,9 +38,16 @@ export async function createItem({
     },
   });
 
+  const { size, updated, created } = await window.electron.getFileDatesAndSize(
+    path
+  );
+
   await prisma.file.create({
     data: {
       path,
+      size,
+      updated: new Date(updated),
+      created: new Date(created),
       item: {
         connect: {
           id: newItem.id,

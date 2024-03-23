@@ -184,6 +184,21 @@ export const filteredData = derived(
             }
             return -1;
           }
+        } else if ($currView.orderBy === "fileSize") {
+          if (!a.file || !b.file) {
+            return 0;
+          }
+          if (a.file.size < b.file.size) {
+            if ($currView.orderDirection === "asc") {
+              return -1;
+            }
+            return 1;
+          } else if (a.file.size > b.file.size) {
+            if ($currView.orderDirection === "asc") {
+              return 1;
+            }
+            return -1;
+          }
         }
         return 0;
       });
