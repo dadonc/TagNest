@@ -9,8 +9,10 @@
   import LoaderCircle from "./LoaderCircle.svelte";
   import ItemOrder from "./ItemOrder.svelte";
   import QuickSettings from "./QuickSettings.svelte";
+  import ImportProgressModal from "../modals/ImportProgressModal.svelte";
 
   let showAddModal = false;
+  let isImportProgressModalOpen = false;
 
   const handleToggleAddModal = () => {
     showAddModal = !showAddModal;
@@ -55,18 +57,14 @@
       {#if $importItems.length > 0}
         <LoaderCircle />
         <button
-          on:click={() => {
-            if ($currentRoute !== "importMultiple") {
-              $currentRoute = "importMultiple";
-              selectedItems.set({ ids: [] });
-            }
-          }}
+          on:click={() => (isImportProgressModalOpen = true)}
           class="ml-1 mr-4 font-bold"
         >
           Importing: {initialImportItems -
             $importItems.length +
             1}/{initialImportItems}
         </button>
+        <ImportProgressModal isOpen={isImportProgressModalOpen} />
       {/if}
     </span>
     <button

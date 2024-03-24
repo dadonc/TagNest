@@ -267,7 +267,12 @@ async function replaceItemInStore(itemId: string) {
 }
 
 export async function increaseCountOpened(item: SingleItem) {
-  console.log("increasing count opened for", item.id);
+  console.log(
+    "increasing count opened for",
+    item.name,
+    " to ",
+    item.countOpened + 1
+  );
   await prisma.item.update({
     where: {
       id: item.id,

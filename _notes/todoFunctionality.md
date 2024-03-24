@@ -8,6 +8,11 @@ orderBy:
 * increase countOpened when opening external file or external link
 
 ## Bugs
+* right sidebar 
+    - decrease preview size
+    - preview external files and pdfs
+    
+* hovering over PDF preview changes layout
 
 * colors video: bg hover time (light), bg progressbar (dark)
 
@@ -18,9 +23,6 @@ orderBy:
 * main grid scrollbar is inside the rightmost items
 
 
-* right sidebar 
-    - decrease preview size
-    - preview external files and pdfs
 
 
 ## Revised plan

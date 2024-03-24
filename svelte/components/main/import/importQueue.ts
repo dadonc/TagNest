@@ -12,84 +12,121 @@ import {
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
 
+// step -1: import not started
+// step 0: runCombineBehavior
+// step 1: the first actual import step
+// step Object.keys(importSteps[importItem.type]).length is the last actual step
+// TODO: change to item.importFinished = true
+// when done item.getsCurrentlyImported is set to false
+
+// todo: type this?
 export const importSteps = {
   // bookmark import steps are run before the bookmark is created - see bookmark.ts and server.ts
   video: {
-    1: async (item: SingleItem) => {
-      await window.electron.createVideoPreview(item.file!.path, item.id);
-      console.log("Created video preview:", item.name);
+    1: {
+      func: async (item: SingleItem) => {
+        await window.electron.createVideoPreview(item.file!.path, item.id);
+        console.log("Created video preview:", item.name);
+      },
+      desc: "Create video preview",
     },
-    2: async (item: SingleItem) => {
-      await window.electron.saveVideoDetailsToItem(item.file!.path, item.id);
+    2: {
+      func: async (item: SingleItem) => {
+        await window.electron.saveVideoDetailsToItem(item.file!.path, item.id);
+      },
+      desc: "Save video details",
     },
-    3: async (item: SingleItem) => {
-      // create video preview thumbnail
-      const $savePath = get(settingsJson).savePath;
-      const { name, extension } = extractNameAndExtension(item.name!);
-      // check if already exists
-      try {
-        const res = await fetch(
-          "file://" + $savePath + "/previews/videos/" + name + "_thumb.jpeg",
-          { method: "HEAD" }
-        );
-        if (res.ok) {
-          console.log("preview already exists");
-          return;
-        }
-      } catch (err) {}
-      const video = document.createElement("video");
-      video.src =
-        "file://" +
-        $savePath +
-        "/previews/videos/" +
-        name +
-        "_preview." +
-        extension;
-      video.load();
-      await new Promise((resolve) => {
-        video.addEventListener("canplay", async () => {
-          video.currentTime = 0;
-          const canvas = document.createElement("canvas");
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          canvas
-            .getContext("2d")
-            ?.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const dataURL = canvas.toDataURL("image/jpeg", 0.5);
-          await window.electron.saveVideoPreviewImage(
-            dataURL,
-            name + "_thumb.jpeg"
+    3: {
+      func: async (item: SingleItem) => {
+        // create video preview thumbnail
+        const $savePath = get(settingsJson).savePath;
+        const { name, extension } = extractNameAndExtension(item.name!);
+        // check if already exists
+        try {
+          const res = await fetch(
+            "file://" + $savePath + "/previews/videos/" + name + "_thumb.jpeg",
+            { method: "HEAD" }
           );
-          // TODO hacky solution, without this the image is black before the app is reloaded
-          // this happens if a single video is imported
-          // I don't know why this happens, because saveVideoPreviewImage is sync
-          setTimeout(() => {
-            resolve(true);
-          }, 1000);
+          if (res.ok) {
+            console.log("preview already exists");
+            return;
+          }
+        } catch (err) {}
+        const video = document.createElement("video");
+        video.src =
+          "file://" +
+          $savePath +
+          "/previews/videos/" +
+          name +
+          "_preview." +
+          extension;
+        video.load();
+        await new Promise((resolve) => {
+          video.addEventListener("canplay", async () => {
+            video.currentTime = 0;
+            const canvas = document.createElement("canvas");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas
+              .getContext("2d")
+              ?.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL("image/jpeg", 0.5);
+            await window.electron.saveVideoPreviewImage(
+              dataURL,
+              name + "_thumb.jpeg"
+            );
+            // TODO hacky solution, without this the image is black before the app is reloaded
+            // this happens if a single video is imported
+            // I don't know why this happens, because saveVideoPreviewImage is sync
+            setTimeout(() => {
+              resolve(true);
+            }, 1000);
+          });
         });
-      });
+      },
+      desc: "Create video preview thumbnail",
     },
   },
   audio: {
-    1: async (item: SingleItem) => {
-      await window.electron.saveAudioLengthToItem(item.file!.path, item.id);
-      console.log("Saved audio length:", item.name);
+    1: {
+      func: async (item: SingleItem) => {
+        await window.electron.saveAudioLengthToItem(item.file!.path, item.id);
+        console.log("Saved audio length:", item.name);
+      },
+      desc: "Get and save audio length",
     },
   },
   text: {
-    1: async (item: SingleItem) => {
-      await window.electron.saveTextInfoToItem(item.file!.path, item.id);
-      console.log("Saved text infos to item", item.name);
+    1: {
+      func: async (item: SingleItem) => {
+        await window.electron.saveTextInfoToItem(item.file!.path, item.id);
+        console.log("Saved text infos to item", item.name);
+      },
+      desc: "Save text infos",
     },
   },
   external: {
-    1: async (item: SingleItem) => {
-      await window.electron.saveFilePreview(item.file!.path);
+    1: {
+      func: async (item: SingleItem) => {
+        await window.electron.saveFilePreview(item.file!.path);
+      },
+      desc: "Save file preview",
+    },
+    2: {
+      func: async (item: SingleItem) => {
+        await new Promise((resolve) => {
+          setTimeout(resolve, 100000);
+        });
+      },
+      desc: "Wait 100s",
     },
   },
   pdf: {
-    1: async (item: SingleItem) => {
-      await window.electron.saveFilePreview(item.file!.path);
+    1: {
+      func: async (item: SingleItem) => {
+        await window.electron.saveFilePreview(item.file!.path);
+      },
+      desc: "Save file preview",
     },
   },
 };
@@ -173,7 +210,7 @@ export default async function startImportTasks() {
         //@ts-ignore
         if (importSteps[item.type] && importSteps[item.type][item.importStep]) {
           //@ts-ignore
-          await importSteps[item.type][item.importStep](item);
+          await importSteps[item.type][item.importStep].func(item);
         }
         console.log(`finished step ${i}/${stepCount} of ${item.name}`);
         importItems.update((items) => {
