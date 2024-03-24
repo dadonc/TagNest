@@ -7,7 +7,7 @@
   import { selectedItems } from "../../stores/stateStore";
   import { updateItemsTags } from "../../stores/tags";
   import { addToDeleteQueue } from "../main/delete/DeleteQueue";
-  import TagSelectWrapper from "../top/TagSelectWrapper.svelte";
+  import TagSelectWrapper from "../modals/components/TagSelectWrapper.svelte";
 
   export let items: SingleItem[];
   export let modalClose: () => void = () => {};

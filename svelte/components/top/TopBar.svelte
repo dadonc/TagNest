@@ -4,8 +4,8 @@
   import { currentRoute, selectedItems } from "../../stores/stateStore";
 
   import { importItems } from "../../stores/items";
-  import AddBookmarkModal from "./AddBookmarkModal.svelte";
-  import AddModal from "./AddModal.svelte";
+  import AddBookmarkModal from "../modals/AddBookmarkModal.svelte";
+  import AddModal from "../modals/AddModal.svelte";
   import LoaderCircle from "./LoaderCircle.svelte";
   import ItemOrder from "./ItemOrder.svelte";
   import QuickSettings from "./QuickSettings.svelte";

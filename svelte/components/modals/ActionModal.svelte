@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Modal from "../Modal.svelte";
+  import Modal from "./Modal.svelte";
   import { items, type SingleItem } from "../../stores/items";
   import { contextMenuStore, selectedItems } from "../../stores/stateStore";
   import RightEditSingle from "../right/RightEditSingle.svelte";
   import RightEditMultiple from "../right/RightEditMultiple.svelte";
-  import ChooseVideoThumb from "../top/ChooseVideoThumb.svelte";
-  import RegenerateVideoPreview from "../top/RegenerateVideoPreview.svelte";
+  import ChooseVideoThumb from "./ChooseVideoThumb.svelte";
+  import RegenerateVideoPreview from "./RegenerateVideoPreview.svelte";
 
   $: isOpen = $contextMenuStore.openModal !== "";
   $: isSingleItemSelected = $selectedItems.ids.length === 1;

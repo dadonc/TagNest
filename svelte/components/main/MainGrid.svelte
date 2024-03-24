@@ -12,7 +12,7 @@
   import { onMount } from "svelte";
   import { topContainer } from "../../stores/cssStore";
   import { deselectItems, getPxfromRem } from "../../utils";
-  import ActionModal from "./ActionModal.svelte";
+  import ActionModal from "../modals/ActionModal.svelte";
 
   export let items: SingleItem[];
   export let focusedItemId: string | undefined = undefined;

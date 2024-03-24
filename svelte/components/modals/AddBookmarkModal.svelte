@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Modal from "../Modal.svelte";
+  import Modal from "./Modal.svelte";
   import {
     getItem,
     refreshDisplayedItems,
     type SingleItem,
   } from "../../stores/items";
-  import CreateOrEdit from "./CreateOrEdit.svelte";
+  import CreateOrEdit from "./components/CreateOrEdit.svelte";
   import { addToDeleteQueue } from "../main/delete/DeleteQueue";
   let isOpen = false;
   let item: SingleItem;

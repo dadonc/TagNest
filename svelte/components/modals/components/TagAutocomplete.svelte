@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Tag } from "@prisma/client";
   import fuzzy from "fuzzy";
-  import { classNames } from "../../utils";
+  import { classNames } from "../../../utils";
 
   export let tags: Tag[];
   export let tagString: string;

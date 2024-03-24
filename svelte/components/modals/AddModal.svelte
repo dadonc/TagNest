@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Modal from "../Modal.svelte";
-  import CreateOrEdit from "./CreateOrEdit.svelte";
+  import Modal from "./Modal.svelte";
+  import CreateOrEdit from "./components/CreateOrEdit.svelte";
   export let isOpen = false;
   export let close: () => void;
 

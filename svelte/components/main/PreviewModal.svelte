@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Modal from "../Modal.svelte";
+  import Modal from "../modals/Modal.svelte";
   import { type SingleItem } from "../../stores/items";
   import DetailView from "./DetailView.svelte";
   import Plus from "../../assets/feather/Plus.svelte";

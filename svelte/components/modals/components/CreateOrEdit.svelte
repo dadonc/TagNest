@@ -8,21 +8,21 @@
     updateItem,
     type SingleItem,
     items,
-  } from "../../stores/items";
+  } from "../../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
-  import BookmarkPreviewImageChooser from "./BookmarkPreviewImageChooser.svelte";
-  import { currentRoute, settingsJson } from "../../stores/stateStore";
-  import startImportTasks from "../main/import/importQueue";
+  import BookmarkPreviewImageChooser from "../BookmarkPreviewImageChooser.svelte";
+  import { currentRoute, settingsJson } from "../../../stores/stateStore";
+  import startImportTasks from "../../main/import/importQueue";
   import { tick } from "svelte";
   import {
     indexOfAlreadyExistingItem,
     saveVideoPreviewImage,
-  } from "../../utils";
+  } from "../../../utils";
   import {
     extractNameAndExtension,
     getItemTypeFromExtension,
-  } from "../../../src/gschert";
-  import { addToDeleteQueue } from "../main/delete/DeleteQueue";
+  } from "../../../../src/gschert";
+  import { addToDeleteQueue } from "../../main/delete/DeleteQueue";
 
   export let isChooseVideoThumbOpen = false;
   export let originalItem: SingleItem | undefined = undefined;

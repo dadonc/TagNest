@@ -1,11 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
-  import { getItemTypeFromExtension } from "../../../src/gschert";
-  import { currentRoute } from "../../stores/stateStore";
-  import { importItems } from "../../stores/items";
-  import createImportItems from "../main/import/createImportItems";
-  import { itemAlreadyExists } from "../../utils";
-  import startImportTasks from "../main/import/importQueue";
+  import { getItemTypeFromExtension } from "../../../../src/gschert";
+  import { currentRoute } from "../../../stores/stateStore";
+  import { importItems } from "../../../stores/items";
+  import createImportItems from "../../main/import/createImportItems";
+  import { itemAlreadyExists } from "../../../utils";
+  import startImportTasks from "../../main/import/importQueue";
 
   export let previewSrc: string = "";
   const dispatch = createEventDispatcher();

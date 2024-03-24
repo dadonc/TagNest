@@ -2,8 +2,8 @@
   import { type SingleItem } from "../../stores/items";
   import { currentRoute } from "../../stores/stateStore";
   import { formatTime, getVideoResolutionDescription } from "../../utils";
-  import ChooseVideoThumb from "../top/ChooseVideoThumb.svelte";
-  import CreateOrEdit from "../top/CreateOrEdit.svelte";
+  import ChooseVideoThumb from "../modals/ChooseVideoThumb.svelte";
+  import CreateOrEdit from "../modals/components/CreateOrEdit.svelte";
 
   export let item: SingleItem;
   export let close: () => void = () => {};
