@@ -7,7 +7,6 @@ export default function createImportItems(paths: string[]) {
       name: path.split("/").pop() ?? "",
       path,
       type: getItemTypeFromExtension(path.split(".").pop()),
-      getsCurrentlyImported: true,
       url: "",
       note: "",
       tagString: "",

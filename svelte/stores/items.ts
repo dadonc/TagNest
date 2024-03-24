@@ -14,7 +14,6 @@ export async function createItem({
   path,
   type,
   importStep,
-  getsCurrentlyImported = false,
 }: {
   name: string;
   url: string;
@@ -23,7 +22,6 @@ export async function createItem({
   path: string;
   type: string;
   importStep: number;
-  getsCurrentlyImported?: boolean;
 }) {
   // TODO get file creation date and size
 
@@ -33,7 +31,6 @@ export async function createItem({
       url,
       note,
       type,
-      getsCurrentlyImported,
       importStep,
     },
   });
@@ -135,7 +132,7 @@ export async function getItem(id: string) {
 export async function getItems() {
   const temp = await prisma.item.findMany({
     // where: {
-    //   getsCurrentlyImported: false,
+    //   importFinished: false,
     // },
     include: {
       file: true,
@@ -150,7 +147,7 @@ export async function getItems() {
     },
   });
   // TODO ask Chris - using "where" errors in for example RightEditSingle
-  const filtered = temp.filter((item) => !item.getsCurrentlyImported);
+  const filtered = temp.filter((item) => item.importFinished);
   // let test = filtered;
   // for (let i = 0; i < 10000; i++) {
   //   test = test.concat(filtered);
@@ -197,15 +194,28 @@ export async function deleteItem(id: string) {
 }
 
 export async function finishItemImport(id: string, importStep: number) {
+  // Display finished import for 5 seconds
   importItems.update((items) => {
-    return items.filter((item) => item.id !== id);
+    return items.map((item) => {
+      if (item.id !== id) {
+        return item;
+      }
+      return { ...item, importFinished: true };
+    });
   });
+  setTimeout(() => {
+    importItems.update((items) => {
+      return items.filter((item) => item.id !== id);
+    });
+  }, 5000);
+
+  // Update item in database
   return await prisma.item.update({
     where: {
       id,
     },
     data: {
-      getsCurrentlyImported: false,
+      importFinished: true,
       importStep,
     },
   });

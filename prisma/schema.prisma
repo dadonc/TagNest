@@ -11,22 +11,22 @@ datasource db {
 }
 
 model Item {
-  id                    String    @id @default(cuid())
-  name                  String?
-  url                   String?
-  note                  String?
-  getsCurrentlyImported Boolean   @default(false)
-  importStep            Int       @default(-1)
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-  countOpened           Int       @default(0)
-  file                  File?
-  tags                  Tag[]
-  type                  String // TODO:  "bookmark" | "image" | "video" | "pdf" | "external"| "noFile" | "audio" | "text";
-  bookmark              Bookmark?
-  video                 Video?
-  audio                 Audio?
-  text                  text?
+  id             String    @id @default(cuid())
+  name           String?
+  url            String?
+  note           String?
+  importFinished Boolean   @default(false)
+  importStep     Int       @default(-1)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  countOpened    Int       @default(0)
+  file           File?
+  tags           Tag[]
+  type           String // TODO:  "bookmark" | "image" | "video" | "pdf" | "external"| "noFile" | "audio" | "text";
+  bookmark       Bookmark?
+  video          Video?
+  audio          Audio?
+  text           text?
 }
 
 model File {

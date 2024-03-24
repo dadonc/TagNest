@@ -18,6 +18,7 @@
   // @ts-ignore
   const importStepsObject = importSteps[importItem.type];
   console.log(importItem.type, importStepsObject);
+  console.log(importItem);
 
   // TODO
   // this breaks with items not in importSteps, e.g. image, bookmark(?)
@@ -33,10 +34,10 @@
     {#if importItem.importStep === -1}
       <span class=""> not yet started </span>
     {/if}
-    {#if importItem.getsCurrentlyImported === false}
+    {#if importItem.importFinished}
       <span class=""> done </span>
     {/if}
-    {#if importItem.importStep !== -1 && importItem.importStep !== countSteps}
+    {#if importItem.importStep !== -1 && !importItem.importFinished}
       <span class="">
         <LoaderCircle />
       </span>

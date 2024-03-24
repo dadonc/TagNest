@@ -12,12 +12,11 @@ import {
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
 
-// step -1: import not started
+// TODO: step -1: import not started
 // step 0: runCombineBehavior
 // step 1: the first actual import step
 // step Object.keys(importSteps[importItem.type]).length is the last actual step
-// TODO: change to item.importFinished = true
-// when done item.getsCurrentlyImported is set to false
+// when done item.importFinished is set to true
 
 // todo: type this?
 export const importSteps = {
