@@ -59,8 +59,13 @@ orderBy:
 * Fix settings screen
 * Import list: better overview
 * List of keyboard shortcuts
+* add link to preferences to menu bar
+* automatically open import modal if no other items exist
+* test deletion of items
+* create and add icon for application
 
 ## Improvments
+* compare hash of files to check if they are the same
 * details top area: "home" button, back button
 * Make URL clickable in right sidebar
 * right sidebar - save on command + s

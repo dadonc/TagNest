@@ -1,12 +1,17 @@
 <!-- https://cssloaders.github.io/ -->
+<script lang="ts">
+  export let className = "h-4 w-4 text-orange-500";
+</script>
 
-<span class="loader" />
+<span class={"loader " + className} />
 
 <style>
   .loader {
-    width: 1rem;
+    /* width: 1rem;
     height: 1rem;
-    border: 5px solid #f97316; /* orange-500 */
+    border: 5px solid #f97316; */
+    /* orange-500 */
+    border: 2px solid;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;

@@ -15,7 +15,7 @@
     {#each $importItems as importItem (importItem.id)}
       <ImportProgressLine {importItem} />
     {/each}
-    <div class="flex justify-center mt-2">
+    <div class="flex justify-center mt-6">
       <button class="btn btn-primary" on:click={close}>Close</button>
     </div>
   </div>
