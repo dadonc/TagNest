@@ -8,7 +8,7 @@
   import DetailView from "./DetailView.svelte";
   import MainGrid from "./MainGrid.svelte";
   import MainList from "./MainList.svelte";
-  import ImportMultiple from "./import/ImportMultiple.svelte";
+  import ImportScreen from "./import/ImportScreen.svelte";
 
   export let items: SingleItem[];
 </script>
@@ -26,5 +26,5 @@
     {/if}
   {/each}
 {:else if $currentRoute === "importMultiple"}
-  <ImportMultiple />
+  <ImportScreen />
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { importItems } from "../../../stores/items";
-  import ImportItemLine from "./ImportItemLine.svelte";
+  import ImportItemLine from "./ImportScreenItemLine.svelte";
   import startImportTasks from "./importQueue";
   import { deselectItems, handleKeydownImportView } from "../../../utils";
 
