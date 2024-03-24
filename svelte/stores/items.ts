@@ -194,7 +194,6 @@ export async function deleteItem(id: string) {
 }
 
 export async function finishItemImport(id: string, importStep: number) {
-  // Display finished import for 5 seconds
   importItems.update((items) => {
     return items.map((item) => {
       if (item.id !== id) {
@@ -203,11 +202,6 @@ export async function finishItemImport(id: string, importStep: number) {
       return { ...item, importFinished: true };
     });
   });
-  setTimeout(() => {
-    importItems.update((items) => {
-      return items.filter((item) => item.id !== id);
-    });
-  }, 5000);
 
   // Update item in database
   return await prisma.item.update({

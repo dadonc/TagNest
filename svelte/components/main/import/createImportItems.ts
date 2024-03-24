@@ -10,7 +10,7 @@ export default function createImportItems(paths: string[]) {
       url: "",
       note: "",
       tagString: "",
-      importStep: 0,
+      importStep: -1,
     };
   });
   return Promise.all(items.map(async (item) => await createItem(item)));

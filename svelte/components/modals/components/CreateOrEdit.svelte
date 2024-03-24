@@ -90,7 +90,7 @@
         type: itemType
           ? itemType
           : getItemTypeFromExtension(path.split(".").pop()),
-        importStep: 0,
+        importStep: -1,
       });
       if (newItem) {
         $importItems = [...$importItems, newItem];
@@ -105,7 +105,7 @@
     if (existingItem) {
       $importItems = $importItems.map((i) => {
         if (existingItem && i.id === existingItem.id) {
-          return { ...i, importStep: 0 };
+          return { ...i, importStep: -1 };
         }
         return i;
       });

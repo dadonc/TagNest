@@ -12,7 +12,7 @@ import {
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
 
-// TODO: step -1: import not started
+// step -1: import not started
 // step 0: runCombineBehavior
 // step 1: the first actual import step
 // step Object.keys(importSteps[importItem.type]).length is the last actual step
@@ -114,10 +114,10 @@ export const importSteps = {
     2: {
       func: async (item: SingleItem) => {
         await new Promise((resolve) => {
-          setTimeout(resolve, 100000);
+          setTimeout(resolve, 10000);
         });
       },
-      desc: "Wait 100s",
+      desc: "Wait 10s",
     },
   },
   pdf: {
@@ -145,8 +145,7 @@ export default async function startImportTasks() {
         ? //@ts-ignore
           Object.keys(importSteps[item.type]).length
         : 0;
-      const correctStep =
-        item.importStep !== -1 && item.importStep <= stepCount;
+      const correctStep = !item.importFinished && item.importStep <= stepCount;
       const wasUpdatedRecently = item.lastImportStepUpdate
         ? item.lastImportStepUpdate < Date.now() - 5 * 60 * 1000
         : false;
@@ -159,6 +158,7 @@ export default async function startImportTasks() {
 
   async function startTasks() {
     queue = fillQueue();
+
     if (queue.length === 0) {
       isRunning = false;
       return;
@@ -182,7 +182,12 @@ export default async function startImportTasks() {
       isRunning = false;
       if (wasRunning) {
         wasRunning = false;
-        refreshDisplayedItems("finishedItemsImport");
+        setTimeout(() => {
+          importItems.update((items) => {
+            return items.filter((item) => !item.importFinished);
+          });
+          refreshDisplayedItems("finishedItemsImport");
+        }, 2000);
       }
       if (get(currentRoute) === "importMultiple") {
         currentRoute.set("main");
@@ -201,7 +206,8 @@ export default async function startImportTasks() {
     // TODO ask Chris - why is this check needed
     if (item) {
       currentTasks++;
-      if (item.importStep === 0) {
+      if (item.importStep === -1) {
+        item.importStep = 0;
         item = await runCombineBehavior(item);
       }
       for (let i = item.importStep; i <= stepCount; i++) {
@@ -211,7 +217,9 @@ export default async function startImportTasks() {
           //@ts-ignore
           await importSteps[item.type][item.importStep].func(item);
         }
-        console.log(`finished step ${i}/${stepCount} of ${item.name}`);
+        console.log(
+          `finished step ${item.importStep}/${stepCount} of ${item.name}`
+        );
         importItems.update((items) => {
           const index = items.findIndex((i) => i.id === item.id);
           items[index].importStep++;

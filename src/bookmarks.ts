@@ -33,6 +33,7 @@ export async function createItemWithBookmark({
         name: title,
         url,
         type: "bookmark",
+        importFinished: true,
         file: {
           create: {
             path: mhtmlPath,
