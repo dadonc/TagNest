@@ -10,6 +10,7 @@ import { getSettingsJson, updateSettingsJson } from "./utils";
 import { isDev } from "./main";
 import { log as electronLog } from "electron-log";
 
+// TODO is this even used?
 let latestMigration = "20230530085736_changed_type";
 
 const log = (...args: any[]) => {

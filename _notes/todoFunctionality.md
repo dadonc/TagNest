@@ -1,12 +1,11 @@
 # TODO/Timeline
 
 orderBy:
-* update fileSize, dateUpdated on text item change and on hover of external files (if changed, update updatedAt) -> make action queue on startup?
+* update fileSize, dateUpdated on text item change and on hover of external files (if changed, update updatedAt) 
 * order by date created of file
-* keep updatedAt for files in sync
+* keep updatedAt for files in sync -> make action queue on startup?
 * does updatedAt of items get updated after tags are changed?
-
-increase countOpened when opening external file or external link
+* increase countOpened when opening external file or external link
 
 ## Bugs
 
