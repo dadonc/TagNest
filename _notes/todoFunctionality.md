@@ -10,7 +10,7 @@
 
 * colors video: bg hover time (light), bg progressbar (dark)
 
-
+* tag group styling - change inset of children compared to parent tag
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
 
@@ -57,10 +57,8 @@ context menu: reset countOpened, delete item, open in default application, open 
     * right sidebar - save on command + s
     * toggle right sidebar on shift+cmd+b
 * automatically open import modal if no other items exist
-* create and add icon for application
 
 ## Improvments
-* create about window
 * Make URL clickable in right sidebar
 * compare hash of files to check if they are the same
 * details top area: "home" button, back button
@@ -75,6 +73,8 @@ context menu: reset countOpened, delete item, open in default application, open 
 * option in settings: rename files if item gets renamed
 * if item groups work make a toggle to automatically group files if they are in a folder when importing
 * item groups
+* electron security warnings
+* update deps
 
 
 
@@ -82,9 +82,11 @@ context menu: reset countOpened, delete item, open in default application, open 
 
 Probably out of scope:
 * Search
-* Import view - better overview, indicator
 * autogenerate type tags
 * undo/redo
+* item groups
+* update functionality
+* tag order
 
 * transcode videos to a supported format ( e.g. :"m4v","mov","avi" into "mp4" or "webm" )
 * item groups

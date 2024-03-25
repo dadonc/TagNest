@@ -23,6 +23,7 @@ const createWindow = async () => {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       webSecurity: isDev ? false : true,
+      // nodeIntegration: false,
     },
     titleBarStyle: "hidden",
     trafficLightPosition: {
@@ -58,7 +59,7 @@ function createMenu() {
           {
             label: app.name,
             submenu: [
-              { role: "about" },
+              { label: "About", click: createAboutWindow },
               { type: "separator" },
               {
                 label: "Preferences...",
@@ -93,6 +94,25 @@ function createMenu() {
 
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+}
+
+function createAboutWindow() {
+  const aboutWindow = new BrowserWindow({
+    width: 300,
+    height: 300,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+    },
+  });
+
+  let aboutPath: string;
+  if (isDev) {
+    aboutPath = path.join(__dirname, "..", "..", "src", "about.html");
+  } else {
+    aboutPath = path.join(process.resourcesPath, "app/src/about.html");
+  }
+  aboutWindow.loadFile(aboutPath);
 }
 
 // This method will be called when Electron has finished
