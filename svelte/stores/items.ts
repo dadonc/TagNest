@@ -127,7 +127,7 @@ export async function getItem(id: string) {
   });
 }
 
-export async function getItems() {
+export async function getItems(args?: { includeUnfinished: boolean }) {
   const temp = await prisma.item.findMany({
     // where: {
     //   importFinished: false,
@@ -145,6 +145,7 @@ export async function getItems() {
     },
   });
   // TODO ask Chris - using "where" errors in for example RightEditSingle
+  if (args && args.includeUnfinished) return temp;
   const filtered = temp.filter((item) => item.importFinished);
   // let test = filtered;
   // for (let i = 0; i < 10000; i++) {

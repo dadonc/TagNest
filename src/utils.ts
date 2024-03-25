@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import util from "util";
 import type { SettingsJson } from "./gschert";
+import { getPrismaClient } from "./prisma";
 
 // @ts-ignore
 const resourcesPath = process.resourcesPath;
@@ -122,4 +123,80 @@ export async function getFaviconPath(faviconName: string) {
     fs.mkdirSync(path.join(bookmarksPath, "favicons"));
   }
   return path.join(bookmarksPath, "favicons", faviconName);
+}
+
+export function getFileDatesAndSize(
+  filePath: string
+): Promise<{ updated: Date; size: number; created: Date }> {
+  return new Promise((resolve, reject) => {
+    fs.stat(filePath, (err, stats) => {
+      if (err) reject(err);
+      resolve({
+        updated: stats.mtime,
+        size: stats.size,
+        created: stats.birthtime,
+      });
+    });
+  });
+}
+
+export async function updateItemsBasedOnFiles() {
+  const prisma = await getPrismaClient();
+  const items = await prisma.item.findMany({
+    include: {
+      file: true,
+      text: true,
+    },
+  });
+  for (const item of items) {
+    updateItemBasedOnFile(item);
+  }
+}
+
+export async function updateItemBasedOnFile(item: any) {
+  const prisma = await getPrismaClient();
+  if (item.file) {
+    const { updated, size, created } = await getFileDatesAndSize(
+      item.file.path
+    );
+    const hasChanged =
+      item.file.updated !== updated ||
+      item.file.size !== size ||
+      item.file.created !== created;
+    if (hasChanged) {
+      const updatedToUse =
+        item.file.updated > updated ? item.file.updated : updated;
+      const createdToUse =
+        item.file.created < created ? item.file.created : created;
+      await prisma.file.update({
+        where: {
+          id: item.file.id,
+        },
+        data: {
+          updated: new Date(updatedToUse),
+          size,
+          created: new Date(createdToUse),
+        },
+      });
+    }
+  }
+
+  if (item.type === "text" && item.file) {
+    const text = fs.readFileSync(item.file.path).toString();
+    const textPreview = text.slice(0, 100);
+    const hasChanged =
+      item.text?.preview !== textPreview ||
+      item.text?.words !== Math.round(text.length / 5);
+    if (hasChanged) {
+      await prisma.text.update({
+        where: {
+          itemId: item.id,
+        },
+        data: {
+          preview: textPreview,
+          words: Math.round(text.length / 5),
+        },
+      });
+    }
+  }
 }

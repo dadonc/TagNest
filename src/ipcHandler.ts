@@ -13,6 +13,7 @@ import { IMAGE_EXTENSIONS, getItemTypeFromExtension } from "./gschert";
 import { extractBookmarkImages, saveImageFromString } from "./bookmarks";
 import {
   downloadImageFromUrl,
+  getFileDatesAndSize,
   getSettingsJson,
   updateSettingsJson,
 } from "./utils";
@@ -258,15 +259,6 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   });
 
   ipcMain.handle("getFileDatesAndSize", async (event, filePath) => {
-    return new Promise((resolve, reject) => {
-      fs.stat(filePath, (err, stats) => {
-        if (err) reject(err);
-        resolve({
-          updated: stats.mtime,
-          size: stats.size,
-          created: stats.birthtime,
-        });
-      });
-    });
+    return getFileDatesAndSize(filePath);
   });
 }

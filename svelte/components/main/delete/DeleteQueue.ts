@@ -5,6 +5,7 @@ import {
   deleteItemsStore,
   refreshDisplayedItems,
   items,
+  getItems,
 } from "../../../stores/items";
 import { settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
@@ -128,7 +129,7 @@ export async function startDeleteTasks() {
 
 export async function addToDeleteQueue(ids: string[]) {
   const $deleteItems = get(deleteItemsStore);
-  const $items = get(items);
+  const $items = await getItems({ includeUnfinished: true });
   const itemsToDelete = $items.filter((item) => ids.includes(item.id));
   itemsToDelete.forEach((item) => {
     if (!$deleteItems.some((deleteItem) => deleteItem.id === item.id)) {

@@ -220,12 +220,16 @@ export default async function startImportTasks() {
         console.log(
           `finished step ${item.importStep}/${stepCount} of ${item.name}`
         );
-        importItems.update((items) => {
-          const index = items.findIndex((i) => i.id === item.id);
-          items[index].importStep++;
-          items[index].lastImportStepUpdate = Date.now();
-          return items;
-        });
+        try {
+          importItems.update((items) => {
+            const index = items.findIndex((i) => i.id === item.id);
+            items[index].importStep++;
+            items[index].lastImportStepUpdate = Date.now();
+            return items;
+          });
+        } catch (err) {
+          console.log("Item import was aborted.");
+        }
       }
       await finishItemImport(item.id, stepCount);
       currentTasks--;
