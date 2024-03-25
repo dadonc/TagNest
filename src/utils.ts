@@ -2,6 +2,7 @@ import https from "https";
 import path from "path";
 import fs from "fs";
 import util from "util";
+import { app, nativeImage } from "electron";
 import type { SettingsJson } from "./gschert";
 import { getPrismaClient } from "./prisma";
 
@@ -140,6 +141,30 @@ export function getFileDatesAndSize(
   });
 }
 
+export async function saveFilePreview(filePath: string) {
+  const folderPath = path.join((await getSettingsJson()).savePath, "icons");
+  if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
+
+  const filePreviewPath = path.join(
+    folderPath,
+    path.basename(filePath) + ".png"
+  );
+  const filePreview = await nativeImage.createThumbnailFromPath(filePath, {
+    width: 256,
+    height: 256,
+  });
+  fs.writeFileSync(filePreviewPath, filePreview.toPNG());
+
+  const iconPath = path.join(folderPath, filePath.split(".").pop() + ".png");
+  if (!fs.existsSync(iconPath)) {
+    return app.getFileIcon(filePath, { size: "normal" }).then((icon) => {
+      console.log(icon.getSize());
+      fs.writeFileSync(iconPath, icon.toPNG());
+    });
+  }
+  return;
+}
+
 export async function updateItemsBasedOnFiles(ids?: string[]) {
   const prisma = await getPrismaClient();
   let items;
@@ -214,5 +239,8 @@ export async function updateItemBasedOnFile(item: any) {
       });
     }
   }
-  // TODO recreate previews of external items and pdfs
+  // Recreate file previews - this is necessary for external files if they were changed outside of the app
+  if (item.type === "external" || item.type === "pdf") {
+    saveFilePreview(item.file.path);
+  }
 }

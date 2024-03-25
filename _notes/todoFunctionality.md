@@ -1,6 +1,6 @@
 # TODO/Timeline
 
-TODO recreate previews of external items and pdfs
+replace writeFileSync with write to avoid blocking the main thread
 
 ## Bugs
 * hovering over PDF preview changes layout
