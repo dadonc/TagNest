@@ -1,6 +1,7 @@
 import https from "https";
 import path from "path";
 import fs from "fs";
+import { promises as fsPromises } from "fs";
 import util from "util";
 import { app, nativeImage } from "electron";
 import type { SettingsJson } from "./gschert";
@@ -142,8 +143,15 @@ export function getFileDatesAndSize(
 }
 
 export async function saveFilePreview(filePath: string) {
-  const folderPath = path.join((await getSettingsJson()).savePath, "icons");
-  if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
+  // Assume getSettingsJson is an async function you've defined elsewhere
+  const settings = await getSettingsJson();
+  const folderPath = path.join(settings.savePath, "icons");
+
+  try {
+    await fsPromises.access(folderPath);
+  } catch {
+    await fsPromises.mkdir(folderPath, { recursive: true });
+  }
 
   const filePreviewPath = path.join(
     folderPath,
@@ -153,16 +161,17 @@ export async function saveFilePreview(filePath: string) {
     width: 256,
     height: 256,
   });
-  fs.writeFileSync(filePreviewPath, filePreview.toPNG());
+  await fsPromises.writeFile(filePreviewPath, filePreview.toPNG());
 
-  const iconPath = path.join(folderPath, filePath.split(".").pop() + ".png");
-  if (!fs.existsSync(iconPath)) {
-    return app.getFileIcon(filePath, { size: "normal" }).then((icon) => {
-      console.log(icon.getSize());
-      fs.writeFileSync(iconPath, icon.toPNG());
-    });
+  const iconFileName = filePath.split(".").pop() + ".png";
+  const iconPath = path.join(folderPath, iconFileName);
+
+  try {
+    return await fsPromises.access(iconPath);
+  } catch {
+    const icon = await app.getFileIcon(filePath, { size: "normal" });
+    return await fsPromises.writeFile(iconPath, icon.toPNG());
   }
-  return;
 }
 
 export async function updateItemsBasedOnFiles(ids?: string[]) {
@@ -241,6 +250,6 @@ export async function updateItemBasedOnFile(item: any) {
   }
   // Recreate file previews - this is necessary for external files if they were changed outside of the app
   if (item.type === "external" || item.type === "pdf") {
-    saveFilePreview(item.file.path);
+    return await saveFilePreview(item.file.path);
   }
 }

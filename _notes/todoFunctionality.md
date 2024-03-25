@@ -1,6 +1,5 @@
 # TODO/Timeline
 
-replace writeFileSync with write to avoid blocking the main thread
 
 ## Bugs
 * hovering over PDF preview changes layout
@@ -51,22 +50,20 @@ context menu: reset countOpened, delete item, open in default application, open 
 ## Other TODO
 * Intro wizard
     * choose save location
-    * copy or link files
+    * copy, move or link files
     * fill with example data?
 * Fix settings screen
-* Import list: better overview
 * List of keyboard shortcuts
 * add link to preferences to menu bar
 * automatically open import modal if no other items exist
-* test deletion of items
 * create and add icon for application
 
 ## Improvments
-* compare hash of files to check if they are the same
-* details top area: "home" button, back button
 * Make URL clickable in right sidebar
 * right sidebar - save on command + s
 * toggle right sidebar on shift+cmd+b
+* compare hash of files to check if they are the same
+* details top area: "home" button, back button
 * list of keyboard shortcuts
 * main grid: select multiple items using the keyboard
 * detailview bottom bar: support up and down arrows
@@ -76,22 +73,8 @@ context menu: reset countOpened, delete item, open in default application, open 
 * item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
 * option in settings: rename files if item gets renamed
 * if item groups work make a toggle to automatically group files if they are in a folder when importing
+* item groups
 
-
-## Initial plan 
-* Initial literature review and assessments for this module
-* cleanup and refactor codebase
-* support different item types: pdf, groups, audio, text, other
-* rewrite chrome extension
-* top area: quicksettings, home and back buttons
-* settings view
-* user highlights: video timestamps, highlights in bookmarks
-* item order
-* bugs
-* styling
-* interviews
-    * landing page for user evaluation
-* handle existing files, make paths relative
 
 
 
@@ -102,21 +85,16 @@ Probably out of scope:
 * autogenerate type tags
 * undo/redo
 
-
-
 * transcode videos to a supported format ( e.g. :"m4v","mov","avi" into "mp4" or "webm" )
 * item groups
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview
 
-* right click on an item opens a context menu: edit item, show file in finder, open in default application, open in browser, delete item
+
 
 * main top area: quick settings, order, home button, back button
 * fix/limit settings view
-* tag input bug
 * Handle already existing files
 * Make paths relative
-* Item order
-* Import - better overview, indicator
 * Chrome extension
 
 
