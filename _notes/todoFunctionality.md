@@ -54,14 +54,14 @@ context menu: reset countOpened, delete item, open in default application, open 
     * fill with example data?
 * Fix settings screen
 * List of keyboard shortcuts
+    * right sidebar - save on command + s
+    * toggle right sidebar on shift+cmd+b
 * add link to preferences to menu bar
 * automatically open import modal if no other items exist
 * create and add icon for application
 
 ## Improvments
 * Make URL clickable in right sidebar
-* right sidebar - save on command + s
-* toggle right sidebar on shift+cmd+b
 * compare hash of files to check if they are the same
 * details top area: "home" button, back button
 * list of keyboard shortcuts
@@ -71,6 +71,7 @@ context menu: reset countOpened, delete item, open in default application, open 
 * ellipsis for text in long filenames in item preview
 * url symbol for all previews
 * item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
+* action queue for recreating video previews
 * option in settings: rename files if item gets renamed
 * if item groups work make a toggle to automatically group files if they are in a folder when importing
 * item groups

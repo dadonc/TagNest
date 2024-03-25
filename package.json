@@ -1,12 +1,12 @@
 {
-  "name": "hbr",
-  "productName": "Hobby Research Base",
+  "name": "tagnest",
+  "productName": "TagNest",
   "version": "1.0.0",
-  "description": "HBR - taggy tag tag",
+  "description": "TagNest - taggy tag tag",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package",
+    "package": "npx prisma generate && electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "tsc --noEmit && svelte-check --tsconfig ./tsconfig.json"

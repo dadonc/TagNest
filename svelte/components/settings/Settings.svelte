@@ -127,5 +127,23 @@
         >
       </div>
     {/if}
+    <h2 class="mt-6 text-xl font-bold">Attribution</h2>
+    <ul class="list-disc">
+      <li class="ml-6">
+        <a
+          target="_blank"
+          class="text-primary"
+          href="https://www.flaticon.com/free-icons/nest"
+          title="nest icons">Nest icon created by Freepik - Flaticon</a
+        >
+      </li>
+      <li class="ml-6">
+        Other icons from <a
+          class="text-primary"
+          target="_blank"
+          href="https://feathericons.com/">Feather</a
+        >
+      </li>
+    </ul>
   </div>
 </div>

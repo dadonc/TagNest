@@ -11,7 +11,7 @@ import { isDev } from "./main";
 import { log as electronLog } from "electron-log";
 
 // TODO is this even used?
-let latestMigration = "20230530085736_changed_type";
+let latestMigration = "20240324092212_import_finished";
 
 const log = (...args: any[]) => {
   if (isDev) {

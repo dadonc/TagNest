@@ -3,6 +3,7 @@ import path from "path";
 import ipcHandler from "./ipcHandler";
 import startServer from "./server";
 import { updateItemsBasedOnFiles } from "./utils";
+import { getPrismaClient } from "./prisma";
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
@@ -14,7 +15,7 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
-const createWindow = () => {
+const createWindow = async () => {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -28,6 +29,8 @@ const createWindow = () => {
       y: 16,
     },
   });
+
+  await getPrismaClient(); // make sure the database is ready, otherwise the packaged app doesn't work on first start
 
   if (isDev) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
