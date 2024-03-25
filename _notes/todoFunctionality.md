@@ -1,9 +1,6 @@
 # TODO/Timeline
 
-  // TODO recreate previews of external items and pdfs
-
-  countOpened gets increased on text save
-
+TODO recreate previews of external items and pdfs
 
 ## Bugs
 * hovering over PDF preview changes layout

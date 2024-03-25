@@ -239,7 +239,10 @@ async function replaceItemInStore(itemId: string) {
   });
 }
 
+export let lastOpenedID: string | null = null;
 export async function increaseCountOpened(item: SingleItem) {
+  if (item.id === lastOpenedID) return; // prevent double counting when saving a text change in a text item detail view
+  lastOpenedID = item.id;
   console.log(
     "increasing count opened for",
     item.name,
