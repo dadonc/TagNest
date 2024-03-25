@@ -15,6 +15,7 @@ import {
   downloadImageFromUrl,
   getFileDatesAndSize,
   getSettingsJson,
+  updateItemsBasedOnFiles,
   updateSettingsJson,
 } from "./utils";
 import { getPrismaClient } from "./prisma";
@@ -260,5 +261,9 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
 
   ipcMain.handle("getFileDatesAndSize", async (event, filePath) => {
     return getFileDatesAndSize(filePath);
+  });
+
+  ipcMain.handle("updateItemsBasedOnFiles", async (event, ids) => {
+    return await updateItemsBasedOnFiles(ids);
   });
 }

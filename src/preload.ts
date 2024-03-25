@@ -65,6 +65,7 @@ export type ExposedInMainWorld = {
   getFileDatesAndSize: (
     path: string
   ) => Promise<{ size: number; updated: number; created: number }>;
+  updateItemsBasedOnFiles: (ids: string[]) => Promise<void>;
 };
 
 const api: ExposedInMainWorld = {
@@ -120,6 +121,9 @@ const api: ExposedInMainWorld = {
 
   getFileDatesAndSize: (path) =>
     ipcRenderer.invoke("getFileDatesAndSize", path),
+
+  updateItemsBasedOnFiles: (ids) =>
+    ipcRenderer.invoke("updateItemsBasedOnFiles", ids),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

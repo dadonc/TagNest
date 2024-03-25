@@ -64,26 +64,6 @@ async function getFileIdByPath(path: string) {
 }
 
 export async function updateItem(item: SingleItem, tagString: string) {
-  // let fileId;
-  // if (item.file) {
-  //   fileId = await getFileIdByPath(item.file.path);
-  //   if (!fileId) {
-  //     fileId = await prisma.file.create({
-  //       data: {
-  //         path: item.file.path,
-  //       },
-  //     });
-  //   }
-  // }
-  // let fileConnect = fileId
-  //   ? {
-  //       file: {
-  //         connect: {
-  //           id: fileId?.id,
-  //         },
-  //       },
-  //     }
-  //   : {};
   prisma.item.update({
     where: {
       id: item.id,
@@ -94,7 +74,6 @@ export async function updateItem(item: SingleItem, tagString: string) {
       note: item.note,
       type: item.type,
       importStep: item.importStep,
-      // ...fileConnect,
     },
   });
   return updateItemTags(item, tagString);
@@ -202,7 +181,6 @@ export async function finishItemImport(id: string, importStep: number) {
     });
   });
 
-  // Update item in database
   return await prisma.item.update({
     where: {
       id,
@@ -244,15 +222,7 @@ export async function updateFilePath(itemId: string, newPath: string) {
 }
 
 export async function updateTextInfos(item: SingleItem, text: string) {
-  await prisma.text.update({
-    where: {
-      itemId: item.id,
-    },
-    data: {
-      preview: text.slice(0, 100),
-      words: Math.round(text.length / 5),
-    },
-  });
+  await window.electron.updateItemsBasedOnFiles([item.id]);
   replaceItemInStore(item.id);
 }
 

@@ -140,16 +140,31 @@ export function getFileDatesAndSize(
   });
 }
 
-export async function updateItemsBasedOnFiles() {
+export async function updateItemsBasedOnFiles(ids?: string[]) {
   const prisma = await getPrismaClient();
-  const items = await prisma.item.findMany({
-    include: {
-      file: true,
-      text: true,
-    },
-  });
+  let items;
+  if (ids) {
+    items = await prisma.item.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+      include: {
+        file: true,
+        text: true,
+      },
+    });
+  } else {
+    items = await prisma.item.findMany({
+      include: {
+        file: true,
+        text: true,
+      },
+    });
+  }
   for (const item of items) {
-    updateItemBasedOnFile(item);
+    await updateItemBasedOnFile(item);
   }
 }
 
@@ -199,4 +214,5 @@ export async function updateItemBasedOnFile(item: any) {
       });
     }
   }
+  // TODO recreate previews of external items and pdfs
 }

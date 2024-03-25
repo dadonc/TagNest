@@ -1,10 +1,9 @@
 # TODO/Timeline
 
-Then:
-orderBy:
-* update fileSize, dateUpdated on text item change and on hover of external files (if changed, update updatedAt) 
+  // TODO recreate previews of external items and pdfs
 
-* make queue in electron code to update items in the database based on the files in the filesystem
+  countOpened gets increased on text save
+
 
 ## Bugs
 * hovering over PDF preview changes layout
@@ -32,7 +31,7 @@ orderBy:
     o	(Re)write chrome extension
     o	Context menu, deletion modal
     o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar
-    o	Item order: file size, date added, date updated, name, countOpenings
+    o	✅ Item order: file size, date added, date updated, name, countOpenings
 •	Polishing the application (01.07.24)
     o	Fixes and improvements
     o	Improve styling
