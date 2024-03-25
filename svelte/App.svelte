@@ -32,6 +32,10 @@
     startDeleteTasks();
     data = await $filteredData;
     isDataAvailable = true;
+
+    window.electron.onOpenSettings(() => {
+      $currentRoute = "settings";
+    });
   });
 
   let isDevToolsOpen = false;

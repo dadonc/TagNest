@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut } from "electron";
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from "electron";
 import path from "path";
 import ipcHandler from "./ipcHandler";
 import startServer from "./server";
@@ -15,8 +15,9 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
+let mainWindow: BrowserWindow;
 const createWindow = async () => {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
@@ -48,10 +49,59 @@ const createWindow = async () => {
   updateItemsBasedOnFiles();
 };
 
+function createMenu() {
+  const isMac = process.platform === "darwin";
+
+  const template: (MenuItemConstructorOptions | Electron.MenuItem)[] = [
+    ...(isMac
+      ? [
+          {
+            label: app.name,
+            submenu: [
+              { role: "about" },
+              { type: "separator" },
+              {
+                label: "Preferences...",
+                accelerator: "CommandOrControl+,",
+                click: () => {
+                  console.log("Opening preferences...");
+                  // Logic to open the preferences window
+                  mainWindow.webContents.send("openSettings");
+                },
+              },
+              { type: "separator" },
+              { role: "services" },
+              { type: "separator" },
+              { role: "hide" },
+              { role: "hideOthers" },
+              { role: "unhide" },
+              { type: "separator" },
+              { role: "quit" },
+            ] as MenuItemConstructorOptions[],
+          },
+        ]
+      : []),
+  ];
+  const originalMenu = Menu.getApplicationMenu();
+  if (originalMenu) {
+    originalMenu.items.forEach((item) => {
+      if (item.label !== app.name) {
+        template.push(item);
+      }
+    });
+  }
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", () => {
+  createWindow();
+  createMenu();
+});
 
 app.on("window-all-closed", () => {
   app.quit();
