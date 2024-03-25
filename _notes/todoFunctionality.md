@@ -1,18 +1,20 @@
 # TODO/Timeline
 
+Then:
 orderBy:
 * update fileSize, dateUpdated on text item change and on hover of external files (if changed, update updatedAt) 
 * order by date created of file
 * keep updatedAt for files in sync -> make action queue on startup?
 * does updatedAt of items get updated after tags are changed?
 * increase countOpened when opening external file or external link
+* make queue in electron code to update items in the database based on the files in the filesystem
 
 ## Bugs
+* hovering over PDF preview changes layout
 * right sidebar 
     - decrease preview size
     - preview external files and pdfs
     
-* hovering over PDF preview changes layout
 
 * colors video: bg hover time (light), bg progressbar (dark)
 
@@ -78,6 +80,7 @@ orderBy:
 * url symbol for all previews
 * item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
 * option in settings: rename files if item gets renamed
+* if item groups work make a toggle to automatically group files if they are in a folder when importing
 
 
 ## Initial plan 

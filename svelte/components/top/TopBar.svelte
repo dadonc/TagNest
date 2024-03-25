@@ -22,12 +22,14 @@
     showAddModal = true;
   });
 
-  let initialImportItems = $importItems.length;
-  $: {
-    if ($importItems.length > initialImportItems) {
-      initialImportItems = $importItems.length;
-    }
-  }
+  $: countImportFinished =
+    $importItems.filter((i) => i.importFinished).length + 1;
+  $: countImportTotal = $importItems.length;
+
+  $: importedCountDisplay =
+    countImportFinished > countImportTotal
+      ? countImportTotal
+      : countImportFinished;
 </script>
 
 <div class="flex items-center justify-between h-full">
@@ -60,11 +62,9 @@
           on:click={() => (isImportProgressModalOpen = true)}
           class="ml-1 mr-4 font-bold"
         >
-          Importing: {initialImportItems -
-            $importItems.length +
-            1}/{initialImportItems}
+          Importing: {importedCountDisplay}/{$importItems.length}
         </button>
-        <ImportProgressModal isOpen={isImportProgressModalOpen} />
+        <ImportProgressModal bind:isOpen={isImportProgressModalOpen} />
       {/if}
     </span>
     <button
