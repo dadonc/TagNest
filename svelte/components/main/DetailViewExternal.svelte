@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SingleItem } from "../../stores/items";
+  import { increaseCountOpened, type SingleItem } from "../../stores/items";
   import { settingsJson } from "../../stores/stateStore";
   export let item: SingleItem;
 
@@ -19,6 +19,7 @@
       class="mb-2 btn btn-primary"
       on:click={() => {
         window.electron.openFileInDefaultApp(item.file?.path ?? "");
+        increaseCountOpened(item);
       }}>Open in default application</button
     >
   </div>

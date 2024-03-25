@@ -1,6 +1,6 @@
 <script lang="ts">
   import Link from "../../assets/feather/Link.svelte";
-  import type { SingleItem } from "../../stores/items";
+  import { increaseCountOpened, type SingleItem } from "../../stores/items";
   import PreviewTypeInfo from "./gschert/PreviewTypeInfo.svelte";
 
   export let item: SingleItem;
@@ -19,6 +19,7 @@
   {#if item.url}
     <a
       target="_blank"
+      on:click={() => increaseCountOpened(item)}
       href={item.url}
       class="absolute w-6 h-6 p-1 bg-base-100 text-primary bottom-2 right-2 hoverDisplay"
     >

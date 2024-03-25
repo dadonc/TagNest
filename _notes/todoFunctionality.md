@@ -3,10 +3,7 @@
 Then:
 orderBy:
 * update fileSize, dateUpdated on text item change and on hover of external files (if changed, update updatedAt) 
-* order by date created of file
-* keep updatedAt for files in sync -> make action queue on startup?
-* does updatedAt of items get updated after tags are changed?
-* increase countOpened when opening external file or external link
+
 * make queue in electron code to update items in the database based on the files in the filesystem
 
 ## Bugs
@@ -52,6 +49,8 @@ orderBy:
     o	Creating a poster and video of the application
     o	More literature and existing application research
     o	Finalizing the thesis
+
+context menu: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, untoggle tags, (group items, ungroup items)
 
 ## Other TODO
 * Intro wizard

@@ -13,5 +13,6 @@ Plan for the next two weeks:
 ## Report 2
 The last two weeks I have
 * Added support for video files: the preview in the grid shows a thumbnail and on hover a videopreview of the video gets played. The detail view shows the video and allows the user to play it. Both views display a preview image if a user hovers over the seekbar which shows the frame at the currently hovered position in the video (comparable to YouTube).
-* Fixed some bugs: deletion of items in the DetailView, space preview, and others.
+* Added an "ImportProgressModal" which shows a list of all the files in the import queue and those which are currently getting imported (generating the preview of long videos can take some time)
+* Fixed some bugs, e.g., deletion of items in the DetailView, space preview, and others.
 

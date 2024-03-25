@@ -1,6 +1,6 @@
 <script lang="ts">
   import { extractNameAndExtension } from "../../../src/gschert";
-  import type { SingleItem } from "../../stores/items";
+  import { increaseCountOpened, type SingleItem } from "../../stores/items";
   import { settingsJson } from "../../stores/stateStore";
   import PreviewName from "./gschert/PreviewName.svelte";
   import PreviewTypeInfo from "./gschert/PreviewTypeInfo.svelte";
@@ -28,7 +28,10 @@
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   on:dblclick={() => {
-    if (item.file?.path) window.electron.openFileInDefaultApp(item.file?.path);
+    if (item.file?.path) {
+      window.electron.openFileInDefaultApp(item.file.path);
+      increaseCountOpened(item);
+    }
   }}
 >
   <div

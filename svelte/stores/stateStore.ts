@@ -149,24 +149,42 @@ export const filteredData = derived(
             return -1;
           }
         } else if ($currView.orderBy === "createdAt") {
-          if (a.createdAt < b.createdAt) {
+          // get older date from file or item
+          const a_olderCreatedAt =
+            a.file && a.file.created < a.createdAt
+              ? a.file.created
+              : a.createdAt;
+          const b_olderCreatedAt =
+            b.file && b.file.created < b.createdAt
+              ? b.file.created
+              : b.createdAt;
+          if (a_olderCreatedAt < b_olderCreatedAt) {
             if ($currView.orderDirection === "asc") {
               return -1;
             }
             return 1;
-          } else if (a.createdAt > b.createdAt) {
+          } else if (a_olderCreatedAt > b_olderCreatedAt) {
             if ($currView.orderDirection === "asc") {
               return 1;
             }
             return -1;
           }
         } else if ($currView.orderBy === "updatedAt") {
-          if (a.updatedAt < b.updatedAt) {
+          // get newer date from file or item
+          const a_newerUpdatedAt =
+            a.file && a.file.updated > a.updatedAt
+              ? a.file.updated
+              : a.updatedAt;
+          const b_newerUpdatedAt =
+            b.file && b.file.updated > b.updatedAt
+              ? b.file.updated
+              : b.updatedAt;
+          if (a_newerUpdatedAt < b_newerUpdatedAt) {
             if ($currView.orderDirection === "asc") {
               return -1;
             }
             return 1;
-          } else if (a.updatedAt > b.updatedAt) {
+          } else if (a_newerUpdatedAt > b_newerUpdatedAt) {
             if ($currView.orderDirection === "asc") {
               return 1;
             }

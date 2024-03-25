@@ -23,8 +23,6 @@ export async function createItem({
   type: string;
   importStep: number;
 }) {
-  // TODO get file creation date and size
-
   const newItem = await prisma.item.create({
     data: {
       name,
