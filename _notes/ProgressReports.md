@@ -17,3 +17,6 @@ The last two weeks I have
 * Users can now order the items by either file size, date added, date updated, name or countOpenings, either in ascending or descending order.
 * Fixed some bugs, e.g., deletion of items in the DetailView, space preview, and others.
 
+
+
+* Replaced Electron's default "About" window, added a link to the settings screen (not yet implemented) in the menu bar
