@@ -6,6 +6,7 @@
     currView,
   } from "../../stores/stateStore";
   import DetailView from "./DetailView.svelte";
+  import MainContextMenu from "./MainContextMenu.svelte";
   import MainGrid from "./MainGrid.svelte";
   import MainList from "./MainList.svelte";
   import ImportScreen from "./import/ImportScreen.svelte";
@@ -15,6 +16,7 @@
 
 {#if $currentRoute === "main"}
   {#if $currView.viewType === "grid"}
+    <MainContextMenu />
     <MainGrid {items} focusedItemId={$selectedItems.ids[0]} />
   {:else if $currView.viewType === "list"}
     <MainList {items} />

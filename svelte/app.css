@@ -18,6 +18,10 @@ progress::-webkit-progress-value {
   background-color: #0369a1;
 }
 
+#contextMenu > :last-child {
+  border-bottom: none;
+}
+
 /* Remove cookie banners
 this code was injected by uBlock Origin on
  https://www.science.org/content/article/brazilian-frog-might-be-first-pollinating-amphibian-known-science */

@@ -18,7 +18,6 @@
   import Settings from "./components/settings/Settings.svelte";
   import { exitFakeFullscreen, toggleLeft, toggleRight } from "./utils";
   import { startDeleteTasks } from "./components/main/delete/DeleteQueue";
-  import ContextMenu from "./components/main/ContextMenu.svelte";
 
   let isDataAvailable = false;
   let data: Awaited<typeof $filteredData>;
@@ -64,8 +63,6 @@
 <svelte:window on:keydown={handleKeyDown} />
 
 <main>
-  <ContextMenu />
-
   {#if $currentRoute === "settings"}
     <Settings />
   {:else if isDataAvailable}
