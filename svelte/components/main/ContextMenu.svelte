@@ -68,6 +68,7 @@
         class="py-1 mx-2 text-left w-44 text-base-content hover:bg-base-300 border-base-content"
         on:click={() => {
           $contextMenuStore.isContextMenuOpen = false;
+          window.electron.openFileInFileBrowser(selectedItem?.file?.path || "");
         }}
       >
         Open in file browser

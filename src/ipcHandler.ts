@@ -105,6 +105,10 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     shell.openPath(path);
   });
 
+  ipcMain.on("openFileInFileBrowser", (event, path) => {
+    shell.showItemInFolder(path);
+  });
+
   ipcMain.handle("extractBookmarkImages", async (event, mhtmlFilePath) => {
     return extractBookmarkImages(mhtmlFilePath);
   });

@@ -21,6 +21,7 @@ export type ExposedInMainWorld = {
   removeChosenFilesListener: () => void;
   saveFileFromUrl: (url: string) => void;
   openFileInDefaultApp: (path: string) => void;
+  openFileInFileBrowser: (path: string) => void;
   onOpenAddBookmark: (
     callback: (
       ev: Electron.IpcRendererEvent,
@@ -82,6 +83,8 @@ const api: ExposedInMainWorld = {
   saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
   openFileInDefaultApp: (path) =>
     ipcRenderer.send("openFileInDefaultApp", path),
+  openFileInFileBrowser: (path) =>
+    ipcRenderer.send("openFileInFileBrowser", path),
   onOpenAddBookmark: (callback) => ipcRenderer.on("openAddBookmark", callback),
   extractBookmarkImages: (mhtmlFilePath) =>
     ipcRenderer.invoke("extractBookmarkImages", mhtmlFilePath),
