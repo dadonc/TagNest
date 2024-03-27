@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import AlertTriangle from "../../assets/feather/AlertTriangle.svelte";
   import type { SingleItem } from "../../stores/items";
   import { contextMenuStore, filteredData } from "../../stores/stateStore";
@@ -7,6 +8,8 @@
   import Modal from "./Modal.svelte";
 
   let itemsToDelete: SingleItem[] = [];
+  let deleteButton: HTMLButtonElement;
+
   $: if ($contextMenuStore.isDeleteModalOpen) {
     async function temp() {
       itemsToDelete = (await $filteredData).items.filter((item) =>
@@ -14,6 +17,7 @@
       );
     }
     temp();
+    if (deleteButton) deleteButton.focus();
   }
 
   function closeAndReset() {
@@ -69,7 +73,8 @@
       <div class="flex flex-col items-center justify-center">
         <button class="btn" on:click={closeAndReset}>Cancel</button>
         <button
-          class="mt-4 text-red-600 hover:text-red-800"
+          class="p-1 mt-4 text-red-600 hover:text-red-800"
+          bind:this={deleteButton}
           on:click={() => {
             addToDeleteQueue($contextMenuStore.idsToDelete);
             closeAndReset();

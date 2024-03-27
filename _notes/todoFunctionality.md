@@ -4,8 +4,6 @@
 * detailpreview: 
     scroll selected item into view on opening
 
-* deleteModal:
-    delete on enter, show item preview if single is selected
 
 ## Bugs
 * right sidebar 
