@@ -8,7 +8,7 @@
   import { type SingleItem } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
   import PreviewModal from "./PreviewModal.svelte";
-  import { addToDeleteQueue } from "./delete/DeleteQueue";
+  import { confirmDelete } from "./delete/DeleteQueue";
   import { onMount } from "svelte";
   import { topContainer } from "../../stores/cssStore";
   import { deselectItems, getPxfromRem } from "../../utils";
@@ -74,7 +74,7 @@
         deselectItems();
       }
     } else if (e.key === "Backspace" && e.metaKey) {
-      addToDeleteQueue($selectedItems.ids);
+      confirmDelete($selectedItems.ids);
       $selectedItems.ids = [];
     } else if (e.key === "ArrowLeft") {
       if (handleKeydownExceptions(e)) return;

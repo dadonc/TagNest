@@ -238,6 +238,8 @@ type contextMenuStoreType = {
   x: number;
   y: number;
   isContextMenuOpen: boolean;
+  isDeleteModalOpen: boolean;
+  idsToDelete: string[];
   // todo do I need to store the modal type here?
   openModal: "videoThumbnail" | "videoPreview" | "editItem" | "editItems" | "";
 };
@@ -245,7 +247,9 @@ type contextMenuStoreType = {
 const emptyContextMenu: contextMenuStoreType = {
   x: 0,
   y: 0,
+  isDeleteModalOpen: false,
   isContextMenuOpen: false,
+  idsToDelete: [],
   openModal: "",
 };
 

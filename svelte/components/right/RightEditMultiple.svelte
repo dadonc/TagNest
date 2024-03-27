@@ -6,7 +6,7 @@
   } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
   import { updateItemsTags } from "../../stores/tags";
-  import { addToDeleteQueue } from "../main/delete/DeleteQueue";
+  import { confirmDelete } from "../main/delete/DeleteQueue";
   import TagSelectWrapper from "../modals/components/TagSelectWrapper.svelte";
 
   export let items: SingleItem[];
@@ -62,7 +62,7 @@
   <button
     class="mt-4 btn btn-error"
     on:click={async () => {
-      addToDeleteQueue($selectedItems.ids);
+      confirmDelete($selectedItems.ids);
       $importItems = $importItems.filter(
         (item) => !$selectedItems.ids.includes(item.id)
       );

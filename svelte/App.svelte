@@ -18,6 +18,7 @@
   import Settings from "./components/settings/Settings.svelte";
   import { exitFakeFullscreen, toggleLeft, toggleRight } from "./utils";
   import { startDeleteTasks } from "./components/main/delete/DeleteQueue";
+  import DeleteConfirmModal from "./components/modals/DeleteConfirmModal.svelte";
 
   let isDataAvailable = false;
   let data: Awaited<typeof $filteredData>;
@@ -61,6 +62,8 @@
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
+
+<DeleteConfirmModal />
 
 <main>
   {#if $currentRoute === "settings"}

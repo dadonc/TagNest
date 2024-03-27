@@ -1,6 +1,8 @@
 # TODO/Timeline
 
-
+* fix detailviewpreview bottom preview for external files
+* loading indicator when opening external files
+#
 ## Bugs
 * hovering over PDF preview changes layout
 * right sidebar 

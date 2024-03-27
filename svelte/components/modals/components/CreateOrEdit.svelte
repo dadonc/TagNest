@@ -22,7 +22,7 @@
     extractNameAndExtension,
     getItemTypeFromExtension,
   } from "../../../../src/gschert";
-  import { addToDeleteQueue } from "../../main/delete/DeleteQueue";
+  import { confirmDelete } from "../../main/delete/DeleteQueue";
 
   export let isChooseVideoThumbOpen = false;
   export let originalItem: SingleItem | undefined = undefined;
@@ -248,7 +248,7 @@
             // add newly created bookmark to the items store for the deletion process
             await refreshDisplayedItems();
           }
-          addToDeleteQueue([existingItem.id]);
+          confirmDelete([existingItem.id]);
           close();
         }
       }}>{itemWasReplacedWithExisting ? "Cancel" : "Delete"}</button

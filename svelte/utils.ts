@@ -9,7 +9,7 @@ import {
 } from "./stores/stateStore";
 import { leftContainer, rightContainer, topContainer } from "./stores/cssStore";
 import { extractNameAndExtension } from "../src/gschert";
-import { addToDeleteQueue } from "./components/main/delete/DeleteQueue";
+import { confirmDelete } from "./components/main/delete/DeleteQueue";
 
 export function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -94,7 +94,7 @@ export const handleKeydownImportView = async (
   if (e.key === "Escape") {
     deselectItems();
   } else if (e.key === "Backspace" && e.metaKey) {
-    addToDeleteQueue($selectedItems.ids);
+    confirmDelete($selectedItems.ids);
     if (useImportItems) {
       importItems.update((items) =>
         items.filter((item) => !$selectedItems.ids.includes(item.id))
@@ -146,19 +146,24 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
     exitFakeFullscreen();
     currentRoute.set("main");
   } else if (e.key === "Backspace" && e.metaKey) {
-    await addToDeleteQueue($selectedItems.ids);
+    confirmDelete($selectedItems.ids);
 
-    // Select the next item
-    const lastItemToDeleteIndex = items.findIndex(
-      (item) => item.id === $selectedItems.ids[$selectedItems.ids.length - 1]
-    );
-    if (lastItemToDeleteIndex) {
-      if (lastItemToDeleteIndex + step < items.length) {
-        $selectedItems.ids = [items[lastItemToDeleteIndex + step].id];
-      } else {
-        if (items[0]) $selectedItems.ids = [items[0].id];
+    // await if item was deleted, if yes the next item should be focused
+    listenToStoreOnce(contextMenuStore, (value) => {
+      if (value.idsToDelete.length === 0) {
+        const lastItemToDeleteIndex = items.findIndex(
+          (item) =>
+            item.id === $selectedItems.ids[$selectedItems.ids.length - 1]
+        );
+        if (lastItemToDeleteIndex) {
+          if (lastItemToDeleteIndex + step < items.length) {
+            $selectedItems.ids = [items[lastItemToDeleteIndex + step].id];
+          } else {
+            if (items[0]) $selectedItems.ids = [items[0].id];
+          }
+        }
       }
-    }
+    });
   } else if (e.key === "ArrowLeft") {
     const video = document.getElementById("videoPlayer") as HTMLVideoElement;
     if (video && !video.paused) return;
@@ -358,4 +363,15 @@ export function convertFileSize(bytes: number) {
   } else {
     return bytes + " B";
   }
+}
+
+function listenToStoreOnce(store: any, callback: (value: any) => void) {
+  let called = false;
+  const unsubscribe = store.subscribe((value: any) => {
+    if (called) {
+      callback(value);
+      unsubscribe();
+    }
+    called = true;
+  });
 }

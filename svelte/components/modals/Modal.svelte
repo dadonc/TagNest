@@ -30,6 +30,7 @@
     }}
     on:keydown={(e) => {
       if (e.key === "Escape") {
+        e.stopPropagation();
         possiblyBlur() || close();
       }
     }}

@@ -6,7 +6,7 @@
     type SingleItem,
   } from "../../stores/items";
   import CreateOrEdit from "./components/CreateOrEdit.svelte";
-  import { addToDeleteQueue } from "../main/delete/DeleteQueue";
+  import { confirmDelete } from "../main/delete/DeleteQueue";
   let isOpen = false;
   let item: SingleItem;
 
@@ -22,7 +22,7 @@
     isOpen = false;
     // add newly created bookmark to the items store for the deletion process
     await refreshDisplayedItems();
-    addToDeleteQueue([item.id]);
+    confirmDelete([item.id]);
   };
 
   const closeAfterSave = async () => {

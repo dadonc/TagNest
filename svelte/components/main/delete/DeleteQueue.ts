@@ -7,7 +7,7 @@ import {
   items,
   getItems,
 } from "../../../stores/items";
-import { settingsJson } from "../../../stores/stateStore";
+import { contextMenuStore, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
 
 const deleteSteps = {
@@ -125,6 +125,14 @@ export async function startDeleteTasks() {
     isRunning = false;
   }
   refreshDisplayedItems("delete");
+}
+
+export function confirmDelete(ids: string[]) {
+  if (ids.length === 0) return;
+  const $contextMenuStore = get(contextMenuStore);
+  $contextMenuStore.idsToDelete = ids;
+  $contextMenuStore.isDeleteModalOpen = true;
+  contextMenuStore.set($contextMenuStore);
 }
 
 export async function addToDeleteQueue(ids: string[]) {
