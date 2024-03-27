@@ -26,6 +26,11 @@
   $: if ($selectedItems.ids.length === 0) {
     $selectedItems.ids = [items[0].id];
   }
+
+  // select the first item if tag selection was changed and current item is not in the selected tags
+  $: if (!items.find((i) => i.id === $selectedItems.ids[0])) {
+    $selectedItems.ids = [items[0].id];
+  }
 </script>
 
 <svelte:window on:keydown={handleKeydownDetailsView} />
