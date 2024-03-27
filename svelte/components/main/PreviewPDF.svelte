@@ -22,19 +22,17 @@
 </script>
 
 <div
-  class="w-full h-full overflow-hidden border-2 border-base-300"
+  class="w-full h-full overflow-hidden"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
 >
-  <div
-    class="relative flex flex-col items-center justify-center w-full h-full select-none"
-    style={maxHeightStyle}
-  >
-    <img src={previewPath} alt="" style={maxHeightStyle} />
+  <div class="relative w-full h-full" style={maxHeightStyle}>
+    <img src={previewPath} alt="" class="h-full" style={maxHeightStyle} />
 
-    {#if isHovered}
-      <PreviewName name={item.name || ""} />
-    {/if}
+    <PreviewName
+      name={item.name || ""}
+      className={!isHovered ? "opacity-0 absolute" : "absolute"}
+    />
     <PreviewTypeInfo type={item.type} />
   </div>
 </div>

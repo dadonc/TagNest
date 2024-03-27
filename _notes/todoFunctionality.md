@@ -1,23 +1,24 @@
-# TODO/Timeline
+# TODO
 
-* fix detailviewpreview bottom preview for external files
-* loading indicator when opening external files
-#
+
+* detailpreview: 
+    scroll selected item into view on opening
+
+* deleteModal:
+    delete on enter, show item preview if single is selected
+
 ## Bugs
-* hovering over PDF preview changes layout
 * right sidebar 
     - decrease preview size
     - preview external files and pdfs
-    
-
 * colors video: bg hover time (light), bg progressbar (dark)
-
 * tag group styling - change inset of children compared to parent tag
+
+
+### Not important bugs
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
-
 * main grid scrollbar is inside the rightmost items
-
 
 
 
@@ -27,8 +28,8 @@
     o	✅ Support different item types: video, PDF, audio, text and other
     o	✅ Support choosable preview images for bookmarks and videos
     o	(Re)write chrome extension
-    o	Context menu, deletion modal
-    o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar
+    o	Context menu, ✅ deletion modal
+    o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar, indicator in grid preview
     o	✅ Item order: file size, date added, date updated, name, countOpenings
 •	Polishing the application (01.07.24)
     o	Fixes and improvements
@@ -47,7 +48,10 @@
     o	More literature and existing application research
     o	Finalizing the thesis
 
-context menu: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, untoggle tags, (group items, ungroup items)
+### context menu 
+context menu main: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, (group items, ungroup items)
+context menu detailview: same as main
+context menu tags: untoggle tags
 
 ## Other TODO
 * Intro wizard
@@ -58,50 +62,43 @@ context menu: reset countOpened, delete item, open in default application, open 
 * List of keyboard shortcuts
     * right sidebar - save on command + s
     * toggle right sidebar on shift+cmd+b
+    * shuffle items on cmd+shift+s
 * automatically open import modal if no other items exist
+* main grid: scroll into view when using arrow keys
+
 
 ## Improvments
-* Make URL clickable in right sidebar
-* compare hash of files to check if they are the same
 * details top area: "home" button, back button
-* list of keyboard shortcuts
+* item preview for additem modal
 * main grid: select multiple items using the keyboard
-* detailview bottom bar: support up and down arrows
-* Quicksettings in top bar: show name, date changed, mute video preview
-* ellipsis for text in long filenames in item preview
-* url symbol for all previews
-* item preview for additem modal: action queue for external file previews - always show the preview not the icon. Create new when app starts
+* Quicksettings in top bar: show name, date changed, mute video preview, countOpened, show tags in previews, show file size
+* item preview: show tags(clickable, toggle on off in quick settings) - also show in detailview
+* Make URL clickable in right sidebar
+* url symbol for all previews with a link
 * action queue for recreating video previews
 * option in settings: rename files if item gets renamed
-* if item groups work make a toggle to automatically group files if they are in a folder when importing
-* item groups
+* loading indicator when opening external files
+* ellipsis for text in long filenames in item preview
+* detailview bottom bar: support up and down arrows
+* Make paths relative
+
+
+## Not important
+* compare hash of files to check if they are the same
 * electron security warnings
 * update deps
 
 
-
-
-
-Probably out of scope:
+## Probably out of scope:
+* update functionality
 * Search
 * autogenerate type tags
-* undo/redo
-* item groups
-* update functionality
-* tag order
-
+* undo/redo  
+* custom tag order
 * transcode videos to a supported format ( e.g. :"m4v","mov","avi" into "mp4" or "webm" )
 * item groups
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview
-
-
-
-* main top area: quick settings, order, home button, back button
-* fix/limit settings view
-* Handle already existing files
-* Make paths relative
-* Chrome extension
-
+    * if item groups work make a toggle to automatically group files if they are in a folder when importing
 
 LIMITATIONS:
 

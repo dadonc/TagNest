@@ -25,7 +25,7 @@
 </script>
 
 <div
-  class="w-full h-full border-2 border-base-300"
+  class="w-full h-full"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   on:dblclick={() => {
@@ -35,15 +35,11 @@
     }
   }}
 >
-  <div
-    class="relative flex flex-col justify-between w-full h-full select-none"
-    style={maxHeightStyle}
-  >
+  <div class="relative" style={maxHeightStyle}>
     <!-- Center -->
-    <div>&nbsp;</div>
-    <img src={previewPath} alt="" style={maxHeightStyle} />
+    <img src={previewPath} alt="" class="h-full" style={maxHeightStyle} />
     {#if isHovered || true}
-      <PreviewName {name} />
+      <PreviewName {name} className="absolute" style={maxHeightStyle} />
     {/if}
     <PreviewTypeInfo type={extension} />
   </div>

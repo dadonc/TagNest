@@ -107,8 +107,13 @@
   on:keydown={() => {}}
   on:contextmenu={openContextMenu}
   class={classNames(
-    "flex items-center justify-center h-full w-full border-4 select-none ",
-    isItemSelected ? "border-blue-500" : "border-transparent"
+    "flex items-center justify-center h-full w-full border-2 select-none ",
+
+    (item.type === "external" || item.type === "pdf") && !isItemSelected
+      ? "border-base-300"
+      : isItemSelected
+        ? "border-blue-500"
+        : "border-transparent"
   )}
 >
   {#if intersects}
