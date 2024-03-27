@@ -6,6 +6,7 @@
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
+  export let hideName: boolean = false;
 
   let isHovered = false;
 
@@ -22,17 +23,18 @@
 </script>
 
 <div
-  class="w-full h-full overflow-hidden"
+  class="h-full overflow-hidden"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
 >
-  <div class="relative w-full h-full" style={maxHeightStyle}>
+  <div class="relative h-full" style={maxHeightStyle}>
     <img src={previewPath} alt="" class="h-full" style={maxHeightStyle} />
-
-    <PreviewName
-      name={item.name || ""}
-      className={!isHovered ? "opacity-0 absolute" : "absolute"}
-    />
+    {#if !hideName}
+      <PreviewName
+        name={item.name || ""}
+        className={!isHovered ? "opacity-0 absolute" : "absolute"}
+      />
+    {/if}
     <PreviewTypeInfo type={item.type} />
   </div>
 </div>

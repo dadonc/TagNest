@@ -2,6 +2,7 @@
   import AlertTriangle from "../../assets/feather/AlertTriangle.svelte";
   import type { SingleItem } from "../../stores/items";
   import { contextMenuStore, filteredData } from "../../stores/stateStore";
+  import PreviewChooser from "../main/PreviewChooser.svelte";
   import { addToDeleteQueue } from "../main/delete/DeleteQueue";
   import Modal from "./Modal.svelte";
 
@@ -48,11 +49,23 @@
         </div>
         <AlertTriangle className="w-8 h-8 ml-6 inline-block text-red-600" />
       </h1>
-      <ul class="my-4 text-center list-disc list-inside">
-        {#each itemsToDelete as item}
-          <li>{item.name}</li>
-        {/each}
-      </ul>
+      {#if itemsToDelete.length > 1}
+        <ul class="my-4 text-center list-disc list-inside">
+          <li>{itemsToDelete[0].name}</li>
+          {#each itemsToDelete as item}
+            <li>{item.name}</li>
+          {/each}
+        </ul>
+      {:else if itemsToDelete.length === 1}
+        <div class="flex flex-col items-center justify-center my-4">
+          <PreviewChooser
+            item={itemsToDelete[0]}
+            hideName={true}
+            maxHeightStyle="max-height: 8rem;"
+          />
+          {itemsToDelete[0].name}
+        </div>
+      {/if}
       <div class="flex flex-col items-center justify-center">
         <button class="btn" on:click={closeAndReset}>Cancel</button>
         <button

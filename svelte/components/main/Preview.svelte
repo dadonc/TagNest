@@ -7,13 +7,7 @@
   } from "../../stores/stateStore";
   import { classNames, possibylCloseContextMenu } from "../../utils";
   import useIntersectionObserver from "../useIntersectionObserver";
-  import PreviewAudio from "./PreviewAudio.svelte";
-  import BookmarkPreview from "./PreviewBookmark.svelte";
-  import ImagePreview from "./PreviewImage.svelte";
-  import PreviewPdf from "./PreviewPDF.svelte";
-  import PreviewText from "./PreviewText.svelte";
-  import PreviewVideo from "./PreviewVideo.svelte";
-  import PreviewExternal from "./PreviewExternal.svelte";
+  import PreviewChooser from "./PreviewChooser.svelte";
 
   export let item: SingleItem;
   export let items: SingleItem[];
@@ -117,25 +111,6 @@
   )}
 >
   {#if intersects}
-    {#if item.type === "image"}
-      <ImagePreview {item} {maxHeightStyle} />
-    {:else if item.type === "bookmark"}
-      <BookmarkPreview {item} {maxHeightStyle} />
-    {:else if item.type === "pdf"}
-      <PreviewPdf {item} {maxHeightStyle} />
-    {:else if item.type === "video"}
-      <PreviewVideo {item} {maxHeightStyle} />
-    {:else if item.type === "audio"}
-      <PreviewAudio {item} {maxHeightStyle} />
-    {:else if item.type === "text"}
-      <PreviewText {item} {maxHeightStyle} />
-    {:else if item.type === "external"}
-      <PreviewExternal {item} {maxHeightStyle} />
-    {:else}
-      <div class="flex flex-col items-center justify-center h-full bg-base-300">
-        <div class="text-sm text-gray-500">Unknown file type</div>
-        <div class="text-sm text-gray-500">{item.name}</div>
-      </div>
-    {/if}
+    <PreviewChooser {item} {maxHeightStyle} />
   {/if}
 </div>
