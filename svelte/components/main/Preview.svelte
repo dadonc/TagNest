@@ -77,7 +77,7 @@
 </script>
 
 <div
-  style="scroll-margin-top: 0.5rem;"
+  style="scroll-margin-top: 0.25rem;"
   id={item.id}
   use:useIntersectionObserver={isDetailView ? "bottomArea" : "mainArea"}
   on:enterViewport={() => {

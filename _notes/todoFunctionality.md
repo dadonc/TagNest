@@ -9,6 +9,10 @@
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
 
+### context menu 
+context menu main: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, (group items, ungroup items)
+context menu detailview: same as main
+context menu tags: untoggle tags
 
 ### Not so important bugs
 * tag input bug, "Tags" background hint text
@@ -43,10 +47,6 @@
     o	More literature and existing application research
     o	Finalizing the thesis
 
-### context menu 
-context menu main: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, (group items, ungroup items)
-context menu detailview: same as main
-context menu tags: untoggle tags
 
 ## Other TODO
 * Intro wizard

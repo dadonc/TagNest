@@ -36,7 +36,7 @@
     }
   }}
 >
-  <div class="relative" style={maxHeightStyle}>
+  <div class="relative h-full" style={maxHeightStyle}>
     <!-- Center -->
     <img src={previewPath} alt="" class="h-full" style={maxHeightStyle} />
     {#if !hideName}

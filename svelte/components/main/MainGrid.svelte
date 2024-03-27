@@ -11,7 +11,11 @@
   import { confirmDelete } from "./delete/DeleteQueue";
   import { onMount } from "svelte";
   import { topContainer } from "../../stores/cssStore";
-  import { deselectItems, getPxfromRem } from "../../utils";
+  import {
+    deselectItems,
+    getPxfromRem,
+    isElementInViewport,
+  } from "../../utils";
   import ActionModal from "../modals/ActionModal.svelte";
 
   export let items: SingleItem[];
@@ -144,7 +148,11 @@
         $currentRoute = "details";
       }
     }
-    document.getElementById($selectedItems.ids[0])?.scrollIntoView();
+
+    const currSelected = document.getElementById($selectedItems.ids[0]);
+    if (currSelected && !isElementInViewport(currSelected)) {
+      currSelected.scrollIntoView();
+    }
   };
 </script>
 
