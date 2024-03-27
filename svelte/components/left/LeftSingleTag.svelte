@@ -18,6 +18,9 @@
     } else {
       $selectedTags.selectedIds = [...$selectedTags.selectedIds, id];
     }
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   }
 
   function toggleDeselectTag(id: string) {

@@ -10,7 +10,7 @@
 * tag group styling - change inset of children compared to parent tag
 
 
-### Not important bugs
+### Not so important bugs
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
 * main grid scrollbar is inside the rightmost items
@@ -61,17 +61,19 @@ context menu tags: untoggle tags
 ## Improvments
 * details top area: "home" button, back button
 * item preview for additem modal
-* main grid: select multiple items using the keyboard
 * Quicksettings in top bar: show name, date changed, mute video preview, countOpened, show tags in previews, show file size
 * item preview: show tags(clickable, toggle on off in quick settings) - also show in detailview
 * Make URL clickable in right sidebar
+* Make paths relative
+
+* loading indicator when opening external files
+* detailview bottom bar: support up and down arrows
+* main grid: select multiple items using the keyboard
 * url symbol for all previews with a link
 * action queue for recreating video previews
 * option in settings: rename files if item gets renamed
-* loading indicator when opening external files
 * ellipsis for text in long filenames in item preview
-* detailview bottom bar: support up and down arrows
-* Make paths relative
+* autogenerate type tags, eg. "type:video", "type:pdf", "type:audio"
 
 
 ## Not important
@@ -83,7 +85,6 @@ context menu tags: untoggle tags
 ## Probably out of scope:
 * update functionality
 * Search
-* autogenerate type tags
 * undo/redo  
 * custom tag order
 * transcode videos to a supported format ( e.g. :"m4v","mov","avi" into "mp4" or "webm" )
@@ -91,7 +92,7 @@ context menu tags: untoggle tags
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview
     * if item groups work make a toggle to automatically group files if they are in a folder when importing
 
-LIMITATIONS:
+## LIMITATIONS
 
 Ublock doesn't run, not completely everything is saved, e.g. fonts, embedded audio and video
 Possibly problems with the highlights due to mhtml
