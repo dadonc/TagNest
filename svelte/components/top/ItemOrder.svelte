@@ -1,7 +1,7 @@
 <script lang="ts">
   import ArrowDown from "../../assets/feather/ArrowDown.svelte";
   import ShuffleIcon from "../../assets/feather/ShuffleIcon.svelte";
-  import { items } from "../../stores/items";
+  import { shuffleItems } from "../../stores/items";
   import { currView } from "../../stores/stateStore";
 
   function changeDirection() {
@@ -14,19 +14,6 @@
     if ($currView.orderBy === "shuffle") {
       shuffleItems();
     }
-  }
-
-  async function shuffleItems() {
-    function shuffleArray(array: any[]) {
-      // https://stackoverflow.com/a/12646864
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-    $currView.orderBy = "shuffle";
-    $items = shuffleArray($items);
   }
 </script>
 

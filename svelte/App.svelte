@@ -11,14 +11,17 @@
   import startImportTasks from "./components/main/import/importQueue";
   import BottomArea from "./components/bottom/BottomArea.svelte";
   import {
+    contextMenuStore,
     currentRoute,
     filteredData,
+    selectedItems,
     settingsJson,
   } from "./stores/stateStore";
   import Settings from "./components/settings/Settings.svelte";
   import { exitFakeFullscreen, toggleLeft, toggleRight } from "./utils";
   import { startDeleteTasks } from "./components/main/delete/DeleteQueue";
   import DeleteConfirmModal from "./components/modals/DeleteConfirmModal.svelte";
+  import { shuffleItems } from "./stores/items";
 
   let isDataAvailable = false;
   let data: Awaited<typeof $filteredData>;
@@ -54,9 +57,15 @@
         window.electron.openDevTools();
       }
     } else if (event.key === "i" && event.metaKey) {
-      toggleRight();
-    } else if (event.key === "b" && event.metaKey) {
+      if ($selectedItems.ids.length !== 0) {
+        $contextMenuStore.openModal = "editItem";
+      }
+    } else if (event.key === "b" && event.metaKey && !event.shiftKey) {
       toggleLeft();
+    } else if (event.key === "b" && event.metaKey && event.shiftKey) {
+      toggleRight();
+    } else if (event.key === "s" && event.metaKey && event.shiftKey) {
+      shuffleItems();
     }
   };
 </script>

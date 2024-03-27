@@ -4,6 +4,8 @@
 * right sidebar 
     - decrease preview size
     - preview external files and pdfs
+    - show size, date updated, date created, countOpened
+* modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
 
@@ -54,8 +56,6 @@ context menu tags: untoggle tags
 * Fix settings screen
 * List of keyboard shortcuts
     * right sidebar - save on command + s
-    * toggle right sidebar on shift+cmd+b
-    * shuffle items on cmd+shift+s
 * automatically open import modal if no other items exist
 
 ## Improvments

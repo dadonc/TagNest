@@ -1,6 +1,7 @@
 import prisma from "../prisma";
 import { writable } from "svelte/store";
 import { possiblyDeleteTags, updateItemTags } from "./tags";
+import { currView } from "./stateStore";
 
 export const items = writable<Awaited<ReturnType<typeof getItems>>>(
   await getItems()
@@ -260,4 +261,21 @@ export async function increaseCountOpened(item: SingleItem) {
     },
   });
   item.countOpened++;
+}
+
+export async function shuffleItems() {
+  function shuffleArray(array: any[]) {
+    // https://stackoverflow.com/a/12646864
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+  currView.update((view) => {
+    return { ...view, orderBy: "shuffle" };
+  });
+  items.update((items) => {
+    return shuffleArray(items);
+  });
 }

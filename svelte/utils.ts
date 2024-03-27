@@ -320,6 +320,9 @@ export function itemAlreadyExists(newPath: string) {
 export const toggleRight = () => {
   const $rightContainer = get(rightContainer);
   if ($rightContainer.currentVal === "0px") {
+    if ($rightContainer.val === "0px") {
+      $rightContainer.val = "200px";
+    }
     $rightContainer.currentVal = $rightContainer.val;
   } else {
     $rightContainer.currentVal = "0px";
@@ -330,6 +333,9 @@ export const toggleRight = () => {
 export const toggleLeft = () => {
   const $leftContainer = get(leftContainer);
   if ($leftContainer.currentVal === "0px") {
+    if ($leftContainer.val === "0px") {
+      $leftContainer.val = "200px";
+    }
     $leftContainer.currentVal = $leftContainer.val;
   } else {
     $leftContainer.currentVal = "0px";
