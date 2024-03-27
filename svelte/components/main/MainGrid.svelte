@@ -103,6 +103,7 @@
         }
       }
     } else if (e.key === "ArrowUp") {
+      e.preventDefault();
       if ($selectedItems.ids.length == 1) {
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
@@ -113,6 +114,7 @@
         }
       }
     } else if (e.key === "ArrowDown") {
+      e.preventDefault();
       if ($selectedItems.ids.length == 1) {
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
@@ -142,6 +144,7 @@
         $currentRoute = "details";
       }
     }
+    document.getElementById($selectedItems.ids[0])?.scrollIntoView();
   };
 </script>
 

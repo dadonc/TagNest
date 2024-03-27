@@ -11,6 +11,9 @@
   onMount(() => {
     $rightContainer.currentVal = "0px";
     $bottomContainer.currentVal = $bottomContainer.val;
+    setTimeout(() => {
+      document.getElementById($selectedItems.ids[0])?.scrollIntoView();
+    }, 0);
     return () => {
       if ($currentRoute !== "details") {
         $rightContainer.currentVal = $rightContainer.val;

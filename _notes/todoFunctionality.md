@@ -1,10 +1,5 @@
 # TODO
 
-
-* detailpreview: 
-    scroll selected item into view on opening
-
-
 ## Bugs
 * right sidebar 
     - decrease preview size
@@ -62,8 +57,6 @@ context menu tags: untoggle tags
     * toggle right sidebar on shift+cmd+b
     * shuffle items on cmd+shift+s
 * automatically open import modal if no other items exist
-* main grid: scroll into view when using arrow keys
-
 
 ## Improvments
 * details top area: "home" button, back button
