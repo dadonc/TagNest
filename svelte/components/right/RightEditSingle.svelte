@@ -1,51 +1,35 @@
 <script lang="ts">
   import { type SingleItem } from "../../stores/items";
-  import { currentRoute } from "../../stores/stateStore";
-  import { formatTime, getVideoResolutionDescription } from "../../utils";
+  import BookmarkPreviewImageChooser from "../modals/BookmarkPreviewImageChooser.svelte";
   import ChooseVideoThumb from "../modals/ChooseVideoThumb.svelte";
-  import CreateOrEdit from "../modals/components/CreateOrEdit.svelte";
+  import EditItem from "../modals/components/EditItem.svelte";
+  import VideoDetails from "../modals/components/VideoDetails.svelte";
 
   export let item: SingleItem;
-  export let close: () => void = () => {};
-  let isChooseVideoThumbOpen = false;
+  let isChooseThumbOpen = false;
 </script>
 
 {#key item}
-  {#if isChooseVideoThumbOpen}
+  {#if isChooseThumbOpen && item.type == "video"}
     <ChooseVideoThumb
       {item}
       close={() => {
-        isChooseVideoThumbOpen = false;
-        close();
+        isChooseThumbOpen = false;
       }}
     />
-  {:else}
-    {#if $currentRoute === "importMultiple"}
-      <h1 class="mt-2 mb-4 text-3xl text-center">Import</h1>
-    {:else}
-      <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
-    {/if}
+  {:else if isChooseThumbOpen && item.type == "bookmark"}
+    <BookmarkPreviewImageChooser
+      {item}
+      on:image-chosen={(ev) => {
+        // @ts-ignore
+        item.bookmark.previewImagePath = ev.detail.newPreviewPath;
+      }}
+    />{:else}
+    <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
 
-    <CreateOrEdit originalItem={item} {close} bind:isChooseVideoThumbOpen />
+    <EditItem {item} bind:isChooseThumbOpen />
     {#if item.type == "video"}
-      <div class="p-2 text-base rounded bg-base-200">
-        <div class="font-bold">Video details</div>
-        <div class="ml-3">
-          {#if item.video && item.video.width && item.video.height}
-            <div>
-              {item.video.width}x{item.video.height} ({getVideoResolutionDescription(
-                item.video.width,
-                item.video.height
-              )}), {item.video.aspectRatio}
-            </div>
-            <div>{item.video.bitrate}, {item.video.fps}fps</div>
-            {#if item.video.duration}
-              <div>{formatTime(item.video.duration)}</div>
-            {/if}
-          {/if}
-        </div>
-      </div>
-      <div class="h-2"></div>
+      <VideoDetails {item} />
     {/if}
   {/if}
 {/key}

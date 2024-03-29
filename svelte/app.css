@@ -11,7 +11,7 @@
 }
 
 progress::-webkit-progress-bar {
-  background-color: hsl(var(--n) / var(--tw-bg-opacity));
+  @apply bg-neutral;
 }
 
 progress::-webkit-progress-value {

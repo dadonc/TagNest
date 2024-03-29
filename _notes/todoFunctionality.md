@@ -5,6 +5,7 @@
     - decrease preview size
     - preview external files and pdfs
     - show size, date updated, date created, countOpened
+    - save on command + s
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
@@ -12,7 +13,7 @@
 ### context menu 
 context menu main: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, (group items, ungroup items)
 context menu detailview: same as main
-context menu tags: untoggle tags
+context menu tags: deselect all tags (show all items), deselect all but this, show untagged items, delete tag, edit tag, (group tags, ungroup tags)
 
 ### Not so important bugs
 * tag input bug, "Tags" background hint text
@@ -54,8 +55,7 @@ context menu tags: untoggle tags
     * copy, move or link files
     * fill with example data?
 * Fix settings screen
-* List of keyboard shortcuts
-    * right sidebar - save on command + s
+    * List of keyboard shortcuts
 * automatically open import modal if no other items exist
 
 ## Improvments
@@ -87,6 +87,7 @@ context menu tags: untoggle tags
 * Search
 * undo/redo  
 * custom tag order
+* suggested tags based on existing tags, filenames and bookmark content
 * transcode videos to a supported format ( e.g. :"m4v","mov","avi" into "mp4" or "webm" )
 * item groups
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview
