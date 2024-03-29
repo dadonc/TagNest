@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { settingsJson } from "../../stores/stateStore";
-  import { extractNameAndExtension } from "../../../src/gschert";
-  import { formatTime, saveVideoPreviewImage } from "../../utils";
-  import { type SingleItem } from "../../stores/items";
+  import { settingsJson } from "../../../stores/stateStore";
+  import { extractNameAndExtension } from "../../../../src/gschert";
+  import { formatTime, saveVideoPreviewImage } from "../../../utils";
+  import { type SingleItem } from "../../../stores/items";
 
   export let item: SingleItem;
   export let close: () => void = () => {};
@@ -61,11 +61,12 @@
     const previewImg = document.getElementById(
       `previewImage-${item.id}`
     ) as HTMLImageElement;
+
     previewImg.src = previewImg.src + "?" + Date.now();
-
     close();
+    setTimeout(() => {}, 0);
 
-    // update right sidebar preview image
+    // TODO update right sidebar preview image
     setTimeout(() => {
       const sidebarPreviewImg = document.getElementById(
         `rightSidebarPreviewImage-${item.id}`
@@ -73,7 +74,7 @@
       if (sidebarPreviewImg) {
         sidebarPreviewImg.src = sidebarPreviewImg.src + "?" + Date.now();
       }
-    }, 0);
+    }, 100);
   }
 
   let videoIsLoaded = false;

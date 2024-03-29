@@ -4,7 +4,7 @@
   import { contextMenuStore, selectedItems } from "../../stores/stateStore";
   import RightEditSingle from "../right/RightEditSingle.svelte";
   import RightEditMultiple from "../right/RightEditMultiple.svelte";
-  import ChooseVideoThumb from "./ChooseVideoThumb.svelte";
+  import ChooseVideoThumb from "./components/ChooseVideoThumb.svelte";
   import RegenerateVideoPreview from "./RegenerateVideoPreview.svelte";
 
   $: isOpen = $contextMenuStore.openModal !== "";
@@ -44,7 +44,7 @@
     <div slot="body" class="h-full p-4 rounded bg-base-100 w-96">
       {#if isSingleItemSelected && item}
         {#if $contextMenuStore.openModal === "editItem"}
-          <RightEditSingle {item} {close} />
+          <RightEditSingle {item} />
         {/if}
         {#if $contextMenuStore.openModal === "videoThumbnail" && item.type === "video" && item.file}
           <ChooseVideoThumb {close} {item} />

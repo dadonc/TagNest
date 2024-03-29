@@ -1,7 +1,8 @@
 <script lang="ts">
   import { type SingleItem } from "../../stores/items";
   import BookmarkPreviewImageChooser from "../modals/BookmarkPreviewImageChooser.svelte";
-  import ChooseVideoThumb from "../modals/ChooseVideoThumb.svelte";
+  import ChooseBookmarkPreview from "../modals/components/ChooseBookmarkPreview.svelte";
+  import ChooseVideoThumb from "../modals/components/ChooseVideoThumb.svelte";
   import EditItem from "../modals/components/EditItem.svelte";
   import VideoDetails from "../modals/components/VideoDetails.svelte";
 
@@ -18,11 +19,10 @@
       }}
     />
   {:else if isChooseThumbOpen && item.type == "bookmark"}
-    <BookmarkPreviewImageChooser
+    <ChooseBookmarkPreview
       {item}
-      on:image-chosen={(ev) => {
-        // @ts-ignore
-        item.bookmark.previewImagePath = ev.detail.newPreviewPath;
+      close={() => {
+        isChooseThumbOpen = false;
       }}
     />{:else}
     <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>

@@ -1,5 +1,9 @@
 # TODO
 
+* chooseVideoThumb: update preview in right sidebar
+* chooseBookmarkThumb: update preview in grid (and in right sidebar if changed in a modal), disable save button, show border around selected,
+
+* create separate component for CreateItem
 ## Bugs
 * right sidebar 
     - decrease preview size
