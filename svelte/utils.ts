@@ -10,6 +10,7 @@ import {
 import { leftContainer, rightContainer, topContainer } from "./stores/cssStore";
 import { extractNameAndExtension } from "../src/gschert";
 import { confirmDelete } from "./components/main/delete/DeleteQueue";
+import { tick } from "svelte";
 
 export function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -393,4 +394,17 @@ export function isElementInViewport(el: HTMLElement) {
       (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
+}
+
+export async function updateItemPreviews(id: string, previewPath?: string) {
+  await tick();
+  setTimeout(() => {
+    const temp = document.getElementsByClassName(id + "_preview");
+    if (!previewPath) {
+      previewPath = temp[0].getAttribute("src") as string;
+    }
+    for (let i = 0; i < temp.length; i++) {
+      temp[i].setAttribute("src", previewPath + "?" + new Date().getTime());
+    }
+  }, 0);
 }

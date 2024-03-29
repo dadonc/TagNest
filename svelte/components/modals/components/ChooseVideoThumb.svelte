@@ -1,7 +1,11 @@
 <script lang="ts">
   import { settingsJson } from "../../../stores/stateStore";
   import { extractNameAndExtension } from "../../../../src/gschert";
-  import { formatTime, saveVideoPreviewImage } from "../../../utils";
+  import {
+    formatTime,
+    saveVideoPreviewImage,
+    updateItemPreviews,
+  } from "../../../utils";
   import { type SingleItem } from "../../../stores/items";
 
   export let item: SingleItem;
@@ -58,23 +62,9 @@
 
   async function saveNewThumb() {
     await saveVideoPreviewImage(videoPath);
-    const previewImg = document.getElementById(
-      `previewImage-${item.id}`
-    ) as HTMLImageElement;
 
-    previewImg.src = previewImg.src + "?" + Date.now();
     close();
-    setTimeout(() => {}, 0);
-
-    // TODO update right sidebar preview image
-    setTimeout(() => {
-      const sidebarPreviewImg = document.getElementById(
-        `rightSidebarPreviewImage-${item.id}`
-      ) as HTMLImageElement;
-      if (sidebarPreviewImg) {
-        sidebarPreviewImg.src = sidebarPreviewImg.src + "?" + Date.now();
-      }
-    }, 100);
+    updateItemPreviews(item.id);
   }
 
   let videoIsLoaded = false;

@@ -127,7 +127,7 @@
   <img
     class={`w-full ${$currentRoute == "details" ? "max-h-full" : ""} ${
       videoIsLoaded ? "absolute" : ""
-    }`}
+    } ${item.id}_preview`}
     style={maxHeightStyle}
     src={thumbPath}
     id={`previewImage-${item.id}`}

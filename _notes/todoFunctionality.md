@@ -1,13 +1,12 @@
 # TODO
 
-* chooseVideoThumb: update preview in right sidebar
 * chooseBookmarkThumb: update preview in grid (and in right sidebar if changed in a modal), disable save button, show border around selected,
+
+remove id={`previewImage-${item.id}`}
 
 * create separate component for CreateItem
 ## Bugs
 * right sidebar 
-    - decrease preview size
-    - preview external files and pdfs
     - show size, date updated, date created, countOpened
     - save on command + s
 * modal sizes
@@ -23,8 +22,6 @@ context menu tags: deselect all tags (show all items), deselect all but this, sh
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
 * main grid scrollbar is inside the rightmost items
-
-
 
 ## Revised plan
 •	Developing the application (01.06.24)
