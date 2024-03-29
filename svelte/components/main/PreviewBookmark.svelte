@@ -13,7 +13,7 @@
   <img
     src={"file://" + item.bookmark?.previewImagePath}
     alt=""
-    class="max-h-full"
+    class={`max-h-full ${item.id}_preview`}
     style={maxHeightStyle}
   />
   {#if item.url}

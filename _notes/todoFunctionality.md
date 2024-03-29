@@ -1,8 +1,11 @@
 # TODO
 
-* chooseBookmarkThumb: update preview in grid (and in right sidebar if changed in a modal), disable save button, show border around selected,
+* delete bookmark previews on item delete, ChooseBookmarkPreview line 68
 
-remove id={`previewImage-${item.id}`}
+* chooseBookmarkThumb: 
+        disable save button
+        show border around selected,
+        modal: close on ESC
 
 * create separate component for CreateItem
 ## Bugs

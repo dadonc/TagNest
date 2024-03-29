@@ -130,7 +130,6 @@
     } ${item.id}_preview`}
     style={maxHeightStyle}
     src={thumbPath}
-    id={`previewImage-${item.id}`}
     alt=""
   />
   <span

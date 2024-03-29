@@ -17,6 +17,7 @@
   import {
     indexOfAlreadyExistingItem,
     saveVideoPreviewImage,
+    updateItemPreviews,
   } from "../../../utils";
   import {
     extractNameAndExtension,
@@ -69,10 +70,7 @@
       if (itemType === "video") {
         if (wasVideoPreviewUpdated) {
           await saveVideoPreviewImage(path);
-          const previewImg = document.getElementById(
-            `previewImage-${existingItem.id}`
-          ) as HTMLImageElement;
-          previewImg.src = previewImg.src + "?" + Date.now();
+          updateItemPreviews(existingItem.id);
         }
       }
       // TODO - is this correct? Is correct if no problems arise
@@ -169,7 +167,6 @@
       <img
         on:click={() => (isChooseVideoThumbOpen = true)}
         on:keydown={() => {}}
-        id={`rightSidebarPreviewImage-${existingItem.id}`}
         src={`file://${$settingsJson.savePath}/previews/videos/${
           extractNameAndExtension(path).name
         }_thumb.jpeg`}

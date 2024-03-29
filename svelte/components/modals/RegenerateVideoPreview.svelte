@@ -1,7 +1,11 @@
 <script lang="ts">
   import { settingsJson } from "../../stores/stateStore";
   import { extractNameAndExtension } from "../../../src/gschert";
-  import { formatTime, saveVideoPreviewImage } from "../../utils";
+  import {
+    formatTime,
+    saveVideoPreviewImage,
+    updateItemPreviews,
+  } from "../../utils";
   import { type SingleItem } from "../../stores/items";
 
   export let item: SingleItem;
@@ -40,10 +44,7 @@
   async function createNewPreview() {
     if (recreateThumb) {
       await saveVideoPreviewImage(videoPath);
-      const previewImg = document.getElementById(
-        `previewImage-${item.id}`
-      ) as HTMLImageElement;
-      previewImg.src = previewImg.src + "?" + Date.now();
+      updateItemPreviews(item.id);
     }
     await window.electron.recreateVideoPreview(
       item.file!.path,

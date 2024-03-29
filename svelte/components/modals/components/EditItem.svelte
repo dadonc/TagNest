@@ -5,7 +5,6 @@
     type SingleItem,
   } from "../../../stores/items";
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
-  import { saveVideoPreviewImage } from "../../../utils";
   import { confirmDelete } from "../../main/delete/DeleteQueue";
   import PreviewChooser from "../../main/PreviewChooser.svelte";
 
@@ -15,21 +14,11 @@
   let tagString = item ? item.tags.map((t) => t.name).join(", ") : "";
   let tagStringCopy = tagString;
 
-  let wasVideoPreviewUpdated = false;
   $: disabled =
     JSON.stringify(item) === JSON.stringify(itemCopy) &&
     tagString === tagStringCopy;
 
   async function update() {
-    if (item.type === "video") {
-      if (wasVideoPreviewUpdated) {
-        await saveVideoPreviewImage(item.file?.path as string);
-        const previewImg = document.getElementById(
-          `previewImage-${item.id}`
-        ) as HTMLImageElement;
-        previewImg.src = previewImg.src + "?" + Date.now();
-      }
-    }
     await updateItem(item, tagString);
   }
 

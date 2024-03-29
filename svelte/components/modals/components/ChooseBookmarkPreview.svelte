@@ -4,6 +4,7 @@
     updateBookmarkPreviewImage,
     type SingleItem,
   } from "../../../stores/items";
+  import { updateItemPreviews } from "../../../utils";
 
   export let item: SingleItem;
   export let close: () => void;
@@ -64,14 +65,7 @@
     path = "file://" + newPreviewPath;
     item.bookmark.previewImagePath = newPreviewPath;
     await updateBookmarkPreviewImage(item);
-
-    // update the preview image
-
-    // const previewImg = document.getElementById(
-    //   `previewImage-${item.id}`
-    // ) as HTMLImageElement;
-
-    // previewImg.src = previewImg.src + "?" + Date.now();
+    updateItemPreviews(item.id, path);
     close();
   }
 </script>
