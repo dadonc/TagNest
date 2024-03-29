@@ -1,10 +1,10 @@
 # TODO
 
-* delete bookmark previews on item delete, ChooseBookmarkPreview line 68
+* save Date.Now() to video preview screenshot, save to db, read from db (cache bust when deselecting and reselecting)
 
 * chooseBookmarkThumb: 
         disable save button
-        show border around selected,
+        show border around selected image
         modal: close on ESC
 
 * create separate component for CreateItem

@@ -43,10 +43,6 @@
   async function saveNewThumb() {
     if (!item.bookmark || !item.bookmark.screenshotPath) return;
 
-    if (item.bookmark?.previewImagePath?.includes("_preview")) {
-      await window.electron.deleteFile(item.bookmark.previewImagePath);
-    }
-
     // If the image is already a file path, just use it
     if (path.includes("file://")) {
       path = path;
@@ -56,7 +52,11 @@
       close();
       return;
     }
-    // else save the image as a new file
+    // else delete the old image and save the new image as a new file
+    if (item.bookmark?.previewImagePath?.includes("_preview_")) {
+      await window.electron.deleteFile(item.bookmark.previewImagePath);
+    }
+
     const newPreviewPath = await window.electron.saveImageFromString({
       imageBase64: path,
       path: item.bookmark.screenshotPath,
