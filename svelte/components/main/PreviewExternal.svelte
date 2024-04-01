@@ -36,9 +36,12 @@
     }
   }}
 >
-  <div class="relative h-full" style={maxHeightStyle}>
+  <div
+    class="relative flex items-center justify-center h-full"
+    style={maxHeightStyle}
+  >
     <!-- Center -->
-    <img src={previewPath} alt="" class="h-full" style={maxHeightStyle} />
+    <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
     {#if !hideName}
       <PreviewName {name} className="absolute" style={maxHeightStyle} />
     {/if}

@@ -1,12 +1,6 @@
 # TODO
-
-* chooseBookmarkThumb: 
-        disable save button
-        show border around selected image - doesn't work for extracted images because the base64 cannot be compared to the file
-
-* items are stretched in the grid if one item is too high
-
 * create separate component for CreateItem
+
 ## Bugs
 * right sidebar 
     - show size, date updated, date created, countOpened
@@ -14,11 +8,7 @@
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
-bookmark space preview: 
-    too slow
-    close on ESC after clicking inside rendered bookmark
 
-rename videoPreviewImage to videoThumbImage
 
 ### context menu 
 context menu main: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, (group items, ungroup items)
@@ -29,6 +19,17 @@ context menu tags: deselect all tags (show all items), deselect all but this, sh
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
 * main grid scrollbar is inside the rightmost items
+
+* bookmark space preview: 
+    too slow
+    close on ESC after clicking inside rendered bookmark
+
+* chooseBookmarkThumb: 
+    disable save button
+    show border around selected image - doesn't work for extracted images because the base64 cannot be compared to the file
+
+
+rename videoPreviewImage to videoThumbImage
 
 ## Revised plan
 •	Developing the application (01.06.24)
