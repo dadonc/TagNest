@@ -16,7 +16,7 @@
   import { tick } from "svelte";
   import {
     indexOfAlreadyExistingItem,
-    saveVideoPreviewImage,
+    saveVideoThumbImage,
     updateItemPreviews,
   } from "../../../utils";
   import {
@@ -69,7 +69,7 @@
     if (existingItem) {
       if (itemType === "video") {
         if (wasVideoPreviewUpdated) {
-          await saveVideoPreviewImage(path);
+          await saveVideoThumbImage(path);
           updateItemPreviews(existingItem.id);
         }
       }

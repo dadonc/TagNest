@@ -3,7 +3,7 @@
   import { extractNameAndExtension } from "../../../src/gschert";
   import {
     formatTime,
-    saveVideoPreviewImage,
+    saveVideoThumbImage,
     updateItemPreviews,
   } from "../../utils";
   import { type SingleItem } from "../../stores/items";
@@ -43,7 +43,7 @@
 
   async function createNewPreview() {
     if (recreateThumb) {
-      await saveVideoPreviewImage(videoPath);
+      await saveVideoThumbImage(videoPath);
       updateItemPreviews(item.id);
     }
     await window.electron.recreateVideoPreview(

@@ -1,7 +1,5 @@
 # TODO
 
-* save Date.Now() to video preview screenshot, save to db, read from db (cache bust when deselecting and reselecting)
-
 * chooseBookmarkThumb: 
         disable save button
         show border around selected image
@@ -15,6 +13,8 @@
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
+
+rename videoPreviewImage to videoThumbImage
 
 ### context menu 
 context menu main: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, (group items, ungroup items)

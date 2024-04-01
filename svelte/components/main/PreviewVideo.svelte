@@ -19,7 +19,7 @@
 
   let { name, extension } = extractNameAndExtension(item.name!);
   $: videoPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}`;
-  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${name}_thumb.jpeg`;
+  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`;
 
   let playPromise: Promise<void> | undefined;
 

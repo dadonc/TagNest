@@ -3,10 +3,13 @@
   import { extractNameAndExtension } from "../../../../src/gschert";
   import {
     formatTime,
-    saveVideoPreviewImage,
+    saveVideoThumbImage,
     updateItemPreviews,
   } from "../../../utils";
-  import { type SingleItem } from "../../../stores/items";
+  import {
+    type SingleItem,
+    updateVideoThumbImage,
+  } from "../../../stores/items";
 
   export let item: SingleItem;
   export let close: () => void = () => {};
@@ -61,28 +64,24 @@
   }
 
   async function saveNewThumb() {
-    await saveVideoPreviewImage(videoPath);
+    const newThumbImageName = await saveVideoThumbImage(videoPath);
+    await window.electron.deleteFile(
+      `${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`
+    );
 
-    // const newPreviewPath = await window.electron.saveImageFromString({
-    //   imageBase64: path,
-    //   path: item.bookmark.screenshotPath,
-    //   isPreview: true,
-    // });
-    // path = "file://" + newPreviewPath;
-    // item.bookmark.previewImagePath = newPreviewPath;
-    // await updateBookmarkPreviewImage(item);
-    // updateItemPreviews(item.id, path);
-
+    item.video!.thumbImageName = newThumbImageName;
+    updateVideoThumbImage(item, newThumbImageName);
     close();
-    updateItemPreviews(item.id);
+    updateItemPreviews(
+      item.id,
+      `file://${$settingsJson.savePath}/previews/videos/${newThumbImageName}`
+    );
   }
 
   let videoIsLoaded = false;
   let saveDisabled = true;
   let videoPath = item.file!.path;
-  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${
-    extractNameAndExtension(videoPath).name
-  }_thumb.jpeg`;
+  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`;
 </script>
 
 <h1 class="mt-2 mb-4 text-3xl text-center">Choose Thumbnail</h1>

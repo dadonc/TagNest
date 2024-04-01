@@ -16,10 +16,7 @@ const deleteSteps = {
       if (item.name) {
         const $savePath = get(settingsJson).savePath;
         const previewImgPath =
-          $savePath +
-          "/previews/videos/" +
-          extractNameAndExtension(item.name).name +
-          "_thumb.jpeg";
+          $savePath + "/previews/videos/" + item.video?.thumbImageName;
         await window.electron.deleteFile(previewImgPath);
         console.log(item.name, ": deleted preview image.");
       }

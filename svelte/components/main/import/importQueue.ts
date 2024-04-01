@@ -8,6 +8,7 @@ import {
   updateFilePath,
   type SingleItem,
   type ImportItem,
+  updateVideoThumbImage,
 } from "../../../stores/items";
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
@@ -60,9 +61,9 @@ export const importSteps = {
           "_preview." +
           extension;
         video.load();
+        video.currentTime = 0.1;
         await new Promise((resolve) => {
           video.addEventListener("canplay", async () => {
-            video.currentTime = 0;
             const canvas = document.createElement("canvas");
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -74,12 +75,8 @@ export const importSteps = {
               dataURL,
               name + "_thumb.jpeg"
             );
-            // TODO hacky solution, without this the image is black before the app is reloaded
-            // this happens if a single video is imported
-            // I don't know why this happens, because saveVideoPreviewImage is sync
-            setTimeout(() => {
-              resolve(true);
-            }, 1000);
+            await updateVideoThumbImage(item, name + "_thumb.jpeg");
+            resolve(true);
           });
         });
       },

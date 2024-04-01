@@ -201,16 +201,17 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
   selectedItems.set($selectedItems);
 };
 
-export async function saveVideoPreviewImage(filePath: string) {
+export async function saveVideoThumbImage(filePath: string) {
   const video = document.getElementById("previewVideo") as HTMLVideoElement;
   const canvas = document.createElement("canvas");
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext("2d")?.drawImage(video, 0, 0, canvas.width, canvas.height);
   const dataURL = canvas.toDataURL("image/jpeg", 0.5);
-  const name = extractNameAndExtension(filePath).name + "_thumb.jpeg";
-  await window.electron.saveVideoPreviewImage(dataURL, name);
-  return true;
+  const name = extractNameAndExtension(filePath).name as string;
+  const newPreviewName = name + Date.now() + "_thumb.jpeg";
+  await window.electron.saveVideoPreviewImage(dataURL, newPreviewName);
+  return newPreviewName;
 }
 
 export async function toggleFakeFullscreen() {

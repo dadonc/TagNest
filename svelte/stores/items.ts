@@ -91,6 +91,20 @@ export async function updateBookmarkPreviewImage(item: SingleItem) {
   });
 }
 
+export async function updateVideoThumbImage(
+  item: SingleItem,
+  newThumbImageName: string
+) {
+  return await prisma.video.update({
+    where: {
+      itemId: item.id,
+    },
+    data: {
+      thumbImageName: newThumbImageName,
+    },
+  });
+}
+
 export async function getItem(id: string) {
   return await prisma.item.findUnique({
     where: {

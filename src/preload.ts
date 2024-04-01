@@ -37,8 +37,8 @@ export type ExposedInMainWorld = {
   getCurrentWorkingDirectory: () => Promise<string>;
   createVideoPreview: (videoPath: string, itemId: string) => Promise<void>;
   saveVideoDetailsToItem: (videoPath: string, itemId: string) => Promise<void>;
+  // todo: rename to saveVideoThumbImage
   saveVideoPreviewImage: (
-    // todo: use file path instead of itemName
     imageBase64: string,
     itemName: string
   ) => Promise<void>;
