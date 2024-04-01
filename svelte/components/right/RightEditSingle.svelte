@@ -4,6 +4,7 @@
   import ChooseBookmarkPreview from "../modals/components/ChooseBookmarkPreview.svelte";
   import ChooseVideoThumb from "../modals/components/ChooseVideoThumb.svelte";
   import EditItem from "../modals/components/EditItem.svelte";
+  import ItemDetails from "../modals/components/ItemDetails.svelte";
   import VideoDetails from "../modals/components/VideoDetails.svelte";
 
   export let item: SingleItem;
@@ -28,6 +29,7 @@
     <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
 
     <EditItem {item} bind:isChooseThumbOpen />
+    <ItemDetails {item} />
     {#if item.type == "video"}
       <VideoDetails {item} />
     {/if}

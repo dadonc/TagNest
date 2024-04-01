@@ -3,7 +3,6 @@
 
 ## Bugs
 * right sidebar 
-    - show size, date updated, date created, countOpened
     - save on command + s
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)

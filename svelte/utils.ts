@@ -271,6 +271,10 @@ export function formatTime(seconds: number) {
   return date.toISOString().split("T")[1].split(".")[0];
 }
 
+export function formatDate(date: Date) {
+  return date.toISOString().split("T")[0];
+}
+
 export function getVideoResolutionDescription(width: number, height: number) {
   let w = width;
   let h = height;

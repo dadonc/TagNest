@@ -41,6 +41,8 @@ type CurrViewType = {
     | "fileSize"
     | "countOpened"
     | "shuffle";
+  isItemDetailsOpen: boolean;
+  isVideoDetailsOpen: boolean;
 };
 
 const emptyCurrView: CurrViewType = {
@@ -49,6 +51,8 @@ const emptyCurrView: CurrViewType = {
   viewType: "grid",
   orderDirection: "desc",
   orderBy: "createdAt",
+  isItemDetailsOpen: false,
+  isVideoDetailsOpen: false,
 };
 
 const currentCurrView = localStorage.getItem("currView");
