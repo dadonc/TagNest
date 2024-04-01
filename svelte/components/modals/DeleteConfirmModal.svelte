@@ -55,7 +55,6 @@
       </h1>
       {#if itemsToDelete.length > 1}
         <ul class="my-4 text-center list-disc list-inside">
-          <li>{itemsToDelete[0].name}</li>
           {#each itemsToDelete as item}
             <li>{item.name}</li>
           {/each}

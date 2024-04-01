@@ -245,7 +245,13 @@ type contextMenuStoreType = {
   isDeleteModalOpen: boolean;
   idsToDelete: string[];
   // todo do I need to store the modal type here?
-  openModal: "videoThumbnail" | "videoPreview" | "editItem" | "editItems" | "";
+  openModal:
+    | "videoThumbnail"
+    | "videoPreview"
+    | "editItem"
+    | "editItems"
+    | "resetCounts"
+    | "";
 };
 
 const emptyContextMenu: contextMenuStoreType = {

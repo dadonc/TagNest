@@ -1,4 +1,6 @@
 # TODO
+* focus delete/reset button if modal is triggered using the mouse
+
 * create separate component for CreateItem
     - save on command + s
 
@@ -7,6 +9,9 @@
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
 
+* bookmark space preview: 
+    too slow
+    close on ESC after clicking inside rendered bookmark
 
 ### context menu 
 context menu main: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, (group items, ungroup items)
@@ -18,9 +23,6 @@ context menu tags: deselect all tags (show all items), deselect all but this, sh
 * close pdf on ESC; pdfjs is broken on space preview
 * main grid scrollbar is inside the rightmost items
 
-* bookmark space preview: 
-    too slow
-    close on ESC after clicking inside rendered bookmark
 
 * chooseBookmarkThumb: 
     disable save button
@@ -70,7 +72,7 @@ rename videoPreviewImage to videoThumbImage
 * item preview for additem modal
 * Quicksettings in top bar: show name, date changed, mute video preview, countOpened, show tags in previews, show file size
 * item preview: show tags(clickable, toggle on off in quick settings) - also show in detailview
-* Make URL clickable in right sidebar
+* Make URL clickable in right sidebar, add url icon to item preview
 * Make paths relative
 
 * loading indicator when opening external files

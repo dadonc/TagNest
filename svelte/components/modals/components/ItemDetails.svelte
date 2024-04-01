@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SingleItem } from "../../../stores/items";
-  import { currView } from "../../../stores/stateStore";
+  import { contextMenuStore, currView } from "../../../stores/stateStore";
   import { convertFileSize, formatDate } from "../../../utils";
 
   export let item: SingleItem;
@@ -20,7 +20,15 @@
   </div>
   {#if $currView.isItemDetailsOpen}
     <div class="ml-3">
-      <div>Count opened: {item.countOpened}</div>
+      <div class="flex justify-between">
+        <span>Count opened: {item.countOpened}</span>
+        <button
+          class="btn btn-xs"
+          on:click={() => {
+            $contextMenuStore.openModal = "resetCounts";
+          }}>reset</button
+        >
+      </div>
       {#if item.file}
         <div>Size: {convertFileSize(item.file.size)}</div>
       {/if}

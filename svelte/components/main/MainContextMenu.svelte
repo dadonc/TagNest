@@ -59,5 +59,13 @@
         $contextMenuStore.openModal = "editItems";
       }}
     />
+
+    <ContextMenuButton
+      name="Reset count of {$selectedItems.ids.length} Items"
+      onClick={() => {
+        $contextMenuStore.isContextMenuOpen = false;
+        $contextMenuStore.openModal = "resetCounts";
+      }}
+    />
   {/if}
 </ContextMenu>

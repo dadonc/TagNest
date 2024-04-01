@@ -6,6 +6,7 @@
   import RightEditMultiple from "../right/RightEditMultiple.svelte";
   import ChooseVideoThumb from "./components/ChooseVideoThumb.svelte";
   import RegenerateVideoPreview from "./RegenerateVideoPreview.svelte";
+  import ResetConfirmModal from "./ResetConfirmModal.svelte";
 
   $: isOpen = $contextMenuStore.openModal !== "";
   $: isSingleItemSelected = $selectedItems.ids.length === 1;
@@ -15,8 +16,9 @@
 
   $: {
     if (isOpen && isSingleItemSelected) {
-      const selectedItem = $items.find((i) => i.id === $selectedItems.ids[0]);
-      item = selectedItem;
+      item = $items.find((i) => i.id === $selectedItems.ids[0]);
+    } else if (isOpen && !isSingleItemSelected) {
+      item = undefined;
     }
   }
 
@@ -54,6 +56,12 @@
             modalClose={close}
           />
         {/if}
+      {/if}
+      {#if $contextMenuStore.openModal === "resetCounts"}
+        <ResetConfirmModal
+          {close}
+          items={item ? [item] : currentlySelectedItems}
+        />
       {/if}
     </div>
   </Modal>

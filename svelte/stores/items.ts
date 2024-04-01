@@ -277,6 +277,27 @@ export async function increaseCountOpened(item: SingleItem) {
   item.countOpened++;
 }
 
+export function resetCountOpened(ids: string[]) {
+  prisma.item.updateMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+    data: {
+      countOpened: 0,
+    },
+  });
+  items.update((items) => {
+    return items.map((item) => {
+      if (ids.includes(item.id)) {
+        return { ...item, countOpened: 0 };
+      }
+      return item;
+    });
+  });
+}
+
 export async function shuffleItems() {
   function shuffleArray(array: any[]) {
     // https://stackoverflow.com/a/12646864

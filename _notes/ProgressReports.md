@@ -26,7 +26,8 @@ Plan for the next two weeks:
 
 
 ## Report 3
+* Fixed a bug regarding the preview images not updating correctly (the old image was displayed because it was served from the cache)
 * Implemented a modal to confirm the deletion of items
 * Added a context menu to the main grid which allows users to open the item in OS file explorer, delete the item or edit the item
-* Replaced Electron's default "About" window with a basic custom one, added a link to the settings screen (not yet implemented) in the menu bar
 * Added a icon and decided on a name for the application: "TagNest"
+* Replaced Electron's default "About" window with a basic custom one, added a link to the settings screen (not yet implemented) in the menu bar
