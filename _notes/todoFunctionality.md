@@ -1,9 +1,8 @@
 # TODO
 * create separate component for CreateItem
+    - save on command + s
 
 ## Bugs
-* right sidebar 
-    - save on command + s
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag

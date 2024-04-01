@@ -25,6 +25,12 @@
   let namePlaceholder = item.name ? item.name : "Name";
 </script>
 
+<svelte:window
+  on:keydown={(e) => {
+    if (e.key == "s" && e.metaKey) update();
+  }}
+/>
+
 <div class="flex flex-col items-center justify-center">
   <div class="text-center">
     <PreviewChooser {item} hideName maxHeightStyle="max-height: 12rem;" />
@@ -63,8 +69,6 @@
   <button
     class="mt-4 text-red-600 hover:text-red-800"
     on:click={async () => {
-      // TODO ask Chris - why do I need this?
-      const existingItemId = item.id;
       $importItems = $importItems.filter((i) => i.id !== item.id);
       confirmDelete([item.id]);
     }}>Delete</button
