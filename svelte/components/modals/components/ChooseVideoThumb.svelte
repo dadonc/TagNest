@@ -63,6 +63,16 @@
   async function saveNewThumb() {
     await saveVideoPreviewImage(videoPath);
 
+    // const newPreviewPath = await window.electron.saveImageFromString({
+    //   imageBase64: path,
+    //   path: item.bookmark.screenshotPath,
+    //   isPreview: true,
+    // });
+    // path = "file://" + newPreviewPath;
+    // item.bookmark.previewImagePath = newPreviewPath;
+    // await updateBookmarkPreviewImage(item);
+    // updateItemPreviews(item.id, path);
+
     close();
     updateItemPreviews(item.id);
   }

@@ -11,14 +11,22 @@ Plan for the next two weeks:
 
 
 ## Report 2
-The last two weeks I have
+The last two weeks I have spend most of my time developing and have made good progress. I have:
 * Added support for video files: the preview in the grid shows a thumbnail and on hover a videopreview of the video gets played. The detail view shows the video and allows the user to play it. Both views display a preview image if a user hovers over the seekbar which shows the frame at the currently hovered position in the video (comparable to YouTube).
 * Added an "ImportProgressModal" which shows a list of all the files in the import queue and those which are currently getting imported (generating the preview of long videos can take some time)
 * Users can now order the items by either file size, date added, date updated, name or countOpenings, either in ascending or descending order.
 * Fixed some bugs, e.g., deletion of items in the DetailView, updating bookmark thumbs, and others.
-* Replaced Electron's default "About" window, added a link to the settings screen (not yet implemented) in the menu bar
+
 
 
 Plan for the next two weeks:
-* Create a context menu and accompanying modals
+* Fix a bug when changing the item previews - if the new preview file is called the same as the old preview file in some cases the old one is displayed because it is served from Electron's cache.
+* Create context menus and accompanying modals
 * Finish deletion confirm modal
+
+
+## Report 3
+* Implemented a modal to confirm the deletion of items
+* Added a context menu to the main grid which allows users to open the item in OS file explorer, delete the item or edit the item
+* Replaced Electron's default "About" window with a basic custom one, added a link to the settings screen (not yet implemented) in the menu bar
+* Added a icon and decided on a name for the application: "TagNest"
