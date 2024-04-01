@@ -2,8 +2,10 @@
 
 * chooseBookmarkThumb: 
         disable save button
-        show border around selected image
+        show border around selected image - doesn't work for extracted images because the base64 cannot be compared to the file
         modal: close on ESC
+
+* items are stretched in the grid if one item is too high
 
 * create separate component for CreateItem
 ## Bugs

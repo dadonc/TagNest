@@ -28,41 +28,36 @@
     // If the image is already a file path, just use it
     if (imagePath.includes("file://")) {
       path = imagePath;
-      // const newPreviewPath = imagePath.replace("file://", "");
-      // if (item.bookmark) item.bookmark.previewImagePath = newPreviewPath;
-      // await updateBookmarkPreviewImage(item);
       return;
     }
+    path = cleanPath(imagePath);
+  }
 
-    let [header, imageData] = imagePath.split(";base64,");
+  function cleanPath(path: string) {
+    let [header, imageData] = path.split(";base64,");
     header = header.slice(0, -1);
-    const cleanedString = header + ";base64," + imageData;
-    path = cleanedString;
+    return header + ";base64," + imageData;
   }
 
   async function saveNewThumb() {
     if (!item.bookmark || !item.bookmark.screenshotPath) return;
-
+    let newPreviewPath = "";
     // If the image is already a file path, just use it
     if (path.includes("file://")) {
-      path = path;
-      const newPreviewPath = path.replace("file://", "");
-      if (item.bookmark) item.bookmark.previewImagePath = newPreviewPath;
-      await updateBookmarkPreviewImage(item);
-      close();
-      return;
-    }
-    // else delete the old image and save the new image as a new file
-    if (item.bookmark?.previewImagePath?.includes("_preview_")) {
-      await window.electron.deleteFile(item.bookmark.previewImagePath);
-    }
+      newPreviewPath = path.replace("file://", "");
+    } else {
+      // else delete the old image and save the new image as a new file
+      if (item.bookmark?.previewImagePath?.includes("_preview_")) {
+        await window.electron.deleteFile(item.bookmark.previewImagePath);
+      }
 
-    const newPreviewPath = await window.electron.saveImageFromString({
-      imageBase64: path,
-      path: item.bookmark.screenshotPath,
-      isPreview: true,
-    });
-    path = "file://" + newPreviewPath;
+      newPreviewPath = await window.electron.saveImageFromString({
+        imageBase64: path,
+        path: item.bookmark.screenshotPath,
+        isPreview: true,
+      });
+      path = "file://" + newPreviewPath;
+    }
     item.bookmark.previewImagePath = newPreviewPath;
     await updateBookmarkPreviewImage(item);
     updateItemPreviews(item.id, path);
@@ -86,6 +81,9 @@
         <img
           src={image}
           alt="Bookmark preview"
+          class={cleanPath(image) === path || image === path
+            ? "border-4 border-primary selectedPreview"
+            : "border-4 border-transparent"}
           on:keydown={(e) => {
             if (e.key === "Enter") {
             }
