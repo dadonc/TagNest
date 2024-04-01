@@ -34,13 +34,7 @@
 </script>
 
 {#if isOpen}
-  <Modal
-    {isOpen}
-    isFullWidth={false}
-    close={() => {
-      $contextMenuStore.openModal = "";
-    }}
-  >
+  <Modal {isOpen} isFullWidth={false} {close}>
     <div slot="body" class="h-full p-4 rounded bg-base-100 w-96">
       {#if isSingleItemSelected && item}
         {#if $contextMenuStore.openModal === "editItem"}

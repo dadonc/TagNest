@@ -3,7 +3,6 @@
 * chooseBookmarkThumb: 
         disable save button
         show border around selected image - doesn't work for extracted images because the base64 cannot be compared to the file
-        modal: close on ESC
 
 * items are stretched in the grid if one item is too high
 
@@ -15,6 +14,9 @@
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
+bookmark space preview: 
+    too slow
+    close on ESC after clicking inside rendered bookmark
 
 rename videoPreviewImage to videoThumbImage
 

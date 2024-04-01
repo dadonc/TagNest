@@ -73,10 +73,14 @@
     )
       return;
     if (e.key === "Escape") {
-      if (!isPreviewModalOpen) {
-        $contextMenuStore.isContextMenuOpen = false;
-        deselectItems();
-      }
+      // Close Modal - used if a edit bookmark modal is open, ChooseBookmarkPreview is open and then it is closed using escape -> the modal doesn't have focus anymore
+      $contextMenuStore.openModal = "";
+      $contextMenuStore.isContextMenuOpen = false;
+      deselectItems();
+      // if (!isPreviewModalOpen) {
+      //   $contextMenuStore.isContextMenuOpen = false;
+      //   deselectItems();
+      // }
     } else if (e.key === "Backspace" && e.metaKey) {
       confirmDelete($selectedItems.ids);
       $selectedItems.ids = [];
