@@ -148,8 +148,10 @@
         isPreviewModalOpen = true;
       }
     } else if (e.key === "Enter") {
-      if ($selectedItems.ids.length === 1) {
-        $currentRoute = "details";
+      if ($contextMenuStore.openModal === "") {
+        if ($selectedItems.ids.length === 1) {
+          $currentRoute = "details";
+        }
       }
     }
 

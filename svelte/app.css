@@ -10,6 +10,10 @@
   outline: none;
 }
 
+button:focus {
+  outline: -webkit-focus-ring-color auto 1px;
+}
+
 progress::-webkit-progress-bar {
   @apply bg-neutral;
 }
