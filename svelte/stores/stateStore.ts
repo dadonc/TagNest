@@ -242,6 +242,7 @@ type contextMenuStoreType = {
   x: number;
   y: number;
   isContextMenuOpen: boolean;
+  openContextMenu: "items" | "tags" | "";
   isDeleteModalOpen: boolean;
   idsToDelete: string[];
   // todo do I need to store the modal type here?
@@ -261,6 +262,7 @@ const emptyContextMenu: contextMenuStoreType = {
   isContextMenuOpen: false,
   idsToDelete: [],
   openModal: "",
+  openContextMenu: "",
 };
 
 export const contextMenuStore =

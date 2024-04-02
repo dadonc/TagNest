@@ -1,4 +1,14 @@
 # TODO
+
+main context menu is behind seekbar of video preview
+
+context menu tags: 
+    delete tag
+    edit tag
+    remove outline around tags
+
+
+
 * create separate component for CreateItem
     - save on command + s?
 
@@ -11,10 +21,7 @@
     too slow
     close on ESC after clicking inside rendered bookmark
 
-### context menu 
-context menu detailview: same as main
-context menu tags: deselect all tags (show all items), deselect all but this, show untagged items, delete tag, edit tag, (group tags, ungroup tags)
-
+DeleteConfirmModal is an ActionModal
 ### Not so important bugs
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
@@ -100,6 +107,7 @@ rename videoPreviewImage to videoThumbImage
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview
     * if item groups work make a toggle to automatically group files if they are in a folder when importing
     * context menu main: (group items, ungroup items)
+* (group tags, ungroup tags)?
 
 
 ## LIMITATIONS

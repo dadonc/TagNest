@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { selectedTags, type FilteredTag } from "../../stores/stateStore";
+  import {
+    selectedTags,
+    type FilteredTag,
+    contextMenuStore,
+  } from "../../stores/stateStore";
   import { classNames, openContextMenu } from "../../utils";
 
   export let tag: FilteredTag;
@@ -7,6 +11,9 @@
   $: isDeSelected = $selectedTags.deselectedIds.includes(tag.id);
 
   function toggleSelectTag(id: string) {
+    if ($contextMenuStore.isContextMenuOpen) {
+      $contextMenuStore.isContextMenuOpen = false;
+    }
     if (isDeSelected) {
       toggleDeselectTag(id);
       return;
@@ -24,6 +31,9 @@
   }
 
   function toggleDeselectTag(id: string) {
+    if ($contextMenuStore.isContextMenuOpen) {
+      $contextMenuStore.isContextMenuOpen = false;
+    }
     if ($selectedTags.deselectedIds.includes(id)) {
       $selectedTags.deselectedIds = [
         ...$selectedTags.deselectedIds.filter((t) => t !== id),
@@ -32,10 +42,14 @@
       $selectedTags.deselectedIds = [...$selectedTags.deselectedIds, id];
     }
   }
+
+  function openTagsContextMenu(e: MouseEvent) {
+    openContextMenu(e, "tags");
+  }
 </script>
 
 <div
-  on:contextmenu={openContextMenu}
+  on:contextmenu={openTagsContextMenu}
   class="flex items-center h-5 text-sm font-medium"
 >
   <span>

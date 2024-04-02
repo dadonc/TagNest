@@ -19,74 +19,76 @@
   $: isSingleVideo = selectedItem && selectedItem.type === "video";
 </script>
 
-<ContextMenu>
-  {#if $selectedItems.ids.length === 1}
-    <ContextMenuButton
-      name="Edit Item"
-      onClick={() => {
-        $contextMenuStore.isContextMenuOpen = false;
-        $contextMenuStore.openModal = "editItem";
-      }}
-    />
-    {#if isSingleVideo}
+{#if $contextMenuStore.openContextMenu === "items"}
+  <ContextMenu>
+    {#if $selectedItems.ids.length === 1}
       <ContextMenuButton
-        name="Change Thumbnail"
+        name="Edit Item"
         onClick={() => {
           $contextMenuStore.isContextMenuOpen = false;
-          $contextMenuStore.openModal = "videoThumbnail";
+          $contextMenuStore.openModal = "editItem";
+        }}
+      />
+      {#if isSingleVideo}
+        <ContextMenuButton
+          name="Change Thumbnail"
+          onClick={() => {
+            $contextMenuStore.isContextMenuOpen = false;
+            $contextMenuStore.openModal = "videoThumbnail";
+          }}
+        />
+
+        <ContextMenuButton
+          name="Recreate Preview"
+          onClick={() => {
+            $contextMenuStore.isContextMenuOpen = false;
+            $contextMenuStore.openModal = "videoPreview";
+          }}
+        />
+      {/if}
+      <ContextMenuButton
+        name="Open in file browser"
+        onClick={() => {
+          $contextMenuStore.isContextMenuOpen = false;
+          window.electron.openFileInFileBrowser(selectedItem?.file?.path || "");
+        }}
+      />
+      <ContextMenuButton
+        name="Open in default application"
+        onClick={() => {
+          window.electron.openFileInDefaultApp(selectedItem?.file?.path || "");
+          $contextMenuStore.isContextMenuOpen = false;
+        }}
+      />
+      <ContextMenuButton
+        name="Delete item"
+        onClick={() => {
+          confirmDelete($selectedItems.ids);
+        }}
+      />
+    {:else if $selectedItems.ids.length > 1}
+      <ContextMenuButton
+        name="Edit {$selectedItems.ids.length} items"
+        onClick={() => {
+          $contextMenuStore.isContextMenuOpen = false;
+          $contextMenuStore.openModal = "editItems";
         }}
       />
 
       <ContextMenuButton
-        name="Recreate Preview"
+        name="Reset count of {$selectedItems.ids.length} items"
         onClick={() => {
           $contextMenuStore.isContextMenuOpen = false;
-          $contextMenuStore.openModal = "videoPreview";
+          $contextMenuStore.openModal = "resetCounts";
+        }}
+      />
+
+      <ContextMenuButton
+        name="Delete {$selectedItems.ids.length} items"
+        onClick={() => {
+          confirmDelete($selectedItems.ids);
         }}
       />
     {/if}
-    <ContextMenuButton
-      name="Open in file browser"
-      onClick={() => {
-        $contextMenuStore.isContextMenuOpen = false;
-        window.electron.openFileInFileBrowser(selectedItem?.file?.path || "");
-      }}
-    />
-    <ContextMenuButton
-      name="Open in default application"
-      onClick={() => {
-        window.electron.openFileInDefaultApp(selectedItem?.file?.path || "");
-        $contextMenuStore.isContextMenuOpen = false;
-      }}
-    />
-    <ContextMenuButton
-      name="Delete item"
-      onClick={() => {
-        confirmDelete($selectedItems.ids);
-      }}
-    />
-  {:else if $selectedItems.ids.length > 1}
-    <ContextMenuButton
-      name="Edit {$selectedItems.ids.length} items"
-      onClick={() => {
-        $contextMenuStore.isContextMenuOpen = false;
-        $contextMenuStore.openModal = "editItems";
-      }}
-    />
-
-    <ContextMenuButton
-      name="Reset count of {$selectedItems.ids.length} items"
-      onClick={() => {
-        $contextMenuStore.isContextMenuOpen = false;
-        $contextMenuStore.openModal = "resetCounts";
-      }}
-    />
-
-    <ContextMenuButton
-      name="Delete {$selectedItems.ids.length} items"
-      onClick={() => {
-        confirmDelete($selectedItems.ids);
-      }}
-    />
-  {/if}
-</ContextMenu>
+  </ContextMenu>
+{/if}

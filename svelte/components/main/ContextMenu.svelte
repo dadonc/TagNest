@@ -1,6 +1,6 @@
 <script lang="ts">
   import { contextMenuStore } from "../../stores/stateStore";
-  import { possibylCloseContextMenu, getPxfromRem } from "../../utils";
+  import { getPxfromRem } from "../../utils";
 
   let contextMenuWidth = getPxfromRem(12); // w-48
 
@@ -12,8 +12,6 @@
         $contextMenuStore.x - contextMenuWidth
       }px`;
 </script>
-
-<svelte:window on:click={possibylCloseContextMenu} />
 
 {#if $contextMenuStore.isContextMenuOpen}
   <div

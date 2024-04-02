@@ -18,7 +18,12 @@
     settingsJson,
   } from "./stores/stateStore";
   import Settings from "./components/settings/Settings.svelte";
-  import { exitFakeFullscreen, toggleLeft, toggleRight } from "./utils";
+  import {
+    exitFakeFullscreen,
+    possibylCloseContextMenu,
+    toggleLeft,
+    toggleRight,
+  } from "./utils";
   import { startDeleteTasks } from "./components/main/delete/DeleteQueue";
   import DeleteConfirmModal from "./components/modals/DeleteConfirmModal.svelte";
   import { shuffleItems } from "./stores/items";
@@ -70,7 +75,13 @@
   };
 </script>
 
-<svelte:window on:keydown={handleKeyDown} />
+<svelte:window
+  on:keydown={handleKeyDown}
+  on:click={(e) => {
+    possibylCloseContextMenu(e);
+  }}
+  on:contextmenu={possibylCloseContextMenu}
+/>
 
 <DeleteConfirmModal />
 

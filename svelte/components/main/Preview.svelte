@@ -67,7 +67,7 @@
     if (!isItemSelected) {
       selectItem(event);
     }
-    openContextMenu(event);
+    openContextMenu(event, "items");
   }
 </script>
 
