@@ -1,5 +1,7 @@
 # TODO
 
+ResetConfirmModal has superfluos <Modal>
+
 context menu tags: 
     delete tag
     edit tag
@@ -108,10 +110,3 @@ rename videoPreviewImage to videoThumbImage
     * if item groups work make a toggle to automatically group files if they are in a folder when importing
     * context menu main: (group items, ungroup items)
 * (group tags, ungroup tags)?
-
-
-## LIMITATIONS
-
-Ublock doesn't run, not completely everything is saved, e.g. fonts, embedded audio and video
-Possibly problems with the highlights due to mhtml
-No way to access the stuff using a mobile device

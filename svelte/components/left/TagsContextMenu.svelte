@@ -31,5 +31,12 @@
         }}
       />
     {/if}
+    <ContextMenuButton
+      name="Rename tag"
+      onClick={() => {
+        $contextMenuStore.isContextMenuOpen = false;
+        $contextMenuStore.openModal = "renameTag";
+      }}
+    />
   </ContextMenu>
 {/if}

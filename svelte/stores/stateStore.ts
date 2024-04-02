@@ -241,17 +241,23 @@ export const settingsJson = writable<SettingsJson>();
 type contextMenuStoreType = {
   x: number;
   y: number;
+
+  // todo remove, move into openContextMenu
   isContextMenuOpen: boolean;
   openContextMenu: "items" | "tags" | "";
+  triggeredByTagId: string; // tag which was clicked to trigger the context menu
+
+  // todo remove, move into openModal
   isDeleteModalOpen: boolean;
   idsToDelete: string[];
-  // todo do I need to store the modal type here?
   openModal:
     | "videoThumbnail"
     | "videoPreview"
     | "editItem"
     | "editItems"
     | "resetCounts"
+    | "renameTag"
+    | "deleteTag"
     | "";
 };
 
@@ -263,6 +269,7 @@ const emptyContextMenu: contextMenuStoreType = {
   idsToDelete: [],
   openModal: "",
   openContextMenu: "",
+  triggeredByTagId: "",
 };
 
 export const contextMenuStore =

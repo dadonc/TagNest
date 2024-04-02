@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import prisma from "../prisma";
-import type { SingleItem } from "./items";
+import { refreshDisplayedItems, type SingleItem } from "./items";
 import { selectedTags } from "./stateStore";
 
 export const allTags = writable<Awaited<ReturnType<typeof getTags>>>(
@@ -160,4 +160,58 @@ export async function updateItemsTags(itemIds: string[], tagString: string) {
   for (const item of items) {
     await updateItemTags(item, tagString);
   }
+}
+
+async function getTagByName(tagName: string) {
+  return prisma.tag.findFirst({
+    where: {
+      name: tagName,
+    },
+  });
+}
+
+export async function renameTag(tagId: string, newName: string) {
+  const existingTag = await getTagByName(newName);
+  if (existingTag) {
+    const itemsToUpdate = await prisma.item.findMany({
+      where: {
+        tags: {
+          some: {
+            id: tagId,
+          },
+        },
+      },
+    });
+
+    const updates = itemsToUpdate.map((item) =>
+      prisma.item.update({
+        where: { id: item.id },
+        data: {
+          tags: {
+            connect: { id: existingTag.id },
+          },
+        },
+      })
+    );
+
+    await prisma.$transaction(updates);
+
+    await prisma.tag.delete({
+      where: {
+        id: tagId,
+      },
+    });
+  } else {
+    await prisma.tag.update({
+      where: {
+        id: tagId,
+      },
+      data: {
+        name: newName,
+      },
+    });
+  }
+
+  refreshTagsStore("renamedTag");
+  refreshDisplayedItems("renamedTag");
 }

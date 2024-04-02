@@ -44,6 +44,7 @@
   }
 
   function openTagsContextMenu(e: MouseEvent) {
+    $contextMenuStore.triggeredByTagId = tag.id;
     openContextMenu(e, "tags");
   }
 </script>

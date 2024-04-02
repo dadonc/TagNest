@@ -7,6 +7,7 @@
   import ChooseVideoThumb from "./components/ChooseVideoThumb.svelte";
   import RegenerateVideoPreview from "./RegenerateVideoPreview.svelte";
   import ResetConfirmModal from "./ResetConfirmModal.svelte";
+  import RenameTagModal from "../left/RenameTagModal.svelte";
 
   $: isOpen = $contextMenuStore.openModal !== "";
   $: isSingleItemSelected = $selectedItems.ids.length === 1;
@@ -62,6 +63,9 @@
           {close}
           items={item ? [item] : currentlySelectedItems}
         />
+      {/if}
+      {#if $contextMenuStore.openModal === "renameTag"}
+        <RenameTagModal {close} />
       {/if}
     </div>
   </Modal>
