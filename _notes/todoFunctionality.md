@@ -1,5 +1,7 @@
 # TODO
-
+Overlapping highlights: caught DOMException: Failed to execute 'surroundContents' on 'Range': The Range has partially selected a non-Text node.
+ 
+ 
 ## Bugs
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)

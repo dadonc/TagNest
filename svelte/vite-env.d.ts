@@ -7,3 +7,8 @@ declare namespace svelte.JSX {
     onexitViewport: () => void;
   }
 }
+
+interface Window {
+  addHighlight: () => void;
+  removeHighlight: (target: HTMLElement) => void;
+}
