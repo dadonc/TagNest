@@ -1,8 +1,6 @@
 # TODO
-* focus delete/reset button if modal is triggered using the mouse
-
 * create separate component for CreateItem
-    - save on command + s
+    - save on command + s?
 
 ## Bugs
 * modal sizes
@@ -14,7 +12,6 @@
     close on ESC after clicking inside rendered bookmark
 
 ### context menu 
-context menu main: reset countOpened, delete item, open in default application, open in browser, show in finder, edit item, (group items, ungroup items)
 context menu detailview: same as main
 context menu tags: deselect all tags (show all items), deselect all but this, show untagged items, delete tag, edit tag, (group tags, ungroup tags)
 
@@ -74,6 +71,7 @@ rename videoPreviewImage to videoThumbImage
 * item preview: show tags(clickable, toggle on off in quick settings) - also show in detailview
 * Make URL clickable in right sidebar, add url icon to item preview
 * Make paths relative
+* Add "searchbar" for tag quick selection 
 
 * loading indicator when opening external files
 * detailview bottom bar: support up and down arrows
@@ -101,6 +99,8 @@ rename videoPreviewImage to videoThumbImage
 * item groups
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview
     * if item groups work make a toggle to automatically group files if they are in a folder when importing
+    * context menu main: (group items, ungroup items)
+
 
 ## LIMITATIONS
 
