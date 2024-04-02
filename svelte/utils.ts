@@ -413,3 +413,13 @@ export async function updateItemPreviews(id: string, previewPath?: string) {
     }
   }, 0);
 }
+
+export function openContextMenu(event: MouseEvent) {
+  event.stopPropagation();
+  event.preventDefault();
+  const $contextMenuStore = get(contextMenuStore);
+  $contextMenuStore.x = event.clientX;
+  $contextMenuStore.y = event.clientY;
+  $contextMenuStore.isContextMenuOpen = true;
+  contextMenuStore.set($contextMenuStore);
+}

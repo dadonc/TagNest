@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { SingleItem } from "../../stores/items";
+  import { selectedItems, currentRoute } from "../../stores/stateStore";
   import {
-    selectedItems,
-    currentRoute,
-    contextMenuStore,
-  } from "../../stores/stateStore";
-  import { classNames, possibylCloseContextMenu } from "../../utils";
+    classNames,
+    openContextMenu,
+    possibylCloseContextMenu,
+  } from "../../utils";
   import useIntersectionObserver from "../useIntersectionObserver";
   import PreviewChooser from "./PreviewChooser.svelte";
 
@@ -63,16 +63,11 @@
       ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem)"
       : "";
 
-  function openContextMenu(event: MouseEvent) {
-    event.stopPropagation();
-    event.preventDefault();
-
+  function openMainContextMenu(event: MouseEvent) {
     if (!isItemSelected) {
       selectItem(event);
     }
-    $contextMenuStore.x = event.clientX;
-    $contextMenuStore.y = event.clientY;
-    $contextMenuStore.isContextMenuOpen = true;
+    openContextMenu(event);
   }
 </script>
 
@@ -99,7 +94,7 @@
     $currentRoute = "details";
   }}
   on:keydown={() => {}}
-  on:contextmenu={openContextMenu}
+  on:contextmenu={openMainContextMenu}
   class={classNames(
     "flex items-center justify-center h-full w-full border-2 select-none ",
 

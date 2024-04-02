@@ -1,6 +1,6 @@
 <script lang="ts">
   import { selectedTags, type FilteredTag } from "../../stores/stateStore";
-  import { classNames } from "../../utils";
+  import { classNames, openContextMenu } from "../../utils";
 
   export let tag: FilteredTag;
   $: isSelected = $selectedTags.selectedIds.includes(tag.id);
@@ -34,7 +34,10 @@
   }
 </script>
 
-<div class="flex items-center h-5 text-sm font-medium">
+<div
+  on:contextmenu={openContextMenu}
+  class="flex items-center h-5 text-sm font-medium"
+>
   <span>
     {#if tag.countAfterDeselection !== 0}
       <button

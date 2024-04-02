@@ -5,6 +5,7 @@
     type TagTree,
   } from "../../stores/stateStore";
   import LeftTagTree from "./LeftTagTree.svelte";
+  import TagsContextMenu from "./TagsContextMenu.svelte";
 
   export let tags: FilteredTag[];
 
@@ -49,4 +50,5 @@
   }
 </script>
 
+<TagsContextMenu />
 <LeftTagTree {tagTree} indent={0} />
