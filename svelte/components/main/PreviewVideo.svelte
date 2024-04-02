@@ -189,7 +189,7 @@
         $currView.jumpToVideoTime = seek(e);
         $currentRoute = "details";
       }}
-      class="absolute bottom-0 z-50 w-full h-6 cursor-pointer"
+      class="absolute bottom-0 z-20 w-full h-6 cursor-pointer"
       bind:this={progressBar}
       value="0"
       max="0"
@@ -198,11 +198,11 @@
     />
     <canvas
       bind:this={thumbElement}
-      class="absolute bottom-0 left-0 z-50 hidden bg-transparent"
+      class="absolute bottom-0 left-0 z-20 hidden bg-transparent"
     />
 
     <span
-      class="absolute z-50 font-mono text-xs text-white pointer-events-none bottom-1 right-1"
+      class="absolute z-20 font-mono text-xs text-white pointer-events-none bottom-1 right-1"
     >
       <span class="hidden" bind:this={hoverSeekTimeSpan}>00:00:00 / </span>
       <span>{durationString}</span>

@@ -1,11 +1,11 @@
 # TODO
 
-main context menu is behind seekbar of video preview
-
 context menu tags: 
     delete tag
     edit tag
     remove outline around tags
+DeleteConfirmModal is an ActionModal
+
 
 
 
@@ -21,7 +21,7 @@ context menu tags:
     too slow
     close on ESC after clicking inside rendered bookmark
 
-DeleteConfirmModal is an ActionModal
+
 ### Not so important bugs
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview

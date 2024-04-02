@@ -16,7 +16,7 @@
 {#if $contextMenuStore.isContextMenuOpen}
   <div
     id="contextMenu"
-    class="absolute z-20 w-48 text-sm border rounded-sm shadow-lg bg-base-100 border-base-200"
+    class="absolute z-50 w-48 text-sm border rounded-sm shadow-lg bg-base-100 border-base-200"
     style={pos}
   >
     <slot />
