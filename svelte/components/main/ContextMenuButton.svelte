@@ -9,3 +9,10 @@
 >
   {name}
 </button>
+
+<style>
+  button:focus {
+    outline-offset: 0;
+    border-color: transparent;
+  }
+</style>

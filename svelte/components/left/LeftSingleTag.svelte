@@ -66,10 +66,10 @@
   </span>
   <button
     class={classNames(
-      isSelected ? "bg-accent text-accent-content" : "",
-      isDeSelected ? "bg-error text-error-content" : "",
+      isSelected ? "bg-accent text-accent-content rounded-md" : "",
+      isDeSelected ? "bg-error text-error-content rounded-md" : "",
 
-      "rounded-md w-full flex justify-between items-center pl-1"
+      " w-full flex justify-between items-center pl-1"
     )}
     on:click={() => toggleSelectTag(tag.id)}
   >
@@ -83,3 +83,11 @@
     {/if}
   </button>
 </div>
+
+<style>
+  button:focus {
+    outline: none;
+    /* accent color */
+    /* border-bottom: 1px solid hsl(var(--a) / var(--tw-bg-opacity)); */
+  }
+</style>

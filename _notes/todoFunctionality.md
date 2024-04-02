@@ -1,18 +1,5 @@
 # TODO
 
-When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created
-
-
-context menu tags: 
-    remove outline around tags
-
-
-ResetConfirmModal has superfluos <Modal>
-DeleteConfirmModal is an ActionModal
-
-* create separate component for CreateItem
-    - save on command + s?
-
 ## Bugs
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
@@ -22,19 +9,23 @@ DeleteConfirmModal is an ActionModal
     too slow
     close on ESC after clicking inside rendered bookmark
 
+When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created(?)
 
 ### Not so important bugs
 * tag input bug, "Tags" background hint text
 * close pdf on ESC; pdfjs is broken on space preview
 * main grid scrollbar is inside the rightmost items
 
-
 * chooseBookmarkThumb: 
     disable save button
     show border around selected image - doesn't work for extracted images because the base64 cannot be compared to the file
 
-
+## Refactor
 rename videoPreviewImage to videoThumbImage
+ResetConfirmModal has superfluos <Modal>
+DeleteConfirmModal is an ActionModal
+* create separate component for CreateItem
+    - save on command + s?
 
 ## Revised plan
 •	Developing the application (01.06.24)
@@ -42,7 +33,7 @@ rename videoPreviewImage to videoThumbImage
     o	✅ Support different item types: video, PDF, audio, text and other
     o	✅ Support choosable preview images for bookmarks and videos
     o	(Re)write chrome extension
-    o	Context menu, ✅ deletion modal
+    o	✅ Context menu, ✅ deletion modal
     o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar, indicator in grid preview
     o	✅ Item order: file size, date added, date updated, name, countOpenings
 •	Polishing the application (01.07.24)
