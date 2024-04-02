@@ -60,7 +60,7 @@
 </div>
 <div class="flex justify-center">
   <button
-    class="mt-4 btn btn-error"
+    class="mt-4 text-red-600 hover:text-red-800"
     on:click={async () => {
       confirmDelete($selectedItems.ids);
       $importItems = $importItems.filter(

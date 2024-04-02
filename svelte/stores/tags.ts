@@ -48,7 +48,6 @@ async function createTags(tagNames: string[]) {
 
 async function possiblyDeleteSingleTag({
   id,
-  dontRefreshStore,
 }: {
   id: string;
   dontRefreshStore?: boolean;
@@ -134,9 +133,9 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
       },
     },
   });
-  refreshTagsStore("updateItemTags");
-
   await possiblyDeleteTags(deletedTagIds);
+  refreshTagsStore("updateItemTags");
+  refreshDisplayedItems("updateItemTags");
 }
 
 export async function updateItemsTags(itemIds: string[], tagString: string) {

@@ -37,5 +37,7 @@
 />
 <div class="flex items-center justify-center">
   <button class="" on:click={close}>Cancel</button>
-  <button class="ml-4 btn" {disabled} on:click={rename}>Rename</button>
+  <button class="ml-4 btn btn-primary" {disabled} on:click={rename}
+    >Rename</button
+  >
 </div>

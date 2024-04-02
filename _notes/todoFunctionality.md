@@ -1,15 +1,15 @@
 # TODO
 
-ResetConfirmModal has superfluos <Modal>
+When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created
+
 
 context menu tags: 
     delete tag
-    edit tag
     remove outline around tags
+
+
+ResetConfirmModal has superfluos <Modal>
 DeleteConfirmModal is an ActionModal
-
-
-
 
 * create separate component for CreateItem
     - save on command + s?
