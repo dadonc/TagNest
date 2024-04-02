@@ -4,7 +4,6 @@ When displaying all untagged items, update the list of deselected tags if a new 
 
 
 context menu tags: 
-    delete tag
     remove outline around tags
 
 

@@ -38,5 +38,12 @@
         $contextMenuStore.openModal = "renameTag";
       }}
     />
+    <ContextMenuButton
+      name="Delete tag"
+      onClick={() => {
+        $contextMenuStore.isContextMenuOpen = false;
+        $contextMenuStore.openModal = "deleteTag";
+      }}
+    />
   </ContextMenu>
 {/if}

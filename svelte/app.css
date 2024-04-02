@@ -11,7 +11,9 @@
 }
 
 button:focus {
-  outline: -webkit-focus-ring-color auto 1px;
+  /* outline: -webkit-focus-ring-color auto 1px; */
+  outline: 2px solid hsl(var(--nf));
+  outline-offset: 2px;
 }
 
 progress::-webkit-progress-bar {

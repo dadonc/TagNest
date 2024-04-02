@@ -8,6 +8,7 @@
   import RegenerateVideoPreview from "./RegenerateVideoPreview.svelte";
   import ResetConfirmModal from "./ResetConfirmModal.svelte";
   import RenameTagModal from "../left/RenameTagModal.svelte";
+  import DeleteTagModal from "../left/DeleteTagModal.svelte";
 
   $: isOpen = $contextMenuStore.openModal !== "";
   $: isSingleItemSelected = $selectedItems.ids.length === 1;
@@ -66,6 +67,9 @@
       {/if}
       {#if $contextMenuStore.openModal === "renameTag"}
         <RenameTagModal {close} />
+      {/if}
+      {#if $contextMenuStore.openModal === "deleteTag"}
+        <DeleteTagModal {close} />
       {/if}
     </div>
   </Modal>

@@ -7,7 +7,7 @@ export const allTags = writable<Awaited<ReturnType<typeof getTags>>>(
   await getTags()
 );
 
-async function refreshTagsStore(src?: string) {
+export async function refreshTagsStore(src?: string) {
   console.log("Refreshing tags store", src);
   const updatedTags = await getTags();
   allTags.set(updatedTags);
@@ -169,6 +169,14 @@ async function getTagByName(tagName: string) {
   });
 }
 
+export async function deleteTagById(tagId: string) {
+  return prisma.tag.delete({
+    where: {
+      id: tagId,
+    },
+  });
+}
+
 export async function renameTag(tagId: string, newName: string) {
   const existingTag = await getTagByName(newName);
   if (existingTag) {
@@ -195,11 +203,7 @@ export async function renameTag(tagId: string, newName: string) {
 
     await prisma.$transaction(updates);
 
-    await prisma.tag.delete({
-      where: {
-        id: tagId,
-      },
-    });
+    await deleteTagById(tagId);
   } else {
     await prisma.tag.update({
       where: {
