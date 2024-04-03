@@ -8,8 +8,18 @@ declare namespace svelte.JSX {
   }
 }
 
+type BookmarkHighlight__copy = {
+  id: string;
+  text: string | null;
+  rangeJSON: string | null;
+  bookmarkId: string;
+};
+
 interface Window {
-  addHighlight: (bookmarkId?: string) => void;
+  addHighlight: (args: { bookmarkId?: string; highlightId?: string }) => void;
   removeHighlight: (target: HTMLElement) => void;
-  restoreHighlights: (rangeDataString: string, doc: Document) => void;
+  restoreHighlights: (
+    highlight: BookmarkHighlight__copy,
+    doc: Document
+  ) => void;
 }

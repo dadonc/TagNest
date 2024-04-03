@@ -3,6 +3,7 @@
   import type { SingleItem } from "../../stores/items";
   import LoaderCircle from "../top/LoaderCircle.svelte";
   import {
+    deleteHighlight,
     getHighlightsForBookmark,
     prepareMhtml,
     restoreHighlights,
@@ -27,7 +28,7 @@
       doc = iframe.contentDocument || iframe.contentWindow!.document;
       exposeFunctionsToIframe();
       highlights.forEach((highlight) => {
-        restoreHighlights(highlight.rangeJSON!, doc);
+        restoreHighlights(highlight, doc);
       });
 
       doc.addEventListener("mouseup", (e) => {
@@ -88,7 +89,7 @@
     tooltip.style.padding = "5px";
     doc.body.appendChild(tooltip);
     tooltip.addEventListener("mouseup", () => {
-      parent.addHighlight(item.bookmark!.id);
+      parent.addHighlight({ bookmarkId: item.bookmark!.id });
     });
 
     const range = selection.getRangeAt(0).getBoundingClientRect();
@@ -109,6 +110,11 @@
     doc.body.appendChild(tooltip);
     tooltip.addEventListener("click", () => {
       parent.removeHighlight(e.target as HTMLElement);
+      // @ts-ignore
+      const highlightId = e.target.dataset.highlightId;
+      if (highlightId) {
+        deleteHighlight(highlightId);
+      }
       removeRmvTooltip();
     });
     // @ts-ignore
@@ -119,14 +125,26 @@
     tooltip.style.top = `${iframeRect.top + span.top + window.scrollY - tooltip.offsetHeight - 15}px`;
   }
 
-  function addHighlight(bookmarkId?: string) {
+  async function addHighlight(args: {
+    bookmarkId?: string;
+    highlightId?: string;
+  }) {
+    // highlightId is set if the highlight is being restored
+    // bookmarkId is set if the highlight is being added for the first time
     const selection = doc.getSelection();
     if (!selection || !selection.toString().trim()) return;
     const range = selection.getRangeAt(0);
-    if (bookmarkId) {
-      saveHighlight(bookmarkId, range);
+    let newId = "";
+    if (args.bookmarkId) {
+      newId = (await saveHighlight(args.bookmarkId, range)).id;
+      console.log("New highlight id:", newId);
     }
     const span = doc.createElement("span");
+    if (args.highlightId) {
+      span.dataset.highlightId = args.highlightId;
+    } else {
+      span.dataset.highlightId = newId;
+    }
     span.classList.add("highlight");
     span.addEventListener("mouseup", (e) => {
       showRemoveTooltip(e);

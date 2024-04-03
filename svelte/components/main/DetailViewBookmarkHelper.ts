@@ -1,3 +1,4 @@
+import type { BookmarkHighlight } from "@prisma/client";
 // @ts-ignore
 import mhtml2html from "../../assets/deps/mhtml2html";
 import prisma from "../../prisma";
@@ -29,7 +30,7 @@ export function saveHighlight(bookmarkId: string, range: Range) {
     endOffset: range.endOffset,
   };
 
-  saveHighlightToDB(bookmarkId, {
+  return saveHighlightToDB(bookmarkId, {
     text: range.toString(),
     rangeJSON: JSON.stringify(rangeData),
   });
@@ -63,7 +64,7 @@ function saveHighlightToDB(
   bookmarkId: string,
   highlightData: { text: string; rangeJSON: string }
 ) {
-  prisma.bookmarkHighlight.create({
+  return prisma.bookmarkHighlight.create({
     data: {
       text: highlightData.text,
       rangeJSON: highlightData.rangeJSON,
@@ -88,8 +89,8 @@ export function getHighlightsForBookmark(bookmarkId: string) {
   });
 }
 
-export function restoreHighlights(rangeDataString: string, doc: Document) {
-  const rangeData = JSON.parse(rangeDataString);
+export function restoreHighlights(highlight: BookmarkHighlight, doc: Document) {
+  const rangeData = JSON.parse(highlight.rangeJSON!);
   const range = doc.createRange();
 
   const startContainer = doc.querySelector(rangeData.startContainerPath);
@@ -109,7 +110,7 @@ export function restoreHighlights(rangeDataString: string, doc: Document) {
     if (!selection) return;
     selection.removeAllRanges();
     selection.addRange(range);
-    window.addHighlight();
+    window.addHighlight({ highlightId: highlight.id });
   }
 }
 
@@ -117,4 +118,15 @@ function findTextNode(container: Node) {
   return [...container.childNodes].find(
     (node) => node.nodeType === Node.TEXT_NODE
   );
+}
+
+// ========================
+// Delete the highlight
+// ========================
+export function deleteHighlight(highlightId: string) {
+  prisma.bookmarkHighlight.delete({
+    where: {
+      id: highlightId,
+    },
+  });
 }
