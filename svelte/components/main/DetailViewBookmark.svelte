@@ -28,9 +28,11 @@
           return;
         }
         const existingTooltip = doc.getElementById("tooltip");
+        const existingRmvTooltip = doc.getElementById("tooltipRmv");
+
         if (existingTooltip) {
           existingTooltip.remove();
-        } else {
+        } else if (!existingRmvTooltip) {
           showHighlightTooltip(selection);
         }
       });
@@ -118,7 +120,11 @@
       showRemoveTooltip(e);
     });
     span.style.backgroundColor = "yellow";
-    range.surroundContents(span);
+    try {
+      range.surroundContents(span);
+    } catch (e) {
+      console.error("Error surrounding contents:", e);
+    }
     selection.empty();
     removeTooltip();
   }
