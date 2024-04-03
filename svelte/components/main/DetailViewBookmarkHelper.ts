@@ -11,16 +11,12 @@ export async function prepareMhtml(bookmarkId: string, mhtmlPath: string) {
       aTag.setAttribute("target", "_blank");
     });
   const html = new XMLSerializer().serializeToString(htmlDoc.window.document);
-  // const doc = await reinsertHighlights(bookmarkId, htmlDoc.window);
   return html;
 }
 
-function ensureElement(node: any) {
-  while (node && node.nodeType !== Node.ELEMENT_NODE) {
-    node = node.parentNode;
-  }
-  return node;
-}
+// ========================
+// Saving the highlight
+// ========================
 
 export function saveHighlight(bookmarkId: string, range: Range) {
   const startContainerPath = getUniquePath(ensureElement(range.startContainer));
@@ -37,6 +33,13 @@ export function saveHighlight(bookmarkId: string, range: Range) {
     text: range.toString(),
     rangeJSON: JSON.stringify(rangeData),
   });
+}
+
+function ensureElement(node: any) {
+  while (node && node.nodeType !== Node.ELEMENT_NODE) {
+    node = node.parentNode;
+  }
+  return node;
 }
 
 function getUniquePath(element: Node) {
@@ -73,6 +76,10 @@ function saveHighlightToDB(
   });
 }
 
+// ========================
+// Restoring the highlight
+// ========================
+
 export function getHighlightsForBookmark(bookmarkId: string) {
   return prisma.bookmarkHighlight.findMany({
     where: {
@@ -81,24 +88,12 @@ export function getHighlightsForBookmark(bookmarkId: string) {
   });
 }
 
-async function reinsertHighlights(bookmarkId: string, win: Window) {
-  const highlights = await getHighlightsForBookmark(bookmarkId);
-  highlights.forEach((highlight) => {
-    restoreHighlights(highlight.rangeJSON!);
-  });
-  return win.document;
-}
-
-export function restoreHighlights(rangeDataString: string) {
+export function restoreHighlights(rangeDataString: string, doc: Document) {
   const rangeData = JSON.parse(rangeDataString);
-  const range = window.document.createRange();
+  const range = doc.createRange();
 
-  const startContainer = window.document.querySelector(
-    rangeData.startContainerPath
-  );
-  const endContainer = window.document.querySelector(
-    rangeData.endContainerPath
-  );
+  const startContainer = doc.querySelector(rangeData.startContainerPath);
+  const endContainer = doc.querySelector(rangeData.endContainerPath);
 
   const startTextNode = findTextNode(startContainer);
   const endTextNode =
@@ -106,50 +101,20 @@ export function restoreHighlights(rangeDataString: string) {
       ? startTextNode
       : findTextNode(endContainer);
 
-  console.log("startTextNode", startTextNode);
-  console.log("endTextNode", endTextNode);
-
   if (startTextNode && endTextNode) {
     range.setStart(startTextNode, rangeData.startOffset);
     range.setEnd(endTextNode, rangeData.endOffset);
 
-    console.log(window);
-    const selection = window.getSelection();
+    const selection = doc.getSelection();
     if (!selection) return;
     selection.removeAllRanges();
     selection.addRange(range);
-    addHighlight(window.document);
+    window.addHighlight();
   }
 }
 
 function findTextNode(container: Node) {
-  // This function finds the first text node within the given container.
-  // Adjust this function if you need to target a different text node.
   return [...container.childNodes].find(
     (node) => node.nodeType === Node.TEXT_NODE
   );
-}
-
-function addHighlight(doc: Document, bookmarkId?: string) {
-  console.log("Adding highlight");
-  const selection = doc.getSelection();
-  console.log(selection!.toString().trim());
-  if (!selection || !selection.toString().trim()) return;
-  const range = selection.getRangeAt(0);
-  if (bookmarkId) {
-    saveHighlight(bookmarkId, range);
-  }
-  const span = doc.createElement("span");
-  span.classList.add("highlight");
-  span.addEventListener("mouseup", (e) => {
-    // showRemoveTooltip(e);
-  });
-  span.style.backgroundColor = "yellow";
-  try {
-    range.surroundContents(span);
-  } catch (e) {
-    console.error("Error surrounding contents:", e);
-  }
-  selection.empty();
-  // removeTooltip();
 }

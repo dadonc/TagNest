@@ -27,7 +27,7 @@
       doc = iframe.contentDocument || iframe.contentWindow!.document;
       exposeFunctionsToIframe();
       highlights.forEach((highlight) => {
-        restoreHighlights(highlight.rangeJSON!);
+        restoreHighlights(highlight.rangeJSON!, doc);
       });
 
       doc.addEventListener("mouseup", (e) => {
@@ -88,7 +88,7 @@
     tooltip.style.padding = "5px";
     doc.body.appendChild(tooltip);
     tooltip.addEventListener("mouseup", () => {
-      parent.addHighlight();
+      parent.addHighlight(item.bookmark!.id);
     });
 
     const range = selection.getRangeAt(0).getBoundingClientRect();
@@ -119,11 +119,13 @@
     tooltip.style.top = `${iframeRect.top + span.top + window.scrollY - tooltip.offsetHeight - 15}px`;
   }
 
-  function addHighlight() {
+  function addHighlight(bookmarkId?: string) {
     const selection = doc.getSelection();
     if (!selection || !selection.toString().trim()) return;
     const range = selection.getRangeAt(0);
-    saveHighlight(item.bookmark!.id, range);
+    if (bookmarkId) {
+      saveHighlight(bookmarkId, range);
+    }
     const span = doc.createElement("span");
     span.classList.add("highlight");
     span.addEventListener("mouseup", (e) => {

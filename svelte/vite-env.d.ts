@@ -9,7 +9,7 @@ declare namespace svelte.JSX {
 }
 
 interface Window {
-  addHighlight: () => void;
+  addHighlight: (bookmarkId?: string) => void;
   removeHighlight: (target: HTMLElement) => void;
-  restoreHighlights: (rangeDataString: string) => void;
+  restoreHighlights: (rangeDataString: string, doc: Document) => void;
 }
