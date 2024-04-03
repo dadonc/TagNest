@@ -49,13 +49,22 @@ model Tag {
 
 model Bookmark {
   // item.file is the mhtml file
-  id               String  @id @default(cuid())
-  text             String?
-  faviconPath      String?
-  previewImagePath String?
-  screenshotPath   String?
-  item             Item    @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  itemId           String  @unique
+  id                String              @id @default(cuid())
+  text              String?
+  faviconPath       String?
+  previewImagePath  String?
+  screenshotPath    String?
+  item              Item                @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId            String              @unique
+  BookmarkHighlight BookmarkHighlight[]
+}
+
+model BookmarkHighlight {
+  id         String   @id @default(cuid())
+  text       String?
+  rangeJSON  String?
+  bookmark   Bookmark @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  bookmarkId String
 }
 
 model Audio {

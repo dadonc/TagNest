@@ -2,7 +2,7 @@
   import { onMount, tick } from "svelte";
   import type { SingleItem } from "../../stores/items";
   import LoaderCircle from "../top/LoaderCircle.svelte";
-  import { prepareMhtml } from "./DetailViewBookmarkHelper";
+  import { prepareMhtml, saveHighlight } from "./DetailViewBookmarkHelper";
 
   export let item: SingleItem;
   let html: string;
@@ -12,7 +12,7 @@
   let doc: Document;
 
   onMount(async () => {
-    html = await prepareMhtml(item.file!.path as string);
+    html = await prepareMhtml(item.bookmark!.id, item.file!.path as string);
     displayScreenshot = false;
 
     await tick();
@@ -114,6 +114,7 @@
     const selection = doc.getSelection();
     if (!selection || !selection.toString().trim()) return;
     const range = selection.getRangeAt(0);
+    saveHighlight(item.bookmark!.id, range);
     const span = doc.createElement("span");
     span.classList.add("highlight");
     span.addEventListener("mouseup", (e) => {

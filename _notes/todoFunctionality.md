@@ -91,6 +91,7 @@ DeleteConfirmModal is an ActionModal
 
 
 ## Probably out of scope:
+* element zapper for bookmarks to remove cookie banners etc
 * update functionality
 * Search
 * undo/redo  

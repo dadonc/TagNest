@@ -1,7 +1,8 @@
 // @ts-ignore
 import mhtml2html from "../../assets/deps/mhtml2html";
+import prisma from "../../prisma";
 
-export async function prepareMhtml(mhtmlPath: string) {
+export async function prepareMhtml(bookmarkId: string, mhtmlPath: string) {
   const mhtml = await window.electron.readFile(mhtmlPath);
   let htmlDoc = mhtml2html.convert(mhtml);
   htmlDoc.window.document
@@ -10,5 +11,73 @@ export async function prepareMhtml(mhtmlPath: string) {
       aTag.setAttribute("target", "_blank");
     });
   const html = new XMLSerializer().serializeToString(htmlDoc.window.document);
+
+  console.log("HIGH", await getHighlightsForBookmark(bookmarkId));
   return html;
+}
+
+function ensureElement(node: any) {
+  while (node && node.nodeType !== Node.ELEMENT_NODE) {
+    node = node.parentNode;
+  }
+  return node;
+}
+
+export function saveHighlight(bookmarkId: string, range: Range) {
+  const startContainerPath = getUniquePath(ensureElement(range.startContainer));
+  const endContainerPath = getUniquePath(ensureElement(range.endContainer));
+
+  const rangeData = {
+    startContainerPath,
+    endContainerPath,
+    startOffset: range.startOffset,
+    endOffset: range.endOffset,
+  };
+
+  saveHighlightToDB(bookmarkId, {
+    text: range.toString(),
+    rangeJSON: JSON.stringify(rangeData),
+  });
+}
+
+function getUniquePath(element: Node) {
+  let path = [];
+  while (element && element.nodeType === Node.ELEMENT_NODE) {
+    const el = element as Element;
+    let selector = el.tagName.toLowerCase();
+    let sibling = el;
+    let count = 1; // Position among siblings with the same tag name
+    while ((sibling = sibling.previousElementSibling as Element) != null) {
+      if (sibling.tagName.toLowerCase() === selector) count++;
+    }
+    selector += ":nth-of-type(" + count + ")";
+    path.unshift(selector);
+    element = element.parentNode as Element;
+  }
+  return path.join(" > "); // Create CSS selector
+}
+
+function saveHighlightToDB(
+  bookmarkId: string,
+  highlightData: { text: string; rangeJSON: string }
+) {
+  prisma.bookmarkHighlight.create({
+    data: {
+      text: highlightData.text,
+      rangeJSON: highlightData.rangeJSON,
+      bookmark: {
+        connect: {
+          id: bookmarkId,
+        },
+      },
+    },
+  });
+}
+
+function getHighlightsForBookmark(bookmarkId: string) {
+  return prisma.bookmarkHighlight.findMany({
+    where: {
+      bookmarkId: bookmarkId,
+    },
+  });
 }
