@@ -36,22 +36,35 @@
       });
       doc.addEventListener("mousedown", (e) => {
         if (e.target !== doc.getElementById("tooltip")) {
-          removeTooltip(e);
+          possiblyRemoveTooltip(e);
         }
       });
     };
   });
 
-  function removeTooltip(e?: MouseEvent) {
+  function possiblyRemoveTooltip(e?: MouseEvent) {
     const tooltip = doc.getElementById("tooltip");
     const tooltipRmv = doc.getElementById("tooltipRmv");
     if (tooltip && (!e || e.target !== tooltip)) {
       tooltip.remove();
     }
-    // @ts-ignore
-    // if (tooltipRmv) {
-    //   tooltipRmv.remove();
-    // }
+    if (tooltipRmv && (!e || e.target !== tooltipRmv)) {
+      tooltipRmv.remove();
+    }
+  }
+
+  function removeTooltip(e?: MouseEvent) {
+    const tooltip = doc.getElementById("tooltip");
+    if (tooltip) {
+      tooltip.remove();
+    }
+  }
+
+  function removeRmvTooltip(e?: MouseEvent) {
+    const tooltipRmv = doc.getElementById("tooltipRmv");
+    if (tooltipRmv) {
+      tooltipRmv.remove();
+    }
   }
 
   function showHighlightTooltip(selection: Selection) {
@@ -85,6 +98,7 @@
     doc.body.appendChild(tooltip);
     tooltip.addEventListener("click", () => {
       parent.removeHighlight(e.target as HTMLElement);
+      removeRmvTooltip();
     });
     // @ts-ignore
     const span = e.target.getBoundingClientRect();
@@ -106,6 +120,7 @@
     span.style.backgroundColor = "yellow";
     range.surroundContents(span);
     selection.empty();
+    removeTooltip();
   }
 
   function removeHighlight(target: HTMLElement) {
