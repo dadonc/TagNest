@@ -11,8 +11,7 @@ export async function prepareMhtml(bookmarkId: string, mhtmlPath: string) {
       aTag.setAttribute("target", "_blank");
     });
   const html = new XMLSerializer().serializeToString(htmlDoc.window.document);
-
-  console.log("HIGH", await getHighlightsForBookmark(bookmarkId));
+  // const doc = await reinsertHighlights(bookmarkId, htmlDoc.window);
   return html;
 }
 
@@ -74,10 +73,83 @@ function saveHighlightToDB(
   });
 }
 
-function getHighlightsForBookmark(bookmarkId: string) {
+export function getHighlightsForBookmark(bookmarkId: string) {
   return prisma.bookmarkHighlight.findMany({
     where: {
       bookmarkId: bookmarkId,
     },
   });
+}
+
+async function reinsertHighlights(bookmarkId: string, win: Window) {
+  const highlights = await getHighlightsForBookmark(bookmarkId);
+  highlights.forEach((highlight) => {
+    restoreHighlights(highlight.rangeJSON!);
+  });
+  return win.document;
+}
+
+export function restoreHighlights(rangeDataString: string) {
+  const rangeData = JSON.parse(rangeDataString);
+  const range = window.document.createRange();
+
+  const startContainer = window.document.querySelector(
+    rangeData.startContainerPath
+  );
+  const endContainer = window.document.querySelector(
+    rangeData.endContainerPath
+  );
+
+  const startTextNode = findTextNode(startContainer);
+  const endTextNode =
+    startContainer === endContainer
+      ? startTextNode
+      : findTextNode(endContainer);
+
+  console.log("startTextNode", startTextNode);
+  console.log("endTextNode", endTextNode);
+
+  if (startTextNode && endTextNode) {
+    range.setStart(startTextNode, rangeData.startOffset);
+    range.setEnd(endTextNode, rangeData.endOffset);
+
+    console.log(window);
+    const selection = window.getSelection();
+    if (!selection) return;
+    selection.removeAllRanges();
+    selection.addRange(range);
+    addHighlight(window.document);
+  }
+}
+
+function findTextNode(container: Node) {
+  // This function finds the first text node within the given container.
+  // Adjust this function if you need to target a different text node.
+  return [...container.childNodes].find(
+    (node) => node.nodeType === Node.TEXT_NODE
+  );
+}
+
+function addHighlight(doc: Document, bookmarkId?: string) {
+  console.log("Adding highlight");
+  const selection = doc.getSelection();
+  console.log(selection!.toString().trim());
+  if (!selection || !selection.toString().trim()) return;
+  const range = selection.getRangeAt(0);
+  if (bookmarkId) {
+    saveHighlight(bookmarkId, range);
+  }
+  const span = doc.createElement("span");
+  span.classList.add("highlight");
+  span.addEventListener("mouseup", (e) => {
+    // showRemoveTooltip(e);
+  });
+  span.style.backgroundColor = "yellow";
+  try {
+    range.surroundContents(span);
+  } catch (e) {
+    console.error("Error surrounding contents:", e);
+  }
+  selection.empty();
+  // removeTooltip();
 }

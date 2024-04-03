@@ -2,7 +2,12 @@
   import { onMount, tick } from "svelte";
   import type { SingleItem } from "../../stores/items";
   import LoaderCircle from "../top/LoaderCircle.svelte";
-  import { prepareMhtml, saveHighlight } from "./DetailViewBookmarkHelper";
+  import {
+    getHighlightsForBookmark,
+    prepareMhtml,
+    restoreHighlights,
+    saveHighlight,
+  } from "./DetailViewBookmarkHelper";
 
   export let item: SingleItem;
   let html: string;
@@ -14,12 +19,16 @@
   onMount(async () => {
     html = await prepareMhtml(item.bookmark!.id, item.file!.path as string);
     displayScreenshot = false;
+    const highlights = await getHighlightsForBookmark(item.bookmark!.id);
 
     await tick();
 
     iframe.onload = () => {
       doc = iframe.contentDocument || iframe.contentWindow!.document;
       exposeFunctionsToIframe();
+      highlights.forEach((highlight) => {
+        restoreHighlights(highlight.rangeJSON!);
+      });
 
       doc.addEventListener("mouseup", (e) => {
         const selection = doc.getSelection();
@@ -142,6 +151,7 @@
   function exposeFunctionsToIframe() {
     window.addHighlight = addHighlight;
     window.removeHighlight = removeHighlight;
+    window.restoreHighlights = restoreHighlights;
   }
 </script>
 

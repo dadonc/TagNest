@@ -11,4 +11,5 @@ declare namespace svelte.JSX {
 interface Window {
   addHighlight: () => void;
   removeHighlight: (target: HTMLElement) => void;
+  restoreHighlights: (rangeDataString: string) => void;
 }
