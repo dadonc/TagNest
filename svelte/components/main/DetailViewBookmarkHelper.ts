@@ -36,6 +36,21 @@ export function saveHighlight(bookmarkId: string, range: Range) {
   });
 }
 
+export async function reorderHighlights(doc: Document) {
+  const all = doc.querySelectorAll(`span[data-highlight-id]`);
+  let promises = [];
+  for (let i = 0; i < all.length; i++) {
+    let id = all[i].getAttribute("data-highlight-id");
+    if (!id) continue;
+    promises.push(updateHighlightPosition(id, i));
+  }
+  try {
+    await Promise.all(promises);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 function ensureElement(node: any) {
   while (node && node.nodeType !== Node.ELEMENT_NODE) {
     node = node.parentNode;
@@ -73,6 +88,17 @@ function saveHighlightToDB(
           id: bookmarkId,
         },
       },
+    },
+  });
+}
+
+async function updateHighlightPosition(id: string, position: number) {
+  return prisma.bookmarkHighlight.update({
+    where: {
+      id: id,
+    },
+    data: {
+      position: position,
     },
   });
 }

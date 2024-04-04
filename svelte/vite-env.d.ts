@@ -10,9 +10,10 @@ declare namespace svelte.JSX {
 
 type BookmarkHighlight__copy = {
   id: string;
-  text: string | null;
-  rangeJSON: string | null;
+  text: string;
+  rangeJSON: string;
   bookmarkId: string;
+  position: number;
 };
 
 interface Window {

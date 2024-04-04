@@ -4,7 +4,6 @@ chatgpt restore highlight bug
 detailview bottombar sizing issue: bookmark next to image
 
 Highlights:
-    reorder highlights
     Left sidebar: 
         styling
         context menu: delete

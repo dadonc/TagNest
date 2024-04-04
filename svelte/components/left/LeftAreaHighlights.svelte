@@ -1,7 +1,18 @@
 <script lang="ts">
+  import type { BookmarkHighlight } from "@prisma/client";
   import { type SingleItem } from "../../stores/items";
 
   export let selectedItem: SingleItem;
+
+  let highlights: BookmarkHighlight[] = [];
+
+  $: {
+    if (selectedItem && selectedItem.bookmark) {
+      highlights = selectedItem.bookmark.BookmarkHighlight.sort(
+        (a, b) => a.position - b.position
+      );
+    }
+  }
 
   function scrollToElementInsideIframe(highlightId: string) {
     const iframe = document.getElementById(
@@ -22,16 +33,14 @@
   }
 </script>
 
-{#if selectedItem && selectedItem.bookmark}
-  {#each selectedItem.bookmark.BookmarkHighlight as highlight}
-    <button
-      class="w-full p-2 mb-2 text-sm font-bold border border-transparent outline-none focus:border-black"
-      on:click={() => scrollToElementInsideIframe(highlight.id)}
-    >
-      {highlight.text}
-    </button>
-  {/each}
-{/if}
+{#each highlights as highlight}
+  <button
+    class="w-full p-2 mb-2 text-sm font-bold border border-transparent outline-none focus:border-black"
+    on:click={() => scrollToElementInsideIframe(highlight.id)}
+  >
+    {highlight.text}
+  </button>
+{/each}
 
 <style>
   button {

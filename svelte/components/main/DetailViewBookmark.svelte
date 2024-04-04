@@ -6,6 +6,7 @@
     deleteHighlight,
     getHighlightsForBookmark,
     prepareMhtml,
+    reorderHighlights,
     restoreHighlights,
     saveHighlight,
   } from "./DetailViewBookmarkHelper";
@@ -30,6 +31,7 @@
       highlights.forEach((highlight) => {
         restoreHighlights(highlight, doc);
       });
+      reorderHighlights(doc);
 
       doc.addEventListener("mouseup", (e) => {
         const selection = doc.getSelection();
@@ -155,6 +157,7 @@
     span.style.backgroundColor = "yellow";
     try {
       range.surroundContents(span);
+      if (newId) await reorderHighlights(doc);
       refreshDisplayedItems("Add Highlight - updateHighlightsInLeftSidebar");
     } catch (e) {
       deleteHighlight(newId);
