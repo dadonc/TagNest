@@ -25,7 +25,7 @@
     await tick();
 
     iframe.onload = () => {
-      doc = iframe.contentDocument || iframe.contentWindow!.document;
+      doc = iframe.contentDocument as Document;
       exposeFunctionsToIframe();
       highlights.forEach((highlight) => {
         restoreHighlights(highlight, doc);
@@ -189,6 +189,7 @@
 {:else}
   <iframe
     bind:this={iframe}
+    id="bookmarkIframe"
     srcdoc={html}
     class="w-full h-full"
     title={item.name}

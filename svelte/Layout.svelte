@@ -133,8 +133,10 @@
       <!-- <slot name="rightDivider">No rightDivider</slot> -->
       &nbsp;
     </div>
-    <div class="rightContainer">
-      <slot name="rightContainer">No rightContainer</slot>
+    <div class={"rightContainer"}>
+      <div class="p-2">
+        <slot name="rightContainer">No rightContainer</slot>
+      </div>
     </div>
   {/if}
   <div
@@ -190,11 +192,6 @@
         calc(var(--topContainer) + var(--bottomContainer) + var(--dividerWidth))
     ); */
     overflow: scroll;
-  }
-
-  .rightContainer {
-    /* @apply p-2; */
-    padding: 0.5rem;
   }
 
   /* TODO - this sucks so much - refactor */
