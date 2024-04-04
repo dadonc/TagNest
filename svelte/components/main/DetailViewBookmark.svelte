@@ -95,8 +95,8 @@
     const range = selection.getRangeAt(0).getBoundingClientRect();
     const iframeRect = iframe.getBoundingClientRect();
 
-    tooltip.style.left = `${iframeRect.left + range.left + window.scrollX}px`;
-    tooltip.style.top = `${iframeRect.top + range.top + window.scrollY - tooltip.offsetHeight - 15}px`;
+    tooltip.style.left = `${range.left + doc.documentElement.scrollLeft}px`;
+    tooltip.style.top = `${iframeRect.top + range.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 24}px`;
   }
 
   function showRemoveTooltip(e: MouseEvent) {
@@ -124,8 +124,8 @@
     const span = e.target.getBoundingClientRect();
     const iframeRect = iframe.getBoundingClientRect();
 
-    tooltip.style.left = `${iframeRect.left + span.left + window.scrollX}px`;
-    tooltip.style.top = `${iframeRect.top + span.top + window.scrollY - tooltip.offsetHeight - 15}px`;
+    tooltip.style.left = `${span.left + doc.documentElement.scrollLeft}px`;
+    tooltip.style.top = `${iframeRect.top + span.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 24}px`;
   }
 
   async function addHighlight(args: {

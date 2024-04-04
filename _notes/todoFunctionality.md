@@ -5,7 +5,6 @@ detailview bottombar sizing issue: bookmark next to image
 
 Highlights:
     reorder highlights
-    tooltip position (eg after scrolling)
     Left sidebar: 
         styling
         context menu: delete
