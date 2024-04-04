@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { items } from "../../stores/items";
-  import { selectedItems } from "../../stores/stateStore";
-  $: selectedItem = $items.filter(
-    (item) => item.id === $selectedItems.ids[0]
-  )[0];
+  import { type SingleItem } from "../../stores/items";
+
+  export let selectedItem: SingleItem;
 
   function scrollToElementInsideIframe(highlightId: string) {
     const iframe = document.getElementById(
@@ -27,10 +25,16 @@
 {#if selectedItem && selectedItem.bookmark}
   {#each selectedItem.bookmark.BookmarkHighlight as highlight}
     <button
-      class="w-full p-2 mb-4 text-sm font-bold"
+      class="w-full p-2 mb-2 text-sm font-bold border border-transparent outline-none focus:border-black"
       on:click={() => scrollToElementInsideIframe(highlight.id)}
     >
       {highlight.text}
     </button>
   {/each}
 {/if}
+
+<style>
+  button {
+    outline: none;
+  }
+</style>

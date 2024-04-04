@@ -1,12 +1,14 @@
 # TODO
+error when deleting the fist item in detailview
+chatgpt restore highlight bug
+detailview bottombar sizing issue: bookmark next to image
+
 Highlights:
     reorder highlights
-    tooltip position after scrolling
+    tooltip position (eg after scrolling)
     Left sidebar: 
         styling
         context menu: delete
-        scroll to highlight on click
-        only show drawer chooser in detailview
     Show count of highlights in preview
 
 ## Bugs
