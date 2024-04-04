@@ -1,6 +1,5 @@
 # TODO
 error when deleting the fist item in detailview
-chatgpt restore highlight bug
 detailview bottombar sizing issue: bookmark next to image
 
 Highlights:
@@ -93,6 +92,7 @@ DeleteConfirmModal is an ActionModal
 * bookmarkhighlights: support different colors, add notes to highlights
 * filter: item type, video length, video resolution, audio length, pdf pages, text length
 * "favorite" tag: heart icon on the item previews
+* search inside bookmark iframe
 
 ## Not important
 * compare hash of files to check if they are the same

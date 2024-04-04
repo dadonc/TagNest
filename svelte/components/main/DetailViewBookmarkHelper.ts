@@ -3,7 +3,7 @@ import type { BookmarkHighlight } from "@prisma/client";
 import mhtml2html from "../../assets/deps/mhtml2html";
 import prisma from "../../prisma";
 
-export async function prepareMhtml(bookmarkId: string, mhtmlPath: string) {
+export async function prepareMhtml(mhtmlPath: string) {
   const mhtml = await window.electron.readFile(mhtmlPath);
   let htmlDoc = mhtml2html.convert(mhtml);
   htmlDoc.window.document
@@ -36,21 +36,6 @@ export function saveHighlight(bookmarkId: string, range: Range) {
   });
 }
 
-export async function reorderHighlights(doc: Document) {
-  const all = doc.querySelectorAll(`span[data-highlight-id]`);
-  let promises = [];
-  for (let i = 0; i < all.length; i++) {
-    let id = all[i].getAttribute("data-highlight-id");
-    if (!id) continue;
-    promises.push(updateHighlightPosition(id, i));
-  }
-  try {
-    await Promise.all(promises);
-  } catch (e) {
-    console.error(e);
-  }
-}
-
 function ensureElement(node: any) {
   while (node && node.nodeType !== Node.ELEMENT_NODE) {
     node = node.parentNode;
@@ -68,7 +53,7 @@ function getUniquePath(element: Node) {
     while ((sibling = sibling.previousElementSibling as Element) != null) {
       if (sibling.tagName.toLowerCase() === selector) count++;
     }
-    selector += ":nth-of-type(" + count + ")";
+    selector += count > 1 ? `:nth-of-type(${count})` : "";
     path.unshift(selector);
     element = element.parentNode as Element;
   }
@@ -90,6 +75,21 @@ function saveHighlightToDB(
       },
     },
   });
+}
+
+export async function reorderHighlights(doc: Document) {
+  const all = doc.querySelectorAll(`span[data-highlight-id]`);
+  let promises = [];
+  for (let i = 0; i < all.length; i++) {
+    let id = all[i].getAttribute("data-highlight-id");
+    if (!id) continue;
+    promises.push(updateHighlightPosition(id, i));
+  }
+  try {
+    await Promise.all(promises);
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 async function updateHighlightPosition(id: string, position: number) {
@@ -129,6 +129,18 @@ export function restoreHighlights(highlight: BookmarkHighlight, doc: Document) {
       : findTextNode(endContainer);
 
   if (startTextNode && endTextNode) {
+    // TODO: this is a bad solution.
+    // And wtf is going on with the ts-ignores?
+    //-> Works with ts-ignore but not like this: (startTextNode.textContent && startTextNode.textContent.length < rangeData.startOffset)
+    // @ts-ignore
+    if (startTextNode.textContent.length < rangeData.startOffset) {
+      rangeData.startOffset = 0;
+    }
+    // @ts-ignore
+    if (endTextNode.textContent.length < rangeData.endOffset) {
+      // @ts-ignore
+      rangeData.endOffset = endTextNode.textContent.length;
+    }
     range.setStart(startTextNode, rangeData.startOffset);
     range.setEnd(endTextNode, rangeData.endOffset);
 

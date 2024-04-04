@@ -19,7 +19,7 @@
   let doc: Document;
 
   onMount(async () => {
-    html = await prepareMhtml(item.bookmark!.id, item.file!.path as string);
+    html = await prepareMhtml(item.file!.path as string);
     displayScreenshot = false;
     const highlights = await getHighlightsForBookmark(item.bookmark!.id);
 
@@ -157,8 +157,10 @@
     span.style.backgroundColor = "yellow";
     try {
       range.surroundContents(span);
-      if (newId) await reorderHighlights(doc);
-      refreshDisplayedItems("Add Highlight - updateHighlightsInLeftSidebar");
+      if (newId) {
+        await reorderHighlights(doc);
+        refreshDisplayedItems("Add Highlight - updateHighlightsInLeftSidebar");
+      }
     } catch (e) {
       deleteHighlight(newId);
       console.error("Error surrounding contents:", e);
