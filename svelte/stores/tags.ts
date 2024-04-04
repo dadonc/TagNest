@@ -149,7 +149,11 @@ export async function updateItemsTags(itemIds: string[], tagString: string) {
     include: {
       tags: true,
       file: true,
-      bookmark: true,
+      bookmark: {
+        include: {
+          BookmarkHighlight: true,
+        },
+      },
       video: true,
       audio: true,
       text: true,

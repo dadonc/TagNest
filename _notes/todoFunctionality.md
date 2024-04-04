@@ -1,5 +1,5 @@
 # TODO
-Overlapping highlights: caught DOMException: Failed to execute 'surroundContents' on 'Range': The Range has partially selected a non-Text node.
+Overlapping highlights: caught DOMException: Failed to execute 'surroundContents' on 'Range': The Range has partially selected a non-Text node. <- don't save highlights that have failed!
  
  
 ## Bugs
@@ -82,7 +82,9 @@ DeleteConfirmModal is an ActionModal
 * option in settings: rename files if item gets renamed
 * ellipsis for text in long filenames in item preview
 * autogenerate type tags, eg. "type:video", "type:pdf", "type:audio"
-
+* bookmarkhighlights: support different colors, add notes to highlights
+* filter: item type, video length, video resolution, audio length, pdf pages, text length
+* "favorite" tag: heart icon on the item previews
 
 ## Not important
 * compare hash of files to check if they are the same
@@ -103,3 +105,4 @@ DeleteConfirmModal is an ActionModal
     * if item groups work make a toggle to automatically group files if they are in a folder when importing
     * context menu main: (group items, ungroup items)
 * (group tags, ungroup tags)?
+* magnifier, playback speed, searchable and highlightable subtitles

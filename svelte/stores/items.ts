@@ -113,7 +113,11 @@ export async function getItem(id: string) {
     include: {
       file: true,
       tags: true,
-      bookmark: true,
+      bookmark: {
+        include: {
+          BookmarkHighlight: true,
+        },
+      },
       video: true,
       audio: true,
       text: true,
@@ -129,7 +133,11 @@ export async function getItems(args?: { includeUnfinished: boolean }) {
     include: {
       file: true,
       tags: true,
-      bookmark: true,
+      bookmark: {
+        include: {
+          BookmarkHighlight: true,
+        },
+      },
       video: true,
       audio: true,
       text: true,

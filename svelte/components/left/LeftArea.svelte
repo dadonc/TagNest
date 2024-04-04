@@ -1,54 +1,39 @@
 <script lang="ts">
-  import {
-    filteredData,
-    type FilteredTag,
-    type TagTree,
-  } from "../../stores/stateStore";
-  import LeftTagTree from "./LeftTagTree.svelte";
-  import TagsContextMenu from "./TagsContextMenu.svelte";
+  import type { FilteredTag } from "../../stores/stateStore";
+  import LeftAreaHighlights from "./LeftAreaHighlights.svelte";
+  import LeftAreaTags from "./LeftAreaTags.svelte";
 
   export let tags: FilteredTag[];
 
-  let tagTree = getTreeStructure(tags);
-  $: $filteredData.then((data) => (tagTree = getTreeStructure(data.tags)));
-
-  function getTreeStructure(tags: FilteredTag[]) {
-    const tree: TagTree = {};
-
-    for (const tag of tags) {
-      const pathParts = tag.name.split(":").slice(0, -1);
-
-      if (pathParts.length === 0) {
-        if (!tree["_tags"]) {
-          tree["_tags"] = [tag];
-        } else {
-          if (Array.isArray(tree["_tags"])) {
-            tree["_tags"].push(tag);
-          } else {
-            console.error("Expected tree['_tags'] to be an array");
-          }
-        }
-        continue;
-      }
-
-      let currentNode: any = tree;
-
-      for (const part of pathParts) {
-        if (!currentNode[part]) {
-          currentNode[part] = {};
-        }
-        currentNode = currentNode[part];
-      }
-      if (!currentNode["_tags"]) {
-        currentNode["_tags"] = [tag];
-      } else {
-        currentNode["_tags"].push(tag);
-      }
-    }
-
-    return tree;
-  }
+  let activeDrawer: "highlights" | "tags" = "highlights";
 </script>
 
-<TagsContextMenu />
-<LeftTagTree {tagTree} indent={0} />
+<button
+  class={activeDrawer === "highlights" ? "activeDrawer" : "inactiveDrawer"}
+  on:click={() => (activeDrawer = "highlights")}>Highlights</button
+>
+<button
+  class={activeDrawer === "tags" ? "activeDrawer" : "inactiveDrawer"}
+  on:click={() => (activeDrawer = "tags")}>Tags</button
+>
+
+{#if activeDrawer === "highlights"}
+  <LeftAreaHighlights />
+{:else if activeDrawer === "tags"}
+  <LeftAreaTags {tags} />
+{/if}
+
+<style>
+  .inactiveDrawer,
+  .activeDrawer {
+    border: none;
+    padding: 0.25rem;
+    outline: none;
+  }
+  .activeDrawer {
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+  }
+</style>
