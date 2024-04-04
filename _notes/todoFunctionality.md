@@ -1,8 +1,16 @@
 # TODO
-Overlapping highlights: caught DOMException: Failed to execute 'surroundContents' on 'Range': The Range has partially selected a non-Text node. <- don't save highlights that have failed!
- 
- 
+Highlights:
+    reorder highlights
+    tooltip position after scrolling
+    Left sidebar: 
+        styling
+        context menu: delete
+        scroll to highlight on click
+        only show drawer chooser in detailview
+    Show count of highlights in preview
+
 ## Bugs
+* show bookmark title in preview
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag

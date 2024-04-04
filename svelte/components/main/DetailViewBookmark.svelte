@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from "svelte";
-  import type { SingleItem } from "../../stores/items";
+  import { refreshDisplayedItems, type SingleItem } from "../../stores/items";
   import LoaderCircle from "../top/LoaderCircle.svelte";
   import {
     deleteHighlight,
@@ -114,6 +114,9 @@
       const highlightId = e.target.dataset.highlightId;
       if (highlightId) {
         deleteHighlight(highlightId);
+        refreshDisplayedItems(
+          "Delete Highlight - updateHighlightsInLeftSidebar"
+        );
       }
       removeRmvTooltip();
     });
@@ -152,11 +155,14 @@
     span.style.backgroundColor = "yellow";
     try {
       range.surroundContents(span);
+      refreshDisplayedItems("Add Highlight - updateHighlightsInLeftSidebar");
     } catch (e) {
+      deleteHighlight(newId);
       console.error("Error surrounding contents:", e);
+    } finally {
+      selection.empty();
+      removeTooltip();
     }
-    selection.empty();
-    removeTooltip();
   }
 
   function removeHighlight(target: HTMLElement) {
