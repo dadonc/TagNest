@@ -60,7 +60,7 @@
 
   let maxHeightStyle =
     $currentRoute == "details"
-      ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem)"
+      ? "height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem)"
       : "";
 
   function openMainContextMenu(event: MouseEvent) {

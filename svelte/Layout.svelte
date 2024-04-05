@@ -45,6 +45,8 @@
   const dragLeft = (e: DragEvent) => {
     let val = e.x - 6;
     val = val < 0 ? 0 : val;
+    val = val < 32 ? 0 : val;
+
     $leftContainer.currentVal = val + "px";
     $leftContainer.val = val + "px";
   };
@@ -54,6 +56,7 @@
     // when dragging this wraps around to the clientWidth if under 0
     val =
       val <= 0 || val > document.documentElement.clientWidth - 100 ? 0 : val;
+    val = val < 32 ? 0 : val;
     $rightContainer.currentVal = val + "px";
     $rightContainer.val = val + "px";
   };

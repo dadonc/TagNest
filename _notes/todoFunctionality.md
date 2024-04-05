@@ -1,6 +1,4 @@
 # TODO
-detailview bottombar sizing issue: arrow-down.svg and arrow-down-cropped.svg
-
 Highlights:
     Left sidebar: 
         styling
