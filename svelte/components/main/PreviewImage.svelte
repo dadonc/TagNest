@@ -7,7 +7,12 @@
 </script>
 
 <div class="relative hoverContainer">
-  <img src={"file://" + item.file?.path} alt="" style={maxHeightStyle} />
+  <img
+    src={"file://" + item.file?.path}
+    alt=""
+    style={maxHeightStyle}
+    class="w-full"
+  />
   {#if item.url}
     <a
       target="_blank"

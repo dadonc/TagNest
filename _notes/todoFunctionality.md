@@ -1,6 +1,5 @@
 # TODO
-error when deleting the fist item in detailview
-detailview bottombar sizing issue: bookmark next to image
+detailview bottombar sizing issue: arrow-down.svg and arrow-down-cropped.svg
 
 Highlights:
     Left sidebar: 

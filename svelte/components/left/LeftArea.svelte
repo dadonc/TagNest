@@ -16,6 +16,7 @@
   let activeDrawer: "highlights" | "tags" = "highlights";
 
   $: showDrawer =
+    selectedItem &&
     $currentRoute === "details" &&
     $selectedItems.ids.length === 1 &&
     selectedItem.type === "bookmark";
