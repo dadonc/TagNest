@@ -1,17 +1,12 @@
 # TODO
 
-Bookmark delete bug: clicking outside when adding new bookmark corrupts the database. also corrupts save.json
-
-cleanup manifest.json
-
-Highlights:
-    Left sidebar: 
-        styling
-        context menu: delete
-    Show count of highlights in preview
+* handle duplicate bookmarks: make file name unique
+* highlights: Left sidebar: styling
+* show count of highlights in preview
+* show bookmark title in preview
 
 ## Bugs
-* show bookmark title in preview
+* jump to position in video from bottomarea in detail view
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
@@ -42,7 +37,7 @@ DeleteConfirmModal is an ActionModal
     o	✅ Cleanup and refactor codebase, fix some bugs
     o	✅ Support different item types: video, PDF, audio, text and other
     o	✅ Support choosable preview images for bookmarks and videos
-    o	(Re)write chrome extension
+    o	✅ (Re)write chrome extension
     o	✅ Context menu, ✅ deletion modal
     o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar, indicator in grid preview
     o	✅ Item order: file size, date added, date updated, name, countOpenings
@@ -94,6 +89,7 @@ DeleteConfirmModal is an ActionModal
 * filter: item type, video length, video resolution, audio length, pdf pages, text length
 * "favorite" tag: heart icon on the item previews
 * search inside bookmark iframe
+* Left sidebar: Highlights: context menu: delete
 
 ## Not important
 * compare hash of files to check if they are the same

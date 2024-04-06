@@ -37,8 +37,12 @@ const writeFileAsync = util.promisify(fs.writeFile);
 export async function getSettingsJson(): Promise<SettingsJson> {
   const filePath = path.join(resourcesPath, "save.json");
   if (fs.existsSync(filePath)) {
-    const data = await readFileAsync(filePath, "utf8");
-    return JSON.parse(data);
+    try {
+      const data = await readFileAsync(filePath, "utf8");
+      return JSON.parse(data);
+    } catch (e) {
+      return createSettingsJsonAndReturn(filePath);
+    }
   } else {
     return createSettingsJsonAndReturn(filePath);
   }
@@ -133,6 +137,7 @@ export function getFileDatesAndSize(
   return new Promise((resolve, reject) => {
     fs.stat(filePath, (err, stats) => {
       if (err) reject(err);
+      if (!!!stats) reject("No stats");
       resolve({
         updated: stats.mtime,
         size: stats.size,
@@ -208,6 +213,7 @@ export async function updateItemBasedOnFile(item: any) {
     const { updated, size, created } = await getFileDatesAndSize(
       item.file.path
     );
+    if (!updated || !size || !created) return;
     const hasChanged =
       item.file.updated !== updated ||
       item.file.size !== size ||
