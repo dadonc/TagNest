@@ -1,5 +1,7 @@
 # TODO
 
+Bookmark delete bug: clicking outside when adding new bookmark corrupts the database. also corrupts save.json
+
 cleanup manifest.json
 
 Highlights:
