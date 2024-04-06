@@ -6,11 +6,13 @@ chrome.runtime.onInstalled.addListener(() => {
   checkServerStatusAndUpdateIcon();
 });
 
+chrome.action.onClicked.addListener(iconClickLogic);
+
 async function checkConnection() {
   try {
     const response = await fetch("http://localhost:3434/ping");
     const data = await response.json();
-    return data && data.pong === "okay";
+    return !!data && data.pong === "okay";
   } catch (error) {
     return false;
   }
@@ -19,19 +21,16 @@ async function checkConnection() {
 async function checkServerStatusAndUpdateIcon() {
   if (await checkConnection()) {
     chrome.action.setIcon({ path: "../icons/nest_128.png" });
-    chrome.action.onClicked.removeListener(iconClickLogic);
-    chrome.action.onClicked.addListener(iconClickLogic);
     return true;
   } else {
     chrome.action.setIcon({ path: "../icons/nest_bw_128.png" });
-    chrome.action.onClicked.removeListener(iconClickLogic);
-    chrome.action.onClicked.addListener(iconClickLogic);
     return false;
   }
 }
 
 async function iconClickLogic() {
-  if (await checkServerStatusAndUpdateIcon()) {
+  const isConnectionOk = await checkServerStatusAndUpdateIcon();
+  if (isConnectionOk) {
     saveWebsite();
   } else {
     openNoConnectionPopup();
@@ -66,7 +65,7 @@ async function saveWebsite() {
         formData.append("title", tab.title);
         formData.append("url", tab.url);
         // TODO handle inline favicons, currently only works for external favicons
-        // e.g. https://www.prisma.io/docs/orm/prisma-migrate/workflows/patching-and-hotfixing#failed-migration
+        // e.g. https://www.prisma.io/docs/orm/prisma-migrate/workflows/patching-and-hotfixing#failed-migration doesn't work
         if (tab.favIconUrl && tab.favIconUrl.length < 100) {
           formData.append("favicon", tab.favIconUrl);
         } else {
