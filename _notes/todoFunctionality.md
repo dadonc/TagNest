@@ -1,4 +1,7 @@
 # TODO
+
+cleanup manifest.json
+
 Highlights:
     Left sidebar: 
         styling
@@ -12,7 +15,6 @@ Highlights:
 * tag group styling - change inset of children compared to parent tag
 
 * bookmark space preview: 
-    too slow
     close on ESC after clicking inside rendered bookmark
 
 When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created(?)
@@ -45,7 +47,7 @@ DeleteConfirmModal is an ActionModal
 •	Polishing the application (01.07.24)
     o	Fixes and improvements
     o	Improve styling
-    o	Handle existing files and bookmarks (duplicates)
+    o	Handle existing files and bookmarks(!) (duplicates)
     o	Good changes I may have noticed after using the application myself.
     o	Testing
 •	Showing to users (01.08.24)

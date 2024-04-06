@@ -1,14 +1,25 @@
 {
   "manifest_version": 3,
-  "name": "HRB Extension",
-  "description": "Save websites to HRB",
+  "name": "TagNest",
+  "description": "Save websites to TagNest",
   "version": "1.0",
   "action": {
-    "default_popup": "popup/popup.html"
+    "default_icon": {
+      "128": "icons/nest_128.png"
+    }
+  },
+  "icons": {
+    "128": "icons/nest_128.png"
   },
   "background": {
     "service_worker": "scripts/background.js"
   },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/nest_512.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
 
   "permissions": ["pageCapture", "tabs", "activeTab", "scripting"]
 }
