@@ -148,7 +148,6 @@ export function getFileDatesAndSize(
 }
 
 export async function saveFilePreview(filePath: string) {
-  // Assume getSettingsJson is an async function you've defined elsewhere
   const settings = await getSettingsJson();
   const folderPath = path.join(settings.savePath, "icons");
 

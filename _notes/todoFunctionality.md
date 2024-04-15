@@ -1,8 +1,8 @@
 # TODO
 
-* handle duplicate bookmarks: make file name unique
-* highlights: Left sidebar: styling
-* show count of highlights in preview
+* handle duplicate bookmarks: make screenshot file names unique
+* highlights: Left sidebar: styling - use daisyui colors
+* show count of bookmark highlights in preview
 * show bookmark title in preview
 
 ## Bugs
@@ -39,7 +39,7 @@ DeleteConfirmModal is an ActionModal
     o	✅ Support choosable preview images for bookmarks and videos
     o	✅ (Re)write chrome extension
     o	✅ Context menu, ✅ deletion modal
-    o	User highlights: video timestamps, highlights in bookmarks, preview in left sidebar, indicator in grid preview
+    o	User highlights: video timestamps, ✅ highlights in bookmarks, preview in left sidebar, indicator in grid preview
     o	✅ Item order: file size, date added, date updated, name, countOpenings
 •	Polishing the application (01.07.24)
     o	Fixes and improvements
@@ -71,7 +71,7 @@ DeleteConfirmModal is an ActionModal
 ## Improvments
 * details top area: "home" button, back button
 * item preview for additem modal
-* Quicksettings in top bar: show name, date changed, mute video preview, countOpened, show tags in previews, show file size
+* Quicksettings in top bar: show name, show type, show count highlights, date changed, mute video preview, countOpened, show tags in previews, show file size
 * item preview: show tags(clickable, toggle on off in quick settings) - also show in detailview
 * Make URL clickable in right sidebar, add url icon to item preview
 * Make paths relative

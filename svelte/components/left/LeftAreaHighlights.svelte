@@ -33,17 +33,33 @@
   }
 </script>
 
-{#each highlights as highlight}
-  <button
-    class="w-full p-2 mb-2 text-sm font-bold border border-transparent outline-none focus:border-black"
-    on:click={() => scrollToElementInsideIframe(highlight.id)}
-  >
-    {highlight.text}
-  </button>
-{/each}
+<div>
+  {#each highlights as highlight}
+    <button
+      class="w-full p-2 text-sm text-left border border-transparent outline-none focus:border-black"
+      on:click={() => scrollToElementInsideIframe(highlight.id)}
+    >
+      {highlight.text}
+    </button>
+  {/each}
+</div>
 
 <style>
   button {
     outline: none;
+    border-top: 1px solid black;
+  }
+
+  button:first-child {
+    border-top: 1px solid transparent;
+  }
+
+  button:first-child:focus {
+    border-top: 1px solid black;
+  }
+
+  button:focus + button {
+    /*  remove border from the next button */
+    border: 1px solid transparent;
   }
 </style>
