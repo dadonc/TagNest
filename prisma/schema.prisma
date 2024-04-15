@@ -69,13 +69,10 @@ model BookmarkHighlight {
 }
 
 model Audio {
-  id        String      @id @default(cuid())
-  duration  Float?
-  item      Item        @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  itemId    String      @unique
-  marks     VideoMark[] @relation(name: "audioMarks")
-  thumbTime Float? // the time of the thumbnail
-  VideoMark VideoMark[]
+  id       String @id @default(cuid())
+  duration Float?
+  item     Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId   String @unique
 }
 
 model text {
@@ -97,7 +94,6 @@ model Video {
   fps            Float?
   item           Item        @relation(fields: [itemId], references: [id], onDelete: Cascade)
   itemId         String      @unique
-  previewMarks   VideoMark[] @relation(name: "previewMarks")
   marks          VideoMark[] @relation(name: "marks")
   thumbTime      Float? // the time of the thumbnail
   thumbImageName String?
@@ -106,13 +102,8 @@ model Video {
 model VideoMark {
   id      String  @id @default(cuid())
   mark    Float
-  Video   Video?  @relation(name: "marks", fields: [videoId], references: [id], onDelete: Cascade)
-  videoId String?
-  Video2  Video?  @relation(name: "previewMarks", fields: [videoId], references: [id], onDelete: Cascade)
+  video   Video?  @relation(name: "marks", fields: [videoId], references: [id], onDelete: Cascade)
+  videoId String
   note    String?
-  tag     Tag?    @relation(fields: [tagId], references: [id])
-  tagId   String?
-  audio   Audio?  @relation(name: "audioMarks", fields: [audioId], references: [id])
-  audioId String?
-  Audio   Audio?  @relation(fields: [audioId], references: [id])
+  tags    Tag[]
 }

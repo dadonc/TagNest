@@ -414,7 +414,10 @@ export async function updateItemPreviews(id: string, previewPath?: string) {
   }, 0);
 }
 
-export function openContextMenu(event: MouseEvent, type: "items" | "tags") {
+export function openContextMenu(
+  event: MouseEvent,
+  type: "items" | "tags" | "video"
+) {
   event.stopPropagation();
   event.preventDefault();
   const $contextMenuStore = get(contextMenuStore);

@@ -5,6 +5,8 @@
 * show count of bookmark highlights in preview
 * show bookmark title in preview
 
+Recreate preview is broken 
+
 ## Bugs
 * jump to position in video from bottomarea in detail view
 * modal sizes

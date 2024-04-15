@@ -2,10 +2,19 @@
   import { onMount } from "svelte";
   import type { SingleItem } from "../../stores/items";
   import Play from "../../assets/feather/Play.svelte";
-  import { formatTime, toggleFakeFullscreen } from "../../utils";
+  import {
+    formatTime,
+    openContextMenu,
+    toggleFakeFullscreen,
+  } from "../../utils";
   import { extractNameAndExtension } from "../../../src/gschert";
-  import { currView, settingsJson } from "../../stores/stateStore";
+  import {
+    contextMenuStore,
+    currView,
+    settingsJson,
+  } from "../../stores/stateStore";
   import Maximize from "../../assets/feather/Maximize.svelte";
+  import DetailViewVideoContextMenu from "./DetailViewVideoContextMenu.svelte";
 
   export let item: SingleItem;
   export let isSpacePreview = false;
@@ -55,10 +64,14 @@
     currentDurationSpan.textContent = formatTime(videoElement.currentTime);
   }
 
-  function seek(e: MouseEvent) {
+  function getSeekPos(e: MouseEvent) {
     const rect = progressBar.getBoundingClientRect();
     const pos = (e.pageX - rect.left) / progressBar.offsetWidth;
-    videoElement.currentTime = pos * videoElement.duration;
+    return pos * videoElement.duration;
+  }
+
+  function seek(e: MouseEvent) {
+    videoElement.currentTime = getSeekPos(e);
   }
 
   function handleFullscreen() {
@@ -99,6 +112,11 @@
     thumbTimeElement.textContent = formatTime(videoElementHidden.currentTime);
     thumbTimeElement.style.left = `calc(${renderPos * 100}% + ${(videoElement.offsetWidth * thumbRatio) / 2}px - ${thumbTimeElement.offsetWidth / 2}px)`; // center the time element
     thumbTimeElement.style.top = `-24px`;
+  }
+
+  function openVideoContextMenu(e: MouseEvent) {
+    $contextMenuStore.videoSeekPos = getSeekPos(e);
+    openContextMenu(e, "video");
   }
 
   let videoIsLoaded = false;
@@ -147,6 +165,7 @@
   }}
 />
 
+<DetailViewVideoContextMenu {item} />
 <!-- svelte-ignore a11y-media-has-caption -->
 <video class="hidden" bind:this={videoElementHidden}>
   <source src={"file://" + item.file?.path} />
@@ -236,6 +255,7 @@
         on:click={seek}
         on:keydown={() => {}}
         on:focus={() => {}}
+        on:contextmenu={openVideoContextMenu}
       />
       <canvas
         bind:this={thumbElement}

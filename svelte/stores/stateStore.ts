@@ -244,8 +244,9 @@ type contextMenuStoreType = {
 
   // todo remove, move into openContextMenu
   isContextMenuOpen: boolean;
-  openContextMenu: "items" | "tags" | "";
+  openContextMenu: "items" | "tags" | "video" | "";
   triggeredByTagId: string; // tag which was clicked to trigger the context menu
+  videoSeekPos: number; // position in the seek bar the user has clicked to open the context menu
 
   // todo remove, move into openModal
   isDeleteModalOpen: boolean;
@@ -270,6 +271,7 @@ const emptyContextMenu: contextMenuStoreType = {
   openModal: "",
   openContextMenu: "",
   triggeredByTagId: "",
+  videoSeekPos: 0,
 };
 
 export const contextMenuStore =
