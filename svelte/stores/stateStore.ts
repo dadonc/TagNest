@@ -238,16 +238,22 @@ export const currentRoute = writable<Route>("main");
 
 export const settingsJson = writable<SettingsJson>();
 
+export type possibleContextMenus =
+  | "items"
+  | "tags"
+  | "videoSeekbar"
+  | "videoMark";
+
 type contextMenuStoreType = {
   x: number;
   y: number;
 
   // todo remove, move into openContextMenu
   isContextMenuOpen: boolean;
-  openContextMenu: "items" | "tags" | "video" | "";
+  openContextMenu: possibleContextMenus | "";
   triggeredByTagId: string; // tag which was clicked to trigger the context menu
   videoSeekPos: number; // position in the seek bar the user has clicked to open the context menu
-
+  triggeredByMarkId: string; // mark which was clicked to trigger the context menu
   // todo remove, move into openModal
   isDeleteModalOpen: boolean;
   idsToDelete: string[];
@@ -271,6 +277,7 @@ const emptyContextMenu: contextMenuStoreType = {
   openModal: "",
   openContextMenu: "",
   triggeredByTagId: "",
+  triggeredByMarkId: "",
   videoSeekPos: 0,
 };
 

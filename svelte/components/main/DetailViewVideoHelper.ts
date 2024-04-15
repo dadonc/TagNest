@@ -13,3 +13,11 @@ export async function addVideoMark(videoId: string, mark: number) {
   });
   return newMark;
 }
+
+export async function deleteMark(id: string) {
+  return await prisma.videoMark.delete({
+    where: {
+      id,
+    },
+  });
+}

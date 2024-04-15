@@ -6,6 +6,7 @@ import {
   currView,
   filteredData,
   selectedItems,
+  type possibleContextMenus,
 } from "./stores/stateStore";
 import { leftContainer, rightContainer, topContainer } from "./stores/cssStore";
 import { extractNameAndExtension } from "../src/gschert";
@@ -414,10 +415,7 @@ export async function updateItemPreviews(id: string, previewPath?: string) {
   }, 0);
 }
 
-export function openContextMenu(
-  event: MouseEvent,
-  type: "items" | "tags" | "video"
-) {
+export function openContextMenu(event: MouseEvent, type: possibleContextMenus) {
   event.stopPropagation();
   event.preventDefault();
   const $contextMenuStore = get(contextMenuStore);

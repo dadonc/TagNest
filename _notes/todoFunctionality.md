@@ -2,13 +2,9 @@
 
 
 VideoMarks:
-✅ * display thumb for first frame of mark
-✅ * hide thumb if the user moves the mouse down
 * skip to mark using keyboard shortcuts
 * add mark keyboardshortcut
-* deletecontext menu
-✅ * display marks from db
-* fix mark oputline, color of mark and text color of the seek time time when a thumb is displayed
+* fix mark outline, color of mark and text color of the seek time time when a thumb is displayed
 * display marks in preview
 
 

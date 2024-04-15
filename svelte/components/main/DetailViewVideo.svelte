@@ -123,9 +123,14 @@
     thumbTimeElement.style.top = `-24px`;
   }
 
-  function openVideoContextMenu(e: MouseEvent) {
+  function openVideoSeekbarContextMenu(e: MouseEvent) {
     $contextMenuStore.videoSeekPos = getSeekPos(e);
-    openContextMenu(e, "video");
+    openContextMenu(e, "videoSeekbar");
+  }
+
+  function openVideoMarkContextMenu(e: MouseEvent, markId: string) {
+    $contextMenuStore.triggeredByMarkId = markId;
+    openContextMenu(e, "videoMark");
   }
 
   let videoIsLoaded = false;
@@ -264,7 +269,7 @@
         on:click={seek}
         on:keydown={() => {}}
         on:focus={() => {}}
-        on:contextmenu={openVideoContextMenu}
+        on:contextmenu={openVideoSeekbarContextMenu}
       />
       {#if videoIsLoaded}
         {#each item.video?.marks || [] as mark}
@@ -281,6 +286,9 @@
               if (videoElement.paused || videoElement.ended) {
                 videoElement.play();
               }
+            }}
+            on:contextmenu={(e) => {
+              openVideoMarkContextMenu(e, mark.id);
             }}
             class="absolute w-4 h-full bg-red-500"
             style={`left: ${getMarkLeftOffset(mark.mark)}px`}

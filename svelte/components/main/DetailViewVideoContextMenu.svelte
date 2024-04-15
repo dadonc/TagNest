@@ -1,23 +1,37 @@
 <script lang="ts">
-  import { type SingleItem } from "../../stores/items";
+  import { refreshDisplayedItems, type SingleItem } from "../../stores/items";
   import { contextMenuStore, selectedItems } from "../../stores/stateStore";
   import ContextMenu from "./ContextMenu.svelte";
   import ContextMenuButton from "./ContextMenuButton.svelte";
-  import { addVideoMark } from "./DetailViewVideoHelper";
+  import { addVideoMark, deleteMark } from "./DetailViewVideoHelper";
 
   export let item: SingleItem;
 
-  function addSimpleMark() {
-    addVideoMark(item.video!.id, $contextMenuStore.videoSeekPos);
+  async function addSimpleMark() {
+    await addVideoMark(item.video!.id, $contextMenuStore.videoSeekPos);
+    refreshDisplayedItems();
   }
 </script>
 
-{#if $contextMenuStore.openContextMenu === "video"}
+{#if $contextMenuStore.openContextMenu === "videoSeekbar"}
   <ContextMenu>
     <ContextMenuButton
       name="Add mark"
       onClick={() => {
         addSimpleMark();
+        $contextMenuStore.isContextMenuOpen = false;
+      }}
+    />
+  </ContextMenu>
+{/if}
+
+{#if $contextMenuStore.openContextMenu === "videoMark"}
+  <ContextMenu>
+    <ContextMenuButton
+      name="Delete mark"
+      onClick={async () => {
+        await deleteMark($contextMenuStore.triggeredByMarkId);
+        refreshDisplayedItems();
         $contextMenuStore.isContextMenuOpen = false;
       }}
     />
