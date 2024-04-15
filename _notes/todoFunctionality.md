@@ -1,5 +1,19 @@
 # TODO
 
+
+VideoMarks:
+✅ * display thumb for first frame of mark
+✅ * hide thumb if the user moves the mouse down
+* skip to mark using keyboard shortcuts
+* add mark keyboardshortcut
+* deletecontext menu
+✅ * display marks from db
+* fix mark oputline, color of mark and text color of the seek time time when a thumb is displayed
+* display marks in preview
+
+
+
+
 * handle duplicate bookmarks: make screenshot file names unique
 * highlights: Left sidebar: styling - use daisyui colors
 * show count of bookmark highlights in preview
@@ -71,6 +85,7 @@ DeleteConfirmModal is an ActionModal
 * automatically open import modal if no other items exist
 
 ## Improvments
+* add notes or tags to videomarks, add notes to bookmarkhighlight
 * details top area: "home" button, back button
 * item preview for additem modal
 * Quicksettings in top bar: show name, show type, show count highlights, date changed, mute video preview, countOpened, show tags in previews, show file size

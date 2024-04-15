@@ -51,7 +51,7 @@
   }
 
   let thumbRatio = 0.2;
-  function play() {
+  function togglePlay() {
     if (videoElement.paused || videoElement.ended) {
       videoElement.play();
     } else {
@@ -74,6 +74,10 @@
     videoElement.currentTime = getSeekPos(e);
   }
 
+  function getMarkLeftOffset(pos: number) {
+    return (pos / videoElement.duration) * progressBar.offsetWidth;
+  }
+
   function handleFullscreen() {
     if (document.fullscreenElement !== null) {
       document.exitFullscreen();
@@ -82,7 +86,7 @@
     }
   }
 
-  function displayThumb(e: MouseEvent) {
+  function displayThumb(e: MouseEvent, markPos?: number) {
     const progressRect = progressBar.getBoundingClientRect();
     let renderPos =
       (e.pageX - progressRect.left - thumbElement.offsetWidth / 2) /
@@ -97,9 +101,14 @@
     thumbElement.style.display = "block";
 
     const context = thumbElement.getContext("2d");
-    let actualPos = (e.pageX - progressRect.left) / progressBar.offsetWidth;
-    actualPos = actualPos < 0 ? 0 : actualPos;
-    videoElementHidden.currentTime = actualPos * videoElement.duration;
+    // if hovered over a mark only display first frame of mark, else display frame at current hover position
+    if (markPos) {
+      videoElementHidden.currentTime = markPos;
+    } else {
+      let actualPos = (e.pageX - progressRect.left) / progressBar.offsetWidth;
+      actualPos = actualPos < 0 ? 0 : actualPos;
+      videoElementHidden.currentTime = actualPos * videoElement.duration;
+    }
     context?.drawImage(
       videoElementHidden,
       0,
@@ -133,7 +142,7 @@
     e.preventDefault();
     if (e.key === " ") {
       wasPreviewHidden = true;
-      play();
+      togglePlay();
     } else if (e.key == "ArrowRight") {
       videoElement.currentTime += 10;
     } else if (e.key == "ArrowLeft") {
@@ -180,7 +189,7 @@
         loop
         on:click={() => {
           wasPreviewHidden = true;
-          play();
+          togglePlay();
         }}
         poster={thumbPath}
         class={`max-w-full max-h-full`}
@@ -203,7 +212,7 @@
       bind:this={videoElement}
       poster={thumbPath}
       on:dblclick={toggleFakeFullscreen}
-      on:click={play}
+      on:click={togglePlay}
       on:canplay={() => {
         videoIsLoaded = true;
         if (directJumpToTime) {
@@ -257,6 +266,28 @@
         on:focus={() => {}}
         on:contextmenu={openVideoContextMenu}
       />
+      {#if videoIsLoaded}
+        {#each item.video?.marks || [] as mark}
+          <button
+            on:mouseover={(e) => displayThumb(e, mark.mark)}
+            on:mousemove={(e) => displayThumb(e, mark.mark)}
+            on:mouseleave={() => {
+              thumbElement.style.display = "none";
+              thumbTimeElement.style.display = "none";
+            }}
+            on:focus={() => {}}
+            on:click={(e) => {
+              seek(e);
+              if (videoElement.paused || videoElement.ended) {
+                videoElement.play();
+              }
+            }}
+            class="absolute w-4 h-full bg-red-500"
+            style={`left: ${getMarkLeftOffset(mark.mark)}px`}
+          >
+          </button>
+        {/each}
+      {/if}
       <canvas
         bind:this={thumbElement}
         class="absolute top-0 left-0 z-50 hidden bg-transparent"

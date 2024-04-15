@@ -26,14 +26,17 @@ Plan for the next two weeks:
 
 
 ## Report 3
-* Fixed a bug regarding the preview images not updating correctly (the old image was displayed because it was served from the cache)
+The last two weeks I have:
+* Fixed a bug regarding the preview images not updating correctly after a user has changed them (in some cases the old image was displayed because it was served from the cache)
 * Implemented a modal to confirm the deletion of items
-* Added a context menu to the main grid which allows users to open the item in OS file explorer, delete the item or edit the item
-* Added a icon and decided on a name for the application: "TagNest"
+* Added a context menu to the main grid which allows users to open an item in the OS file explorer, delete the item or edit the item
+* Added a context menu to the tags sidebar which allows users to rename or delete a tag, deselect all tags ("Show all items") and display items without any tags ("Show untagged")
+* Added an icon and decided on a name for the application: "TagNest"
 * Replaced Electron's default "About" window with a basic custom one, added a link to the settings screen (not yet implemented) to the menu bar
 * Started with the functionality to add highlights to bookmarks
 
+
 Plan for the next two weeks:
 * Finish the functionality to add highlights to bookmarks
-* Start with the functionality to add highlights to videos
-* Work through week 8 of the module material and start planning the poster
+* Implement the functionality to add highlights/marks to videos
+* Work through week 8 of the module's material and start planning the poster

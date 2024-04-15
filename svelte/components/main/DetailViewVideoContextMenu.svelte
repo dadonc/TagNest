@@ -8,7 +8,7 @@
   export let item: SingleItem;
 
   function addSimpleMark() {
-    addVideoMark(item.id, $contextMenuStore.videoSeekPos);
+    addVideoMark(item.video!.id, $contextMenuStore.videoSeekPos);
   }
 </script>
 

@@ -3,6 +3,23 @@ import { writable } from "svelte/store";
 import { possiblyDeleteTags, updateItemTags } from "./tags";
 import { currView } from "./stateStore";
 
+export const itemInclude = {
+  file: true,
+  tags: true,
+  bookmark: {
+    include: {
+      BookmarkHighlight: true,
+    },
+  },
+  video: {
+    include: {
+      marks: true,
+    },
+  },
+  audio: true,
+  text: true,
+};
+
 export const items = writable<Awaited<ReturnType<typeof getItems>>>(
   await getItems()
 );
@@ -110,18 +127,7 @@ export async function getItem(id: string) {
     where: {
       id,
     },
-    include: {
-      file: true,
-      tags: true,
-      bookmark: {
-        include: {
-          BookmarkHighlight: true,
-        },
-      },
-      video: true,
-      audio: true,
-      text: true,
-    },
+    include: itemInclude,
   });
 }
 
@@ -130,18 +136,7 @@ export async function getItems(args?: { includeUnfinished: boolean }) {
     // where: {
     //   importFinished: false,
     // },
-    include: {
-      file: true,
-      tags: true,
-      bookmark: {
-        include: {
-          BookmarkHighlight: true,
-        },
-      },
-      video: true,
-      audio: true,
-      text: true,
-    },
+    include: itemInclude,
     orderBy: {
       createdAt: "desc",
     },

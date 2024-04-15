@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import prisma from "../prisma";
-import { refreshDisplayedItems, type SingleItem } from "./items";
+import { itemInclude, refreshDisplayedItems, type SingleItem } from "./items";
 import { selectedTags } from "./stateStore";
 
 export const allTags = writable<Awaited<ReturnType<typeof getTags>>>(
@@ -146,18 +146,7 @@ export async function updateItemsTags(itemIds: string[], tagString: string) {
         in: itemIds,
       },
     },
-    include: {
-      tags: true,
-      file: true,
-      bookmark: {
-        include: {
-          BookmarkHighlight: true,
-        },
-      },
-      video: true,
-      audio: true,
-      text: true,
-    },
+    include: itemInclude,
   });
   // Don't use Promise.all because tags should be created before the next item gets processed
   for (const item of items) {
