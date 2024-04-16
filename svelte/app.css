@@ -86,3 +86,23 @@ this code was injected by uBlock Origin on
     display: none;
   }
 }
+
+.previewContainer {
+  container-name: previewContainer;
+  container-type: inline-size;
+}
+
+@container previewContainer (max-width: 5rem) {
+  .typeInfo {
+    display: none;
+  }
+  .durationString {
+    display: none;
+  }
+}
+
+@container previewContainer (max-width: 3rem) {
+  .resolutionString {
+    display: none;
+  }
+}

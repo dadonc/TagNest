@@ -96,8 +96,8 @@
   on:keydown={() => {}}
   on:contextmenu={openMainContextMenu}
   class={classNames(
-    "flex items-center justify-center h-full w-full border-2 select-none ",
-
+    "h-full flex items-center justify-center w-full border-2 select-none ",
+    !isDetailView ? "previewContainer" : "",
     (item.type === "external" || item.type === "pdf") && !isItemSelected
       ? "border-base-300"
       : isItemSelected

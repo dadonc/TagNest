@@ -1,10 +1,4 @@
 # TODO
-
-
-
-
-
-* highlights: Left sidebar: styling - use daisyui colors
 * show count of bookmark highlights in preview
 * show bookmark title in preview
 

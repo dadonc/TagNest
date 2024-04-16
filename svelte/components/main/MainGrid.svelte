@@ -177,8 +177,6 @@
   .myGrid {
     display: grid;
     grid-template-columns: var(--grid-cols-string);
-    grid-template-rows: 1;
-    /* padding: 0.375rem; */
     grid-gap: 0.25rem;
   }
 </style>
