@@ -2,19 +2,14 @@
 
 
 
-VideoMarks:
-* fix mark outline, color of mark and text color of the seek time time when a thumb is displayed
-* display marks in preview
 
 
-
-
-* handle duplicate bookmarks: make screenshot file names unique
 * highlights: Left sidebar: styling - use daisyui colors
 * show count of bookmark highlights in preview
 * show bookmark title in preview
 
 Recreate preview is broken 
+* handle duplicate bookmarks: make screenshot file names unique
 
 ## Bugs
 * jump to position in video from bottomarea in detail view
@@ -50,7 +45,7 @@ DeleteConfirmModal is an ActionModal
     o	✅ Support choosable preview images for bookmarks and videos
     o	✅ (Re)write chrome extension
     o	✅ Context menu, ✅ deletion modal
-    o	User highlights: video timestamps, ✅ highlights in bookmarks, preview in left sidebar, indicator in grid preview
+    o	User highlights: ✅ video timestamps, ✅ highlights in bookmarks, preview in left sidebar, indicator in grid preview
     o	✅ Item order: file size, date added, date updated, name, countOpenings
 •	Polishing the application (01.07.24)
     o	Fixes and improvements

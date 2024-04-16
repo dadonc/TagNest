@@ -51,7 +51,7 @@
     thumbElement.style.bottom = "24px";
   }
 
-  function displayThumb(e: MouseEvent) {
+  function displayThumb(e: MouseEvent, markPos?: number) {
     if (thumbElement.width === 0) resizeThumbElement();
     const progressRect = progressBar.getBoundingClientRect();
     let renderPos =
@@ -69,7 +69,11 @@
     const context = thumbElement.getContext("2d");
 
     if (videoElementHidden.duration) {
-      videoElementHidden.currentTime = seek(e);
+      if (markPos) {
+        videoElementHidden.currentTime = markPos;
+      } else {
+        videoElementHidden.currentTime = seek(e);
+      }
       videoElementHidden.addEventListener(
         "seeked",
         function onSeeked() {
@@ -97,6 +101,12 @@
     let actualPos = (e.pageX - progressRect.left) / progressBar.offsetWidth;
     actualPos = actualPos < 0 ? 0 : actualPos;
     return actualPos * videoElementHidden.duration;
+  }
+
+  function getMarkLeftOffset(markTime: number) {
+    const progressRect = progressBar.getBoundingClientRect();
+    const percentage = markTime / videoElementHidden.duration;
+    return percentage * progressRect.width;
   }
 </script>
 
@@ -196,6 +206,27 @@
       on:keydown={() => {}}
       on:focus={() => {}}
     />
+    {#if videoIsLoaded && videoElementHidden.duration > 0}
+      {#each item.video?.marks || [] as mark}
+        <button
+          on:mouseover={(e) => displayThumb(e, mark.mark)}
+          on:mousemove={(e) => displayThumb(e, mark.mark)}
+          on:mouseleave={() => {
+            thumbElement.style.display = "none";
+          }}
+          on:focus={() => {}}
+          on:click={(e) => {
+            $selectedItems.ids = [item.id];
+            $currView.jumpToVideoTime = mark.mark;
+            $currentRoute = "details";
+          }}
+          class="absolute bottom-0 z-40 w-2 h-6 bg-red-500 hover:bg-yellow-400 focus:outline-none"
+          style={`left: ${getMarkLeftOffset(mark.mark)}px`}
+        >
+        </button>
+      {/each}
+    {/if}
+
     <canvas
       bind:this={thumbElement}
       class="absolute bottom-0 left-0 z-20 hidden bg-transparent"

@@ -119,6 +119,7 @@
     );
 
     thumbTimeElement.style.display = "block";
+    thumbTimeElement.style.backgroundColor = "rgba(0,0,0,0.65)";
     thumbTimeElement.textContent = formatTime(videoElementHidden.currentTime);
     thumbTimeElement.style.left = `calc(${renderPos * 100}% + ${(videoElement.offsetWidth * thumbRatio) / 2}px - ${thumbTimeElement.offsetWidth / 2}px)`; // center the time element
     thumbTimeElement.style.top = `-24px`;
@@ -346,7 +347,7 @@
             on:contextmenu={(e) => {
               openVideoMarkContextMenu(e, mark.id);
             }}
-            class="absolute w-4 h-full bg-red-500 hover:bg-yellow-400"
+            class="absolute w-4 h-full bg-red-500 hover:bg-yellow-400 focus:outline-none"
             style={`left: ${getMarkLeftOffset(mark.mark)}px`}
           >
           </button>
