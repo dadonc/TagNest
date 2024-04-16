@@ -8,11 +8,10 @@
 * show count of bookmark highlights in preview
 * show bookmark title in preview
 
-Recreate preview is broken 
-* handle duplicate bookmarks: make screenshot file names unique
+Recreate video preview is broken 
 
 ## Bugs
-* jump to position in video from bottomarea in detail view
+* handle duplicate bookmarks: make screenshot file names unique
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag

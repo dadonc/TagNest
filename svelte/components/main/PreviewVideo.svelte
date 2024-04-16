@@ -195,9 +195,16 @@
         }
       }}
       on:click={(e) => {
-        $selectedItems.ids = [item.id];
-        $currView.jumpToVideoTime = seek(e);
-        $currentRoute = "details";
+        const video = document.getElementById("videoPlayer");
+        if (video) {
+          // jump to position in video from bottomarea in detail view
+          // @ts-ignore
+          video.currentTime = seek(e);
+        } else {
+          $selectedItems.ids = [item.id];
+          $currView.jumpToVideoTime = seek(e);
+          $currentRoute = "details";
+        }
       }}
       class="absolute bottom-0 z-20 w-full h-6 cursor-pointer"
       bind:this={progressBar}
@@ -216,9 +223,16 @@
           }}
           on:focus={() => {}}
           on:click={(e) => {
-            $selectedItems.ids = [item.id];
-            $currView.jumpToVideoTime = mark.mark;
-            $currentRoute = "details";
+            const video = document.getElementById("videoPlayer");
+            if (video) {
+              // @ts-ignore
+              // jump to position in video from bottomarea in detail view
+              video.currentTime = mark.mark;
+            } else {
+              $selectedItems.ids = [item.id];
+              $currView.jumpToVideoTime = mark.mark;
+              $currentRoute = "details";
+            }
           }}
           class="absolute bottom-0 z-40 w-2 h-6 bg-red-500 hover:bg-yellow-400 focus:outline-none"
           style={`left: ${getMarkLeftOffset(mark.mark)}px`}
