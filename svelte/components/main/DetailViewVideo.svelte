@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { SingleItem } from "../../stores/items";
+  import { refreshDisplayedItems, type SingleItem } from "../../stores/items";
   import Play from "../../assets/feather/Play.svelte";
   import {
     formatTime,
@@ -15,6 +15,7 @@
   } from "../../stores/stateStore";
   import Maximize from "../../assets/feather/Maximize.svelte";
   import DetailViewVideoContextMenu from "./DetailViewVideoContextMenu.svelte";
+  import { addVideoMark } from "./DetailViewVideoHelper";
 
   export let item: SingleItem;
   export let isSpacePreview = false;
@@ -149,23 +150,66 @@
       wasPreviewHidden = true;
       togglePlay();
     } else if (e.key == "ArrowRight") {
-      videoElement.currentTime += 10;
+      if (e.metaKey) {
+        const marks = (item.video?.marks || []).sort((a, b) =>
+          b.mark < a.mark ? 1 : -1
+        );
+        const nextMark = marks.find(
+          (mark) => mark.mark > videoElement.currentTime
+        );
+        if (nextMark) {
+          videoElement.currentTime = nextMark.mark;
+        } else if (marks.length > 0) {
+          videoElement.currentTime = marks[0].mark;
+        }
+      } else {
+        videoElement.currentTime += 10;
+      }
     } else if (e.key == "ArrowLeft") {
-      videoElement.currentTime -= 10;
+      if (e.metaKey) {
+        const marks = (item.video?.marks || []).sort((a, b) =>
+          b.mark > a.mark ? 1 : -1
+        );
+        const prevMark = marks.filter(
+          (mark) => mark.mark + 2 < videoElement.currentTime
+        )[0];
+        if (prevMark) {
+          videoElement.currentTime = prevMark.mark;
+        } else {
+          videoElement.currentTime = 0;
+        }
+      } else {
+        videoElement.currentTime -= 10;
+      }
     } else if (e.key == "ArrowDown") {
-      if (e.altKey) {
+      if (e.metaKey) {
         videoElement.currentTime -= 300; // 5 minutes
         return;
       }
       videoElement.currentTime -= 60;
     } else if (e.key == "ArrowUp") {
-      if (e.altKey) {
+      if (e.metaKey) {
         videoElement.currentTime += 300; // 5 minutes
         return;
       }
       videoElement.currentTime += 60;
     } else if (e.key == "f") {
       handleFullscreen();
+    } else if (e.key == "d" && e.metaKey) {
+      if (item.video) {
+        // todo check that no mark already exists at that time
+        const existingMark = (item.video?.marks || []).filter(
+          (mark) =>
+            mark.mark + 5 > videoElement.currentTime &&
+            mark.mark - 5 < videoElement.currentTime
+        )[0];
+        if (!existingMark) {
+          addVideoMark(item.video.id, videoElement.currentTime);
+          refreshDisplayedItems("added video mark");
+        } else {
+          console.log("mark already exists at that time");
+        }
+      }
     }
   }}
   on:fullscreenchange={() => {
@@ -290,7 +334,7 @@
             on:contextmenu={(e) => {
               openVideoMarkContextMenu(e, mark.id);
             }}
-            class="absolute w-4 h-full bg-red-500"
+            class="absolute w-4 h-full bg-red-500 hover:bg-yellow-400"
             style={`left: ${getMarkLeftOffset(mark.mark)}px`}
           >
           </button>

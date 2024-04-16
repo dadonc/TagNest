@@ -1,6 +1,6 @@
 <script lang="ts">
   import { refreshDisplayedItems, type SingleItem } from "../../stores/items";
-  import { contextMenuStore, selectedItems } from "../../stores/stateStore";
+  import { contextMenuStore } from "../../stores/stateStore";
   import ContextMenu from "./ContextMenu.svelte";
   import ContextMenuButton from "./ContextMenuButton.svelte";
   import { addVideoMark, deleteMark } from "./DetailViewVideoHelper";
@@ -9,7 +9,7 @@
 
   async function addSimpleMark() {
     await addVideoMark(item.video!.id, $contextMenuStore.videoSeekPos);
-    refreshDisplayedItems();
+    refreshDisplayedItems("added video mark");
   }
 </script>
 
@@ -31,7 +31,7 @@
       name="Delete mark"
       onClick={async () => {
         await deleteMark($contextMenuStore.triggeredByMarkId);
-        refreshDisplayedItems();
+        refreshDisplayedItems("deleted video mark");
         $contextMenuStore.isContextMenuOpen = false;
       }}
     />
