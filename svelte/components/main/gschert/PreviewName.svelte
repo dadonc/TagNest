@@ -5,7 +5,8 @@
 </script>
 
 <div
-  class={"bottom-0 w-full p-2 mt-2 break-words bg-base-300 " + className}
+  class={"absolute bottom-0 left-0 w-full p-1 overflow-hidden text-sm text-ellipsis bg-base-300 whitespace-nowrap nameDiv " +
+    className}
   {style}
 >
   {name}

@@ -4,6 +4,7 @@
 
   import { increaseCountOpened, type SingleItem } from "../../stores/items";
   import PreviewTypeInfo from "./gschert/PreviewTypeInfo.svelte";
+  import PreviewName from "./gschert/PreviewName.svelte";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
@@ -20,6 +21,7 @@
     class={`max-h-full ${item.id}_preview`}
     style={maxHeightStyle}
   />
+  <PreviewName name={item.name || ""} />
   {#if item.url}
     <a
       target="_blank"

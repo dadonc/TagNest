@@ -195,7 +195,11 @@
       }
       videoElement.currentTime += 60;
     } else if (e.key == "f") {
-      handleFullscreen();
+      if (e.shiftKey) {
+        toggleFakeFullscreen();
+      } else {
+        handleFullscreen();
+      }
     } else if (e.key == "d" && e.metaKey) {
       if (item.video) {
         // todo check that no mark already exists at that time
@@ -273,7 +277,7 @@
         : "hidden"}
       bind:this={videoElement}
       poster={thumbPath}
-      on:dblclick={toggleFakeFullscreen}
+      on:dblclick={() => videoContainer.requestFullscreen()}
       on:click={togglePlay}
       on:canplay={() => {
         videoIsLoaded = true;
@@ -299,18 +303,24 @@
     >
       <source src={"file://" + item.file?.path} />
     </video>
-    <span
-      bind:this={playIconElement}
-      class="absolute flex items-center justify-center w-8 h-8 p-2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm bg-base-300 text-base-content top-1/2 left-1/2"
-      ><Play className="w-4 h-4" /></span
-    >
     <button
-      on:click={() => videoContainer.requestFullscreen()}
-      bind:this={maximizeIconElement}
-      class={showActionElements
-        ? "absolute flex items-center justify-center w-6 h-6 p-0 rounded-sm cursor-pointer bg-base-300 text-base-content hover:bg-base-content hover:text-base-300 top-2 right-2"
-        : "hidden"}><Maximize className="w-4 h-4" /></button
+      on:click={() => {
+        wasPreviewHidden = true;
+        togglePlay();
+      }}
+      bind:this={playIconElement}
+      class="absolute flex items-center w-20 h-20 p-2 transform -translate-x-1/2 -translate-y-1/2 rounded focus:outline-none bg-base-300 text-base-content top-1/2 left-1/2"
+      ><Play className="w-20 h-20" /></button
     >
+    {#if !isSpacePreview}
+      <button
+        on:click={() => videoContainer.requestFullscreen()}
+        bind:this={maximizeIconElement}
+        class={showActionElements
+          ? "absolute flex items-center justify-center w-6 h-6 p-0 rounded-sm cursor-pointer bg-base-300 text-base-content hover:bg-base-content hover:text-base-300 top-2 right-2"
+          : "hidden"}><Maximize className="w-4 h-4" /></button
+      >
+    {/if}
     <div class={showActionElements ? "relative h-4" : "opacity-0 h-4"}>
       <progress
         on:mouseover={displayThumb}

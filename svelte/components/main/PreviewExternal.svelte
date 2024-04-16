@@ -43,7 +43,7 @@
     <!-- Center -->
     <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
     {#if !hideName}
-      <PreviewName {name} className="absolute" style={maxHeightStyle} />
+      <PreviewName {name} style={maxHeightStyle} />
     {/if}
     <PreviewTypeInfo type={extension} />
   </div>

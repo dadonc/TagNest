@@ -108,14 +108,6 @@ export const importSteps = {
       },
       desc: "Save file preview",
     },
-    2: {
-      func: async (item: SingleItem) => {
-        await new Promise((resolve) => {
-          setTimeout(resolve, 10000);
-        });
-      },
-      desc: "Wait 10s",
-    },
   },
   pdf: {
     1: {
@@ -179,12 +171,10 @@ export default async function startImportTasks() {
       isRunning = false;
       if (wasRunning) {
         wasRunning = false;
-        setTimeout(() => {
-          importItems.update((items) => {
-            return items.filter((item) => !item.importFinished);
-          });
-          refreshDisplayedItems("finishedItemsImport");
-        }, 2000);
+        importItems.update((items) => {
+          return items.filter((item) => !item.importFinished);
+        });
+        refreshDisplayedItems("finishedItemsImport");
       }
       if (get(currentRoute) === "importMultiple") {
         currentRoute.set("main");

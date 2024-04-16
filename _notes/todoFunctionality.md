@@ -1,5 +1,5 @@
 # TODO
-* show bookmark title in preview
+* fix name for external and pdf; don't display above img
 
 Recreate video preview is broken 
 
