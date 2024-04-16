@@ -88,6 +88,7 @@
     tooltip.style.position = "absolute";
     tooltip.style.zIndex = "1000";
     tooltip.style.background = "yellow";
+    tooltip.style.border = "none";
     tooltip.style.padding = "5px";
     doc.body.appendChild(tooltip);
     tooltip.addEventListener("mouseup", () => {
@@ -98,7 +99,7 @@
     const iframeRect = iframe.getBoundingClientRect();
 
     tooltip.style.left = `${range.left + doc.documentElement.scrollLeft}px`;
-    tooltip.style.top = `${iframeRect.top + range.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 24}px`;
+    tooltip.style.top = `${iframeRect.top + range.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 30}px`;
   }
 
   function showRemoveTooltip(e: MouseEvent) {
@@ -107,7 +108,9 @@
     tooltip.textContent = "Remove Highlight";
     tooltip.style.position = "absolute";
     tooltip.style.zIndex = "1000";
-    tooltip.style.background = "yellow";
+    tooltip.style.background = "#ef4444";
+    tooltip.style.color = "white";
+    tooltip.style.border = "none";
     tooltip.style.padding = "5px";
     doc.body.appendChild(tooltip);
     tooltip.addEventListener("click", () => {
@@ -127,7 +130,7 @@
     const iframeRect = iframe.getBoundingClientRect();
 
     tooltip.style.left = `${span.left + doc.documentElement.scrollLeft}px`;
-    tooltip.style.top = `${iframeRect.top + span.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 24}px`;
+    tooltip.style.top = `${iframeRect.top + span.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 30}px`;
   }
 
   async function addHighlight(args: {

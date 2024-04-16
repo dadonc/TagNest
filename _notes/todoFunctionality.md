@@ -1,5 +1,4 @@
 # TODO
-* show count of bookmark highlights in preview
 * show bookmark title in preview
 
 Recreate video preview is broken 
@@ -38,7 +37,7 @@ DeleteConfirmModal is an ActionModal
     o	✅ Support choosable preview images for bookmarks and videos
     o	✅ (Re)write chrome extension
     o	✅ Context menu, ✅ deletion modal
-    o	User highlights: ✅ video timestamps, ✅ highlights in bookmarks, preview in left sidebar, indicator in grid preview
+    o	✅ User highlights: ✅ video timestamps, ✅ highlights in bookmarks, ✅ preview in left sidebar, ✅ indicator in grid preview
     o	✅ Item order: file size, date added, date updated, name, countOpenings
 •	Polishing the application (01.07.24)
     o	Fixes and improvements
@@ -74,7 +73,7 @@ DeleteConfirmModal is an ActionModal
 * Quicksettings in top bar: show name, show type, show count highlights, date changed, mute video preview, countOpened, show tags in previews, show file size
 * item preview: show tags(clickable, toggle on off in quick settings) - also show in detailview
 * Make URL clickable in right sidebar, add url icon to item preview
-* Make paths relative
+* Make paths relative!
 * Add "searchbar" for tag quick selection 
 
 * loading indicator when opening external files

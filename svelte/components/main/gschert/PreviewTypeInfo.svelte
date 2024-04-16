@@ -3,6 +3,7 @@
 </script>
 
 <span
-  class="absolute inline-block p-1 text-xs text-white rounded-sm typeInfo bg-neutral top-1 left-1"
-  >{type}</span
->
+  class="absolute inline-flex items-center justify-center p-1 text-xs text-white rounded-sm typeInfo bg-neutral top-1 left-1"
+  >{type}
+  <slot />
+</span>

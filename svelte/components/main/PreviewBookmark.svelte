@@ -1,10 +1,14 @@
 <script lang="ts">
   import Link from "../../assets/feather/Link.svelte";
+  import Edit from "../../assets/feather/Edit.svelte";
+
   import { increaseCountOpened, type SingleItem } from "../../stores/items";
   import PreviewTypeInfo from "./gschert/PreviewTypeInfo.svelte";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
+
+  $: highlightCount = item.bookmark?.BookmarkHighlight.length || 0;
 </script>
 
 <div
@@ -21,12 +25,21 @@
       target="_blank"
       on:click={() => increaseCountOpened(item)}
       href={item.url}
-      class="absolute w-6 h-6 p-1 bg-base-100 text-primary bottom-2 right-2 hoverDisplay"
+      class="absolute w-6 h-6 p-1 bg-slate-100 text-primary bottom-2 right-2 hoverDisplay"
     >
       <Link />
     </a>
   {/if}
-  <PreviewTypeInfo type={item.type} />
+  <PreviewTypeInfo type={item.type}>
+    {#if highlightCount > 0}
+      <span class="inline-flex items-center justify-center ml-1">
+        <Edit className="w-3 h-3 inline-block text-yellow-200" />
+        <span class="highlightCount">
+          {highlightCount ? highlightCount : ""}
+        </span>
+      </span>
+    {/if}
+  </PreviewTypeInfo>
 </div>
 
 <style>

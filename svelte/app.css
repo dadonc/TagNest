@@ -92,7 +92,13 @@ this code was injected by uBlock Origin on
   container-type: inline-size;
 }
 
-@container previewContainer (max-width: 5rem) {
+@container previewContainer (max-width: 7rem) {
+  .highlightCount {
+    display: none;
+  }
+}
+
+@container previewContainer (max-width: 6rem) {
   .typeInfo {
     display: none;
   }
