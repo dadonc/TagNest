@@ -6,7 +6,7 @@
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
-  export let hideName: boolean = false;
+  export let hideName: boolean;
 
   let isHovered = false;
 
@@ -23,7 +23,7 @@
 </script>
 
 <div
-  class="h-full overflow-hidden"
+  class="h-full overflow-hidden hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
 >
@@ -33,10 +33,7 @@
   >
     <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
     {#if !hideName}
-      <PreviewName
-        name={item.name || ""}
-        className={!isHovered ? "opacity-0 absolute" : "absolute"}
-      />
+      <PreviewName name={item.name || ""} />
     {/if}
     <PreviewTypeInfo type={item.type} />
   </div>

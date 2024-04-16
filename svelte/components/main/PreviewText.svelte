@@ -36,11 +36,11 @@
     <div class="w-screen"></div>
   {/if}
 
-  <div class="absolute inline-block mb-8 whitespace-pre-wrap">
+  <div class="absolute inline-block mb-8 text-xs whitespace-pre-wrap">
     {item.text?.preview}
   </div>
   <div
-    class="absolute bottom-0 right-0 h-8 p-2 font-bold text-right bg-base-300"
+    class="absolute p-1 text-xs text-right text-white rounded-sm bottom-1 right-1 bg-neutral"
   >
     {item.text?.words} words
   </div>

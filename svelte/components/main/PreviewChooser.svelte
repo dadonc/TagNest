@@ -16,7 +16,7 @@
 {#if item.type === "image"}
   <ImagePreview {item} {maxHeightStyle} />
 {:else if item.type === "bookmark"}
-  <BookmarkPreview {item} {maxHeightStyle} />
+  <BookmarkPreview {item} {maxHeightStyle} {hideName} />
 {:else if item.type === "pdf"}
   <PreviewPdf {item} {maxHeightStyle} {hideName} />
 {:else if item.type === "video"}

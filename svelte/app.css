@@ -30,6 +30,7 @@ progress::-webkit-progress-value {
 
 .hoverContainer:hover .nameDiv {
   white-space: inherit;
+  word-break: break-word;
 }
 
 /* Remove cookie banners

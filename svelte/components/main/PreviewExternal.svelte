@@ -7,7 +7,7 @@
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
-  export let hideName: boolean = false;
+  export let hideName: boolean;
 
   let isHovered = false;
   const { name, extension } = extractNameAndExtension(item.file?.path || "");
@@ -26,7 +26,7 @@
 </script>
 
 <div
-  class="h-full"
+  class="h-full hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   on:dblclick={() => {
@@ -43,7 +43,7 @@
     <!-- Center -->
     <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
     {#if !hideName}
-      <PreviewName {name} style={maxHeightStyle} />
+      <PreviewName name={name + "." + extension} />
     {/if}
     <PreviewTypeInfo type={extension} />
   </div>

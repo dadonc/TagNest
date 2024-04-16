@@ -1,6 +1,6 @@
 # TODO
-* fix name for external and pdf; don't display above img
-
+* Previews: don't display names above img
+* BottomArea: gap between pdfs, border around text items
 Recreate video preview is broken 
 
 ## Bugs
@@ -89,6 +89,7 @@ DeleteConfirmModal is an ActionModal
 * "favorite" tag: heart icon on the item previews
 * search inside bookmark iframe
 * Left sidebar: Highlights: context menu: delete
+* DetailView BottomArea: display as list
 
 ## Not important
 * compare hash of files to check if they are the same

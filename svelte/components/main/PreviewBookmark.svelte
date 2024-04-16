@@ -8,6 +8,7 @@
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
+  export let hideName: boolean;
 
   $: highlightCount = item.bookmark?.BookmarkHighlight.length || 0;
 </script>
@@ -21,7 +22,9 @@
     class={`max-h-full ${item.id}_preview`}
     style={maxHeightStyle}
   />
-  <PreviewName name={item.name || ""} />
+  {#if !hideName}
+    <PreviewName name={item.name || ""} />
+  {/if}
   {#if item.url}
     <a
       target="_blank"
