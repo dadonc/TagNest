@@ -169,6 +169,12 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
   } else if (e.key === "ArrowLeft") {
     const video = document.getElementById("videoPlayer") as HTMLVideoElement;
     if (video && !video.paused) return;
+    if (video && video.paused) {
+      if (e.metaKey) {
+        video.play();
+        return;
+      }
+    }
     if ($selectedItems.ids.length == 1) {
       const item = items.find((item) => item.id === $selectedItems.ids[0]);
       if (item) {
@@ -183,6 +189,12 @@ export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
   } else if (e.key === "ArrowRight") {
     const video = document.getElementById("videoPlayer") as HTMLVideoElement;
     if (video && !video.paused) return;
+    if (video && video.paused) {
+      if (e.metaKey) {
+        video.play();
+        return;
+      }
+    }
     if ($selectedItems.ids.length == 1) {
       const item = items.find((item) => item.id === $selectedItems.ids[0]);
       if (item) {

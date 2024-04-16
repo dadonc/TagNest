@@ -37,11 +37,7 @@
       class="text-3xl">-</button
     >
     <div class="w-full text-sm text-center">
-      {#if $currentRoute === "importMultiple"}
-        {$importItems.length} items to import
-      {:else}
-        {itemsCount} items
-      {/if}
+      {itemsCount} items
     </div>
   </div>
   <div class="inline-block" style="width: var(--rightContainer)" />

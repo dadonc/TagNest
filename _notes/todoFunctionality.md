@@ -1,8 +1,6 @@
 # TODO
 
 
-autoplay video if metaKey and arrow are pressed
-delete video mark with metaKey + x
 
 VideoMarks:
 * fix mark outline, color of mark and text color of the seek time time when a thumb is displayed

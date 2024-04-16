@@ -15,7 +15,7 @@
   } from "../../stores/stateStore";
   import Maximize from "../../assets/feather/Maximize.svelte";
   import DetailViewVideoContextMenu from "./DetailViewVideoContextMenu.svelte";
-  import { addVideoMark } from "./DetailViewVideoHelper";
+  import { addVideoMark, deleteMark } from "./DetailViewVideoHelper";
 
   export let item: SingleItem;
   export let isSpacePreview = false;
@@ -144,7 +144,7 @@
 </script>
 
 <svelte:window
-  on:keydown={(e) => {
+  on:keydown={async (e) => {
     e.preventDefault();
     if (e.key === " ") {
       wasPreviewHidden = true;
@@ -204,10 +204,22 @@
             mark.mark - 5 < videoElement.currentTime
         )[0];
         if (!existingMark) {
-          addVideoMark(item.video.id, videoElement.currentTime);
+          await addVideoMark(item.video.id, videoElement.currentTime);
           refreshDisplayedItems("added video mark");
         } else {
           console.log("mark already exists at that time");
+        }
+      }
+    } else if (e.key == "x" && e.metaKey) {
+      if (item.video) {
+        const existingMark = (item.video?.marks || []).filter(
+          (mark) =>
+            mark.mark + 5 > videoElement.currentTime &&
+            mark.mark - 5 < videoElement.currentTime
+        )[0];
+        if (existingMark) {
+          await deleteMark(existingMark.id);
+          refreshDisplayedItems("deleted video mark");
         }
       }
     }
