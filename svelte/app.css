@@ -71,7 +71,7 @@ this code was injected by uBlock Origin on
   display: none !important;
 }
 
-/* Hide video preview info if preview is too small: resolution, playicon, duration */
+/* Hide video preview type info if preview is too small */
 
 .bottomContainer {
   container-name: bottomContainer;
@@ -79,22 +79,10 @@ this code was injected by uBlock Origin on
 }
 
 @container bottomContainer (max-height: 6rem) {
-  .playIcon {
+  .typeInfo {
     display: none;
   }
-}
-
-@container bottomContainer (max-height: 5rem) {
   .resolutionString {
     display: none;
-  }
-}
-
-@container bottomContainer (max-height: 4rem) {
-  .durationString {
-    display: none;
-  }
-  .playIcon {
-    display: block;
   }
 }

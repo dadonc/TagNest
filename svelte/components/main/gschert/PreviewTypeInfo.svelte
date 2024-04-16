@@ -3,6 +3,6 @@
 </script>
 
 <span
-  class="absolute inline-block p-1 text-xs text-white rounded-sm bg-neutral durationString top-1 left-1"
+  class="absolute inline-block p-1 text-xs text-white rounded-sm typeInfo bg-neutral top-1 left-1"
   >{type}</span
 >

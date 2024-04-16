@@ -45,13 +45,12 @@
   .inactiveDrawer,
   .activeDrawer {
     border: none;
-    padding: 0.25rem;
     outline: none;
+    margin-bottom: 1rem;
   }
+
   .activeDrawer {
-    background-color: #f0f0f0;
-    border: 1px solid black;
-    border-bottom: none;
-    border-radius: 8px 8px 0 0;
+    /* text-primary */
+    border-bottom: 3px solid hsl(var(--p) / 1);
   }
 </style>

@@ -36,7 +36,7 @@
 <div>
   {#each highlights as highlight}
     <button
-      class="w-full p-2 text-sm text-left border border-transparent outline-none focus:border-black"
+      class="w-full p-2 text-sm text-left border border-transparent outline-none"
       on:click={() => scrollToElementInsideIframe(highlight.id)}
     >
       {highlight.text}
@@ -47,15 +47,21 @@
 <style>
   button {
     outline: none;
-    border-top: 1px solid black;
+    /* text-content */
+    border-top: 1px solid hsl(var(--bc) / 1);
+  }
+
+  button:focus {
+    border: 1px solid hsl(var(--bc) / 1);
   }
 
   button:first-child {
     border-top: 1px solid transparent;
+    padding-top: 0;
   }
 
   button:first-child:focus {
-    border-top: 1px solid black;
+    border-top: 1px solid hsl(var(--bc) / 1);
   }
 
   button:focus + button {
