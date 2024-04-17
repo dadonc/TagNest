@@ -7,7 +7,12 @@
     settingsJson,
   } from "../../stores/stateStore";
   import { extractNameAndExtension } from "../../../src/gschert";
-  import { formatTime, getVideoResolutionDescription } from "../../utils";
+  import {
+    classNames,
+    formatTime,
+    getVideoResolutionDescription,
+  } from "../../utils";
+  import PreviewName from "./gschert/PreviewName.svelte";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
@@ -39,7 +44,7 @@
   let progressBar: HTMLProgressElement;
   let videoElementHidden: HTMLVideoElement;
   let hoverSeekTimeSpan: HTMLSpanElement;
-  let thumbRatio = 0.35;
+  let thumbRatio = 0.75;
 
   function resizeThumbElement() {
     if (!videoElement) return; // on first render after changin to next video, videoElement is not yet defined
@@ -48,7 +53,7 @@
     thumbElement.style.bottom = `calc(-${
       videoElement.offsetHeight * thumbRatio //+ 24
     }px)`;
-    thumbElement.style.bottom = "24px";
+    thumbElement.style.bottom = "28px";
   }
 
   function displayThumb(e: MouseEvent, markPos?: number) {
@@ -111,7 +116,7 @@
 </script>
 
 <div
-  class="relative flex items-center justify-center w-full"
+  class="relative w-full"
   style={maxHeightStyle}
   on:mouseenter={() => {
     displayVideo = true;
@@ -136,7 +141,7 @@
 >
   <img
     class={`w-full ${$currentRoute == "details" ? "max-h-full" : ""} ${
-      videoIsLoaded ? "absolute" : ""
+      videoIsLoaded ? "hidden" : ""
     } ${item.id}_preview`}
     style={maxHeightStyle}
     src={thumbPath}
@@ -151,9 +156,15 @@
     ><Play className="w-4 h-4 text-white p-1" /></span
   > -->
   <span
-    class="absolute bottom-0 right-0 inline-block p-1 font-mono text-xs text-white rounded-sm bg-neutral durationString"
-    >{durationString}</span
+    class={classNames(
+      "absolute inline-block p-1 font-mono text-xs text-white rounded-sm right-1 bottom-8 bg-neutral durationString",
+      displayVideo ? "hidden" : ""
+    )}>{durationString}</span
   >
+  {#if !displayVideo}
+    <PreviewName name={item.name || ""} hideName={false} />
+  {/if}
+
   {#if displayVideo}
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
@@ -169,6 +180,7 @@
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
       loop
+      title={item.name}
       bind:this={videoElement}
       class={`w-full max-h-full ${videoIsLoaded ? "z-10" : "hidden"} `}
       src={videoPath}
@@ -182,7 +194,9 @@
         videoIsLoaded = true;
       }}
     />
+    <div class="w-full bg-red-500 h-7"></div>
     <progress
+      title={item.name}
       on:mouseover={displayThumb}
       on:mousemove={displayThumb}
       on:mouseleave={(e) => {
@@ -206,7 +220,7 @@
           $currentRoute = "details";
         }
       }}
-      class="absolute bottom-0 z-20 w-full h-6 cursor-pointer"
+      class="absolute bottom-0 z-20 w-full cursor-pointer h-7"
       bind:this={progressBar}
       value="0"
       max="0"
@@ -234,7 +248,7 @@
               $currentRoute = "details";
             }
           }}
-          class="absolute bottom-0 z-40 w-2 h-6 bg-red-500 hover:bg-yellow-400 focus:outline-none"
+          class="absolute bottom-0 z-40 w-2 bg-red-500 h-7 hover:bg-yellow-400 focus:outline-none"
           style={`left: ${getMarkLeftOffset(mark.mark)}px`}
         >
         </button>
@@ -247,7 +261,7 @@
     />
 
     <span
-      class="absolute z-20 font-mono text-xs text-white pointer-events-none bottom-1 right-1"
+      class="absolute bottom-0 z-20 font-mono text-xs leading-7 text-white pointer-events-none h-7 right-2"
     >
       <span class="hidden" bind:this={hoverSeekTimeSpan}>00:00:00 / </span>
       <span>{durationString}</span>

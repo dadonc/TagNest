@@ -1,6 +1,9 @@
 # TODO
 
-add name to videopreview, audiopreview
+video preview breaks if the item is renamed
+File order: rename Date added to file created
+
+add name audiopreview
 Recreate video preview is broken 
 
 ## Bugs
