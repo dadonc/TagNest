@@ -15,12 +15,12 @@
 
 <div
   class="relative flex flex-col items-center justify-center w-full h-full hoverContainer"
+  style={maxHeightStyle}
 >
   <img
     src={"file://" + item.bookmark?.previewImagePath}
     alt=""
     class={`h-full ${item.id}_preview`}
-    style={maxHeightStyle}
   />
   <PreviewName name={item.name || ""} {hideName} />
   {#if item.url}

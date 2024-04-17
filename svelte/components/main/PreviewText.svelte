@@ -26,7 +26,7 @@
 
 <!-- aspect ratio is based on the pdf/external preview -->
 <div
-  class="relative w-full h-full p-1 overflow-hidden bg-base-300 text-ellipsis"
+  class="relative w-full h-full p-1 overflow-hidden bg-base-100 text-ellipsis"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   style={maxHeightStyle + "; aspect-ratio: 0.725"}

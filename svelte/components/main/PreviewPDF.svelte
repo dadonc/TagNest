@@ -23,20 +23,14 @@
 </script>
 
 <div
-  class="w-full hoverContainer"
+  class="relative flex flex-col items-center w-full h-full hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
+  style={maxHeightStyle}
 >
-  <div class="relative" style={maxHeightStyle}>
-    <img
-      src={previewPath}
-      alt=""
-      class="max-h-full m-auto"
-      style={maxHeightStyle}
-    />
-
-    <PreviewName name={item.name || ""} {hideName} />
-
-    <PreviewTypeInfo type={item.type} />
+  <div class="flex items-center justify-center h-full">
+    <img src={previewPath} alt="" class="max-h-full" />
   </div>
+  <PreviewName name={item.name || ""} {hideName} />
+  <PreviewTypeInfo type={item.type} />
 </div>

@@ -35,14 +35,11 @@
       increaseCountOpened(item);
     }
   }}
+  style={maxHeightStyle}
 >
   <div class="flex items-center justify-center h-full">
-    <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
+    <img src={previewPath} alt="" class="max-h-full" />
   </div>
   <PreviewTypeInfo type={extension} />
-  <!-- <div
-    class="relative flex items-center justify-center"
-    style={maxHeightStyle}
-  ></div> -->
   <PreviewName name={name + "." + extension} {hideName} />
 </div>
