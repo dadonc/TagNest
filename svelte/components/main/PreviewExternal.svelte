@@ -42,9 +42,7 @@
   >
     <!-- Center -->
     <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
-    {#if !hideName}
-      <PreviewName name={name + "." + extension} />
-    {/if}
+    <PreviewName name={name + "." + extension} {hideName} />
     <PreviewTypeInfo type={extension} />
   </div>
 </div>

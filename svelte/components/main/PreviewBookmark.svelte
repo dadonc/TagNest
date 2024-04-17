@@ -14,7 +14,7 @@
 </script>
 
 <div
-  class="relative flex items-center justify-center w-full h-full hoverContainer"
+  class="relative flex flex-col items-center justify-center w-full h-full hoverContainer"
 >
   <img
     src={"file://" + item.bookmark?.previewImagePath}
@@ -22,9 +22,7 @@
     class={`max-h-full ${item.id}_preview`}
     style={maxHeightStyle}
   />
-  {#if !hideName}
-    <PreviewName name={item.name || ""} />
-  {/if}
+  <PreviewName name={item.name || ""} {hideName} />
   {#if item.url}
     <a
       target="_blank"

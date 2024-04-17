@@ -32,9 +32,9 @@
     style={maxHeightStyle}
   >
     <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
-    {#if !hideName}
-      <PreviewName name={item.name || ""} />
-    {/if}
+
+    <PreviewName name={item.name || ""} {hideName} />
+
     <PreviewTypeInfo type={item.type} />
   </div>
 </div>

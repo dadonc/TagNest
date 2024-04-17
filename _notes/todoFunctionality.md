@@ -1,5 +1,9 @@
 # TODO
-* Previews: don't display names above img
+
+* fix pdf preview name
+* preview name: fix gap when selected
+* display more text in text preview
+
 Recreate video preview is broken 
 
 ## Bugs
