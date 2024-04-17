@@ -26,7 +26,7 @@
 
 <!-- aspect ratio is based on the pdf/external preview -->
 <div
-  class="relative w-full h-full p-1 overflow-hidden border-2 border-base-300 bg-base-300 text-ellipsis"
+  class="relative w-full h-full p-1 overflow-hidden bg-base-300 text-ellipsis"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   style={maxHeightStyle + "; aspect-ratio: 0.725"}
@@ -36,11 +36,14 @@
     <div class="w-screen"></div>
   {/if}
 
-  <div class="absolute inline-block mb-8 text-xs whitespace-pre-wrap">
+  <div
+    class="absolute inline-block mb-8 text-xs whitespace-pre-wrap"
+    style="word-break: break-all;"
+  >
     {item.text?.preview}
   </div>
   <div
-    class="absolute p-1 text-xs text-right text-white rounded-sm bottom-1 right-1 bg-neutral"
+    class="absolute p-1 text-xs text-right text-white rounded-sm bottom-1 right-1 bg-neutral wordCount"
   >
     {item.text?.words} words
   </div>

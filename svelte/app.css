@@ -112,6 +112,12 @@ this code was injected by uBlock Origin on
   }
 }
 
+@container previewContainer (max-width: 4.5rem) {
+  .wordCount {
+    display: none;
+  }
+}
+
 @container previewContainer (max-width: 3rem) {
   .resolutionString {
     display: none;

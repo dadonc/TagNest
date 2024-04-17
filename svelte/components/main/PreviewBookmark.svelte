@@ -14,7 +14,7 @@
 </script>
 
 <div
-  class="relative flex items-center justify-center w-full h-full border-2 hoverContainer border-base-300"
+  class="relative flex items-center justify-center w-full h-full hoverContainer"
 >
   <img
     src={"file://" + item.bookmark?.previewImagePath}

@@ -1,6 +1,5 @@
 # TODO
 * Previews: don't display names above img
-* BottomArea: gap between pdfs, border around text items
 Recreate video preview is broken 
 
 ## Bugs
@@ -90,6 +89,8 @@ DeleteConfirmModal is an ActionModal
 * search inside bookmark iframe
 * Left sidebar: Highlights: context menu: delete
 * DetailView BottomArea: display as list
+* audio marks
+* PDF highlights
 
 ## Not important
 * compare hash of files to check if they are the same

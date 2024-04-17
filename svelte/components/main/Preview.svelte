@@ -98,14 +98,17 @@
   class={classNames(
     "h-full flex items-center justify-center w-full border-2 select-none ",
     !isDetailView ? "previewContainer" : "",
-    (item.type === "external" || item.type === "pdf") && !isItemSelected
-      ? "border-base-300"
-      : isItemSelected
-        ? "border-blue-500"
-        : "border-transparent"
+    isItemSelected ? "border-blue-500" : "border-transparent"
   )}
 >
   {#if intersects}
-    <PreviewChooser {item} {maxHeightStyle} />
+    <div
+      class={classNames(
+        "h-full w-full border flex items-center justify-center",
+        isItemSelected ? "border-transparent" : "border-base-300"
+      )}
+    >
+      <PreviewChooser {item} {maxHeightStyle} />
+    </div>
   {/if}
 </div>
