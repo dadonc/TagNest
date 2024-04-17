@@ -23,7 +23,7 @@
 </script>
 
 <div
-  class="relative flex flex-col items-center w-full h-full hoverContainer"
+  class="relative flex flex-col items-center w-full h-full overflow-hidden hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   style={maxHeightStyle}

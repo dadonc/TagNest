@@ -1,7 +1,6 @@
 # TODO
 
-* Right sidebar: pdf and text preview are broken
-
+add name to videopreview, audiopreview
 Recreate video preview is broken 
 
 ## Bugs
@@ -9,6 +8,8 @@ Recreate video preview is broken
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
+
+* change input styling for right sidebar
 
 * bookmark space preview: 
     close on ESC after clicking inside rendered bookmark
@@ -68,14 +69,14 @@ DeleteConfirmModal is an ActionModal
 * automatically open import modal if no other items exist
 
 ## Improvments
-* add notes or tags to videomarks, add notes to bookmarkhighlight
-* details top area: "home" button, back button
-* item preview for additem modal
 * Quicksettings in top bar: show name, show type, show count highlights, date changed, mute video preview, countOpened, show tags in previews, show file size
 * item preview: show tags(clickable, toggle on off in quick settings) - also show in detailview
 * Make URL clickable in right sidebar, add url icon to item preview
 * Make paths relative!
 * Add "searchbar" for tag quick selection 
+* add notes or tags to videomarks, add notes to bookmarkhighlight
+* details top area: "home" button, back button
+* item preview for additem modal - start with creating a separate AddItem component
 
 * loading indicator when opening external files
 * detailview bottom bar: support up and down arrows
@@ -93,6 +94,22 @@ DeleteConfirmModal is an ActionModal
 * DetailView BottomArea: display as list
 * audio marks
 * PDF highlights
+* Create a text file if user adds an item without file, remove itemtype "noFile"
+
+## Testing
+Test all item typestype 
+
+ItemType =
+  | "bookmark"
+  | "image"
+  | "video"
+  | "pdf"
+  | "external"
+  | "noFile"
+  | "audio"
+  | "text";
+
+* in grid view, in detail view, in space preview, in right sidebar
 
 ## Not important
 * compare hash of files to check if they are the same

@@ -32,9 +32,7 @@
 />
 
 <div class="flex flex-col items-center justify-center">
-  <div class="text-center">
-    <PreviewChooser {item} hideName maxHeightStyle="max-height: 12rem;" />
-  </div>
+  <PreviewChooser {item} hideName />
   {#if item.type === "bookmark" || item.type === "video"}
     <button
       class="text-blue-700"

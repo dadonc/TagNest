@@ -102,13 +102,6 @@
   )}
 >
   {#if intersects}
-    <div
-      class={classNames(
-        "h-full w-full border-2 flex items-center justify-center",
-        isItemSelected ? "border-transparent" : "border-base-300"
-      )}
-    >
-      <PreviewChooser {item} {maxHeightStyle} />
-    </div>
+    <PreviewChooser {item} {maxHeightStyle} {isItemSelected} />
   {/if}
 </div>

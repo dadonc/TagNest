@@ -23,7 +23,7 @@
     class={`h-full ${item.id}_preview`}
   />
   <PreviewName name={item.name || ""} {hideName} />
-  {#if item.url}
+  {#if item.url && !hideName}
     <a
       target="_blank"
       on:click={() => increaseCountOpened(item)}
