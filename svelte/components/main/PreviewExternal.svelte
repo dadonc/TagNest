@@ -26,7 +26,7 @@
 </script>
 
 <div
-  class="h-full hoverContainer"
+  class="relative flex flex-col items-center w-full h-full hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   on:dblclick={() => {
@@ -36,13 +36,13 @@
     }
   }}
 >
-  <div
-    class="relative flex items-center justify-center h-full"
-    style={maxHeightStyle}
-  >
-    <!-- Center -->
+  <div class="flex items-center justify-center h-full">
     <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
-    <PreviewName name={name + "." + extension} {hideName} />
-    <PreviewTypeInfo type={extension} />
   </div>
+  <PreviewTypeInfo type={extension} />
+  <!-- <div
+    class="relative flex items-center justify-center"
+    style={maxHeightStyle}
+  ></div> -->
+  <PreviewName name={name + "." + extension} {hideName} />
 </div>

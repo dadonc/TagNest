@@ -10,7 +10,7 @@
   let text = "";
   onMount(async () => {
     text = await window.electron.readFile(item.file!.path);
-    const newPreview = text.slice(0, 100);
+    const newPreview = text.slice(0, 1000);
     const newWordCount = Math.round(text.length / 5);
     if (
       item.text?.preview !== newPreview ||

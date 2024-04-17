@@ -19,7 +19,7 @@
   <img
     src={"file://" + item.bookmark?.previewImagePath}
     alt=""
-    class={`max-h-full ${item.id}_preview`}
+    class={`h-full ${item.id}_preview`}
     style={maxHeightStyle}
   />
   <PreviewName name={item.name || ""} {hideName} />

@@ -12,7 +12,7 @@
   async function update(isHovered: boolean) {
     if (isHovered) {
       const t = await window.electron.readFile(item.file!.path);
-      const newPreview = t.slice(0, 100);
+      const newPreview = t.slice(0, 1000);
       const newWordCount = Math.round(t.length / 5);
       if (
         item.text?.preview !== newPreview ||

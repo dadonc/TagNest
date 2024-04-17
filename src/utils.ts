@@ -237,7 +237,7 @@ export async function updateItemBasedOnFile(item: any) {
 
   if (item.type === "text" && item.file) {
     const text = fs.readFileSync(item.file.path).toString();
-    const textPreview = text.slice(0, 100);
+    const textPreview = text.slice(0, 1000);
     const hasChanged =
       item.text?.preview !== textPreview ||
       item.text?.words !== Math.round(text.length / 5);

@@ -23,15 +23,17 @@
 </script>
 
 <div
-  class="h-full overflow-hidden hoverContainer"
+  class="w-full hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
 >
-  <div
-    class="relative flex items-center justify-center h-full"
-    style={maxHeightStyle}
-  >
-    <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
+  <div class="relative" style={maxHeightStyle}>
+    <img
+      src={previewPath}
+      alt=""
+      class="max-h-full m-auto"
+      style={maxHeightStyle}
+    />
 
     <PreviewName name={item.name || ""} {hideName} />
 

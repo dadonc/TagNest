@@ -6,9 +6,9 @@
 </script>
 
 {#if !hideName}
-  <div class="w-full h-6"></div>
+  <div class="w-full h-8 bg-red-500"></div>
   <div
-    class={"absolute bottom-0 left-0 w-full max-h-full overflow-scroll p-1  text-sm text-ellipsis bg-base-300 whitespace-nowrap nameDiv " +
+    class={"absolute outline outline-base-300 bottom-0 left-0 w-full max-h-full overflow-scroll p-1  text-sm text-ellipsis bg-base-300 whitespace-nowrap nameDiv " +
       className}
   >
     {name}
