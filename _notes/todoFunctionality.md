@@ -1,9 +1,6 @@
 # TODO
 
-* fix pdf preview name
-* preview name: fix gap when selected
-* display more text in text preview
-* text edit (right sidebar) preview is broken
+* Right sidebar: pdf and text preview are broken
 
 Recreate video preview is broken 
 

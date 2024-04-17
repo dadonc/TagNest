@@ -1,6 +1,7 @@
 <script lang="ts">
   import { updateTextInfos, type SingleItem } from "../../stores/items";
   import { currentRoute } from "../../stores/stateStore";
+  import PreviewName from "./gschert/PreviewName.svelte";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
@@ -26,25 +27,22 @@
 
 <!-- aspect ratio is based on the pdf/external preview -->
 <div
-  class="relative w-full h-full p-1 overflow-hidden bg-base-100 text-ellipsis"
+  class="relative flex flex-col w-full h-full bg-base-100 text-ellipsis hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   style={maxHeightStyle + "; aspect-ratio: 0.725"}
 >
-  {#if $currentRoute == "details"}
-    <!-- Because the item.text is positioned absolutely this preview doesn't have any size in the BottomArea preview -->
-    <div class="w-screen"></div>
-  {/if}
-
   <div
-    class="absolute inline-block mb-8 text-xs whitespace-pre-wrap"
+    class="h-full p-1 overflow-hidden text-xs whitespace-pre-wrap"
     style="word-break: break-all;"
   >
     {item.text?.preview}
   </div>
   <div
-    class="absolute p-1 text-xs text-right text-white rounded-sm bottom-1 right-1 bg-neutral wordCount"
+    class="absolute p-1 text-xs text-right text-white rounded-sm right-1 bg-neutral wordCount"
+    style="bottom: 2.1rem;"
   >
     {item.text?.words} words
   </div>
+  <PreviewName name={item.name || ""} hideName={false} />
 </div>
