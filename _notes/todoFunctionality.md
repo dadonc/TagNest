@@ -1,10 +1,11 @@
 # TODO
 
-video preview breaks if the item is renamed
-File order: rename Date added to file created
+video preview breaks if the item is renamed: PreviewVideo, DetailVideo, CreateEdit
+File order: rename Date added to file created, random to shuffle
 
 add name audiopreview
 Recreate video preview is broken 
+
 
 ## Bugs
 * handle duplicate bookmarks: make screenshot file names unique
@@ -81,6 +82,7 @@ DeleteConfirmModal is an ActionModal
 * details top area: "home" button, back button
 * item preview for additem modal - start with creating a separate AddItem component
 
+* settings toggle: rename files if item gets renamed
 * loading indicator when opening external files
 * detailview bottom bar: support up and down arrows
 * main grid: select multiple items using the keyboard

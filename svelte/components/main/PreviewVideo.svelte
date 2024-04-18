@@ -261,7 +261,7 @@
     />
 
     <span
-      class="absolute bottom-0 z-20 font-mono text-xs leading-7 text-white pointer-events-none h-7 right-2"
+      class="absolute bottom-0 z-40 font-mono text-xs leading-7 text-white pointer-events-none h-7 right-2"
     >
       <span class="hidden" bind:this={hoverSeekTimeSpan}>00:00:00 / </span>
       <span>{durationString}</span>
