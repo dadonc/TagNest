@@ -22,7 +22,7 @@
   let displayVideo = false;
   let videoIsLoaded = false;
 
-  let { name, extension } = extractNameAndExtension(item.name!);
+  let { name, extension } = extractNameAndExtension(item.file!.path);
   $: videoPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}`;
   $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`;
 
@@ -116,7 +116,10 @@
 </script>
 
 <div
-  class="relative w-full"
+  class={classNames(
+    "relative w-full",
+    $currentRoute == "details" ? "flex" : ""
+  )}
   style={maxHeightStyle}
   on:mouseenter={() => {
     displayVideo = true;
@@ -143,7 +146,6 @@
     class={`w-full ${$currentRoute == "details" ? "max-h-full" : ""} ${
       videoIsLoaded ? "hidden" : ""
     } ${item.id}_preview`}
-    style={maxHeightStyle}
     src={thumbPath}
     alt=""
   />
@@ -184,7 +186,6 @@
       bind:this={videoElement}
       class={`w-full max-h-full ${videoIsLoaded ? "z-10" : "hidden"} `}
       src={videoPath}
-      style={maxHeightStyle}
       on:mouseenter={() => {
         if (videoElement.paused) {
           playPromise = videoElement.play();

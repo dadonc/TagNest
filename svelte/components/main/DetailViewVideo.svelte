@@ -139,15 +139,15 @@
   let wasPreviewHidden = false;
   $: showActionElements =
     !isSpacePreview || (isSpacePreview && wasPreviewHidden);
-  let { name, extension } = extractNameAndExtension(item.name!);
+  let { name, extension } = extractNameAndExtension(item.file!.path);
   $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${name}_thumb.jpeg`;
   $: previewPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}`;
 </script>
 
 <svelte:window
   on:keydown={async (e) => {
-    e.preventDefault();
     if (e.key === " ") {
+      e.preventDefault();
       wasPreviewHidden = true;
       togglePlay();
     } else if (e.key == "ArrowRight") {
