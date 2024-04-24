@@ -60,7 +60,7 @@
 
   let maxHeightStyleOuter =
     $currentRoute == "details"
-      ? "height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem)"
+      ? "height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem);"
       : "";
 
   let maxHeightStyle =

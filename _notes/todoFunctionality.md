@@ -1,7 +1,6 @@
 # TODO
 
 
-* fix bookmark preview
 * store numer of cols in detail grid separately
 * DetailView bottomarea grid - scroll to item if the user uses up arrow
 

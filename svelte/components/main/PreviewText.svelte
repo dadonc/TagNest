@@ -32,7 +32,7 @@
 >
   <div
     class="h-full p-1 overflow-hidden text-xs whitespace-pre-wrap"
-    style={maxHeightStyle + "; word-break: break-all;"}
+    style={maxHeightStyle + "; word-break: break-all; aspect-ratio: 1 / 1.5;"}
   >
     {item.text?.preview}
   </div>
