@@ -1,9 +1,13 @@
 # TODO
 
-video preview breaks if the item is renamed: PreviewVideo, DetailVideo, CreateEdit
+
+* fix bookmark preview
+* store numer of cols in detail grid separately
+* DetailView bottomarea grid - scroll to item if the user uses up arrow
+
 File order: rename Date added to file created, random to shuffle
 
-add name audiopreview
+add name to audiopreview
 Recreate video preview is broken 
 
 

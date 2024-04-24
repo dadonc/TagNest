@@ -56,6 +56,10 @@
     thumbElement.style.bottom = "28px";
   }
 
+  const w = item.video!.width || 0;
+  const h = item.video!.height || 0;
+  const aspectRatio = w / h;
+
   function displayThumb(e: MouseEvent, markPos?: number) {
     if (thumbElement.width === 0) resizeThumbElement();
     const progressRect = progressBar.getBoundingClientRect();
@@ -88,8 +92,11 @@
             videoElementHidden,
             0,
             0,
-            videoElement.offsetWidth * thumbRatio,
-            videoElement.offsetHeight * thumbRatio
+            // if there is space left and right of the video the clientWidth isn't correct
+            // e.g. in the DetailView BottomArea with only one item per row
+            // therefore use aspectRatio to calculate the width
+            videoElement.clientHeight * aspectRatio * thumbRatio,
+            videoElement.clientHeight * thumbRatio
           );
         },
         { once: true }
@@ -116,11 +123,7 @@
 </script>
 
 <div
-  class={classNames(
-    "relative w-full",
-    $currentRoute == "details" ? "flex" : ""
-  )}
-  style={maxHeightStyle}
+  class="relative flex flex-col items-center justify-center w-full"
   on:mouseenter={() => {
     displayVideo = true;
     if (videoIsLoaded && videoElement.paused) {
@@ -143,11 +146,12 @@
   }}
 >
   <img
-    class={`w-full ${$currentRoute == "details" ? "max-h-full" : ""} ${
+    class={`max-w-full ${$currentRoute == "details" ? "max-h-full" : ""} ${
       videoIsLoaded ? "hidden" : ""
     } ${item.id}_preview`}
     src={thumbPath}
     alt=""
+    style={maxHeightStyle}
   />
   <span
     class="absolute inline-block p-1 text-xs text-white rounded-sm bg-neutral resolutionString top-1 left-1"
@@ -194,6 +198,7 @@
       on:canplay={() => {
         videoIsLoaded = true;
       }}
+      style={maxHeightStyle}
     />
     <div class="w-full bg-red-500 h-7"></div>
     <progress

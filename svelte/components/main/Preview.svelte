@@ -58,9 +58,14 @@
   let intersects = false;
   let isDetailView = $currentRoute === "details";
 
-  let maxHeightStyle =
+  let maxHeightStyleOuter =
     $currentRoute == "details"
       ? "height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem)"
+      : "";
+
+  let maxHeightStyle =
+    $currentRoute == "details"
+      ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 1rem - 1.75rem - 6px);"
       : "";
 
   function openMainContextMenu(event: MouseEvent) {
@@ -72,7 +77,7 @@
 </script>
 
 <div
-  style="scroll-margin-top: 0.25rem;"
+  style={"scroll-margin-top: 0.25rem; " + maxHeightStyleOuter}
   id={item.id}
   use:useIntersectionObserver={isDetailView ? "bottomArea" : "mainArea"}
   on:enterViewport={() => {

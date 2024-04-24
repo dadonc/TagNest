@@ -1,10 +1,9 @@
 <script lang="ts">
-  import Preview from "../main/Preview.svelte";
   import { currentRoute, selectedItems } from "../../stores/stateStore";
-  import { handleKeydownDetailsView } from "../../utils";
   import type { SingleItem } from "../../stores/items";
   import { onMount } from "svelte";
   import { bottomContainer, rightContainer } from "../../stores/cssStore";
+  import MainGrid from "../main/MainGrid.svelte";
 
   export let items: SingleItem[];
 
@@ -33,17 +32,11 @@
   }
 </script>
 
-<svelte:window on:keydown={handleKeydownDetailsView} />
-
 <div
   id="bottomArea"
   style={$currentRoute == "details"
     ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 0.5rem)"
     : ""}
 >
-  {#each items as item}
-    <div class="inline-block">
-      <Preview {item} {items} />
-    </div>
-  {/each}
+  <MainGrid {items} />
 </div>

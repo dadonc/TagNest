@@ -15,10 +15,10 @@
 
 <div
   class="relative flex flex-col items-center justify-center w-full h-full hoverContainer"
-  style={maxHeightStyle}
 >
   <img
     src={"file://" + item.bookmark?.previewImagePath}
+    style={maxHeightStyle}
     alt=""
     class={`h-full ${item.id}_preview`}
   />

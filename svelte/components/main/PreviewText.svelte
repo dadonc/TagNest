@@ -25,16 +25,14 @@
   }
 </script>
 
-<!-- aspect ratio is based on the pdf/external preview -->
 <div
   class="relative flex flex-col w-full h-full bg-base-100 text-ellipsis hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
-  style={maxHeightStyle + "; aspect-ratio: 0.725"}
 >
   <div
     class="h-full p-1 overflow-hidden text-xs whitespace-pre-wrap"
-    style="word-break: break-all;"
+    style={maxHeightStyle + "; word-break: break-all;"}
   >
     {item.text?.preview}
   </div>

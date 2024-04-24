@@ -26,10 +26,9 @@
   class="relative flex flex-col items-center w-full h-full overflow-hidden hoverContainer"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
-  style={maxHeightStyle}
 >
   <div class="flex items-center justify-center h-full">
-    <img src={previewPath} alt="" class="max-h-full" />
+    <img src={previewPath} alt="" class="max-h-full" style={maxHeightStyle} />
   </div>
   <PreviewName name={item.name || ""} {hideName} />
   <PreviewTypeInfo type={item.type} />
