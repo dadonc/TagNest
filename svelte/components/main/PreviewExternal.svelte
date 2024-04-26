@@ -31,8 +31,12 @@
   on:mouseleave={() => (isHovered = false)}
   on:dblclick={() => {
     if (item.file?.path) {
-      window.electron.openFileInDefaultApp(item.file.path);
+      document.body.classList.add("loading");
+      setTimeout(() => {
+        document.body.classList.remove("loading");
+      }, 200);
       increaseCountOpened(item);
+      window.electron.openFileInDefaultApp(item.file.path);
     }
   }}
 >

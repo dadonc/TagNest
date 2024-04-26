@@ -20,7 +20,7 @@ export type ExposedInMainWorld = {
   ) => void;
   removeChosenFilesListener: () => void;
   saveFileFromUrl: (url: string) => void;
-  openFileInDefaultApp: (path: string) => void;
+  openFileInDefaultApp: (path: string) => Promise<void>;
   openFileInFileBrowser: (path: string) => void;
   onOpenAddBookmark: (
     callback: (
@@ -82,7 +82,7 @@ const api: ExposedInMainWorld = {
     ipcRenderer.removeAllListeners("chosenFiles"),
   saveFileFromUrl: (url) => ipcRenderer.send("saveFileFromUrl", url),
   openFileInDefaultApp: (path) =>
-    ipcRenderer.send("openFileInDefaultApp", path),
+    ipcRenderer.invoke("openFileInDefaultApp", path),
   openFileInFileBrowser: (path) =>
     ipcRenderer.send("openFileInFileBrowser", path),
   onOpenAddBookmark: (callback) => ipcRenderer.on("openAddBookmark", callback),

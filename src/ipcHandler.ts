@@ -101,8 +101,8 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     }
   });
 
-  ipcMain.on("openFileInDefaultApp", (event, path) => {
-    shell.openPath(path);
+  ipcMain.handle("openFileInDefaultApp", (event, path) => {
+    return shell.openPath(path);
   });
 
   ipcMain.on("openFileInFileBrowser", (event, path) => {

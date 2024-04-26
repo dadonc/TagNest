@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body.loading {
+  cursor: wait;
+}
+
 .topContainer button {
   -webkit-app-region: no-drag;
 }

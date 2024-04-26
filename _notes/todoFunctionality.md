@@ -76,7 +76,6 @@ DeleteConfirmModal is an ActionModal
 * item preview for additem modal - start with creating a separate AddItem component
 
 * settings toggle: rename files if item gets renamed
-* loading indicator when opening external files
 * detailview bottom bar: support up and down arrows
 * main grid: select multiple items using the keyboard
 * url symbol for all previews with a link
