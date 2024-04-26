@@ -108,7 +108,7 @@ export async function updateBookmarkPreviewImage(item: SingleItem) {
   });
 }
 
-export async function updateVideoThumbImage(
+export async function updateVideoThumbImageInDB(
   item: SingleItem,
   newThumbImageName: string
 ) {

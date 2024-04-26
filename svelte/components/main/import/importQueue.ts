@@ -8,7 +8,7 @@ import {
   updateFilePath,
   type SingleItem,
   type ImportItem,
-  updateVideoThumbImage,
+  updateVideoThumbImageInDB,
 } from "../../../stores/items";
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
@@ -75,7 +75,7 @@ export const importSteps = {
               dataURL,
               name + "_thumb.jpeg"
             );
-            await updateVideoThumbImage(item, name + "_thumb.jpeg");
+            await updateVideoThumbImageInDB(item, name + "_thumb.jpeg");
             resolve(true);
           });
         });

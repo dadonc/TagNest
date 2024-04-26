@@ -19,7 +19,7 @@
 
 <select on:change={setOrderBy}>
   <option selected={$currView.orderBy === "createdAt"} value="createdAt"
-    >Date added</option
+    >File created</option
   >
   <option selected={$currView.orderBy === "updatedAt"} value="updatedAt"
     >Date modified</option
@@ -32,7 +32,7 @@
     >Count opened</option
   >
   <option selected={$currView.orderBy === "shuffle"} value="shuffle"
-    >Random</option
+    >Shuffle</option
   >
 </select>
 

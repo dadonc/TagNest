@@ -1,15 +1,7 @@
 <script lang="ts">
   import { settingsJson } from "../../../stores/stateStore";
-  import { extractNameAndExtension } from "../../../../src/gschert";
-  import {
-    formatTime,
-    saveVideoThumbImage,
-    updateItemPreviews,
-  } from "../../../utils";
-  import {
-    type SingleItem,
-    updateVideoThumbImage,
-  } from "../../../stores/items";
+  import { formatTime, saveAndUpdateNewVideoThumb } from "../../../utils";
+  import { type SingleItem } from "../../../stores/items";
 
   export let item: SingleItem;
   export let close: () => void = () => {};
@@ -64,18 +56,11 @@
   }
 
   async function saveNewThumb() {
-    const newThumbImageName = await saveVideoThumbImage(videoPath);
-    await window.electron.deleteFile(
-      `${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`
-    );
-
-    item.video!.thumbImageName = newThumbImageName;
-    updateVideoThumbImage(item, newThumbImageName);
+    saveAndUpdateNewVideoThumb({
+      item,
+      videoPath,
+    });
     close();
-    updateItemPreviews(
-      item.id,
-      `file://${$settingsJson.savePath}/previews/videos/${newThumbImageName}`
-    );
   }
 
   let videoIsLoaded = false;

@@ -1,6 +1,4 @@
 # TODO
-File order: rename Date added to file created, random to shuffle
-
 add name to audiopreview
 Recreate video preview is broken 
 
@@ -10,15 +8,10 @@ Recreate video preview is broken
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
-
-* fix intersectionobserver and isElementInViewport (used to scoll into view when using the arrow keys) for bottomarea : https://github.com/metonym/svelte-intersection-observer?tab=readme-ov-file
-
 * change input styling for right sidebar
-
 * bookmark space preview: 
     close on ESC after clicking inside rendered bookmark
-
-When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created(?)
+* Possibly: When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created(?)
 
 ### Not so important bugs
 * tag input bug, "Tags" background hint text
@@ -100,6 +93,7 @@ DeleteConfirmModal is an ActionModal
 * audio marks
 * PDF highlights
 * Create a text file if user adds an item without file, remove itemtype "noFile"
+* recreatevideopreview: save start position of preview in db and show in the modal what was the last position
 
 ## Testing
 Test all item typestype 

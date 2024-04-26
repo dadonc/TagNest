@@ -1,11 +1,6 @@
 <script lang="ts">
   import { settingsJson } from "../../stores/stateStore";
-  import { extractNameAndExtension } from "../../../src/gschert";
-  import {
-    formatTime,
-    saveVideoThumbImage,
-    updateItemPreviews,
-  } from "../../utils";
+  import { formatTime, saveAndUpdateNewVideoThumb } from "../../utils";
   import { type SingleItem } from "../../stores/items";
 
   export let item: SingleItem;
@@ -18,7 +13,7 @@
   let totalDurationSpan: HTMLSpanElement;
   let currentDurationSpan: HTMLSpanElement;
 
-  const TEST_THUMB_TIMING = 50;
+  const TEST_THUMB_TIMING = 0;
 
   let userClicked = false;
 
@@ -43,10 +38,13 @@
 
   async function createNewPreview() {
     if (recreateThumb) {
-      await saveVideoThumbImage(videoPath);
-      updateItemPreviews(item.id);
+      saveAndUpdateNewVideoThumb({
+        item,
+        videoPath,
+      });
     }
-    await window.electron.recreateVideoPreview(
+    // TODO add to an ActionQueue
+    window.electron.recreateVideoPreview(
       item.file!.path,
       videoElement.currentTime
     );
@@ -56,9 +54,8 @@
   let videoIsLoaded = false;
   let saveDisabled = true;
   let videoPath = item.file!.path;
-  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${
-    extractNameAndExtension(videoPath).name
-  }_thumb.jpeg`;
+
+  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`;
 </script>
 
 {#if !videoIsLoaded}

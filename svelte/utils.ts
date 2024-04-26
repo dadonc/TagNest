@@ -1,8 +1,12 @@
 import { get } from "svelte/store";
-import { importItems, items, type SingleItem } from "./stores/items";
+import {
+  importItems,
+  items,
+  updateVideoThumbImageInDB,
+  type SingleItem,
+} from "./stores/items";
 import {
   contextMenuStore,
-  currentRoute,
   currView,
   filteredData,
   selectedItems,
@@ -129,90 +133,6 @@ export const handleKeydownImportView = async (
   }
   selectedItems.set($selectedItems);
 };
-
-// export const handleKeydownDetailsView = async (e: KeyboardEvent) => {
-//   if (
-//     document.activeElement?.tagName === "INPUT" ||
-//     document.activeElement?.tagName === "TEXTAREA" ||
-//     //@ts-ignore
-//     document.activeElement?.isContentEditable
-//   ) {
-//     return;
-//   }
-
-//   const $selectedItems = get(selectedItems);
-//   const items = (await get(filteredData)).items;
-
-//   const step = 1;
-//   if (e.key === "Escape") {
-//     exitFakeFullscreen();
-//     currentRoute.set("main");
-//   } else if (e.key === "Backspace" && e.metaKey) {
-//     confirmDelete($selectedItems.ids);
-
-//     // await if item was deleted, if yes the next item should be focused
-//     listenToStoreOnce(contextMenuStore, (value) => {
-//       if (value.idsToDelete.length === 0) {
-//         const lastItemToDeleteIndex = items.findIndex(
-//           (item) =>
-//             item.id === $selectedItems.ids[$selectedItems.ids.length - 1]
-//         );
-//         if (lastItemToDeleteIndex) {
-//           if (lastItemToDeleteIndex + step < items.length) {
-//             $selectedItems.ids = [items[lastItemToDeleteIndex + step].id];
-//           } else {
-//             if (items[0]) $selectedItems.ids = [items[0].id];
-//           }
-//         }
-//       }
-//     });
-//   } else if (e.key === "ArrowLeft") {
-//     const video = document.getElementById("videoPlayer") as HTMLVideoElement;
-//     if (video && !video.paused) return;
-//     if (video && video.paused) {
-//       if (e.metaKey) {
-//         video.play();
-//         return;
-//       }
-//     }
-//     if ($selectedItems.ids.length == 1) {
-//       const item = items.find((item) => item.id === $selectedItems.ids[0]);
-//       if (item) {
-//         const index = items.indexOf(item);
-//         if (index - step >= 0) {
-//           $selectedItems.ids = [items[index - step].id];
-//         } else {
-//           $selectedItems.ids = [items[items.length - 1].id];
-//         }
-//       }
-//     }
-//   } else if (e.key === "ArrowRight") {
-//     const video = document.getElementById("videoPlayer") as HTMLVideoElement;
-//     if (video && !video.paused) return;
-//     if (video && video.paused) {
-//       if (e.metaKey) {
-//         video.play();
-//         return;
-//       }
-//     }
-//     if ($selectedItems.ids.length == 1) {
-//       const item = items.find((item) => item.id === $selectedItems.ids[0]);
-//       if (item) {
-//         const index = items.indexOf(item);
-//         if (index + step < items.length) {
-//           $selectedItems.ids = [items[index + step].id];
-//         } else {
-//           $selectedItems.ids = [items[0].id];
-//         }
-//       }
-//     }
-//   } else if (e.key === "a" && e.metaKey) {
-//     e.preventDefault();
-//     $selectedItems.ids = items.map((item) => item.id);
-//   }
-//   document.getElementById($selectedItems.ids[0])?.scrollIntoView();
-//   selectedItems.set($selectedItems);
-// };
 
 export async function saveVideoThumbImage(filePath: string) {
   const video = document.getElementById("previewVideo") as HTMLVideoElement;
@@ -436,4 +356,25 @@ export function openContextMenu(event: MouseEvent, type: possibleContextMenus) {
   $contextMenuStore.isContextMenuOpen = true;
   $contextMenuStore.openContextMenu = type;
   contextMenuStore.set($contextMenuStore);
+}
+
+export async function saveAndUpdateNewVideoThumb({
+  videoPath,
+  item,
+}: {
+  videoPath: string;
+  item: SingleItem;
+}) {
+  const newThumbImageName = await saveVideoThumbImage(videoPath);
+  const $settingsJson = await window.electron.getSettingsJson();
+  await window.electron.deleteFile(
+    `${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`
+  );
+
+  item.video!.thumbImageName = newThumbImageName;
+  updateVideoThumbImageInDB(item, newThumbImageName);
+  updateItemPreviews(
+    item.id,
+    `file://${$settingsJson.savePath}/previews/videos/${newThumbImageName}`
+  );
 }
