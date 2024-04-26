@@ -1,11 +1,4 @@
 # TODO
-
-* close detailview on ESC
-* hide bottomarea if too small - green padding is displayed
-
-* store numer of cols in detail grid separately
-* outline for zoom buttons, show in detailview
-
 File order: rename Date added to file created, random to shuffle
 
 add name to audiopreview

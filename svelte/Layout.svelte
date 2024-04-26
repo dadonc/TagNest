@@ -38,6 +38,9 @@
     if (e.target && e.target.type === "button") return;
     if (!canOpenBottom) return;
     if ($bottomContainer.currentVal === "0px") {
+      if ($bottomContainer.val === "0px") {
+        $bottomContainer.val = "200px";
+      }
       $bottomContainer.currentVal = $bottomContainer.val;
     } else {
       $bottomContainer.currentVal = "0px";
@@ -68,6 +71,7 @@
     let val = document.documentElement.clientHeight - e.y - 24; // 2rem, ie 32px is the height of the divider;
     val =
       val < 0 || val > document.documentElement.clientHeight - 100 ? 0 : val;
+    val = val < 56 ? 0 : val;
     $bottomContainer.currentVal = val + "px";
     $bottomContainer.val = val + "px";
   };

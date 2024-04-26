@@ -38,5 +38,7 @@
     ? "max-height: calc(var(--bottomContainer) - var(--bottomAreaPadding) * 2 - 0.5rem)"
     : ""}
 >
-  <MainGrid {items} />
+  {#if $bottomContainer.currentVal !== "0px"}
+    <MainGrid {items} />
+  {/if}
 </div>

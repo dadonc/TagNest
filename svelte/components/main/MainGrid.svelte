@@ -83,6 +83,9 @@
       //   $contextMenuStore.isContextMenuOpen = false;
       //   deselectItems();
       // }
+      if ($currentRoute === "details") {
+        $currentRoute = "main";
+      }
     } else if (e.key === "Backspace" && e.metaKey) {
       confirmDelete($selectedItems.ids);
       $selectedItems.ids = [];
