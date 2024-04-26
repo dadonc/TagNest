@@ -66,9 +66,26 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
       ],
     });
 
-    return result.then(({ canceled, filePaths }) => {
+    return result.then(async ({ canceled, filePaths }) => {
       if (filePaths.length > 1) {
-        mainWindow.webContents.send("chosenFiles", filePaths);
+        let allPaths: string[] = [];
+
+        const getAllFilePaths = async (dirPath: string) => {
+          const files = await fs.promises.readdir(dirPath);
+          return files.map((file) => path.join(dirPath, file));
+        };
+
+        for (const filePath of filePaths) {
+          const stats = await fs.promises.stat(filePath);
+          if (stats.isDirectory()) {
+            const filesInDirectory = await getAllFilePaths(filePath);
+            allPaths = allPaths.concat(filesInDirectory);
+          } else {
+            allPaths.push(filePath);
+          }
+        }
+
+        mainWindow.webContents.send("chosenFiles", allPaths);
       } else {
         const extension = filePaths[0].split(".").pop();
         const itemType = getItemTypeFromExtension(extension);

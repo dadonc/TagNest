@@ -15,6 +15,7 @@ display small videos (240p) in large in detailview
 bug when selecting a video in bottomarea and clicking space
 save importqueue with the databasepath?
 don't display title hint when hovering over a video
+continue import of the currently imported item if it is canceled in the import modal
 
 * break words in importmodal
 * dont center item names in delete modal
@@ -22,8 +23,7 @@ don't display title hint when hovering over a video
 * deleteque is broken when deleting mutliple - check for all item types
 
 test
-* import subfolders
-* is the fileneding removed when the item gets renamed? Seew ListView
+* is the file ending removed when the item gets renamed? Seew ListView
 
 ## Bugs
 * handle duplicate bookmarks: make screenshot file names unique
