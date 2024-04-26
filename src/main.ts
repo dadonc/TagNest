@@ -23,7 +23,9 @@ const createWindow = async () => {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       webSecurity: isDev ? false : true,
-      // nodeIntegration: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      allowRunningInsecureContent: false,
     },
     titleBarStyle: "hidden",
     trafficLightPosition: {
