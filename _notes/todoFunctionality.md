@@ -1,12 +1,29 @@
 # TODO
 add name to audiopreview
 Recreate video preview is broken 
+for some videos the import fails
+
+autoplay video if it is opened from the mainview, also when clicked inside the seekbar in bottompreview
+scroll to video if detailview is closed
+don't change item in detailview on up/down arrow if video is playing
+allow changing item in detailview if bottomarea is closed
+jump tp start of videomark on mark click
+after pausing the play icon isn't centered
+some videos and their previewthumbs aren't the same size
+for some videos the seekbar hover on the maingrid doesn't work (size issue?)
+display small videos (240p) in large in detailview
+bug when selecting a video in bottomarea and clicking space
+save importqueue with the databasepath?
+don't display title hint when hovering over a video
 
 * break words in importmodal
 * dont center item names in delete modal
 
 * deleteque is broken when deleting mutliple - check for all item types
+
+test
 * import subfolders
+* is the fileneding removed when the item gets renamed? Seew ListView
 
 ## Bugs
 * handle duplicate bookmarks: make screenshot file names unique
@@ -17,6 +34,7 @@ Recreate video preview is broken
 * bookmark space preview: 
     close on ESC after clicking inside rendered bookmark
 * Possibly: When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created(?)
+* fix import queue for concurrent imports
 
 ### Not so important bugs
 * tag input bug, "Tags" background hint text
@@ -99,6 +117,7 @@ DeleteConfirmModal is an ActionModal
 * PDF highlights
 * Create a text file if user adds an item without file, remove itemtype "noFile"
 * recreatevideopreview: save start position of preview in db and show in the modal what was the last position
+* custom MainList
 
 ## Testing
 Test all item typestype 

@@ -3,6 +3,7 @@
   import type { SingleItem } from "../../stores/items";
   import Grid from "gridjs-svelte";
   import { convertFileSize } from "../../utils";
+  import { selectedItems } from "../../stores/stateStore";
 
   export let items: SingleItem[];
   let data: any[] = [];
@@ -14,7 +15,7 @@
     data = items.map((item) => {
       return {
         id: item.id,
-        name: item.name,
+        name: item.name?.slice(0, 40),
         countOpened: item.countOpened,
         size: convertFileSize(item.file?.size || 0),
         createdAt: item.file!.created.toDateString(),
@@ -48,9 +49,8 @@
     resizable={true}
     autoWidth={true}
     on:rowClick={(row) => {
-      console.log(row);
-      console.log(JSON.stringify(row));
-      // $selectedItems.ids = [row.cells[0].data];
+      const id = row.detail[1]["_cells"][0]["data"];
+      $selectedItems.ids = [id];
     }}
   />
 {/if}

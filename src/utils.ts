@@ -228,7 +228,7 @@ export async function updateItemBasedOnFile(item: any) {
         },
         data: {
           updated: new Date(updatedToUse),
-          size,
+          size: size + "",
           created: new Date(createdToUse),
         },
       });

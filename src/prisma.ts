@@ -10,7 +10,7 @@ import { getSettingsJson, updateSettingsJson } from "./utils";
 import { isDev } from "./main";
 import { log as electronLog } from "electron-log";
 
-let latestMigration = "20240404100406_bookmark_highlight_position";
+let latestMigration = "20240426130831_size_string";
 
 const log = (...args: any[]) => {
   if (isDev) {
