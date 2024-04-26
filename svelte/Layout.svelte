@@ -33,7 +33,9 @@
     }
   });
 
-  const toggleBottom = () => {
+  const toggleBottom = (e: MouseEvent) => {
+    //@ts-ignore
+    if (e.target && e.target.type === "button") return;
     if (!canOpenBottom) return;
     if ($bottomContainer.currentVal === "0px") {
       $bottomContainer.currentVal = $bottomContainer.val;

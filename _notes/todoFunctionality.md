@@ -1,9 +1,9 @@
 # TODO
 
-* movement after first arrow click to select next item in  main grid
+* close detailview on ESC
+* hide bottomarea if too small - green padding is displayed
 
 * store numer of cols in detail grid separately
-* DetailView bottomarea grid - scroll to item if the user uses up arrow
 * outline for zoom buttons, show in detailview
 
 File order: rename Date added to file created, random to shuffle

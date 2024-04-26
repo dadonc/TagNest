@@ -31,6 +31,7 @@ export type TagTree = {
 
 type CurrViewType = {
   zoomLvl: number;
+  zoomLvlDetails: number;
   jumpToVideoTime?: number; // used to directly jump to a specific timestamp in the video if user clicks on the seekbar of a video in the gridview
   viewType: "grid" | "list";
   orderDirection: "desc" | "asc";
@@ -47,6 +48,7 @@ type CurrViewType = {
 
 const emptyCurrView: CurrViewType = {
   zoomLvl: 3,
+  zoomLvlDetails: 5,
   jumpToVideoTime: 0,
   viewType: "grid",
   orderDirection: "desc",

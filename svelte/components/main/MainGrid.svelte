@@ -34,7 +34,10 @@
   let isPreviewModalOpen = false;
   let previewItem: SingleItem;
 
-  $: gridCols = createGridColsString($currView.zoomLvl);
+  $: zoomLvl =
+    $currentRoute === "details" ? $currView.zoomLvlDetails : $currView.zoomLvl;
+
+  $: gridCols = createGridColsString(zoomLvl);
 
   $: {
     if ($selectedItems.ids.length === 1) {
@@ -115,8 +118,8 @@
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
           const index = items.indexOf(item);
-          if (index - $currView.zoomLvl >= 0) {
-            $selectedItems.ids = [items[index - $currView.zoomLvl].id];
+          if (index - zoomLvl >= 0) {
+            $selectedItems.ids = [items[index - zoomLvl].id];
           }
         }
       }
@@ -126,8 +129,8 @@
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
           const index = items.indexOf(item);
-          if (index + $currView.zoomLvl < items.length) {
-            $selectedItems.ids = [items[index + $currView.zoomLvl].id];
+          if (index + zoomLvl < items.length) {
+            $selectedItems.ids = [items[index + zoomLvl].id];
           }
         }
       }
@@ -136,12 +139,16 @@
       $selectedItems.ids = items.map((item) => item.id);
     } else if ((e.key === "+" || e.key === "*") && e.metaKey && e.shiftKey) {
       e.preventDefault();
-      if ($currView.zoomLvl > 1) {
-        $currView.zoomLvl--;
+      if (zoomLvl > 1) {
+        $currentRoute === "details"
+          ? $currView.zoomLvlDetails--
+          : $currView.zoomLvl--;
       }
     } else if ((e.key === "-" || e.key === "_") && e.metaKey && e.shiftKey) {
       e.preventDefault();
-      $currView.zoomLvl++;
+      $currentRoute === "details"
+        ? $currView.zoomLvlDetails++
+        : $currView.zoomLvl++;
     } else if (e.key === " ") {
       if ($selectedItems.ids.length === 1) {
         isPreviewModalOpen = true;
