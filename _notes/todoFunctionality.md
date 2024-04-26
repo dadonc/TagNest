@@ -2,6 +2,11 @@
 add name to audiopreview
 Recreate video preview is broken 
 
+* break words in importmodal
+* dont center item names in delete modal
+
+* deleteque is broken when deleting mutliple - check for all item types
+* import subfolders
 
 ## Bugs
 * handle duplicate bookmarks: make screenshot file names unique
@@ -63,6 +68,7 @@ DeleteConfirmModal is an ActionModal
     * fill with example data?
 * Fix settings screen
     * List of keyboard shortcuts
+    * number of concurrent import tasks
 * automatically open import modal if no other items exist
 
 ## Improvments

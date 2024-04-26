@@ -34,7 +34,7 @@ model File {
   path    String
   created DateTime @default(now())
   updated DateTime @default(now())
-  size    Int      @default(0)
+  size    String   @default("0") // in bytes, using BigInt results in error with JSON.stringify
   item    Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
   itemId  String   @unique
 }

@@ -294,10 +294,11 @@ export const possibylCloseContextMenu = (e: MouseEvent) => {
   contextMenuStore.set(menuStore);
 };
 
-export function convertFileSize(bytes: number) {
-  const sizeInKB = bytes / 1024;
-  const sizeInMB = bytes / (1024 * 1024);
-  const sizeInGB = bytes / (1024 * 1024 * 1024);
+export function convertFileSize(bytes: number | string) {
+  const b = typeof bytes === "string" ? parseInt(bytes) : bytes;
+  const sizeInKB = b / 1024;
+  const sizeInMB = b / (1024 * 1024);
+  const sizeInGB = b / (1024 * 1024 * 1024);
 
   if (sizeInGB >= 1) {
     return sizeInGB.toFixed(2) + " GB";

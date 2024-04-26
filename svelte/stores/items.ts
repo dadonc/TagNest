@@ -58,7 +58,7 @@ export async function createItem({
   await prisma.file.create({
     data: {
       path,
-      size,
+      size: size + "",
       updated: new Date(updated),
       created: new Date(created),
       item: {
