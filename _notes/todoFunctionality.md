@@ -1,8 +1,10 @@
 # TODO
 
+* movement after first arrow click to select next item in  main grid
 
 * store numer of cols in detail grid separately
 * DetailView bottomarea grid - scroll to item if the user uses up arrow
+* outline for zoom buttons, show in detailview
 
 File order: rename Date added to file created, random to shuffle
 
@@ -15,6 +17,8 @@ Recreate video preview is broken
 * modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
 * tag group styling - change inset of children compared to parent tag
+
+* fix intersectionobserver and isElementInViewport (used to scoll into view when using the arrow keys) for bottomarea : https://github.com/metonym/svelte-intersection-observer?tab=readme-ov-file
 
 * change input styling for right sidebar
 

@@ -79,7 +79,7 @@
 <div
   style={"scroll-margin-top: 0.25rem; " + maxHeightStyleOuter}
   id={item.id}
-  use:useIntersectionObserver={isDetailView ? "bottomArea" : "mainArea"}
+  use:useIntersectionObserver
   on:enterViewport={() => {
     intersects = true;
   }}

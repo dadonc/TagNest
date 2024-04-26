@@ -156,7 +156,9 @@
 
     const currSelected = document.getElementById($selectedItems.ids[0]);
     if (currSelected && !isElementInViewport(currSelected)) {
-      currSelected.scrollIntoView();
+      // TODO: block:Start would be nicer but results in a gap at the bottom of the window
+      // comment out !isElementInViewport to debug
+      currSelected.scrollIntoView({ block: "end" });
     }
   };
 </script>

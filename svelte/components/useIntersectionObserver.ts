@@ -1,9 +1,8 @@
 let intersectionObserver: IntersectionObserver | null = null;
 
-function getIntersectionObserver(containerId: string) {
-  // TODO use only one observer - doesn't work when clicking on a tag
-  // if (intersectionObserver) return intersectionObserver;
-  const intersectionObserver = new IntersectionObserver(
+function getIntersectionObserver() {
+  if (intersectionObserver) return intersectionObserver;
+  intersectionObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         const eventName = entry.isIntersecting
@@ -13,7 +12,7 @@ function getIntersectionObserver(containerId: string) {
       });
     },
     {
-      root: document.getElementById(containerId),
+      root: document.getElementsByTagName("main")[0],
       // TODO rootMargin doesn't work
       rootMargin: "0px 0px 500px",
       threshold: [],
@@ -22,11 +21,8 @@ function getIntersectionObserver(containerId: string) {
   return intersectionObserver;
 }
 
-export default function useViewportAction(
-  node: HTMLElement,
-  containerId: string
-) {
-  const observer = getIntersectionObserver(containerId);
+export default function useViewportAction(node: HTMLElement) {
+  const observer = getIntersectionObserver();
   observer.observe(node);
   return {
     destroy() {
