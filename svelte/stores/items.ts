@@ -2,6 +2,7 @@ import prisma from "../prisma";
 import { writable } from "svelte/store";
 import { possiblyDeleteTags, updateItemTags } from "./tags";
 import { currView } from "./stateStore";
+import { extractNameAndExtension } from "../../src/gschert";
 
 export const itemInclude = {
   file: true,
@@ -41,9 +42,10 @@ export async function createItem({
   type: string;
   importStep: number;
 }) {
+  const { name: nameWithoutExtension } = extractNameAndExtension(name);
   const newItem = await prisma.item.create({
     data: {
-      name,
+      name: nameWithoutExtension,
       url,
       note,
       type,
