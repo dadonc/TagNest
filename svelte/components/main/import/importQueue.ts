@@ -39,23 +39,26 @@ export const importSteps = {
     3: {
       func: async (item: SingleItem) => {
         // create video preview thumbnail
-        const $savePath = get(settingsJson).savePath;
-        const { name, extension } = extractNameAndExtension(item.name!);
+        const savePath = get(settingsJson).savePath;
+        const { name, extension } = extractNameAndExtension(item.file!.path);
         // check if already exists
-        try {
-          const res = await fetch(
-            "file://" + $savePath + "/previews/videos/" + name + "_thumb.jpeg",
-            { method: "HEAD" }
-          );
-          if (res.ok) {
-            console.log("preview already exists");
-            return;
-          }
-        } catch (err) {}
+        if (item.video?.thumbImageName) {
+          try {
+            const res = await fetch(
+              `file://${savePath}/previews/videos/${item.video?.thumbImageName}`,
+              { method: "HEAD" }
+            );
+            if (res.ok) {
+              console.log("preview already exists");
+              return;
+            }
+          } catch (err) {}
+        }
+
         const video = document.createElement("video");
         video.src =
           "file://" +
-          $savePath +
+          savePath +
           "/previews/videos/" +
           name +
           "_preview." +

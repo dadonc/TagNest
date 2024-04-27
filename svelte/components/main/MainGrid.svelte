@@ -78,13 +78,14 @@
       // Close Modal - used if a edit bookmark modal is open, ChooseBookmarkPreview is open and then it is closed using escape -> the modal doesn't have focus anymore
       $contextMenuStore.openModal = "";
       $contextMenuStore.isContextMenuOpen = false;
-      deselectItems();
       // if (!isPreviewModalOpen) {
       //   $contextMenuStore.isContextMenuOpen = false;
       //   deselectItems();
       // }
       if ($currentRoute === "details") {
         $currentRoute = "main";
+      } else {
+        deselectItems();
       }
     } else if (e.key === "Backspace" && e.metaKey) {
       confirmDelete($selectedItems.ids);
@@ -117,6 +118,7 @@
       }
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
+      if (handleKeydownExceptions(e)) return;
       if ($selectedItems.ids.length == 1) {
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
@@ -128,6 +130,7 @@
       }
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
+      if (handleKeydownExceptions(e)) return;
       if ($selectedItems.ids.length == 1) {
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
         if (item) {
@@ -153,8 +156,10 @@
         ? $currView.zoomLvlDetails++
         : $currView.zoomLvl++;
     } else if (e.key === " ") {
-      if ($selectedItems.ids.length === 1) {
-        isPreviewModalOpen = true;
+      if ($currentRoute === "main") {
+        if ($selectedItems.ids.length === 1) {
+          isPreviewModalOpen = true;
+        }
       }
     } else if (e.key === "Enter") {
       if ($contextMenuStore.openModal === "") {

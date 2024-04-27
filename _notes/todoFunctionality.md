@@ -4,19 +4,17 @@ Recreate video preview is broken
 for some videos the import fails
 
 autoplay video if it is opened from the mainview, also when clicked inside the seekbar in bottompreview
-scroll to video if detailview is closed
-don't change item in detailview on up/down arrow if video is playing
 allow changing item in detailview using the arrows if bottomarea is closed
 jump to start of videomark on mark click
 after pausing the play icon isn't centered
 some videos and their previewthumbs aren't the same size
 for some videos the seekbar hover on the maingrid doesn't work (size issue?)
 display small videos (240p) in large in detailview
-bug when selecting a video in bottomarea and clicking space
-save importqueue with the databasepath?
 don't display title hint when hovering over a video
-continue import of the currently imported item if it is canceled in the import modal
+continue import of the currently next item in the importlist if the current one is canceled in the import modal
 scroll to item after rename
+delete files if import is cancelled
+
 
 * break words in importmodal
 * dont center item names in delete modal
@@ -34,6 +32,7 @@ scroll to item after rename
     close on ESC after clicking inside rendered bookmark
 * Possibly: When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created(?)
 * fix import queue for concurrent imports
+bottomarea grid - scroll to item if arrow left or arrow up is used
 
 ### Not so important bugs
 * tag input bug, "Tags" background hint text
@@ -117,6 +116,8 @@ DeleteConfirmModal is an ActionModal
 * Create a text file if user adds an item without file, remove itemtype "noFile"
 * recreatevideopreview: save start position of preview in db and show in the modal what was the last position
 * custom MainList
+* save importqueue with the databasepath, i.e. switching database doesn't lose the import queue
+
 
 ## Testing
 Test all item typestype 
