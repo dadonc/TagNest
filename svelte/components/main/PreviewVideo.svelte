@@ -44,7 +44,7 @@
   let progressBar: HTMLProgressElement;
   let videoElementHidden: HTMLVideoElement;
   let hoverSeekTimeSpan: HTMLSpanElement;
-  let thumbRatio = 0.75;
+  let thumbRatio = 1;
 
   function resizeThumbElement() {
     if (!videoElement) return; // on first render after changin to next video, videoElement is not yet defined
@@ -78,6 +78,8 @@
     const context = thumbElement.getContext("2d");
 
     if (videoElementHidden.duration) {
+      videoElementHidden.width = videoElement.offsetWidth;
+      videoElementHidden.height = videoElement.offsetHeight;
       if (markPos) {
         videoElementHidden.currentTime = markPos;
       } else {
@@ -186,7 +188,7 @@
     <!-- svelte-ignore a11y-media-has-caption -->
     <video
       loop
-      title={item.name}
+      muted
       bind:this={videoElement}
       class={`w-full max-h-full ${videoIsLoaded ? "z-10" : "hidden"} `}
       src={videoPath}

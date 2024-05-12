@@ -45,12 +45,15 @@ Plan for the next two weeks:
 The last two weeks, I have:
 * Finished the functionality to add highlights to bookmarks
 * Added the functionality to add highlights/marks to videos
-* For bookmark highlights, their count, and for video highlights, their position in the seek bar are displayed in the preview
-* Worked through week 8 of the module's material and started planning the poster 
+* For bookmark highlights, their count, and for video highlights, their position in the seek bar, are displayed in the preview
+* Started planning the poster 
 * Increased the security of the application by adding a CSP, disabling nodeIntegration, etc., based on the security guidelines of Electron
-* I spent multiple days struggling with CSS, mainly regarding the item previews. The main issue was problems with aspect ratio and wildly different sizes of items while trying to position the item's name and other information absolutely. I have deleted all the code I had previously used in the DetailView's bottom area preview, and now I reuse the same grid as in the MainGrid. After some changes, most of the problems have been fixed, but I still have some issues. Further, the current solution involves several additional divs and a wild mix of grid, flexbox, absolutely positioned elements, and static elements that are behind absolutely positioned ones. This is incredibly hard to reason about, and I will try to simplify it in the next weeks.
 * Fixed numerous bugs. The application is now at a stage where I can start to use it. This had the result that I have detected many many more bugs - I have added them to my list of bugs and will work on them in the next weeks and months.
 
 Plan for the next two weeks:
-* I will try to fix the remaining issues with the item previews in the MainGrid (if possible while simplifying the code)
+* I will start creating the poster
 * I will work on my huge list of bugs and issues, starting with the most important ones. Some of these bugs may require significant code refactoring, e.g., how I handle creating and updating items.
+
+
+Report 5
+* I spent multiple days struggling with CSS, mainly regarding the item previews. The main issue was problems with aspect ratio and wildly different sizes of items while trying to position the item's name and other information absolutely. I have deleted all the code I had previously used in the DetailView's bottom area preview, and now I reuse the same grid as in the MainGrid. After some changes, most of the problems have been fixed, but I still have some issues. Further, the current solution involves several additional divs and a wild mix of grid, flexbox, absolutely positioned elements, and static elements that are behind absolutely positioned ones. This is incredibly hard to reason about, and I will try to simplify it in the next weeks.

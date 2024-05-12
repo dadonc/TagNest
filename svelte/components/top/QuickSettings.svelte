@@ -6,6 +6,8 @@
   }
 </script>
 
-<button on:click={changeDisplay} class="w-8 mr-4">
-  {$currView.viewType}
-</button>
+{#if false}
+  <button on:click={changeDisplay} class="w-8 mr-4">
+    {$currView.viewType}
+  </button>
+{/if}

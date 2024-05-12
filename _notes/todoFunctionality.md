@@ -3,17 +3,23 @@ add name to audiopreview
 Recreate video preview is broken 
 for some videos the import fails
 
-autoplay video if it is opened from the mainview, also when clicked inside the seekbar in bottompreview
-allow changing item in detailview using the arrows if bottomarea is closed
-jump to start of videomark on mark click
-after pausing the play icon isn't centered
-some videos and their previewthumbs aren't the same size
-for some videos the seekbar hover on the maingrid doesn't work (size issue?)
-display small videos (240p) in large in detailview
-don't display title hint when hovering over a video
-continue import of the currently next item in the importlist if the current one is canceled in the import modal
-scroll to item after rename
-delete files if import is cancelled
+Tabs
+
+* move to selected video on backbutton.
+
+* some videos and their previewthumbs aren't the same size
+* some previews don't work at all
+* for some videos the seekbar hover on the maingrid doesn't work (size issue?)
+
+* autoplay video if it is opened from the mainview, also when clicked inside the seekbar in bottompreview
+* allow changing item in detailview using the arrows if bottomarea is closed
+* jump to start of videomark on mark click
+* after pausing the play icon isn't centered
+* display small videos (240p) in large in detailview
+* continue import of the currently next item in the importlist if the current one is canceled in the import modal
+* scroll to item after rename
+* delete files if import is cancelled
+* if a video was played and has finished arrow left should jump back in the same video, not to the previous item
 
 
 * break words in importmodal
@@ -88,6 +94,10 @@ DeleteConfirmModal is an ActionModal
 * automatically open import modal if no other items exist
 
 ## Improvments
+* Simple searchbar
+* "Tabs"
+* Open in new window/duplicate app window
+* make videopreview on seekbar hover adjustable in the settings
 * Quicksettings in top bar: show name, show type, show count highlights, date changed, mute video preview, countOpened, show tags in previews, show file size
 * item preview: show tags(clickable, toggle on off in quick settings) - also show in detailview
 * Make URL clickable in right sidebar, add url icon to item preview
