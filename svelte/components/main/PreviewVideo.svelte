@@ -36,7 +36,7 @@
         item.video!.width as number,
         item.video!.height as number
       )
-    : "";
+    : "no resolution available";
 
   // All the following code is for the seekbar hover functionality:
 
@@ -179,7 +179,7 @@
       class="hidden"
       bind:this={videoElementHidden}
       on:loadedmetadata={() => {
-        progressBar.max = videoElement.duration;
+        progressBar.max = videoElementHidden.duration;
         resizeThumbElement();
       }}
     >

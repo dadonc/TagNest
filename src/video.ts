@@ -265,53 +265,59 @@ type VideoDetails = {
 
 export const getVideoDetails = (videoPath: string): Promise<VideoDetails> => {
   function extractData(data: string) {
-    let result: VideoDetails = {} as any;
-    if (data.indexOf("Duration:") !== -1) {
-      const durationStr = data.split("Duration: ")[1].split(",")[0];
-      let [h, m, s] = durationStr.split(":");
-      s = s.split(".")[0];
-      result["duration"] = parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
-    }
-    if (data.indexOf("bitrate: ") !== -1) {
-      result["metaBitrate"] = data.split("bitrate: ")[1]?.split("\n")[0];
-    }
-    if (data.indexOf("Stream #0:0") !== -1) {
-      const i = data.split("Stream")[1]?.split("\n")[0];
-      //Example for i:  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709), 1280x720 [SAR 1:1 DAR 16:9], 619 kb/s, 30 fps, 30 tbr, 15360 tbn, 60 tbc (default)
-      if (i) {
-        i.split(", ").forEach((s) => {
-          if (s.indexOf("kb/s") !== -1) {
-            if (!result["bitrate"])
-              result["bitrate"] = s.split("kb/s")[0].trim() + "kb/s"; // rmv (default) or (forced) if present
-          } else if (s.indexOf("DAR") !== -1) {
-            if (!result["aspectRatio"])
-              result["aspectRatio"] = s.split("DAR ")[1].slice(0, -1);
-            if (!result["width"])
-              result["width"] = Number(s.split("x")[0].trim());
-            if (!result["height"])
-              result["height"] = Number(s.split("x")[1].split(" ")[0].trim());
-          } else if (s.indexOf("fps") !== -1) {
-            if (!result["fps"]) result["fps"] = Number(s.split(" ")[0].trim());
-          }
-        });
-      }
-    }
-    return result;
+    // Example output: width=1920,height=1080,duration=300.000000,display_aspect_ratio=16:9,bit_rate=5000000,avg_frame_rate=25/1
+    const entries = data.split("\n");
+    const result: any = {};
+    entries.forEach((entry) => {
+      const [key, value] = entry.split("=");
+      result[key] = value;
+    });
+    return {
+      width: Math.round(Number(result.width)),
+      height: Math.round(Number(result.height)),
+      duration: Math.round(Number(result.duration)),
+      aspectRatio: result.display_aspect_ratio,
+      // TODO should this be a number?
+      metaBitrate: String(Math.round(Number(result.bit_rate))),
+      bitrate: String(Math.round(Number(result.bit_rate))),
+      fps: eval(result.avg_frame_rate), // This converts avg_frame_rate from "25/1" to 25
+    };
   }
 
   return new Promise((resolve, reject) => {
-    const process = spawn(ffprobePath, [videoPath]);
+    const process = spawn("ffprobe", [
+      "-v",
+      "error",
+      "-select_streams",
+      "v:0",
+      "-show_entries",
+      "stream=width,height,duration,display_aspect_ratio,bit_rate,avg_frame_rate",
+      "-of",
+      "default=noprint_wrappers=1:nokey=0",
+      videoPath,
+    ]);
+
     let data = "";
-    process.stderr.on("data", (d: string) => {
-      const stdData = d.toString();
-      data += stdData;
+
+    // Listen to stdout stream to capture the output
+    process.stdout.on("data", (d: Buffer) => {
+      data += d.toString();
     });
 
-    process.on("close", (code: string) => {
-      if (code == "0") {
-        const result = extractData(data);
+    // Listen to stderr stream to capture errors (optional, for debugging)
+    process.stderr.on("data", (d: Buffer) => {
+      data += d.toString();
+      console.error("stderr: ", d.toString());
+    });
+
+    // Handle process close event
+    process.on("close", (code: number) => {
+      if (code === 0) {
+        const result = extractData(data.trim());
         resolve(result);
-      } else reject();
+      } else {
+        reject(new Error(`ffprobe process exited with code ${code}`));
+      }
     });
   });
 };

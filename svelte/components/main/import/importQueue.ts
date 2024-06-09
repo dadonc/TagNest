@@ -1,5 +1,4 @@
 // TODO - This is a mess. Refactor this whole file
-
 import { get } from "svelte/store";
 import {
   finishItemImport,
@@ -25,8 +24,29 @@ export const importSteps = {
   video: {
     1: {
       func: async (item: SingleItem) => {
-        await window.electron.createVideoPreview(item.file!.path, item.id);
-        console.log("Created video preview:", item.name);
+        const savePath = get(settingsJson).savePath;
+
+        try {
+          let { name, extension } = extractNameAndExtension(item.file!.path);
+          if (!name || !extension) {
+            throw new Error(
+              "Could not extract name and extension for: " + item.file!.path
+            );
+          }
+          const res = await fetch(
+            `file://${savePath}/previews/videos/${encodeURIComponent(
+              name
+            )}_preview.${extension}`,
+            { method: "HEAD" }
+          );
+          if (res.ok) {
+            console.log("preview already exists");
+            return;
+          }
+        } catch (err) {
+          await window.electron.createVideoPreview(item.file!.path, item.id);
+          console.log("Created video preview:", item.name);
+        }
       },
       desc: "Create video preview",
     },
@@ -41,6 +61,11 @@ export const importSteps = {
         // create video preview thumbnail
         const savePath = get(settingsJson).savePath;
         const { name, extension } = extractNameAndExtension(item.file!.path);
+        if (!name || !extension) {
+          throw new Error(
+            "Could not extract name and extension for: " + item.file!.path
+          );
+        }
         // check if already exists
         if (item.video?.thumbImageName) {
           try {
@@ -60,7 +85,7 @@ export const importSteps = {
           "file://" +
           savePath +
           "/previews/videos/" +
-          name +
+          encodeURIComponent(name) +
           "_preview." +
           extension;
         video.load();
@@ -78,7 +103,10 @@ export const importSteps = {
               dataURL,
               name + "_thumb.jpeg"
             );
-            await updateVideoThumbImageInDB(item, name + "_thumb.jpeg");
+            await updateVideoThumbImageInDB(
+              item,
+              encodeURIComponent(name) + "_thumb.jpeg"
+            );
             resolve(true);
           });
         });

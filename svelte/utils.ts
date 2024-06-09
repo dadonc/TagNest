@@ -231,7 +231,7 @@ export function getVideoResolutionDescription(width: number, height: number) {
     return "4K";
   } else if (w <= 7680 || h <= 4320) {
     return "8K";
-  }
+  } else return "Unknown resolution";
 }
 
 export function indexOfAlreadyExistingItem(newPath: string) {
