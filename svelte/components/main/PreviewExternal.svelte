@@ -18,9 +18,11 @@
 
   async function fetchNewPreview(isHovered: boolean) {
     if (isHovered) {
-      await window.electron.saveFilePreview(item.file?.path || "");
-      await window.electron.updateItemsBasedOnFiles([item.id]);
-      previewPath = `file://${$settingsJson.savePath}/icons/${item.file?.path.split("/").pop()}.png?${Date.now()}`;
+      if (await window.electron.doesFileExist(item.file?.path || "")) {
+        await window.electron.saveFilePreview(item.file?.path || "");
+        await window.electron.updateItemsBasedOnFiles([item.id]);
+        previewPath = `file://${$settingsJson.savePath}/icons/${item.file?.path.split("/").pop()}.png?${Date.now()}`;
+      }
     }
   }
 </script>

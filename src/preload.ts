@@ -71,6 +71,7 @@ export type ExposedInMainWorld = {
   onOpenSettings: (callback: () => void) => void;
 
   restartApp: () => void;
+  doesFileExist: (path: string) => Promise<boolean>;
 };
 
 const api: ExposedInMainWorld = {
@@ -135,6 +136,8 @@ const api: ExposedInMainWorld = {
   onOpenSettings: (callback) => ipcRenderer.on("openSettings", callback),
 
   restartApp: () => ipcRenderer.send("restartApp"),
+
+  doesFileExist: (path) => ipcRenderer.invoke("doesFileExist", path),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

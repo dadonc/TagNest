@@ -167,11 +167,11 @@
       }
     }
 
-    const currSelected = document.getElementById($selectedItems.ids[0]);
-    if (currSelected && !isElementInViewport(currSelected)) {
-      // TODO: block:Start would be nicer but results in a gap at the bottom of the window
-      // comment out !isElementInViewport to debug
-      currSelected.scrollIntoView({ block: "end" });
+    if (!e.shiftKey && !e.metaKey && e.key !== "Shift" && e.key !== "Meta") {
+      const currSelected = document.getElementById($selectedItems.ids[0]);
+      if (currSelected && !isElementInViewport(currSelected)) {
+        currSelected.scrollIntoView({ block: "end" });
+      }
     }
   };
 </script>

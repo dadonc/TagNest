@@ -134,6 +134,7 @@ export function getFileDatesAndSize(
   filePath: string
 ): Promise<{ updated: Date; size: number; created: Date }> {
   return new Promise((resolve, reject) => {
+    if (!fs.existsSync(filePath)) reject("File does not exist");
     fs.stat(filePath, (err, stats) => {
       if (err) reject(err);
       if (!!!stats) reject("No stats");

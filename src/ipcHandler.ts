@@ -270,6 +270,10 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
 
   ipcMain.on("restartApp", () => {
     app.relaunch();
-    app.exit(0);
+    app.quit();
+  });
+
+  ipcMain.handle("doesFileExist", async (event, path) => {
+    return fs.existsSync(path);
   });
 }

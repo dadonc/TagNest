@@ -134,9 +134,11 @@
   }}
   on:mouseleave={async () => {
     await playPromise;
-    videoElement.pause();
-    displayVideo = false;
-    videoIsLoaded = false;
+    if (videoElement) {
+      videoElement.pause();
+      displayVideo = false;
+      videoIsLoaded = false;
+    }
   }}
   on:focus={() => {
     displayVideo = true;
