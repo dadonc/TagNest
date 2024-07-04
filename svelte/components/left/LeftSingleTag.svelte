@@ -57,7 +57,7 @@
     {#if tag.countAfterDeselection !== 0}
       <button
         on:click={() => toggleDeselectTag(tag.id)}
-        class="w-2 mr-1 font-mono text-xs text-error"
+        class="w-4 mr-1 font-mono text-xs text-error"
         >{tag.countAfterDeselection}</button
       >
     {:else}

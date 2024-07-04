@@ -5,6 +5,7 @@
   import { currView } from "../../stores/stateStore";
 
   function changeDirection() {
+    (document.activeElement as HTMLElement)?.blur();
     $currView.orderDirection =
       $currView.orderDirection === "asc" ? "desc" : "asc";
   }

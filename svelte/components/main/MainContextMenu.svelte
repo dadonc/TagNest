@@ -61,6 +61,13 @@
         }}
       />
       <ContextMenuButton
+        name="Reset count"
+        onClick={() => {
+          $contextMenuStore.isContextMenuOpen = false;
+          $contextMenuStore.openModal = "resetCounts";
+        }}
+      />
+      <ContextMenuButton
         name="Delete item"
         onClick={() => {
           confirmDelete($selectedItems.ids);

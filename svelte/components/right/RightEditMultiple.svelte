@@ -44,6 +44,12 @@
   };
 </script>
 
+<svelte:window
+  on:keydown={(e) => {
+    if (e.key == "s" && e.metaKey) save();
+  }}
+/>
+
 <h1 class="mt-2 mb-4 text-3xl text-center">Edit</h1>
 <div class="text-center">
   Selected <span class="font-bold">{$selectedItems.ids.length}</span> items

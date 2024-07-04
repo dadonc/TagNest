@@ -65,8 +65,10 @@
           resetCountOpened(items.map((i) => i.id));
           close();
         }}
-        >Reset count of {items.length}
-        {items.length === 1 ? "item" : "items"}</button
+      >
+        {items.length === 1
+          ? "Reset item"
+          : `Reset count of ${items.length} items`}</button
       >
     </div>
   </div>
