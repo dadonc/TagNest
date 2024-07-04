@@ -36,6 +36,8 @@
     }
   }
 
+  let isCreatingPreview = false;
+
   async function createNewPreview() {
     if (recreateThumb) {
       saveAndUpdateNewVideoThumb({
@@ -44,7 +46,8 @@
       });
     }
     // TODO add to an ActionQueue
-    window.electron.recreateVideoPreview(
+    isCreatingPreview = true;
+    await window.electron.recreateVideoPreview(
       item.file!.path,
       videoElement.currentTime
     );
@@ -115,6 +118,12 @@
   <button
     disabled={saveDisabled}
     on:click={createNewPreview}
-    class="btn btn-primary">Create preview</button
+    class="btn btn-primary"
   >
+    {#if isCreatingPreview}
+      Creating preview...
+    {:else}
+      Create preview
+    {/if}
+  </button>
 </div>

@@ -12,14 +12,7 @@
 </script>
 
 {#key item}
-  {#if isChooseThumbOpen && item.type == "video"}
-    <ChooseVideoThumb
-      {item}
-      close={() => {
-        isChooseThumbOpen = false;
-      }}
-    />
-  {:else if isChooseThumbOpen && item.type == "bookmark"}
+  {#if isChooseThumbOpen && item.type == "bookmark"}
     <ChooseBookmarkPreview
       {item}
       close={() => {

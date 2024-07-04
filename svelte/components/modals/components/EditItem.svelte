@@ -7,6 +7,7 @@
   import TagSelectWrapper from "./TagSelectWrapper.svelte";
   import { confirmDelete } from "../../main/delete/DeleteQueue";
   import PreviewChooser from "../../main/PreviewChooser.svelte";
+  import { contextMenuStore } from "../../../stores/stateStore";
 
   export let isChooseThumbOpen = true;
   export let item: SingleItem;
@@ -37,7 +38,11 @@
     <button
       class="text-blue-700"
       on:click={() => {
-        isChooseThumbOpen = true;
+        if (item.type === "video") {
+          $contextMenuStore.openModal = "videoThumbnail";
+        } else {
+          isChooseThumbOpen = true;
+        }
       }}>Change thumbnail</button
     >
   {/if}

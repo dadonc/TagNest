@@ -142,7 +142,7 @@ export async function saveVideoThumbImage(filePath: string) {
   canvas.getContext("2d")?.drawImage(video, 0, 0, canvas.width, canvas.height);
   const dataURL = canvas.toDataURL("image/jpeg", 0.5);
   const name = extractNameAndExtension(filePath).name as string;
-  const newPreviewName = name + Date.now() + "_thumb.jpeg";
+  const newPreviewName = name + "_" + Date.now() + "_thumb.jpeg";
   await window.electron.saveVideoPreviewImage(dataURL, newPreviewName);
   return newPreviewName;
 }
@@ -368,9 +368,15 @@ export async function saveAndUpdateNewVideoThumb({
 }) {
   const newThumbImageName = await saveVideoThumbImage(videoPath);
   const $settingsJson = await window.electron.getSettingsJson();
-  await window.electron.deleteFile(
-    `${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`
-  );
+  try {
+    await window.electron.deleteFile(
+      `${$settingsJson.savePath}/previews/videos/${decodeURI(
+        item.video?.thumbImageName || ""
+      )}`
+    );
+  } catch (e) {
+    console.log(e);
+  }
 
   item.video!.thumbImageName = newThumbImageName;
   updateVideoThumbImageInDB(item, newThumbImageName);
