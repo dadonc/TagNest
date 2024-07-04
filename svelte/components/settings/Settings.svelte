@@ -7,7 +7,7 @@
   let wasSavePathChanged = false;
   let shouldRestart = false;
   let savePath = $settingsJson.savePath;
-  let oldSavePath = "";
+  let prevSavePath = "";
   let combineBehavior = $settingsJson.combineBehavior;
 
   let showCombineBehaviorSaveButton = false;
@@ -34,7 +34,7 @@
       on:click={async () => {
         const newPath = await window.electron.getNewSavePath();
         if (newPath && newPath !== savePath) {
-          oldSavePath = savePath;
+          prevSavePath = savePath;
           savePath = newPath;
           wasSavePathChanged = true;
         }
@@ -47,7 +47,7 @@
 
         <Alert
           header="Restart application"
-          body="After saving you need to restart the application for changes to take effect."
+          body="After saving the application will restart."
         />
 
         <label class="line-through">
@@ -58,7 +58,7 @@
         <div class="mt-2 text-center">
           <button
             on:click={() => {
-              savePath = oldSavePath;
+              savePath = prevSavePath;
               wasSavePathChanged = false;
             }}
           >
@@ -70,6 +70,7 @@
               $settingsJson.savePath = savePath;
               await window.electron.updateSettingsJson(get(settingsJson));
               wasSavePathChanged = false;
+              window.electron.restartApp();
               shouldRestart = true;
             }}>Save</button
           >

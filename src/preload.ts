@@ -69,6 +69,8 @@ export type ExposedInMainWorld = {
   updateItemsBasedOnFiles: (ids: string[]) => Promise<void>;
 
   onOpenSettings: (callback: () => void) => void;
+
+  restartApp: () => void;
 };
 
 const api: ExposedInMainWorld = {
@@ -131,6 +133,8 @@ const api: ExposedInMainWorld = {
     ipcRenderer.invoke("updateItemsBasedOnFiles", ids),
 
   onOpenSettings: (callback) => ipcRenderer.on("openSettings", callback),
+
+  restartApp: () => ipcRenderer.send("restartApp"),
 };
 
 contextBridge.exposeInMainWorld("electron", api);

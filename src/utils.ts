@@ -53,7 +53,6 @@ async function createSettingsJsonAndReturn(
 ): Promise<SettingsJson> {
   const initialData = {
     savePath: resourcesPath,
-    latestMigration: "",
     combineBehavior: "copy",
   };
   const initialDataString = JSON.stringify(initialData, null, 2);

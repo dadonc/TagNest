@@ -4,6 +4,7 @@ import {
   globalShortcut,
   dialog,
   shell,
+  app,
 } from "electron";
 import fs from "fs";
 import path from "path";
@@ -265,5 +266,10 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
 
   ipcMain.handle("updateItemsBasedOnFiles", async (event, ids) => {
     return await updateItemsBasedOnFiles(ids);
+  });
+
+  ipcMain.on("restartApp", () => {
+    app.relaunch();
+    app.exit(0);
   });
 }

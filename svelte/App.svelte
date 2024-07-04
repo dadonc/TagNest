@@ -48,7 +48,7 @@
 
   let isDevToolsOpen = false;
 
-  const handleKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown = async (event: KeyboardEvent) => {
     if (event.key === "," && event.metaKey) {
       $currentRoute = "settings";
     } else if (event.key === "Escape") {
@@ -71,6 +71,10 @@
       toggleRight();
     } else if (event.key === "s" && event.metaKey && event.shiftKey) {
       shuffleItems();
+    } else if (event.key === "0" && event.metaKey && event.shiftKey) {
+      $settingsJson.savePath = $settingsJson.oldSavePath || "";
+      await window.electron.updateSettingsJson($settingsJson);
+      window.electron.restartApp();
     }
   };
 </script>

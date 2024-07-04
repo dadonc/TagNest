@@ -25,7 +25,6 @@ type ItemType =
 
 export type SettingsJson = {
   savePath: string;
-  latestMigration: string;
   oldSavePath?: string;
   combineBehavior: "copy" | "move" | "separate";
 };

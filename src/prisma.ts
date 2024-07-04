@@ -6,7 +6,7 @@ import path from "path";
 import { fork } from "child_process";
 import { app } from "electron";
 import { PrismaClient } from "@prisma/client";
-import { getSettingsJson, updateSettingsJson } from "./utils";
+import { getSettingsJson } from "./utils";
 import { isDev } from "./main";
 import { log as electronLog } from "electron-log";
 
@@ -79,10 +79,6 @@ export async function getPrismaClient() {
         dbUrl,
       });
 
-      updateSettingsJson({
-        ...savePathJson,
-        latestMigration,
-      });
       // seed
       // log("Seeding...");
       // await seed(prisma);

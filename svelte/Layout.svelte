@@ -143,7 +143,7 @@
       &nbsp;
     </div>
     <div class={"rightContainer"}>
-      <div class="p-2">
+      <div class="h-full p-2">
         <slot name="rightContainer">No rightContainer</slot>
       </div>
     </div>

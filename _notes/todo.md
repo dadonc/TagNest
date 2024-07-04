@@ -193,7 +193,6 @@ app crashes because the file is not found.
 * tests: https://github.com/spaceagetv/electron-playwright-helpers
 * electron security warnings
 * bump deps
-* rmv latestMigration from save.json
 * iframe - rmv webfonts
 * video deflicker step takes long - make secondary import queue?
 * detailview bottom: remove var(--bottomAreaPadding), change paddings
