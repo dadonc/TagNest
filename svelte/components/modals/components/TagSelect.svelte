@@ -11,11 +11,16 @@
 
   const tagStringCopy = tagString;
 
-  const placeholder = '<span class="text-gray-500">Tags<span>';
+  const placeholder =
+    '<span class="absolute text-gray-500 pointer-events-none">tag1, group:tag2, ...<span>';
+
+  $: containerCSS = `w-full mt-2 pl-4 input input-bordered outlineFuckery h-12 flex items-center p-2 overflow-scroll caret-base-content ${isAutoCompleteVisible ? "rounded-b-none" : "rounded-b"}`;
 
   let tagsHTML = "";
+  let hasUserInteracted = false;
   $: {
     tagsHTML = tagString
+      .replace(placeholder, "")
       .split(",")
       .map((t) => t.trim())
       .map((t) => {
@@ -35,7 +40,7 @@
         }
       })
       .join(", ");
-    if (tagString.length === 0) tagsHTML = placeholder;
+    if (tagString.length === 0 && !hasUserInteracted) tagsHTML = placeholder;
     tick().then(() => {
       // don't run on initial render
       if (tagStringCopy !== tagString) setEndOfContenteditable(textInput);
@@ -43,6 +48,7 @@
   }
 
   const handleKeydown = (e: any) => {
+    hasUserInteracted = true;
     if (e.key === "Enter") {
       e.preventDefault();
       return;
@@ -70,24 +76,36 @@
 
 <div class="relative">
   <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
     contenteditable="true"
     spellcheck="false"
     tabindex="0"
     bind:this={textInput}
-    class={classNames(
-      "w-full mt-2 pl-4 input input-bordered outlineFuckery h-16 p-2 overflow-scroll caret-base-content",
-      isAutoCompleteVisible ? "rounded-b-none" : ""
-    )}
+    class={containerCSS}
     on:input={handleKeydown}
     on:focus={() => {
       displayAutocomplete = true;
       if (tagsHTML == placeholder) {
-        tagsHTML = "";
+        tagsHTML = "&nbsp;";
       }
+      console.log("setend");
+      setTimeout(() => {
+        setEndOfContenteditable(textInput);
+      }, 0);
+    }}
+    on:click={() => {
+      setTimeout(() => {
+        setEndOfContenteditable(textInput);
+      }, 0);
     }}
     on:blur={(event) => {
-      if (tagsHTML === "") {
+      if (
+        tagsHTML == "&nbsp;" ||
+        tagsHTML.length === 0 ||
+        tagsHTML == '<span class="text-red-500"></span>'
+      ) {
+        hasUserInteracted = false;
         tagsHTML = placeholder;
       }
       if (
@@ -100,6 +118,7 @@
         )
       ) {
         displayAutocomplete = false;
+        isAutoCompleteVisible = false;
       }
     }}
   >
