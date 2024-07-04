@@ -3,7 +3,7 @@
   import type { SingleItem } from "../../stores/items";
   import { onMount } from "svelte";
   import { bottomContainer, rightContainer } from "../../stores/cssStore";
-  import MainGrid from "../main/MainGrid.svelte";
+  import MainGridItems from "../main/MainGridItems.svelte";
 
   export let items: SingleItem[];
 
@@ -11,7 +11,9 @@
     $rightContainer.currentVal = "0px";
     $bottomContainer.currentVal = $bottomContainer.val;
     setTimeout(() => {
-      document.getElementById($selectedItems.ids[0])?.scrollIntoView();
+      document
+        .getElementById("bottom_" + $selectedItems.ids[0])
+        ?.scrollIntoView();
     }, 0);
     return () => {
       if ($currentRoute !== "details") {
@@ -39,6 +41,6 @@
     : ""}
 >
   {#if $bottomContainer.currentVal !== "0px"}
-    <MainGrid {items} />
+    <MainGridItems {items} isBottomGrid={true} />
   {/if}
 </div>

@@ -16,11 +16,17 @@
     getPxfromRem,
     isElementInViewport,
   } from "../../utils";
+  import DetailView from "./DetailView.svelte";
+  import MainGridItems from "./MainGridItems.svelte";
 
   export let items: SingleItem[];
   export let focusedItemId: string | undefined = undefined;
 
   onMount(async () => {
+    scrollToSelected();
+  });
+
+  function scrollToSelected() {
     if (focusedItemId) {
       setTimeout(() => {
         const focusedItem = document.getElementById(focusedItemId!);
@@ -29,15 +35,15 @@
           getPxfromRem(Number($topContainer.val.slice(0, -3)));
       }, 0);
     }
-  });
+  }
+
+  $: $currentRoute, scrollToSelected();
 
   let isPreviewModalOpen = false;
   let previewItem: SingleItem;
 
   $: zoomLvl =
     $currentRoute === "details" ? $currView.zoomLvlDetails : $currView.zoomLvl;
-
-  $: gridCols = createGridColsString(zoomLvl);
 
   $: {
     if ($selectedItems.ids.length === 1) {
@@ -49,14 +55,6 @@
       }
     }
   }
-
-  const createGridColsString = (zoomLvl: number) => {
-    let str = "";
-    for (let i = 0; i < zoomLvl; i++) {
-      str += "1fr ";
-    }
-    return str;
-  };
 
   const handleKeydownExceptions = (e: KeyboardEvent) => {
     const video = document.getElementById("videoPlayer") as HTMLVideoElement;
@@ -180,20 +178,16 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<PreviewModal item={previewItem} bind:isOpen={isPreviewModalOpen} />
+{#if $currentRoute === "details"}
+  {#each items as item}
+    {#if item.id === $selectedItems.ids[0]}
+      <DetailView {item} />
+    {/if}
+  {/each}
+{/if}
 
-<div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
-  <div class="p-1 myGrid" style={`--grid-cols-string: ${gridCols};`}>
-    {#each items as item (item.id)}
-      <Preview {item} {items} />
-    {/each}
-  </div>
+<div style={$currentRoute === "details" ? "display:none;" : ""}>
+  <PreviewModal item={previewItem} bind:isOpen={isPreviewModalOpen} />
+
+  <MainGridItems {items} />
 </div>
-
-<style>
-  .myGrid {
-    display: grid;
-    grid-template-columns: var(--grid-cols-string);
-    grid-gap: 0.25rem;
-  }
-</style>

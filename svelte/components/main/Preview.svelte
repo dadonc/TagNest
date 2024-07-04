@@ -11,6 +11,7 @@
 
   export let item: SingleItem;
   export let items: SingleItem[];
+  export let isBottomGrid: boolean;
 
   $: isItemSelected =
     $selectedItems.ids.filter((id) => id === item.id).length > 0;
@@ -78,7 +79,7 @@
 
 <div
   style={"scroll-margin-top: 0.25rem; " + maxHeightStyleOuter}
-  id={item.id}
+  id={isBottomGrid ? "bottom_" + item.id : item.id}
   use:useIntersectionObserver
   on:enterViewport={() => {
     intersects = true;

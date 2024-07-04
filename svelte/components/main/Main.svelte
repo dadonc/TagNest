@@ -6,7 +6,6 @@
     currView,
   } from "../../stores/stateStore";
   import ActionModal from "../modals/ActionModal.svelte";
-  import DetailView from "./DetailView.svelte";
   import MainContextMenu from "./MainContextMenu.svelte";
   import MainGrid from "./MainGrid.svelte";
   import MainList from "./MainList.svelte";
@@ -15,7 +14,7 @@
   export let items: SingleItem[];
 </script>
 
-{#if $currentRoute === "main"}
+{#if $currentRoute === "main" || $currentRoute === "details"}
   {#if $currView.viewType === "grid"}
     <ActionModal />
     <MainContextMenu />
@@ -23,14 +22,6 @@
   {:else if $currView.viewType === "list"}
     <MainList {items} />
   {/if}
-{:else if $currentRoute === "details"}
-  <ActionModal />
-  <MainContextMenu />
-  {#each items as item}
-    {#if item.id === $selectedItems.ids[0]}
-      <DetailView {item} />
-    {/if}
-  {/each}
 {:else if $currentRoute === "importMultiple"}
   <ImportScreen />
 {/if}
