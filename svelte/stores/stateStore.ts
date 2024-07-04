@@ -44,6 +44,7 @@ type CurrViewType = {
     | "shuffle";
   isItemDetailsOpen: boolean;
   isVideoDetailsOpen: boolean;
+  searchString: string;
 };
 
 const emptyCurrView: CurrViewType = {
@@ -55,6 +56,7 @@ const emptyCurrView: CurrViewType = {
   orderBy: "createdAt",
   isItemDetailsOpen: false,
   isVideoDetailsOpen: false,
+  searchString: "",
 };
 
 const currentCurrView = localStorage.getItem("currView");
@@ -226,6 +228,11 @@ export const filteredData = derived(
         }
         return 0;
       });
+    }
+    if ($currView.searchString) {
+      filteredItems = filteredItems.filter((item) =>
+        item.name?.toLowerCase().includes($currView.searchString.toLowerCase())
+      );
     }
 
     return {

@@ -1,7 +1,11 @@
 <script lang="ts">
   import Plus from "../../assets/feather/Plus.svelte";
   import ChevronLeft from "../../assets/feather/ChevronLeft.svelte";
-  import { currentRoute, selectedItems } from "../../stores/stateStore";
+  import {
+    currentRoute,
+    currView,
+    selectedItems,
+  } from "../../stores/stateStore";
 
   import { importItems } from "../../stores/items";
   import AddBookmarkModal from "../modals/AddBookmarkModal.svelte";
@@ -13,6 +17,7 @@
 
   let showAddModal = false;
   let isImportProgressModalOpen = false;
+  let searchInput: HTMLInputElement;
 
   const handleToggleAddModal = () => {
     showAddModal = !showAddModal;
@@ -53,6 +58,27 @@
       <QuickSettings />
       <ItemOrder />
     {/if}
+    <div class="relative">
+      <input
+        type="text"
+        placeholder="Search"
+        class="w-32 p-1 rounded"
+        bind:this={searchInput}
+        on:change={(event) => {
+          //@ts-ignore
+          $currView.searchString = event.target.value;
+        }}
+      />
+      {#if $currView.searchString}
+        <button
+          class="absolute top-0 right-0 p-1"
+          on:click={() => {
+            $currView.searchString = "";
+            searchInput.value = "";
+          }}>Clear</button
+        >
+      {/if}
+    </div>
   </div>
   <div class="flex items-center h-4 text-xs">
     <span class="flex justify-center h-4">

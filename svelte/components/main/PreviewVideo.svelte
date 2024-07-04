@@ -23,7 +23,7 @@
   let videoIsLoaded = false;
 
   let { name, extension } = extractNameAndExtension(item.file!.path);
-  $: videoPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}`;
+  $: videoPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}?cacheBust=${Date.now()}`;
   $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`;
 
   let playPromise: Promise<void> | undefined;

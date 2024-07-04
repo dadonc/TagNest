@@ -215,7 +215,7 @@
   }
 
   .topContainer {
-    -webkit-app-region: drag;
+    /* -webkit-app-region: drag; */
   }
 
   .grababble-x:active,
