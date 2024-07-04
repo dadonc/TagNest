@@ -140,7 +140,7 @@
   $: showActionElements =
     !isSpacePreview || (isSpacePreview && wasPreviewHidden);
   let { name, extension } = extractNameAndExtension(item.file!.path);
-  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${name}_thumb.jpeg`;
+  $: thumbPath = `file://${$settingsJson.savePath}/previews/videos/${item.video?.thumbImageName}`;
   $: previewPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}`;
 </script>
 
@@ -349,7 +349,7 @@
             }}
             on:focus={() => {}}
             on:click={(e) => {
-              seek(e);
+              videoElement.currentTime = mark.mark;
               if (videoElement.paused || videoElement.ended) {
                 videoElement.play();
               }
