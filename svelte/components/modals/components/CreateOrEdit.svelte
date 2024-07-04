@@ -2,7 +2,6 @@
 <script lang="ts">
   import FileDragArea from "./FileDragArea.svelte";
   import {
-    createItem,
     importItems,
     refreshDisplayedItems,
     updateItem,
@@ -24,6 +23,7 @@
     getItemTypeFromExtension,
   } from "../../../../src/gschert";
   import { confirmDelete } from "../../main/delete/DeleteQueue";
+  import { createImportItem } from "../../main/import/createImportItems";
 
   export let isChooseVideoThumbOpen = false;
   export let originalItem: SingleItem | undefined = undefined;
@@ -73,13 +73,12 @@
           updateItemPreviews(existingItem.id);
         }
       }
-      // TODO - is this correct? Is correct if no problems arise
       close();
       await updateItem(existingItem, tagString);
       refreshDisplayedItems();
     } else {
       const newName = name ? name : namePlaceholder ? namePlaceholder : "";
-      const newItem = await createItem({
+      const newItem = createImportItem({
         name: newName,
         url,
         note,
@@ -88,9 +87,9 @@
         type: itemType
           ? itemType
           : getItemTypeFromExtension(path.split(".").pop()),
-        importStep: -1,
       });
       if (newItem) {
+        //@ts-ignore
         $importItems = [...$importItems, newItem];
         await tick();
         startImportTasks();

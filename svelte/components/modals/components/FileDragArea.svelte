@@ -60,15 +60,10 @@
 
     window.electron.onChosenFiles(async (_, filePaths) => {
       dispatch("close-modal");
-      const filteredPaths = filePaths.filter((p) => {
-        return !itemAlreadyExists(p);
-      });
-      const newItems = await createImportItems(filteredPaths);
-      // TODO ask Chris - how to type this
+      const newItems = createImportItems(filePaths);
       // @ts-ignore
       $importItems = [...$importItems, ...newItems];
       startImportTasks();
-      // $currentRoute = "importMultiple";
     });
     return () => {
       window.electron.removeChosenFileListener();

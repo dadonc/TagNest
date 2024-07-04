@@ -55,5 +55,43 @@ Plan for the next two weeks:
 * I will work on my huge list of bugs and issues, starting with the most important ones. Some of these bugs may require significant code refactoring, e.g., how I handle creating and updating items.
 
 
-Report 5
+## Report 5
 * I spent multiple days struggling with CSS, mainly regarding the item previews. The main issue was problems with aspect ratio and wildly different sizes of items while trying to position the item's name and other information absolutely. I have deleted all the code I had previously used in the DetailView's bottom area preview, and now I reuse the same grid as in the MainGrid. After some changes, most of the problems have been fixed, but I still have some issues. Further, the current solution involves several additional divs and a wild mix of grid, flexbox, absolutely positioned elements, and static elements that are behind absolutely positioned ones. This is incredibly hard to reason about, and I will try to simplify it in the next weeks.
+* I have created a first draft of my poster and posted it to the forum for feedback:  https://study.online.keele.ac.uk/courses/521/discussion_topics/16759?module_item_id=34324 
+* I have worked on some of the bugs in my list.
+* I have shown the current state of the application to a friend who had some interesting feedback. Some of his ideas seem good but I think I may not have enough time to implement them.
+
+Plan for the next two weeks:
+* After hopefully receiving feedback I will update the poster and finalize it
+* I will continue to work on the bug list
+* Maybe I will try to make the app visually more appealing, e.g. by changing the color scheme or making the margins and paddings more consistent
+
+
+## Report 6
+Due to some health and other issues I didn't manage much progress the last two weeks.
+I have submitted the poster
+I worked on some bugs, primarily involving CSS
+
+The next two weeks I plan to:
+Continue eradicating bugs
+Start to think about what to write in the report and how to structure it
+
+## Report 7
+For the last two weeks, I have still been struggling with my health issues and have not been able to work as much as I would have liked. I have still been able to make some progress, though. Fortunately, I have worked on the project very intensively earlier, so I believe I am still more or less on track.
+
+During the last two weeks, I have continued fixing bugs (and found several I hadn't noticed before). I think for a better progress, I should now stop working on issues that only affect performance or happen in edge cases (and can often be solved by using the application differently). For example, I spent a lot of time fixing a performance issue that only happened if a user added many items (in my case, around 300) at once. I have fixed the issue, but this required a large refactor and I think in similar situations, it would be better just to tell the user to add fewer items at once.
+
+In the next two weeks, I will:
+* Fix the styling of tags
+* Start working on the report
+
+## Report 8
+During the last two weeks I created (and just now uploaded) my report outline.
+I have started writing the report by writing details about the architecture and implementation of the application.
+I have written down a list of questions regarding the report and will add them to my eMail to my tutor.
+The next two weeks I will continue writing the report and research how to structure my user testing.
+
+
+Hallo Beran,
+
+here is my next progress report:

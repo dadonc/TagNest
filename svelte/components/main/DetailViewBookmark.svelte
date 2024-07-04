@@ -88,6 +88,7 @@
     tooltip.style.position = "absolute";
     tooltip.style.zIndex = "1000";
     tooltip.style.background = "yellow";
+    tooltip.style.color = "black";
     tooltip.style.border = "none";
     tooltip.style.padding = "5px";
     doc.body.appendChild(tooltip);
@@ -158,6 +159,7 @@
       showRemoveTooltip(e);
     });
     span.style.backgroundColor = "yellow";
+    span.style.color = "black";
     try {
       range.surroundContents(span);
       if (newId) {

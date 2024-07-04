@@ -1,15 +1,24 @@
 # TODO
+scroll to item on arrowback if opened in detailview
+hover over videobar results ins many network requests 
+
+import single item fix
+make function that extracts paths from subfolders faster
+
+checkbox whether file should be deleted if file isnt copied into db folder
+preview files arent deleted (what about if import is canceled)
+firstimportstep: copy item into temp folder, delete after import or cancel. Sometimes the item gets deleted if a bug arises
+
+does item rename break anything? Scroll to item after rename
+
+why do I need type ImportItem?
+
 add name to audiopreview
 Recreate video preview is broken 
-for some videos the import fails
 
-Tabs
+* resolution filter
 
-* move to selected video on backbutton.
-
-* some videos and their previewthumbs aren't the same size
-* some previews don't work at all
-* for some videos the seekbar hover on the maingrid doesn't work (size issue?)
+dont call saveVideoDetailsToItem twice
 
 * autoplay video if it is opened from the mainview, also when clicked inside the seekbar in bottompreview
 * allow changing item in detailview using the arrows if bottomarea is closed
@@ -96,6 +105,7 @@ DeleteConfirmModal is an ActionModal
 ## Improvments
 * Simple searchbar
 * "Tabs"
+* convert .flv to mp4
 * Open in new window/duplicate app window
 * make videopreview on seekbar hover adjustable in the settings
 * Quicksettings in top bar: show name, show type, show count highlights, date changed, mute video preview, countOpened, show tags in previews, show file size
@@ -164,3 +174,4 @@ ItemType =
     * context menu main: (group items, ungroup items)
 * (group tags, ungroup tags)?
 * magnifier, playback speed, searchable and highlightable subtitles
+* auto tag using AI

@@ -1,8 +1,10 @@
 import { getItemTypeFromExtension } from "../../../../src/gschert";
-import { createItem } from "../../../stores/items";
+import { type ItemCreate } from "../../../stores/items";
+import { v4 as uuidv4 } from "uuid";
 
-export default function createImportItems(paths: string[]) {
+export default function createImportItems(paths: string[]): ItemCreate[] {
   const items = paths.map((path) => {
+    const id = uuidv4();
     return {
       name: path.split("/").pop() ?? "",
       path,
@@ -11,7 +13,38 @@ export default function createImportItems(paths: string[]) {
       note: "",
       tagString: "",
       importStep: -1,
+      id,
+      tempId: id,
     };
   });
-  return Promise.all(items.map(async (item) => await createItem(item)));
+  return items;
+}
+
+export function createImportItem({
+  path,
+  name,
+  url,
+  note,
+  tagString,
+  type,
+}: {
+  path: string;
+  name: string;
+  url: string;
+  note: string;
+  tagString: string;
+  type: string;
+}): ItemCreate {
+  const id = uuidv4();
+  return {
+    name,
+    path,
+    type,
+    url,
+    note,
+    tagString,
+    importStep: -1,
+    id,
+    tempId: id,
+  };
 }

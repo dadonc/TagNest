@@ -33,15 +33,8 @@ export async function createItem({
   path,
   type,
   importStep,
-}: {
-  name: string;
-  url: string;
-  note: string;
-  tagString: string;
-  path: string;
-  type: string;
-  importStep: number;
-}) {
+  tempId,
+}: ItemCreate) {
   const { name: nameWithoutExtension } = extractNameAndExtension(name);
   const newItem = await prisma.item.create({
     data: {
@@ -72,7 +65,7 @@ export async function createItem({
   });
   const item = await getItem(newItem.id);
   await updateItemTags(item!, tagString);
-  return item;
+  return { ...item, tempId };
 }
 
 async function getFileIdByPath(path: string) {
@@ -212,8 +205,23 @@ export async function finishItemImport(id: string, importStep: number) {
   });
 }
 
-export type ImportItem = SingleItem & { lastImportStepUpdate?: number };
+export type ImportItem = SingleItem & {
+  lastImportStepUpdate?: number;
+  tempId: string;
+};
 const currentImportItems = localStorage.getItem("importItems");
+
+export type ItemCreate = {
+  name: string;
+  url: string;
+  note: string;
+  tagString: string;
+  path: string;
+  type: string;
+  importStep: number;
+  id: string;
+  tempId: string;
+};
 
 // TODO - rename to importItemsStore
 export const importItems = writable<ImportItem[]>(

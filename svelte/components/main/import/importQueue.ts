@@ -1,4 +1,4 @@
-// TODO - This is a mess. Refactor this whole file
+// TODO - This was so often changed haphazardly it is a complete mess. Refactor this whole file
 import { get } from "svelte/store";
 import {
   finishItemImport,
@@ -8,9 +8,12 @@ import {
   type SingleItem,
   type ImportItem,
   updateVideoThumbImageInDB,
+  type ItemCreate,
+  createItem,
 } from "../../../stores/items";
 import { currentRoute, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
+import { itemAlreadyExists } from "../../../utils";
 
 // step -1: import not started
 // step 0: runCombineBehavior
@@ -52,7 +55,10 @@ export const importSteps = {
     },
     2: {
       func: async (item: SingleItem) => {
-        await window.electron.saveVideoDetailsToItem(item.file!.path, item.id);
+        return await window.electron.saveVideoDetailsToItem(
+          item.file!.path,
+          item.id
+        );
       },
       desc: "Save video details",
     },
@@ -213,8 +219,9 @@ export default async function startImportTasks() {
     }
   }
 
-  async function runItemTasks(item: ImportItem) {
-    console.log(`importing item: ${item.name}`);
+  // ImportItem | ItemCreate is a stupid typing hack to get this to work _now_ instead of a larger refactor
+  async function runItemTasks(item: ImportItem | ItemCreate) {
+    console.log(`importing item: ${item.name}`, item.importStep);
 
     //@ts-ignore
     const stepCount = importSteps[item.type]
@@ -222,43 +229,69 @@ export default async function startImportTasks() {
         Object.keys(importSteps[item.type]).length
       : 0;
     // TODO ask Chris - why is this check needed
-    if (item) {
-      currentTasks++;
-      if (item.importStep === -1) {
-        item.importStep = 0;
-        item = await runCombineBehavior(item);
-      }
-      for (let i = item.importStep; i <= stepCount; i++) {
-        console.log(`run step ${i}/${stepCount} of ${item.name}`);
-        //@ts-ignore
-        if (importSteps[item.type] && importSteps[item.type][item.importStep]) {
-          //@ts-ignore
-          await importSteps[item.type][item.importStep].func(item);
-        }
-        console.log(
-          `finished step ${item.importStep}/${stepCount} of ${item.name}`
-        );
-        try {
-          importItems.update((items) => {
-            const index = items.findIndex((i) => i.id === item.id);
-            items[index].importStep++;
-            items[index].lastImportStepUpdate = Date.now();
-            return items;
+    currentTasks++;
+    if (item.importStep === -1) {
+      item.importStep = 0;
+      item = await runCombineBehavior(item as ItemCreate);
+      if (item.importStep === 999) {
+        console.log("Item import was aborted.");
+        queue = queue.filter((i) => i.tempId !== item.tempId);
+        importItems.update((items) => {
+          return items.filter((i) => i.tempId !== item.tempId);
+        });
+        currentTasks--;
+        return;
+      } else {
+        queue = queue.filter((i) => i.tempId !== item.tempId);
+        importItems.update((items) => {
+          return items.map((i) => {
+            if (i.tempId === item.tempId) {
+              return item as ImportItem;
+            }
+            return i;
           });
-        } catch (err) {
-          console.log("Item import was aborted.");
-        }
+        });
       }
-      await finishItemImport(item.id, stepCount);
-      currentTasks--;
     }
+    item = item as ImportItem;
+    for (let i = item.importStep; i <= stepCount; i++) {
+      console.log(`run step ${i}/${stepCount} of ${item.name}`);
+      //@ts-ignore
+      if (importSteps[item.type] && importSteps[item.type][item.importStep]) {
+        //@ts-ignore
+        await importSteps[item.type][item.importStep].func(item);
+      }
+      console.log(
+        `finished step ${item.importStep}/${stepCount} of ${item.name}`
+      );
+      try {
+        importItems.update((items) => {
+          const index = items.findIndex((i) => i.id === item.id);
+          items[index].importStep++;
+          items[index].lastImportStepUpdate = Date.now();
+          return items;
+        });
+      } catch (err) {
+        console.log("Item import was aborted.:", err);
+      }
+    }
+
+    await finishItemImport(item.id, stepCount);
+    currentTasks--;
   }
 
   startTasks();
 }
 
-async function runCombineBehavior(item: ImportItem) {
-  if (!item.file || !item.file.path) return item;
+async function runCombineBehavior(item_: ItemCreate) {
+  let item = await possiblyCreateEmptyItem(item_);
+  if (!item || item?.importStep === 999) return item;
+  else {
+    item = item as ImportItem;
+  }
+  if (!item.file || !item.file.path) {
+    throw new Error("Item has no file path");
+  }
   const combineBehavior = get(settingsJson).combineBehavior;
   if (combineBehavior === "separate" || item.type === "bookmark") {
     item.importStep = 1;
@@ -276,4 +309,9 @@ async function runCombineBehavior(item: ImportItem) {
   item.importStep = 1;
   await updateFilePath(item.id, newPath);
   return item;
+}
+
+async function possiblyCreateEmptyItem(item: ItemCreate) {
+  if (itemAlreadyExists(item.path)) return { ...item, importStep: 999 };
+  return (await createItem(item)) as ImportItem;
 }

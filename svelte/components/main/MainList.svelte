@@ -1,3 +1,5 @@
+<!-- This file isn't used anymore -->
+
 <script lang="ts">
   import { tick } from "svelte";
   import type { SingleItem } from "../../stores/items";
