@@ -39,7 +39,12 @@ export async function getSettingsJson(): Promise<SettingsJson> {
   if (fs.existsSync(filePath)) {
     try {
       const data = await readFileAsync(filePath, "utf8");
-      return JSON.parse(data);
+      const json = JSON.parse(data);
+      if (fs.existsSync(path.join(json.savePath, "database.db"))) {
+        return json;
+      } else {
+        return createSettingsJsonAndReturn(filePath);
+      }
     } catch (e) {
       return createSettingsJsonAndReturn(filePath);
     }
@@ -130,21 +135,24 @@ export async function getFaviconPath(faviconName: string) {
   return path.join(bookmarksPath, "favicons", faviconName);
 }
 
-export function getFileDatesAndSize(
-  filePath: string
-): Promise<{ updated: Date; size: number; created: Date }> {
-  return new Promise((resolve, reject) => {
-    if (!fs.existsSync(filePath)) reject("File does not exist");
-    fs.stat(filePath, (err, stats) => {
-      if (err) reject(err);
-      if (!!!stats) reject("No stats");
-      resolve({
-        updated: stats.mtime,
-        size: stats.size,
-        created: stats.birthtime,
-      });
-    });
-  });
+export async function getFileDatesAndSize(filePath) {
+  try {
+    await fsPromises.access(filePath);
+    const stats = await fsPromises.stat(filePath);
+    if (!stats) throw new Error("No stats available");
+
+    return {
+      updated: stats.mtime,
+      size: stats.size,
+      created: stats.birthtime,
+    };
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      throw new Error("File does not exist");
+    } else {
+      throw error;
+    }
+  }
 }
 
 export async function saveFilePreview(filePath: string) {
@@ -208,10 +216,17 @@ export async function updateItemsBasedOnFiles(ids?: string[]) {
 
 export async function updateItemBasedOnFile(item: any) {
   const prisma = await getPrismaClient();
+  let updated: Date, size: number, created: Date;
   if (item.file) {
-    const { updated, size, created } = await getFileDatesAndSize(
-      item.file.path
-    );
+    try {
+      const res = await getFileDatesAndSize(item.file.path);
+      updated = res.updated;
+      size = res.size;
+      created = res.created;
+    } catch {
+      console.log("File doesn't seem to exist", item);
+      return;
+    }
     if (!updated || !size || !created) return;
     const hasChanged =
       item.file.updated !== updated ||
