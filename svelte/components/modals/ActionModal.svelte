@@ -9,6 +9,7 @@
   import ResetConfirmModal from "./ResetConfirmModal.svelte";
   import RenameTagModal from "../left/RenameTagModal.svelte";
   import DeleteTagModal from "../left/DeleteTagModal.svelte";
+  import WelcomeModal from "./WelcomeModal.svelte";
 
   $: isOpen = $contextMenuStore.openModal !== "";
   $: isSingleItemSelected = $selectedItems.ids.length === 1;
@@ -38,8 +39,16 @@
 </script>
 
 {#if isOpen}
-  <Modal {isOpen} isFullWidth={false} {close}>
+  <Modal
+    {isOpen}
+    isFullWidth={false}
+    {close}
+    closeOnClickOutside={$contextMenuStore.openModal !== "welcome"}
+  >
     <div slot="body" class="h-full p-4 rounded bg-base-100 w-96">
+      {#if $contextMenuStore.openModal === "welcome"}
+        <WelcomeModal />
+      {/if}
       {#if isSingleItemSelected && item}
         {#if $contextMenuStore.openModal === "editItem"}
           <RightEditSingle {item} />

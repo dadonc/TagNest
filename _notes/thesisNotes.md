@@ -1,7 +1,7 @@
 
 ## Testing
 
-I have tried to anticipate as many edge cases as I could (e.g. renaming tag to an already existing one) and found and fixed several more through extensive testing and my own usage of the application.
+I have tried to anticipate as many edge cases as I could (e.g. renaming a tag to an already existing one, importing already existing files and bookmarks, deleting files that have been imported using Finder) and found and fixed several more through extensive testing and my own usage of the application.
 
 ## Limitations
 

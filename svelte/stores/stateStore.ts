@@ -274,6 +274,7 @@ type contextMenuStoreType = {
     | "resetCounts"
     | "renameTag"
     | "deleteTag"
+    | "welcome"
     | "";
 };
 

@@ -17,6 +17,7 @@
 >
   <button
     type="button"
+    title="cmd + shift + '+'"
     on:click={() => {
       currView.update((v) => {
         if (get(currentRoute) === "main") {
@@ -35,6 +36,7 @@
 
   <button
     type="button"
+    title="cmd + shift + '-'"
     on:click={(e) => {
       currView.update((v) => {
         if (get(currentRoute) === "main") {

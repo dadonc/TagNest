@@ -1,11 +1,11 @@
 # TODO
-scroll to item on arrowback if opened in detailview
-hover over videobar results ins many network requests 
 
-import single item fix
+welcomescreen
+verify delete queue, verify delete if import is canceled
+ask in deletion modal whether the file should be deleted - checkbox whether file should be deleted if file isnt copied into db folder
+
 make function that extracts paths from subfolders faster
 
-checkbox whether file should be deleted if file isnt copied into db folder
 preview files arent deleted (what about if import is canceled)
 firstimportstep: copy item into temp folder, delete after import or cancel. Sometimes the item gets deleted if a bug arises
 
@@ -166,12 +166,16 @@ ItemType =
 * Search
 * undo/redo  
 * custom tag order
-* suggested tags based on existing tags, filenames and bookmark content
+* suggested tags based on existing tags, filenames and bookmark content, auto tag using AI
 * transcode videos to a supported format ( e.g. :"m4v","mov","avi" into "mp4" or "webm" )
 * item groups
     * group: icon indicating it is a group,  number of items in the group, user can choose the main item to be used as preview
     * if item groups work make a toggle to automatically group files if they are in a folder when importing
     * context menu main: (group items, ungroup items)
-* (group tags, ungroup tags)?
 * magnifier, playback speed, searchable and highlightable subtitles
-* auto tag using AI
+
+
+
+more research:
+https://www.sciencedirect.com/science/article/pii/S1071581901904598
+https://www.eelcoherder.com/images/publications/2010/the_impact_of_bookmarks_and_annotations.pdf
