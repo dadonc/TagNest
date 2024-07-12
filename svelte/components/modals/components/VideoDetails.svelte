@@ -19,7 +19,7 @@
     Video details
   </div>
   {#if $currView.isVideoDetailsOpen}
-    <div class="ml-3">
+    <div class="ml-3 text-xs">
       {#if item.video && item.video.width && item.video.height}
         <div>
           Resolution: {item.video.width}x{item.video.height} ({getVideoResolutionDescription(

@@ -19,7 +19,7 @@
     Item details
   </div>
   {#if $currView.isItemDetailsOpen}
-    <div class="ml-3">
+    <div class="ml-3 text-xs">
       <div class="flex justify-between">
         <span>Count opened: {item.countOpened}</span>
         <button

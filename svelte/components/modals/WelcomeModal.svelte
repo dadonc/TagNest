@@ -1,7 +1,11 @@
 <script lang="ts">
   import { get } from "svelte/store";
   import Plus from "../../assets/feather/Plus.svelte";
-  import { contextMenuStore, settingsJson } from "../../stores/stateStore";
+  import {
+    contextMenuStore,
+    currentRoute,
+    settingsJson,
+  } from "../../stores/stateStore";
   import Alert from "../settings/Alert.svelte";
   import icon from "../../assets/icon/nest.png";
 
@@ -113,7 +117,12 @@
     <li>Right-click on a video seek bar to highlight this position</li>
     <li>
       Most of macOS's default keyboard shortcut work as expected, some less
-      obvious ones can be found on the settings page
+      obvious ones can be found on the <button
+        class="text-primary"
+        on:click={() => {
+          $currentRoute = "settings";
+        }}>settings</button
+      > page
     </li>
   </ul>
 

@@ -7,15 +7,18 @@
   } from "../../stores/items";
   import CreateOrEdit from "./components/CreateOrEdit.svelte";
   import { confirmDelete } from "../main/delete/DeleteQueue";
+  import { onMount } from "svelte";
   let isOpen = false;
   let item: SingleItem;
 
-  window.electron.onOpenAddBookmark(async (_, { newItemId }) => {
-    const newItem = await getItem(newItemId);
-    if (newItem) {
-      item = newItem;
-      isOpen = true;
-    }
+  onMount(() => {
+    window.electron.onOpenAddBookmark(async (_, { newItemId }) => {
+      const newItem = await getItem(newItemId);
+      if (newItem) {
+        item = newItem;
+        isOpen = true;
+      }
+    });
   });
 
   const close = async () => {

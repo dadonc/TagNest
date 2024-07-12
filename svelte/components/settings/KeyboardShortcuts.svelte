@@ -38,6 +38,8 @@
   />
   <Kbd keys={["enter"]} description="Open selected item" />
   <Kbd keys={["command", "f"]} description="Focus search input" />
+  <Kbd keys={["command", "backspace"]} description="Delete selected item(s)" />
+  <Kbd keys={["space"]} description="Show item preview" />
 
   <h2 class="mt-8 mb-2 text-lg font-semibold">Video</h2>
   <Kbd keys={["space"]} description="Play/pause" />
