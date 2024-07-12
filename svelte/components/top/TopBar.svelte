@@ -14,10 +14,15 @@
   import ItemOrder from "./ItemOrder.svelte";
   import QuickSettings from "./QuickSettings.svelte";
   import ImportProgressModal from "../modals/ImportProgressModal.svelte";
+  import { onMount } from "svelte";
 
   let showAddModal = false;
   let isImportProgressModalOpen = false;
   let searchInput: HTMLInputElement;
+
+  onMount(() => {
+    $currView.searchString = "";
+  });
 
   const handleToggleAddModal = () => {
     showAddModal = !showAddModal;
@@ -72,7 +77,7 @@
       />
       {#if $currView.searchString}
         <button
-          class="absolute top-0 bottom-0 h-8 p-0 focus:ring-0 focus:border-none focus:outline-none focus:text-primary right-1"
+          class="absolute top-0 bottom-0 text-sm text-primary focus:ring-0 focus:border-none focus:outline-none focus:text-primary right-1"
           on:click={() => {
             $currView.searchString = "";
             searchInput.value = "";

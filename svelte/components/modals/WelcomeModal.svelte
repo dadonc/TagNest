@@ -30,7 +30,7 @@
   <h2 class="text-xl font-bold">Welcome!</h2>
   <div class="text-sm">
     TagNest is a tool to organize your bookmarks and files using tags. You can
-    save bookmarks offline using the <a
+    save bookmarks using the <a
       target="_blank"
       class="underline text-primary"
       href="https://github.com/dadonc/eTags/tree/main/chrome_extension"
@@ -41,7 +41,7 @@
     </span> -->
     <div
       title="Add item"
-      class="h-8 mr-4 text-sm font-normal capitalize rounded hover:bg-base-100 hover:text-base-content hover:border-base-content hover:cursor-default btn btn-outline btn-sm text-base-content"
+      class="h-8 mx-1 text-sm font-normal capitalize rounded hover:bg-base-100 hover:text-base-content hover:border-base-content hover:cursor-default btn btn-outline btn-sm text-base-content"
     >
       Import
       <span class="inline-block w-4 h-4 ml-2">
@@ -51,9 +51,9 @@
     button in the top right corner to start importing files.
   </div>
   <h2 class="mt-4 text-xl font-bold">Inital settings</h2>
-  <div class="text-sm">
+  <!-- <div class="text-sm">
     You can also change these settings later in the settings menu.
-  </div>
+  </div> -->
 
   <div class="mt-2">
     <div class="font-bold">Database folder</div>
@@ -118,12 +118,10 @@
 
   <h2 class="mt-4 text-xl font-bold">Some tips</h2>
   <ul class="text-sm list-disc">
-    <li>
-      Right-click on an item in the grid or a tag in the tags list for
-      additional actions
-    </li>
-    <li>Select text in bookmarks to create highlights</li>
+    <li>Right-click on an item in the grid for additional actions</li>
+    <li>Right-click on a tag in the tags list for additional actions</li>
     <li>Right-click on a video seek bar to highlight this position</li>
+    <li>Select text in bookmarks to create highlights</li>
     <li>
       Most of macOS's default keyboard shortcut work as expected, some less
       obvious ones can be found on the <button
