@@ -131,15 +131,26 @@
       </div>
     {/if}
   </div>
+
   <div class="max-w-xl p-4 m-auto my-4 rounded-md bg-base-200">
     <h1 class="text-2xl font-semibold text-center">Keyboard shortcuts</h1>
     <KeyboardShortcuts />
   </div>
 
   <div class="max-w-xl p-4 m-auto my-4 rounded-md bg-base-200">
+    <h1 class="text-2xl font-semibold text-center">Tips</h1>
+    <ul class="list-disc">
+      <li>Right-click on an item in the grid for additional actions</li>
+      <li>Right-click on a tag in the tags list for additional actions</li>
+      <li>Right-click on a video seek bar to highlight this position</li>
+      <li>Select text in bookmarks to create highlights</li>
+    </ul>
+  </div>
+
+  <div class="max-w-xl p-4 m-auto my-4 rounded-md bg-base-200">
     <h1 class="text-2xl font-semibold text-center">Attribution</h1>
     <ul class="list-disc">
-      <li class="ml-6">
+      <li>
         Nest icon (<img class="inline-block w-4 h-4" src={icon} alt="" />)
         created by
         <a
@@ -149,7 +160,7 @@
           title="nest icons">Freepik - Flaticon</a
         >
       </li>
-      <li class="ml-6">
+      <li>
         Other icons from <a
           class="text-primary"
           target="_blank"
@@ -159,3 +170,9 @@
     </ul>
   </div>
 </div>
+
+<style>
+  li {
+    margin-left: 1rem;
+  }
+</style>

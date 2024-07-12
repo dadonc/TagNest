@@ -1,8 +1,5 @@
 # TODO
 
-Settings: 
-    link from welcomemodal
-    copy over tips, possibly add additional ones
 
 fix copy to databse folder
 

@@ -30,7 +30,11 @@
   <Kbd keys={["command", "i"]} description="Edit selected item(s)" />
   <Kbd keys={["command", "shift", "s"]} description="Shuffle items" />
   <Kbd keys={["command", "a"]} description="Select all items" />
-  <Kbd keys={["↕️"]} description="Arrows: move selection" />
+  <Kbd
+    keys={["↕️", "↔️"]}
+    combinator="or"
+    description="Arrows: move selection"
+  />
   <Kbd keys={["command", "click"]} description="Select multiple items" />
   <Kbd
     keys={["shift", "click"]}
