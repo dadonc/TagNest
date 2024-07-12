@@ -70,11 +70,16 @@ export async function updateSettingsJson(
   newSavePathJson: SettingsJson
 ): Promise<SettingsJson> {
   const oldJson = await getSettingsJson();
-  const newSaveString = JSON.stringify(
-    { ...newSavePathJson, oldSavePath: oldJson.savePath },
-    null,
-    2
-  );
+  let newSaveString = "";
+  if (oldJson.savePath !== newSavePathJson.savePath) {
+    newSaveString = JSON.stringify(
+      { ...newSavePathJson, oldSavePath: oldJson.savePath },
+      null,
+      2
+    );
+  } else {
+    newSaveString = JSON.stringify(newSavePathJson, null, 2);
+  }
   await writeFileAsync(
     path.join(resourcesPath, "save.json"),
     newSaveString,

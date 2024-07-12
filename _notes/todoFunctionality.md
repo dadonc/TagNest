@@ -4,9 +4,6 @@ welcomescreen
     - inc width
     - add y margins
     - add logo
-    - fix path change
-    - add copy/move 
-    - test
 
 
 design:

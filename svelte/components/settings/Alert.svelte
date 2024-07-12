@@ -5,6 +5,7 @@
   export let classNames = "my-4";
   export let buttonText = "";
   export let buttonAction = () => {};
+  export let buttonAutoFocus = false;
 </script>
 
 <div class={"p-4 rounded-md bg-yellow-50 " + classNames}>
@@ -36,8 +37,11 @@
   </div>
   {#if buttonText}
     <div class="flex justify-center mt-4">
-      <button class="btn btn-primary btn-sm" on:click={buttonAction}
-        >{buttonText}</button
+      <!-- svelte-ignore a11y-autofocus -->
+      <button
+        autofocus={buttonAutoFocus}
+        class="btn btn-primary btn-sm"
+        on:click={buttonAction}>{buttonText}</button
       >
     </div>
   {/if}

@@ -27,6 +27,7 @@ export async function getPrismaClient() {
   }
 
   // log("Save path location", path.join(process.resourcesPath, "save.json"));
+  log("save.json location:", path.join(process.resourcesPath, "save.json"));
   const savePathJson = await getSettingsJson();
   // log("Save path json", savePathJson);
   const dbPath = path.join(savePathJson.savePath, "database.db");

@@ -7,11 +7,12 @@
   let savePath = $settingsJson.savePath;
   let prevSavePath = "";
   let wasSavePathChanged = false;
-  let shouldRestart = true;
 
   let combineBehavior = $settingsJson.combineBehavior;
 
-  function closeModal() {
+  async function closeModal() {
+    $settingsJson.combineBehavior = combineBehavior;
+    await window.electron.updateSettingsJson(get(settingsJson));
     $contextMenuStore.openModal = "";
   }
 </script>
@@ -52,18 +53,18 @@
             prevSavePath = savePath;
             savePath = newPath;
             wasSavePathChanged = true;
-            shouldRestart = true;
           }
         }}>{savePath}</button
       >
     </div>
-    {#if shouldRestart}
+    {#if wasSavePathChanged}
       <div class="p-4">
         <Alert
           classNames=""
           header="Pending changes"
           body="Please restart the application for changes to take effect."
           buttonText="Restart"
+          buttonAutoFocus={true}
           buttonAction={async () => {
             $settingsJson.savePath = savePath;
             await window.electron.updateSettingsJson(get(settingsJson));
