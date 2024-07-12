@@ -198,7 +198,9 @@
       // if (e.shiftKey) {
       //   toggleFakeFullscreen();
       // } else {
-      handleFullscreen();
+      if (document.activeElement?.id !== "searchInput") {
+        handleFullscreen();
+      }
       // }
     } else if (e.key == "d" && e.metaKey) {
       if (item.video) {

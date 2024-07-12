@@ -298,7 +298,9 @@ async function runCombineBehavior(item_: ItemCreate) {
     return item;
   }
   const $savePath = get(settingsJson).savePath;
-  const { name, extension } = extractNameAndExtension(item.name!);
+  const { name, extension } = extractNameAndExtension(
+    item.file.path ?? item.name
+  );
   const newPath = $savePath + "/" + name + "." + extension;
   const oldPath = item.file.path;
   if (combineBehavior === "copy") {

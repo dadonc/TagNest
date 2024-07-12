@@ -30,7 +30,10 @@
 
   // select the first item if tag selection was changed and current item is not in the selected tags
   $: if (!items.find((i) => i.id === $selectedItems.ids[0])) {
-    $selectedItems.ids = [items[0].id];
+    // can be undefined if no items are present due to search input
+    if (items[0]) {
+      $selectedItems.ids = [items[0].id];
+    }
   }
 </script>
 
