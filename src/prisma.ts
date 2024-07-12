@@ -41,7 +41,7 @@ export async function getPrismaClient() {
   });
 
   let needsMigration: boolean;
-  const dbExists = fs.existsSync(dbPath);
+  const dbExists = fs.existsSync(dbPath) && fs.statSync(dbPath).size > 0;
   if (!dbExists) {
     needsMigration = true;
     // prisma for whatever reason has trouble if the database file does not exist yet.

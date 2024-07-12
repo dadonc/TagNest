@@ -1,8 +1,24 @@
 # TODO
 
 welcomescreen
+    - inc width
+    - add y margins
+    - add logo
+    - fix path change
+    - add copy/move 
+    - test
+
+
+design:
+    - use https://daisyui.com/components/dropdown/ for the order
+    - use icon button for the import button
+
 verify delete queue, verify delete if import is canceled
 ask in deletion modal whether the file should be deleted - checkbox whether file should be deleted if file isnt copied into db folder
+
+Settings: 
+    create list of keyboard shortcuts
+    copy over tips, possibly add additional ones
 
 make function that extracts paths from subfolders faster
 

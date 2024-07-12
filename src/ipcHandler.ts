@@ -145,8 +145,16 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   });
 
   ipcMain.handle("updateSettingsJson", async (event, json) => {
-    const curr = await getSettingsJson();
-    await updateSettingsJson({ ...curr, ...json });
+    // Create an empty database file if it doesn't exist but relaunch is requested
+    // If a database doesn't exist, the default DB path will be used, because it is assumed the database folder was deleted
+    // Therefore creating an empty database is necessary  if a user chooses a custom path so that the new database is created at the custom path
+
+    const dbPath = path.join(json.savePath, "database.db");
+    if (!fs.existsSync(dbPath)) {
+      fs.closeSync(fs.openSync(dbPath, "w"));
+    }
+
+    await updateSettingsJson(json);
     return true;
   });
 

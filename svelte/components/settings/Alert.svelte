@@ -1,9 +1,13 @@
 <script lang="ts">
   export let header: string;
   export let body: string;
+
+  export let classNames = "my-4";
+  export let buttonText = "";
+  export let buttonAction = () => {};
 </script>
 
-<div class="p-4 my-4 rounded-md bg-yellow-50">
+<div class={"p-4 rounded-md bg-yellow-50 " + classNames}>
   <div class="flex">
     <div class="flex-shrink-0">
       <svg
@@ -30,4 +34,11 @@
       </div>
     </div>
   </div>
+  {#if buttonText}
+    <div class="flex justify-center mt-4">
+      <button class="btn btn-primary btn-sm" on:click={buttonAction}
+        >{buttonText}</button
+      >
+    </div>
+  {/if}
 </div>
