@@ -13,7 +13,7 @@
   export let combineBehaviour: "Copy" | "Move" | "";
 
   const cancelImport = () => {
-    addToDeleteQueue([importItem.id]);
+    addToDeleteQueue([importItem.id], true);
     importItems.update((items) => {
       return items.filter((item) => item.id !== importItem.id);
     });

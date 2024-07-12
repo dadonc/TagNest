@@ -1,13 +1,6 @@
 # TODO
 
 
-fix copy to databse folder
-
-design:
-    - use icon button for the import button
-
-ask in deletion modal whether the file should be deleted - checkbox whether file should be deleted if file isnt copied into db folder
-
 verify delete queue, verify delete if import is canceled
 
 

@@ -95,7 +95,7 @@ export async function startDeleteTasks() {
     }
     item.allStepsRun = true;
     // delete file
-    if (item.file) {
+    if (item.file && item.deleteFile) {
       try {
         await window.electron.deleteFile(item.file.path);
         console.log(item.name, ": deleted file.");
@@ -132,7 +132,7 @@ export function confirmDelete(ids: string[]) {
   contextMenuStore.set($contextMenuStore);
 }
 
-export async function addToDeleteQueue(ids: string[]) {
+export async function addToDeleteQueue(ids: string[], deleteFiles: boolean) {
   const $deleteItems = get(deleteItemsStore);
   const $items = await getItems({ includeUnfinished: true });
   const itemsToDelete = $items.filter((item) => ids.includes(item.id));
@@ -141,6 +141,7 @@ export async function addToDeleteQueue(ids: string[]) {
       $deleteItems.push({
         ...item,
         deleteStep: 0,
+        deleteFile: deleteFiles,
       });
     }
   });

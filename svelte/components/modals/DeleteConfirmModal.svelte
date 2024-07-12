@@ -1,14 +1,19 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import AlertTriangle from "../../assets/feather/AlertTriangle.svelte";
   import type { SingleItem } from "../../stores/items";
-  import { contextMenuStore, filteredData } from "../../stores/stateStore";
+  import {
+    contextMenuStore,
+    filteredData,
+    settingsJson,
+  } from "../../stores/stateStore";
   import PreviewChooser from "../main/PreviewChooser.svelte";
   import { addToDeleteQueue } from "../main/delete/DeleteQueue";
   import Modal from "./Modal.svelte";
 
   let itemsToDelete: SingleItem[] = [];
   let deleteButton: HTMLButtonElement;
+
+  let deleteFileCheckbox: HTMLInputElement;
 
   $: if ($contextMenuStore.isDeleteModalOpen) {
     async function temp() {
@@ -63,19 +68,51 @@
         <div class="flex flex-col items-center justify-center my-4">
           <PreviewChooser
             item={itemsToDelete[0]}
-            hideName={true}
+            hideName={false}
             maxHeightStyle="max-height: 8rem;"
           />
-          {itemsToDelete[0].name}
+          <!-- Should this be shown for some item types? -->
+          <!-- {itemsToDelete[0].name} -->
         </div>
       {/if}
+      <label class="block mt-4 select-none">
+        <input
+          type="checkbox"
+          bind:this={deleteFileCheckbox}
+          checked={$settingsJson?.combineBehavior === "copy"}
+        />
+        <span class="ml-1">
+          {#if itemsToDelete.length === 1}
+            Delete file
+            <span class="text-xs text-gray-500"
+              >{itemsToDelete[0].file?.path}</span
+            >
+          {:else}
+            Delete files
+          {/if}
+        </span>
+      </label>
+      <div class="mt-2 mb-4 text-center">
+        This file was
+        {#if $settingsJson.combineBehavior === "copy"}
+          <span class="font-bold">copied</span> to
+        {:else if $settingsJson.combineBehavior === "move"}
+          <span class="font-bold">moved</span> to
+        {:else if $settingsJson.combineBehavior === "separate"}
+          <span class="font-bold">is not in</span>
+        {/if}
+        the database folder.
+      </div>
       <div class="flex flex-col items-center justify-center">
         <button class="btn" on:click={closeAndReset}>Cancel</button>
         <button
           class="p-1 mt-4 text-red-600 hover:text-red-800"
           bind:this={deleteButton}
           on:click={() => {
-            addToDeleteQueue($contextMenuStore.idsToDelete);
+            addToDeleteQueue(
+              $contextMenuStore.idsToDelete,
+              deleteFileCheckbox.checked
+            );
             closeAndReset();
           }}
           >Delete {itemsToDelete.length}

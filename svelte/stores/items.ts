@@ -231,6 +231,7 @@ export const importItems = writable<ImportItem[]>(
 export type DeleteItem = SingleItem & {
   deleteStep: number;
   allStepsRun?: boolean;
+  deleteFile: boolean;
 };
 const currentDeleteItems = localStorage.getItem("deleteItems");
 
