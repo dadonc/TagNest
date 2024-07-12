@@ -18,10 +18,10 @@
   }
 </script>
 
-<select on:change={setOrderBy}>
+<select on:change={setOrderBy} class="h-8 ml-2 text-sm text-base-content">
   <option selected={$currView.orderBy === "createdAt"} value="createdAt"
-    >File created</option
-  >
+    >File created
+  </option>
   <option selected={$currView.orderBy === "updatedAt"} value="updatedAt"
     >Date modified</option
   >
@@ -55,7 +55,7 @@
     class="p-2 cursor-pointer"
     title="Shuffle items"
   >
-    <ShuffleIcon className="h-4 w-4 text-base-content" />
+    <ShuffleIcon className="h-3 w-3 text-base-content" />
   </button>
 {/if}
 
@@ -67,14 +67,15 @@
     outline: none;
     box-shadow: none;
     color: var(--text-base);
-    font-size: 0.875rem;
-    padding: 0.25rem 1.25rem 0.25rem 0.25rem;
+    padding: 0;
     -webkit-app-region: no-drag;
     cursor: pointer;
     background-position: right;
+    background: none;
   }
 
-  select option {
-    margin-right: 1rem;
+  select {
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem;
   }
 </style>

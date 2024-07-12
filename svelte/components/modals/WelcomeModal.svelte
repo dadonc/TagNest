@@ -36,10 +36,19 @@
       href="https://github.com/dadonc/eTags/tree/main/chrome_extension"
       >Chrome extension</a
     >, or click on the
-    <span title="Add item" class="inline-block w-4 h-4 align-middle">
+    <!-- <span title="Add item" class="inline-block w-4 h-4 align-middle">
       <Plus />
-    </span>
-    icon in the top right corner to start importing files.
+    </span> -->
+    <div
+      title="Add item"
+      class="h-8 mr-4 text-sm font-normal capitalize rounded hover:bg-base-100 hover:text-base-content hover:border-base-content hover:cursor-default btn btn-outline btn-sm text-base-content"
+    >
+      Import
+      <span class="inline-block w-4 h-4 ml-2">
+        <Plus />
+      </span>
+    </div>
+    button in the top right corner to start importing files.
   </div>
   <h2 class="mt-4 text-xl font-bold">Inital settings</h2>
   <div class="text-sm">

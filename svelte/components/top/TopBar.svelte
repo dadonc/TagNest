@@ -62,8 +62,8 @@
       <input
         type="text"
         id="searchInput"
-        placeholder="Search"
-        class="w-32 p-1 ml-2 rounded"
+        placeholder="Search..."
+        class="w-32 p-0 ml-4 text-sm border-t-0 border-l-0 border-r-0 placeholder-base-content bg-base-300 border-base-content focus:border-primary focus:ring-0"
         bind:this={searchInput}
         on:change={(event) => {
           //@ts-ignore
@@ -72,7 +72,7 @@
       />
       {#if $currView.searchString}
         <button
-          class="absolute top-0 right-0 p-1"
+          class="absolute top-0 bottom-0 h-8 p-0 focus:ring-0 focus:border-none focus:outline-none focus:text-primary right-1"
           on:click={() => {
             $currView.searchString = "";
             searchInput.value = "";
@@ -94,12 +94,22 @@
         <ImportProgressModal bind:isOpen={isImportProgressModalOpen} />
       {/if}
     </span>
-    <button
+    <!-- <button
       title="Add item"
       on:click={handleToggleAddModal}
       class="w-4 h-4 mr-4 text-base-content"
     >
       <Plus />
+    </button> -->
+    <button
+      title="Add item"
+      class="h-8 mr-4 text-sm font-normal capitalize rounded hover:bg-base-300 hover:text-primary hover:border-primary btn btn-outline btn-sm text-base-content"
+      on:click={handleToggleAddModal}
+    >
+      Import
+      <span class="inline-block w-4 h-4 ml-2">
+        <Plus />
+      </span>
     </button>
   </div>
 </div>
