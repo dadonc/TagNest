@@ -13,24 +13,27 @@ import { extractNameAndExtension } from "../../../../src/gschert";
 const deleteSteps = {
   video: {
     1: async (item: SingleItem) => {
+      // Delete video preview
       if (item.name) {
         const $savePath = get(settingsJson).savePath;
-        const previewImgPath =
-          $savePath + "/previews/videos/" + item.video?.thumbImageName;
-        await window.electron.deleteFile(previewImgPath);
-        console.log(item.name, ": deleted preview image.");
+        let { name, extension } = extractNameAndExtension(item.file!.path);
+
+        const previewPath =
+          $savePath +
+          `/previews/videos/${name || item.name}_preview.${extension}`;
+        await window.electron.deleteFile(previewPath);
+        console.log(item.name, ": deleted preview video.");
       }
     },
     2: async (item: SingleItem) => {
       if (item.name) {
         const $savePath = get(settingsJson).savePath;
-        const previewPath =
+        const previewImgPath =
           $savePath +
           "/previews/videos/" +
-          extractNameAndExtension(item.name).name +
-          "_preview.mp4";
-        await window.electron.deleteFile(previewPath);
-        console.log(item.name, ": deleted preview video.");
+          decodeURIComponent(item.video?.thumbImageName || "");
+        await window.electron.deleteFile(previewImgPath);
+        console.log(item.name, ": deleted preview image.");
       }
     },
   },

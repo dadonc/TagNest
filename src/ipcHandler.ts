@@ -221,7 +221,10 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
   });
 
   ipcMain.handle("moveFile", async (event, src, dest) => {
-    fs.renameSync(src, dest);
+    fs.copyFileSync(src, dest);
+    fs.unlinkSync(src);
+    // I am not sure if copying is necessary, but the below function seems to fail in some cases and the file disappears (when quitting the app?)
+    // fs.renameSync(src, dest);
     return true;
   });
 

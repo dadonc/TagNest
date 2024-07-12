@@ -1,13 +1,16 @@
 # TODO
 
 
-verify delete queue, verify delete if import is canceled
+verify delete queue
+    - ✅ video
+    - bookmark
+    - external
+    - pdf
+verify delete if import is canceled
 
 
-make function that extracts paths from subfolders faster
-
-preview files arent deleted (what about if import is canceled)
-firstimportstep: copy item into temp folder, delete after import or cancel. Sometimes the item gets deleted if a bug arises
+import whole folder and its subfolders seems broken
+    make function that extracts paths from subfolders faster
 
 does item rename break anything? Scroll to item after rename
 
@@ -26,15 +29,11 @@ dont call saveVideoDetailsToItem twice
 * after pausing the play icon isn't centered
 * display small videos (240p) in large in detailview
 * continue import of the currently next item in the importlist if the current one is canceled in the import modal
-* scroll to item after rename
-* delete files if import is cancelled
 * if a video was played and has finished arrow left should jump back in the same video, not to the previous item
 
 
 * break words in importmodal
-* dont center item names in delete modal
 
-* deleteque is broken when deleting mutliple - check for all item types
 
 
 ## Bugs
@@ -65,45 +64,16 @@ DeleteConfirmModal is an ActionModal
 * create separate component for CreateItem
     - save on command + s?
 
-## Revised plan
-•	Developing the application (01.06.24)
-    o	✅ Cleanup and refactor codebase, fix some bugs
-    o	✅ Support different item types: video, PDF, audio, text and other
-    o	✅ Support choosable preview images for bookmarks and videos
-    o	✅ (Re)write chrome extension
-    o	✅ Context menu, ✅ deletion modal
-    o	✅ User highlights: ✅ video timestamps, ✅ highlights in bookmarks, ✅ preview in left sidebar, ✅ indicator in grid preview
-    o	✅ Item order: file size, date added, date updated, name, countOpenings
-•	Polishing the application (01.07.24)
-    o	Fixes and improvements
-    o	Improve styling
-    o	Handle existing files and bookmarks(!) (duplicates)
-    o	Good changes I may have noticed after using the application myself.
-    o	Testing
-•	Showing to users (01.08.24)
-    o	Simple landing page explaining the functionality.
-    o	Research how to do interviews: Interview questions.
-    o	Do the interviews.
-    o	Evaluating the interviews
-•	Implementing user feedback, fixing newly discovered bugs (01.09.24)
-•	Writing the thesis (01.09.24)
-    o	Creating a poster and video of the application
-    o	More literature and existing application research
-    o	Finalizing the thesis
+
 
 
 ## Other TODO
 * Intro wizard
-    * choose save location
-    * copy, move or link files
     * fill with example data?
-* Fix settings screen
-    * List of keyboard shortcuts
+* settings screen
     * number of concurrent import tasks
-* automatically open import modal if no other items exist
 
 ## Improvments
-* Simple searchbar
 * "Tabs"
 * convert .flv to mp4
 * Open in new window/duplicate app window
@@ -140,7 +110,7 @@ DeleteConfirmModal is an ActionModal
 
 
 ## Testing
-Test all item typestype 
+Test all item types
 
 ItemType =
   | "bookmark"
@@ -148,7 +118,7 @@ ItemType =
   | "video"
   | "pdf"
   | "external"
-  | "noFile"
+  | "noFile" // remove?
   | "audio"
   | "text";
 
@@ -156,7 +126,6 @@ ItemType =
 
 ## Not important
 * compare hash of files to check if they are the same
-* electron security warnings
 * update deps
 
 

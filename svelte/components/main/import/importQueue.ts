@@ -26,6 +26,7 @@ export const importSteps = {
   // bookmark import steps are run before the bookmark is created - see bookmark.ts and server.ts
   video: {
     1: {
+      // Create video preview
       func: async (item: SingleItem) => {
         const savePath = get(settingsJson).savePath;
 
@@ -54,6 +55,7 @@ export const importSteps = {
       desc: "Create video preview",
     },
     2: {
+      // Save video details
       func: async (item: SingleItem) => {
         return await window.electron.saveVideoDetailsToItem(
           item.file!.path,
