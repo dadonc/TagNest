@@ -165,7 +165,7 @@ export default async function startImportTasks() {
 
   function fillQueue() {
     return get(importItems).filter((item) => {
-      // TODO ask Chris - how to type this
+      // TODO research tsc - how to type this
       //@ts-ignore
       const stepCount = importSteps[item.type]
         ? //@ts-ignore
@@ -228,7 +228,7 @@ export default async function startImportTasks() {
       ? //@ts-ignore
         Object.keys(importSteps[item.type]).length
       : 0;
-    // TODO ask Chris - why is this check needed
+    // TODO research tsc - why is this check needed
     currentTasks++;
     if (item.importStep === -1) {
       item.importStep = 0;

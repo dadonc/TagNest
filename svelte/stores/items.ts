@@ -136,7 +136,7 @@ export async function getItems(args?: { includeUnfinished: boolean }) {
       createdAt: "desc",
     },
   });
-  // TODO ask Chris - using "where" errors in for example RightEditSingle
+  // TODO research tsc - using "where" errors in for example RightEditSingle
   if (args && args.includeUnfinished) return temp;
   const filtered = temp.filter((item) => item.importFinished);
   // let test = filtered;

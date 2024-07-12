@@ -76,7 +76,7 @@ export async function startDeleteTasks() {
   }
   for (let i = 0; i < $deleteItems.length; i++) {
     const item = $deleteItems[i];
-    // TODO ask Chris - see importQueue.ts
+    // TODO research tsc - see importQueue.ts
     //@ts-ignore
     if (deleteSteps[item.type]) {
       //@ts-ignore
