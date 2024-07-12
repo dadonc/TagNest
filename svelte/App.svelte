@@ -54,6 +54,8 @@
     } else if (event.key === "Escape") {
       if ($currentRoute === "settings") {
         $currentRoute = "main";
+      } else {
+        (document.activeElement as HTMLElement)?.blur();
       }
     } else if ((event.key === "j" && event.metaKey) || event.key === "º") {
       if (isDevToolsOpen) {
@@ -75,6 +77,8 @@
       $settingsJson.savePath = $settingsJson.oldSavePath || "";
       await window.electron.updateSettingsJson($settingsJson);
       window.electron.restartApp();
+    } else if (event.key === "f" && event.metaKey) {
+      document.getElementById("searchInput")?.focus();
     }
   };
 </script>

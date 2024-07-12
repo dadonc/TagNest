@@ -195,11 +195,11 @@
       }
       videoElement.currentTime += 60;
     } else if (e.key == "f") {
-      if (e.shiftKey) {
-        toggleFakeFullscreen();
-      } else {
-        handleFullscreen();
-      }
+      // if (e.shiftKey) {
+      //   toggleFakeFullscreen();
+      // } else {
+      handleFullscreen();
+      // }
     } else if (e.key == "d" && e.metaKey) {
       if (item.video) {
         // todo check that no mark already exists at that time

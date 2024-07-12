@@ -1,19 +1,18 @@
 # TODO
 
-welcomescreen
-    - inc width
-Ì
+Settings: 
+    link from welcomemodal
+    copy over tips, possibly add additional ones
+
+fix copy to databse folder
 
 design:
-    - use https://daisyui.com/components/dropdown/ for the order
     - use icon button for the import button
 
-verify delete queue, verify delete if import is canceled
 ask in deletion modal whether the file should be deleted - checkbox whether file should be deleted if file isnt copied into db folder
 
-Settings: 
-    create list of keyboard shortcuts
-    copy over tips, possibly add additional ones
+verify delete queue, verify delete if import is canceled
+
 
 make function that extracts paths from subfolders faster
 

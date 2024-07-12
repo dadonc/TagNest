@@ -3,6 +3,8 @@
   import { currentRoute, settingsJson } from "../../stores/stateStore";
   import ChevronLeft from "../../assets/feather/ChevronLeft.svelte";
   import { get } from "svelte/store";
+  import icon from "../../assets/icon/nest.png";
+  import KeyboardShortcuts from "./KeyboardShortcuts.svelte";
 
   let wasSavePathChanged = false;
   let shouldRestart = false;
@@ -13,7 +15,7 @@
   let showCombineBehaviorSaveButton = false;
 </script>
 
-<div class="h-12 bg-base-300" style="-webkit-app-region: drag;" />
+<div class="h-10 bg-base-300" style="-webkit-app-region: drag;" />
 <button
   on:click={() => {
     $currentRoute = "main";
@@ -23,8 +25,8 @@
   <ChevronLeft className="h-4 w-4" />
 </button>
 <div class="overflow-scroll" style="height: calc(100vh - 1.5rem)">
-  <div class="max-w-xl p-4 m-auto my-4">
-    <h1 class="text-4xl font-bold text-center">Settings</h1>
+  <div class="max-w-xl p-4 m-auto my-4 rounded-md bg-base-200">
+    <h1 class="text-2xl font-semibold text-center">Settings</h1>
 
     <h2 class="mt-4 text-xl font-bold">Data location</h2>
     <p>The location of the database and accompanying files</p>
@@ -128,14 +130,23 @@
         >
       </div>
     {/if}
-    <h2 class="mt-6 text-xl font-bold">Attribution</h2>
+  </div>
+  <div class="max-w-xl p-4 m-auto my-4 rounded-md bg-base-200">
+    <h1 class="text-2xl font-semibold text-center">Keyboard shortcuts</h1>
+    <KeyboardShortcuts />
+  </div>
+
+  <div class="max-w-xl p-4 m-auto my-4 rounded-md bg-base-200">
+    <h1 class="text-2xl font-semibold text-center">Attribution</h1>
     <ul class="list-disc">
       <li class="ml-6">
+        Nest icon (<img class="inline-block w-4 h-4" src={icon} alt="" />)
+        created by
         <a
           target="_blank"
           class="text-primary"
           href="https://www.flaticon.com/free-icons/nest"
-          title="nest icons">Nest icon created by Freepik - Flaticon</a
+          title="nest icons">Freepik - Flaticon</a
         >
       </li>
       <li class="ml-6">

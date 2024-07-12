@@ -61,8 +61,9 @@
     <div class="relative">
       <input
         type="text"
+        id="searchInput"
         placeholder="Search"
-        class="w-32 p-1 rounded"
+        class="w-32 p-1 ml-2 rounded"
         bind:this={searchInput}
         on:change={(event) => {
           //@ts-ignore
