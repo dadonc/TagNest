@@ -2,9 +2,7 @@
 
 welcomescreen
     - inc width
-    - add y margins
-    - add logo
-
+Ì
 
 design:
     - use https://daisyui.com/components/dropdown/ for the order

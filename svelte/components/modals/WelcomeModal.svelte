@@ -3,6 +3,7 @@
   import Plus from "../../assets/feather/Plus.svelte";
   import { contextMenuStore, settingsJson } from "../../stores/stateStore";
   import Alert from "../settings/Alert.svelte";
+  import icon from "../../assets/icon/nest.png";
 
   let savePath = $settingsJson.savePath;
   let prevSavePath = "";
@@ -18,7 +19,10 @@
 </script>
 
 <div>
-  <h1>TagNest</h1>
+  <div class="flex items-center justify-center">
+    <img class="w-16 h-16" src={icon} alt="" />
+    <h1 class="ml-4 font-mono text-3xl font-extrabold text-center">TagNest</h1>
+  </div>
   <h2 class="text-xl font-bold">Welcome!</h2>
   <div class="text-sm">
     TagNest is a tool to organize your bookmarks and files using tags. You can
@@ -100,7 +104,7 @@
   </div>
 
   <h2 class="mt-4 text-xl font-bold">Some tips</h2>
-  <ul class="list-disc">
+  <ul class="text-sm list-disc">
     <li>
       Right-click on an item in the grid or a tag in the tags list for
       additional actions
@@ -113,7 +117,7 @@
     </li>
   </ul>
 
-  <div class="flex items-center justify-center mt-8">
+  <div class="flex items-center justify-center mt-8 mb-4">
     <button class="btn btn-primary" on:click={closeModal}>Let's go</button>
   </div>
 </div>

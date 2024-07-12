@@ -45,7 +45,11 @@
     {close}
     closeOnClickOutside={$contextMenuStore.openModal !== "welcome"}
   >
-    <div slot="body" class="h-full p-4 rounded bg-base-100 w-96">
+    <div
+      slot="body"
+      class="h-full p-4 rounded bg-base-100 w-96"
+      style={$contextMenuStore.openModal == "welcome" ? "width: 36rem;" : ""}
+    >
       {#if $contextMenuStore.openModal === "welcome"}
         <WelcomeModal />
       {/if}

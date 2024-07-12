@@ -39,7 +39,7 @@
     style="z-index: 99999;"
   >
     <!-- m-8 -->
-    <div class={`${isFullWidth ? "w-full" : "max-w-xl"} rounded`}>
+    <div class={`${isFullWidth ? "w-full" : "max-w-xl"} rounded m-8`}>
       <slot name="body" />
     </div>
   </div>
