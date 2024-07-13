@@ -17,6 +17,8 @@
     keys={["command", "shift", "i"]}
     description="Global: Open add item modal"
   />
+  <Kbd keys={["command", "w"]} description="Close pinned item" />
+  <Kbd keys={["command", "option", "↔️"]} description="Next/previous pin" />
 
   <h2 class="mt-8 mb-2 text-lg font-semibold">Main grid</h2>
   <Kbd

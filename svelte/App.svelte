@@ -28,7 +28,7 @@
   import DeleteConfirmModal from "./components/modals/DeleteConfirmModal.svelte";
   import { shuffleItems } from "./stores/items";
   import Pins from "./components/main/Pins.svelte";
-  import { pins } from "./stores/pins";
+  import { addPin, pins } from "./stores/pins";
 
   let isDataAvailable = false;
   let data: Awaited<typeof $filteredData>;
@@ -132,6 +132,10 @@
         } else {
           $currentRoute = "main";
         }
+      }
+    } else if (event.metaKey && event.key === "p") {
+      if ($selectedItems.ids.length === 1) {
+        addPin($selectedItems.ids[0]);
       }
     }
   };
