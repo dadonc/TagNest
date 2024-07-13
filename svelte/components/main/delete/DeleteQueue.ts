@@ -66,6 +66,70 @@ const deleteSteps = {
       }
     },
   },
+  external: {
+    // delete preview
+    1: async (item: SingleItem) => {
+      if (item.file?.path) {
+        window.electron.deleteFile(
+          `${get(settingsJson).savePath}/icons/${item.file.path
+            .split("/")
+            .pop()}.png`
+        );
+      }
+    },
+    // delete icon
+    2: async (item: SingleItem) => {
+      if (item.file?.path) {
+        const { extension } = extractNameAndExtension(item.file.path);
+        // check if not other item of this file type exists
+        const $items = get(items);
+        const otherItems = $items.filter((item_) => {
+          if (!item_.file?.path) return false;
+          const { extension: extension_ } = extractNameAndExtension(
+            item_.file.path
+          );
+          return item_.id !== item.id && extension_ === extension;
+        });
+        if (otherItems.length === 0) {
+          window.electron.deleteFile(
+            `${get(settingsJson).savePath}/icons/${extension}.png`
+          );
+        }
+      }
+    },
+  },
+  pdf: {
+    // delete preview
+    1: async (item: SingleItem) => {
+      if (item.file?.path) {
+        window.electron.deleteFile(
+          `${get(settingsJson).savePath}/icons/${item.file.path
+            .split("/")
+            .pop()}.png`
+        );
+      }
+    },
+    // delete icon
+    2: async (item: SingleItem) => {
+      if (item.file?.path) {
+        const { extension } = extractNameAndExtension(item.file.path);
+        // check if not other item of this file type exists
+        const $items = get(items);
+        const otherItems = $items.filter((item_) => {
+          if (!item_.file?.path) return false;
+          const { extension: extension_ } = extractNameAndExtension(
+            item_.file.path
+          );
+          return item_.id !== item.id && extension_ === extension;
+        });
+        if (otherItems.length === 0) {
+          window.electron.deleteFile(
+            `${get(settingsJson).savePath}/icons/${extension}.png`
+          );
+        }
+      }
+    },
+  },
 };
 
 let isRunning = false;

@@ -1,15 +1,16 @@
 # TODO
 
-
-verify delete queue
-    - ✅ video
-    - bookmark
-    - external
-    - pdf
+switch to grid (from eg settings) if bookmark import is started
 verify delete if import is canceled
 
 
-import whole folder and its subfolders seems broken
+* after pausing the play icon isn't centered
+* break words in importmodal
+
+
+bug: importing the same bookmark twice and deleting one of them
+
+import whole folder and its subfolders seems broken?
     make function that extracts paths from subfolders faster
 
 does item rename break anything? Scroll to item after rename
@@ -17,36 +18,30 @@ does item rename break anything? Scroll to item after rename
 why do I need type ImportItem?
 
 add name to audiopreview
-Recreate video preview is broken 
+
+
 
 * resolution filter
-
-dont call saveVideoDetailsToItem twice
-
 * autoplay video if it is opened from the mainview, also when clicked inside the seekbar in bottompreview
 * allow changing item in detailview using the arrows if bottomarea is closed
-* jump to start of videomark on mark click
-* after pausing the play icon isn't centered
 * display small videos (240p) in large in detailview
 * continue import of the currently next item in the importlist if the current one is canceled in the import modal
 * if a video was played and has finished arrow left should jump back in the same video, not to the previous item
 
 
-* break words in importmodal
 
 
 
 ## Bugs
 * handle duplicate bookmarks: make screenshot file names unique
-* modal sizes
 * colors video: bg hover time (light), bg progressbar (dark)
-* tag group styling - change inset of children compared to parent tag
 * change input styling for right sidebar
 * bookmark space preview: 
     close on ESC after clicking inside rendered bookmark
 * Possibly: When displaying all untagged items, update the list of deselected tags if a new tag gets added, thereby hiding the item for which a new tag was created(?)
 * fix import queue for concurrent imports
-bottomarea grid - scroll to item if arrow left or arrow up is used
+dont call saveVideoDetailsToItem twice
+
 
 ### Not so important bugs
 * tag input bug, "Tags" background hint text

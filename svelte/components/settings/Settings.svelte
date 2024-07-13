@@ -5,6 +5,7 @@
   import { get } from "svelte/store";
   import icon from "../../assets/icon/nest.png";
   import KeyboardShortcuts from "./KeyboardShortcuts.svelte";
+  import Key from "./Key.svelte";
 
   let wasSavePathChanged = false;
   let shouldRestart = false;
@@ -144,6 +145,11 @@
       <li>Right-click on a tag in the tags list for additional actions</li>
       <li>Right-click on a video seek bar to highlight this position</li>
       <li>Select text in bookmarks to create highlights</li>
+      <li>You can group tags using colons: group1:group2:tag1</li>
+      <li>
+        You can import multiple files at once (by using <Key key="command" />,
+        <Key key="shift" /> or selecting a folder)
+      </li>
     </ul>
   </div>
 
