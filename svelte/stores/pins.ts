@@ -46,9 +46,11 @@ export function closePin(itemId?: string) {
         // jump right if there is a pin to the right
         if (index < $pins.length - 1) {
           $selectedItems.ids = [$pins[index + 1].itemId || ""];
+          selectedItems.set($selectedItems);
         } else {
           // jump left if there is a pin to the left
           $selectedItems.ids = [$pins[index - 1].itemId || ""];
+          selectedItems.set($selectedItems);
         }
       }
     } else {

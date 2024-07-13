@@ -1,5 +1,10 @@
 # TODO
+pins:
+- dark mode 
 
+detailview: on rightclick on an item in the bottom don't select it
+
+editItemModal width is too narrow
 verify delete if import is cancelled
     * news.ycombinator favicon isn't deleted
     * video preview isn't deleted
@@ -21,7 +26,7 @@ import whole folder and its subfolders seems broken?
 does item rename break anything? Scroll to item after rename
 
 
-add name to audiopreview
+add name to audiopreview and images
 
 
 

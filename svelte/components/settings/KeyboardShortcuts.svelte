@@ -19,7 +19,7 @@
   />
   <Kbd keys={["command", "w"]} description="Close pinned item" />
   <Kbd keys={["command", "shift", "w"]} description="Close all pinned items" />
-  <Kbd keys={["command", "option", "↔️"]} description="Next/previous pin" />
+  <Kbd keys={["command", "↔️"]} description="Next/previous pin" />
   <Kbd keys={["command", "[1-9]"]} description="Jump to pin at position 1-9" />
 
   <h2 class="mt-8 mb-2 text-lg font-semibold">Main grid</h2>

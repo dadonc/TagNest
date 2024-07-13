@@ -86,11 +86,11 @@
         $pins = [$pins[0]];
       } else {
         if ($selectedItems.ids.length === 1 && $currentRoute === "details") {
-          closePin($selectedItems.ids[0]);
+          closePin();
         }
       }
       event.preventDefault();
-    } else if (event.metaKey && event.altKey && event.key === "ArrowRight") {
+    } else if (event.metaKey && event.key === "ArrowRight") {
       event.preventDefault();
       if ($currentRoute === "main" && $pins.length > 1) {
         $selectedItems.ids = [$pins[1].itemId || ""];
@@ -105,7 +105,7 @@
           $currentRoute = "main";
         }
       }
-    } else if (event.metaKey && event.altKey && event.key === "ArrowLeft") {
+    } else if (event.metaKey && event.key === "ArrowLeft") {
       event.preventDefault();
       // jump to last
       if ($currentRoute === "main" && $pins.length > 1) {
