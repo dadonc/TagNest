@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { closePin } from "../../stores/pins";
+  import { closePin, pins } from "../../stores/pins";
   import { contextMenuStore } from "../../stores/stateStore";
   import ContextMenu from "./ContextMenu.svelte";
   import ContextMenuButton from "./ContextMenuButton.svelte";
@@ -12,6 +12,13 @@
       onClick={() => {
         $contextMenuStore.isContextMenuOpen = false;
         closePin($contextMenuStore.triggeredByPinItemId);
+      }}
+    />
+    <ContextMenuButton
+      name="Close all pins"
+      onClick={() => {
+        $contextMenuStore.isContextMenuOpen = false;
+        $pins = [$pins[0]];
       }}
     />
   </ContextMenu>

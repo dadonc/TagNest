@@ -82,8 +82,12 @@
     } else if (event.key === "f" && event.metaKey) {
       document.getElementById("searchInput")?.focus();
     } else if (event.key === "w" && event.metaKey) {
-      if ($selectedItems.ids.length === 1 && $currentRoute === "details") {
-        closePin($selectedItems.ids[0]);
+      if (event.shiftKey) {
+        $pins = [$pins[0]];
+      } else {
+        if ($selectedItems.ids.length === 1 && $currentRoute === "details") {
+          closePin($selectedItems.ids[0]);
+        }
       }
       event.preventDefault();
     } else if (event.metaKey && event.altKey && event.key === "ArrowRight") {
