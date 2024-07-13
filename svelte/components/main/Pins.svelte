@@ -1,7 +1,13 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import { currentRoute, selectedItems } from "../../stores/stateStore";
+  import {
+    contextMenuStore,
+    currentRoute,
+    selectedItems,
+  } from "../../stores/stateStore";
   import { pins } from "../../stores/pins";
+  import { openContextMenu } from "../../utils";
+  import PinContextMenu from "./PinContextMenu.svelte";
 
   let resizeObserver: ResizeObserver | null = null;
   let container: HTMLElement | null = null;
@@ -27,11 +33,16 @@
   function handleResize() {
     forceReactive = !forceReactive;
   }
+
+  function openPinContextMenu(e: MouseEvent, itemId: string) {
+    openContextMenu(e, "pin");
+  }
 </script>
 
+<PinContextMenu />
 <div
   bind:this={container}
-  class="fixed z-50 w-full p-2 pt-0 bg-base-100"
+  class="fixed z-10 w-full p-2 pt-0 bg-base-100"
   style="width: calc(100% - var(--leftContainer) - var(--dividerWidth) - var(--rightContainer) - var(--dividerWidth) - 0.5rem);
 padding-left: calc(0.5rem + 2px);"
   id="pinContainer"
@@ -49,6 +60,12 @@ padding-left: calc(0.5rem + 2px);"
         on:click={() => {
           $selectedItems.ids = [pin.itemId || ""];
           $currentRoute = pin.currentRoute;
+        }}
+        on:contextmenu={(e) => {
+          if (pin.currentRoute !== "main") {
+            $contextMenuStore.triggeredByPinItemId = pin.itemId || "";
+            openPinContextMenu(e, pin.itemId || "");
+          }
         }}>{pin.name.slice(0, 7)}</button
       >
     {/each}

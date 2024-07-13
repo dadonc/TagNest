@@ -1,11 +1,11 @@
 # TODO
 
-Pins:
-* close with rightclick
-
 verify delete if import is cancelled
     * news.ycombinator favicon isn't deleted
     * video preview isn't deleted
+
+
+deselect items on click anywhere
 
 bug: importing the same bookmark twice and deleting one of them
 

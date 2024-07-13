@@ -28,7 +28,7 @@
   import DeleteConfirmModal from "./components/modals/DeleteConfirmModal.svelte";
   import { shuffleItems } from "./stores/items";
   import Pins from "./components/main/Pins.svelte";
-  import { addPin, pins } from "./stores/pins";
+  import { addPin, closePin, pins } from "./stores/pins";
 
   let isDataAvailable = false;
   let data: Awaited<typeof $filteredData>;
@@ -83,22 +83,7 @@
       document.getElementById("searchInput")?.focus();
     } else if (event.key === "w" && event.metaKey) {
       if ($selectedItems.ids.length === 1 && $currentRoute === "details") {
-        const prevSelectedId = $selectedItems.ids[0];
-        if ($pins.length > 2) {
-          let index = $pins.findIndex(
-            (pin) => pin.itemId === $selectedItems.ids[0]
-          );
-          // jump right if there is a pin to the right
-          if (index < $pins.length - 1) {
-            $selectedItems.ids = [$pins[index + 1].itemId || ""];
-          } else {
-            // jump left if there is a pin to the left
-            $selectedItems.ids = [$pins[index - 1].itemId || ""];
-          }
-        } else {
-          $currentRoute = "main";
-        }
-        $pins = $pins.filter((pin) => pin.itemId !== prevSelectedId);
+        closePin($selectedItems.ids[0]);
       }
       event.preventDefault();
     } else if (event.metaKey && event.altKey && event.key === "ArrowRight") {
