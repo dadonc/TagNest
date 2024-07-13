@@ -24,17 +24,17 @@
   <ContextMenu>
     {#if $selectedItems.ids.length === 1}
       <ContextMenuButton
-        name="Edit Item"
-        onClick={() => {
-          $contextMenuStore.isContextMenuOpen = false;
-          $contextMenuStore.openModal = "editItem";
-        }}
-      />
-      <ContextMenuButton
         name="Pin item"
         onClick={() => {
           $contextMenuStore.isContextMenuOpen = false;
           addPin(selectedItem?.id || "");
+        }}
+      />
+      <ContextMenuButton
+        name="Edit Item"
+        onClick={() => {
+          $contextMenuStore.isContextMenuOpen = false;
+          $contextMenuStore.openModal = "editItem";
         }}
       />
       {#if isSingleVideo}
