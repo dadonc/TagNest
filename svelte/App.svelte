@@ -122,6 +122,56 @@
       if ($selectedItems.ids.length === 1) {
         addPin($selectedItems.ids[0]);
       }
+    } else if (event.metaKey && event.key === "1") {
+      if ($pins.length > 0) {
+        $selectedItems.ids = [$pins[0].itemId || ""];
+        $currentRoute = "main";
+      }
+    } else if (event.metaKey && event.key === "2") {
+      if ($pins.length > 1) {
+        $selectedItems.ids = [$pins[1].itemId || ""];
+        $currentRoute = "details";
+      }
+    } else if (event.metaKey && event.key === "3") {
+      if ($pins.length > 2) {
+        $selectedItems.ids = [$pins[2].itemId || ""];
+        $currentRoute = "details";
+      }
+    } else if (event.metaKey && event.key === "4") {
+      if ($pins.length > 3) {
+        $selectedItems.ids = [$pins[3].itemId || ""];
+        $currentRoute = "details";
+      }
+    } else if (event.metaKey && event.key === "5") {
+      if ($pins.length > 4) {
+        $selectedItems.ids = [$pins[4].itemId || ""];
+        $currentRoute = "details";
+      }
+    } else if (event.metaKey && event.key === "6") {
+      if ($pins.length > 5) {
+        $selectedItems.ids = [$pins[5].itemId || ""];
+        $currentRoute = "details";
+      }
+    } else if (event.metaKey && event.key === "7") {
+      if ($pins.length > 6) {
+        $selectedItems.ids = [$pins[6].itemId || ""];
+        $currentRoute = "details";
+      }
+    } else if (event.metaKey && event.key === "8") {
+      if ($pins.length > 7) {
+        $selectedItems.ids = [$pins[7].itemId || ""];
+        $currentRoute = "details";
+      }
+    } else if (event.metaKey && event.key === "9") {
+      if ($pins.length > 8) {
+        $selectedItems.ids = [$pins[8].itemId || ""];
+        $currentRoute = "details";
+      }
+    } else if (event.metaKey && event.key === "0") {
+      if ($pins.length > 9) {
+        $selectedItems.ids = [$pins[9].itemId || ""];
+        $currentRoute = "details";
+      }
     }
   };
 </script>
