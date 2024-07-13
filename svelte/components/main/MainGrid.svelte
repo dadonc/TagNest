@@ -88,7 +88,7 @@
     } else if (e.key === "Backspace" && e.metaKey) {
       confirmDelete($selectedItems.ids);
       $selectedItems.ids = [];
-    } else if (e.key === "ArrowLeft") {
+    } else if (e.key === "ArrowLeft" && !e.metaKey) {
       if (handleKeydownExceptions(e)) return;
       if ($selectedItems.ids.length == 1) {
         const item = items.find((item) => item.id === $selectedItems.ids[0]);
@@ -101,7 +101,7 @@
           }
         }
       }
-    } else if (e.key === "ArrowRight") {
+    } else if (e.key === "ArrowRight" && !e.metaKey) {
       if (handleKeydownExceptions(e)) return;
       if ($selectedItems.ids.length == 1) {
         const item = items.find((item) => item.id === $selectedItems.ids[0]);

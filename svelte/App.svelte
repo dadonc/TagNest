@@ -27,6 +27,8 @@
   import { startDeleteTasks } from "./components/main/delete/DeleteQueue";
   import DeleteConfirmModal from "./components/modals/DeleteConfirmModal.svelte";
   import { shuffleItems } from "./stores/items";
+  import Pins from "./components/main/Pins.svelte";
+  import { pins } from "./stores/pins";
 
   let isDataAvailable = false;
   let data: Awaited<typeof $filteredData>;
@@ -79,6 +81,58 @@
       window.electron.restartApp();
     } else if (event.key === "f" && event.metaKey) {
       document.getElementById("searchInput")?.focus();
+    } else if (event.key === "w" && event.metaKey) {
+      if ($selectedItems.ids.length === 1 && $currentRoute === "details") {
+        const prevSelectedId = $selectedItems.ids[0];
+        if ($pins.length > 2) {
+          let index = $pins.findIndex(
+            (pin) => pin.itemId === $selectedItems.ids[0]
+          );
+          // jump right if there is a pin to the right
+          if (index < $pins.length - 1) {
+            $selectedItems.ids = [$pins[index + 1].itemId || ""];
+          } else {
+            // jump left if there is a pin to the left
+            $selectedItems.ids = [$pins[index - 1].itemId || ""];
+          }
+        } else {
+          $currentRoute = "main";
+        }
+        $pins = $pins.filter((pin) => pin.itemId !== prevSelectedId);
+      }
+      event.preventDefault();
+    } else if (event.metaKey && event.altKey && event.key === "ArrowRight") {
+      event.preventDefault();
+      if ($currentRoute === "main" && $pins.length > 1) {
+        $selectedItems.ids = [$pins[1].itemId || ""];
+        $currentRoute = "details";
+      } else if ($currentRoute === "details" && $pins.length > 1) {
+        let index = $pins.findIndex(
+          (pin) => pin.itemId === $selectedItems.ids[0]
+        );
+        if (index < $pins.length - 1) {
+          $selectedItems.ids = [$pins[index + 1].itemId || ""];
+        } else {
+          $currentRoute = "main";
+        }
+      }
+    } else if (event.metaKey && event.altKey && event.key === "ArrowLeft") {
+      event.preventDefault();
+      // jump to last
+      if ($currentRoute === "main" && $pins.length > 1) {
+        $selectedItems.ids = [$pins[$pins.length - 1].itemId || ""];
+        $currentRoute = "details";
+      } else if ($currentRoute === "details" && $pins.length > 1) {
+        let index = $pins.findIndex(
+          (pin) => pin.itemId === $selectedItems.ids[0]
+        );
+        // jump left if there is a pin to the left
+        if (index > 1) {
+          $selectedItems.ids = [$pins[index - 1].itemId || ""];
+        } else {
+          $currentRoute = "main";
+        }
+      }
     }
   };
 </script>
@@ -102,6 +156,7 @@
         <TopBar />
       </svelte:fragment>
       <svelte:fragment slot="mainContainer">
+        <Pins />
         <Main items={data.items} />
       </svelte:fragment>
       <svelte:fragment slot="rightContainer">

@@ -1,5 +1,8 @@
 # TODO
 
+Pins:
+* close with rightclick
+
 verify delete if import is cancelled
     * news.ycombinator favicon isn't deleted
     * video preview isn't deleted
@@ -7,6 +10,8 @@ verify delete if import is cancelled
 bug: importing the same bookmark twice and deleting one of them
 
 * break words in importmodal
+
+tag placeholder overflows if right sidebar is too narrow
 
 
 

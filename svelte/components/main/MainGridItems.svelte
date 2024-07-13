@@ -22,7 +22,7 @@
 </script>
 
 <div class="h-full" on:click={deselectItems} on:keydown={() => {}}>
-  <div class="p-1 myGrid" style={`--grid-cols-string: ${gridCols};`}>
+  <div class="p-2 pt-0 myGrid" style={`--grid-cols-string: ${gridCols};`}>
     {#each items as item (item.id)}
       <Preview {item} {items} {isBottomGrid} />
     {/each}

@@ -15,7 +15,10 @@
 </script>
 
 {#key item.id}
-  <div class={`flex items-center justify-center max-h-full h-full`}>
+  <div
+    class={`flex items-center justify-center max-h-full h-full`}
+    style={`height: calc(100% - ${document.getElementById("pintContainer")?.clientHeight});`}
+  >
     {#if item.type === "bookmark"}
       <DetailViewBookmark {item} />
     {:else if item.type === "image"}

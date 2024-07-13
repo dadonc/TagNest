@@ -150,7 +150,7 @@
       e.preventDefault();
       wasPreviewHidden = true;
       togglePlay();
-    } else if (e.key == "ArrowRight") {
+    } else if (e.key == "ArrowRight" && !e.metaKey) {
       if (e.metaKey) {
         const marks = (item.video?.marks || []).sort((a, b) =>
           b.mark < a.mark ? 1 : -1
@@ -166,7 +166,7 @@
       } else {
         videoElement.currentTime += 10;
       }
-    } else if (e.key == "ArrowLeft") {
+    } else if (e.key == "ArrowLeft" && !e.metaKey) {
       if (e.metaKey) {
         const marks = (item.video?.marks || []).sort((a, b) =>
           b.mark > a.mark ? 1 : -1

@@ -9,6 +9,7 @@
   import type { CssContainerType } from "../Types";
   import { currView } from "./stateStore";
   import { deleteItemsStore, importItems } from "./items";
+  import { pins } from "./pins";
 
   onMount(async () => {
     leftContainer.subscribe((v) => {
@@ -60,6 +61,11 @@
     deleteItemsStore.subscribe((v) => {
       const value = JSON.stringify(v);
       localStorage.setItem("deleteItems", value);
+    });
+
+    pins.subscribe((v) => {
+      const value = JSON.stringify(v);
+      localStorage.setItem("pins", value);
     });
   });
 </script>

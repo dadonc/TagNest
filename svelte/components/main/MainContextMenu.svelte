@@ -1,6 +1,7 @@
 <script lang="ts">
   import { items, type SingleItem } from "../../stores/items";
   import { contextMenuStore, selectedItems } from "../../stores/stateStore";
+  import { addPin } from "../../stores/pins";
   import ContextMenu from "./ContextMenu.svelte";
   import ContextMenuButton from "./ContextMenuButton.svelte";
   import { confirmDelete } from "./delete/DeleteQueue";
@@ -27,6 +28,13 @@
         onClick={() => {
           $contextMenuStore.isContextMenuOpen = false;
           $contextMenuStore.openModal = "editItem";
+        }}
+      />
+      <ContextMenuButton
+        name="Pin item"
+        onClick={() => {
+          $contextMenuStore.isContextMenuOpen = false;
+          addPin(selectedItem?.id || "");
         }}
       />
       {#if isSingleVideo}

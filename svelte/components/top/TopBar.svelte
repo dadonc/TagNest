@@ -68,7 +68,7 @@
         type="text"
         id="searchInput"
         placeholder="Search..."
-        class="w-32 p-0 ml-4 text-sm border-t-0 border-l-0 border-r-0 placeholder-base-content bg-base-300 border-base-content focus:border-primary focus:ring-0"
+        class="w-32 p-0 ml-4 text-sm border-t-0 border-l-0 border-r-0 select-none placeholder-base-content bg-base-300 border-base-content focus:border-primary focus:ring-0"
         bind:this={searchInput}
         on:change={(event) => {
           //@ts-ignore
