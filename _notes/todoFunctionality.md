@@ -1,27 +1,25 @@
 # TODO
 
-switch to grid (from eg settings) if bookmark import is started
-verify delete if import is canceled
+verify delete if import is cancelled
+    * news.ycombinator favicon isn't deleted
+    * video preview isn't deleted
 
+bug: importing the same bookmark twice and deleting one of them
 
-* after pausing the play icon isn't centered
 * break words in importmodal
 
 
-bug: importing the same bookmark twice and deleting one of them
 
 import whole folder and its subfolders seems broken?
     make function that extracts paths from subfolders faster
 
 does item rename break anything? Scroll to item after rename
 
-why do I need type ImportItem?
 
 add name to audiopreview
 
 
 
-* resolution filter
 * autoplay video if it is opened from the mainview, also when clicked inside the seekbar in bottompreview
 * allow changing item in detailview using the arrows if bottomarea is closed
 * display small videos (240p) in large in detailview
@@ -33,6 +31,8 @@ add name to audiopreview
 
 
 ## Bugs
+* AddBookMarkModal doesn't appear if the Settings screen is opened when the chrome extenison is clicked
+    * switch to grid (from eg settings) if bookmark import is started
 * handle duplicate bookmarks: make screenshot file names unique
 * colors video: bg hover time (light), bg progressbar (dark)
 * change input styling for right sidebar
@@ -44,7 +44,7 @@ dont call saveVideoDetailsToItem twice
 
 
 ### Not so important bugs
-* tag input bug, "Tags" background hint text
+* tag input bug
 * close pdf on ESC; pdfjs is broken on space preview
 * main grid scrollbar is inside the rightmost items
 
@@ -54,23 +54,19 @@ dont call saveVideoDetailsToItem twice
 
 ## Refactor
 rename videoPreviewImage to videoThumbImage
+Make all modals ActionModals
 ResetConfirmModal has superfluos <Modal>
-DeleteConfirmModal is an ActionModal
 * create separate component for CreateItem
-    - save on command + s?
+* why do I need type ImportItem?
 
 
-
-
-## Other TODO
-* Intro wizard
-    * fill with example data?
-* settings screen
-    * number of concurrent import tasks
 
 ## Improvments
 * "Tabs"
+* resolution filter
 * convert .flv to mp4
+* Intro wizard: fill with example data?
+* settings screen: number of concurrent import tasks
 * Open in new window/duplicate app window
 * make videopreview on seekbar hover adjustable in the settings
 * Quicksettings in top bar: show name, show type, show count highlights, date changed, mute video preview, countOpened, show tags in previews, show file size

@@ -21,10 +21,10 @@
     });
   });
 
-  const close = async () => {
+  const close = () => {
     isOpen = false;
     // add newly created bookmark to the items store for the deletion process
-    await refreshDisplayedItems();
+    // await refreshDisplayedItems();
     confirmDelete([item.id]);
   };
 

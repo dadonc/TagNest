@@ -312,7 +312,7 @@
       }}
       bind:this={playIconElement}
       class="absolute flex items-center w-20 h-20 p-2 transform -translate-x-1/2 -translate-y-1/2 rounded focus:outline-none bg-base-300 text-base-content top-1/2 left-1/2"
-      ><Play className="w-20 h-20" /></button
+      ><Play className="w-full h-full" /></button
     >
     {#if !isSpacePreview}
       <button
