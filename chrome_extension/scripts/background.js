@@ -59,7 +59,11 @@ async function saveWebsite() {
       target: { tabId: tab.id },
       function: inlineStylesheets,
     },
-    () => {
+    (results) => {
+      if (results[0].result !== "complete") {
+        console.log("Page is not fully loaded yet.");
+        return;
+      }
       chrome.pageCapture.saveAsMHTML({ tabId: tab.id }, async (mhtml) => {
         const formData = new FormData();
         formData.append("title", tab.title);
@@ -102,5 +106,5 @@ async function getCurrentTab() {
 const inlineStylesheets = () => {
   // todo: inline dynamically added stylesheets
   // see https://www.science.org/content/article/brazilian-frog-might-be-first-pollinating-amphibian-known-science for example
-  return;
+  return document.readyState;
 };
