@@ -99,8 +99,15 @@
     const range = selection.getRangeAt(0).getBoundingClientRect();
     const iframeRect = iframe.getBoundingClientRect();
 
+    let fontSize: string | number = window
+      .getComputedStyle(doc.documentElement, null)
+      .getPropertyValue("font-size");
+    fontSize = Number(fontSize.slice(-3) === "rem")
+      ? Number(fontSize.slice(0, fontSize.length - 3))
+      : Number(fontSize.slice(0, fontSize.length - 2));
+
     tooltip.style.left = `${range.left + doc.documentElement.scrollLeft}px`;
-    tooltip.style.top = `${iframeRect.top + range.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 30}px`;
+    tooltip.style.top = `${iframeRect.top + range.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 2.5 * fontSize}px`;
   }
 
   function showRemoveTooltip(e: MouseEvent) {
@@ -130,8 +137,15 @@
     const span = e.target.getBoundingClientRect();
     const iframeRect = iframe.getBoundingClientRect();
 
+    let fontSize: string | number = window
+      .getComputedStyle(doc.documentElement, null)
+      .getPropertyValue("font-size");
+    fontSize = Number(fontSize.slice(-3) === "rem")
+      ? Number(fontSize.slice(0, fontSize.length - 3))
+      : Number(fontSize.slice(0, fontSize.length - 2));
+
     tooltip.style.left = `${span.left + doc.documentElement.scrollLeft}px`;
-    tooltip.style.top = `${iframeRect.top + span.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 30}px`;
+    tooltip.style.top = `${iframeRect.top + span.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 2.5 * fontSize}px`;
   }
 
   async function addHighlight(args: {
