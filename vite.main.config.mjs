@@ -9,6 +9,7 @@ export default defineConfig({
         "@prisma/client",
         "fastify",
         "ffmpeg-static",
+        "ffprobe-static",
         // Problems? For inspiration see https://github.com/electron-vite/vite-plugin-electron/blob/main/vite.config.ts
       ],
     },
