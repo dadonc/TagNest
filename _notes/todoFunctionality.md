@@ -1,8 +1,5 @@
 # TODO
 
-
-detailview video: fix max-height
-
 when does preview autoplay start? can this start faster?
 
 pins:
