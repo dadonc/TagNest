@@ -1,5 +1,6 @@
 # DB
 dev.db
+dev.db-journal
 
 # Logs
 logs
@@ -8,6 +9,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+
+# Old notes
+__notes/
 
 # History
 .history

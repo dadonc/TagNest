@@ -1,6 +1,6 @@
 {
-  "css.lint.unknownAtRules": "ignore",
-  "scss.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore"
+  // "scss.lint.unknownAtRules": "ignore"
   // "svelte.plugin.svelte.compilerWarnings": {
   //   "a11y-media-has-caption": "ignore"
   // }
