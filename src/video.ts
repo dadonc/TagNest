@@ -140,40 +140,6 @@ function deflicker(previewPath: string): Promise<void> {
   });
 }
 
-// const getSomeVideoDetails = (
-//   videoPath: string
-// ): Promise<{
-//   duration: number;
-//   bitrate: string;
-//   info: string;
-// }> => {
-//   return new Promise((resolve, reject) => {
-//     const process = spawn(ffprobePath, [videoPath]);
-
-//     process.stderr.on("data", (d: string) => {
-//       const data = d.toString();
-//       if (data.indexOf("Duration:") !== -1) {
-//         try {
-//           const durationStr = data.split("Duration: ")[1].split(",")[0];
-//           let [h, m, s] = durationStr.split(":");
-//           s = s.split(".")[0];
-//           const duration = parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
-//           const bitrate = data.split("bitrate: ")[1]?.split("\n")[0];
-//           const info = data.split("Video: ")[1]?.split("\n")[0];
-//           resolve({ duration, bitrate, info });
-//         } catch (e) {
-//           reject(e);
-//         }
-//       }
-//     });
-
-//     process.on("close", (code: string) => {
-//       if (code == "0") {
-//       } else reject();
-//     });
-//   });
-// };
-
 const createConcatTxt = (
   videoPath: string,
   savePath: string,
@@ -285,40 +251,42 @@ export const getVideoDetails = (videoPath: string): Promise<VideoDetails> => {
   }
 
   return new Promise((resolve, reject) => {
-    const process = spawn("ffprobe", [
-      "-v",
-      "error",
-      "-select_streams",
-      "v:0",
-      "-show_entries",
-      "stream=width,height,duration,display_aspect_ratio,bit_rate,avg_frame_rate",
-      "-of",
-      "default=noprint_wrappers=1:nokey=0",
-      videoPath,
-    ]);
+    try {
+      const process = spawn(ffprobePath, [
+        "-v",
+        "error",
+        "-select_streams",
+        "v:0",
+        "-show_entries",
+        "stream=width,height,duration,display_aspect_ratio,bit_rate,avg_frame_rate",
+        "-of",
+        "default=noprint_wrappers=1:nokey=0",
+        videoPath,
+      ]);
 
-    let data = "";
+      let data = "";
 
-    // Listen to stdout stream to capture the output
-    process.stdout.on("data", (d: Buffer) => {
-      data += d.toString();
-    });
+      process.stdout.on("data", (d: Buffer) => {
+        data += d.toString();
+      });
 
-    // Listen to stderr stream to capture errors (optional, for debugging)
-    process.stderr.on("data", (d: Buffer) => {
-      data += d.toString();
-      console.error("stderr: ", d.toString());
-    });
+      process.stderr.on("data", (d: Buffer) => {
+        data += d.toString();
+        console.error("stderr: ", d.toString());
+      });
 
-    // Handle process close event
-    process.on("close", (code: number) => {
-      if (code === 0) {
-        const result = extractData(data.trim());
-        resolve(result);
-      } else {
-        reject(new Error(`ffprobe process exited with code ${code}`));
-      }
-    });
+      process.on("close", (code: number) => {
+        if (code === 0) {
+          const result = extractData(data.trim());
+          resolve(result);
+        } else {
+          reject(new Error(`ffprobe process exited with code ${code}`));
+        }
+      });
+    } catch (e) {
+      console.log("ERROR CATCHED in function getVideoDetails", e);
+      reject(e);
+    }
   });
 };
 

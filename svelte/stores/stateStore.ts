@@ -48,7 +48,7 @@ type CurrViewType = {
 };
 
 const emptyCurrView: CurrViewType = {
-  zoomLvl: 3,
+  zoomLvl: 4,
   zoomLvlDetails: 5,
   jumpToVideoTime: 0,
   viewType: "grid",
