@@ -264,7 +264,7 @@ type contextMenuStoreType = {
   triggeredByTagId: string; // tag which was clicked to trigger the context menu
   videoSeekPos: number; // position in the seek bar the user has clicked to open the context menu
   triggeredByMarkId: string; // mark which was clicked to trigger the context menu
-  triggeredByPinItemId: string;
+  triggeredByPinItemId: string; // pin which was clicked to trigger the context menu
   // todo remove - move this into openModal
   isDeleteModalOpen: boolean;
   idsToDelete: string[];

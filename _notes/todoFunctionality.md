@@ -1,6 +1,15 @@
 # TODO
+
+
+scroll to item if back button is used
+item scroll: add space above due to pin bar
+detailview video: fix max-height
+
+when does preview autoplay start? can this start faster?
+
 pins:
 - dark mode 
+- dont loose focus when switching back to home
 
 detailview: on rightclick on an item in the bottom don't select it
 
@@ -72,7 +81,9 @@ ResetConfirmModal has superfluos <Modal>
 
 
 ## Improvments
-* "Tabs"
+
+* resize preview videos when importing
+* creater screenshots instead of using a canvas for video previews
 * resolution filter
 * convert .flv to mp4
 * Intro wizard: fill with example data?

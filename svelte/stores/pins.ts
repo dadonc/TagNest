@@ -5,12 +5,13 @@ import { currentRoute, selectedItems } from "./stateStore";
 export type Pin = {
   name: string;
   currentRoute: "details" | "main";
-  itemId?: string;
+  itemId: string;
 };
 
 const defaultPin: Pin = {
   name: "Home",
   currentRoute: "main",
+  itemId: "",
 };
 
 const currentPins = localStorage.getItem("pins");
