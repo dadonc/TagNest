@@ -1,8 +1,6 @@
 # TODO
 
 
-scroll to item if back button is used
-item scroll: add space above due to pin bar
 detailview video: fix max-height
 
 when does preview autoplay start? can this start faster?

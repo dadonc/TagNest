@@ -5,7 +5,7 @@
     currentRoute,
     selectedItems,
   } from "../../stores/stateStore";
-  import { pins } from "../../stores/pins";
+  import { pinBarHeight, pins } from "../../stores/pins";
   import { openContextMenu } from "../../utils";
   import PinContextMenu from "./PinContextMenu.svelte";
 
@@ -31,6 +31,7 @@
   });
 
   function handleResize() {
+    $pinBarHeight = container?.clientHeight || 0;
     forceReactive = !forceReactive;
   }
 
@@ -44,7 +45,7 @@
   <div
     bind:this={container}
     class="fixed z-10 w-full p-2 pt-0 bg-base-100"
-    style="width: calc(100% - var(--leftContainer) - var(--dividerWidth) - var(--rightContainer) - var(--dividerWidth) - 0.5rem);
+    style="width: calc(100% - var(--leftContainer) - var(--dividerWidth) - var(--rightContainer) - var(--dividerWidth));
 padding-left: calc(0.5rem + 2px);"
     id="pinContainer"
   >

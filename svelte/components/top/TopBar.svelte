@@ -52,7 +52,6 @@
       <button
         on:click={() => {
           $currentRoute = "main";
-          selectedItems.set({ ids: [] });
         }}
         class="p-2"
       >

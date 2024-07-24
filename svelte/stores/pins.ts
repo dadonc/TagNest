@@ -20,6 +20,11 @@ export const pins = writable<Pin[]>(
   currentPins ? JSON.parse(currentPins) : [defaultPin]
 );
 
+const pinBarHeightStore = localStorage.getItem("pinBarHeight");
+export const pinBarHeight = writable<number>(
+  pinBarHeightStore ? JSON.parse(pinBarHeightStore) : 0
+);
+
 export async function addPin(itemId: string) {
   const alreadyExists = get(pins).some((pin) => pin.itemId === itemId);
   if (alreadyExists) {

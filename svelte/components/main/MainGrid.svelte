@@ -18,6 +18,7 @@
   } from "../../utils";
   import DetailView from "./DetailView.svelte";
   import MainGridItems from "./MainGridItems.svelte";
+  import { pinBarHeight } from "../../stores/pins";
 
   export let items: SingleItem[];
   export let focusedItemId: string | undefined = undefined;
@@ -32,7 +33,8 @@
         const focusedItem = document.getElementById(focusedItemId!);
         document.getElementById("mainArea")!.scrollTop =
           focusedItem!.offsetTop -
-          getPxfromRem(Number($topContainer.val.slice(0, -3)));
+          getPxfromRem(Number($topContainer.val.slice(0, -3))) -
+          $pinBarHeight;
       }, 0);
     }
   }
