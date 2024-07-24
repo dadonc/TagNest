@@ -99,15 +99,10 @@
     const range = selection.getRangeAt(0).getBoundingClientRect();
     const iframeRect = iframe.getBoundingClientRect();
 
-    let fontSize: string | number = window
-      .getComputedStyle(doc.documentElement, null)
-      .getPropertyValue("font-size");
-    fontSize = Number(fontSize.slice(-3) === "rem")
-      ? Number(fontSize.slice(0, fontSize.length - 3))
-      : Number(fontSize.slice(0, fontSize.length - 2));
+    const fontSize = getFontSizeFromRange(selection.getRangeAt(0)) || 16;
 
     tooltip.style.left = `${range.left + doc.documentElement.scrollLeft}px`;
-    tooltip.style.top = `${iframeRect.top + range.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 2.5 * fontSize}px`;
+    tooltip.style.top = `${iframeRect.top + range.top + doc.documentElement.scrollTop - tooltip.offsetHeight - 3 * fontSize}px`;
   }
 
   function showRemoveTooltip(e: MouseEvent) {
@@ -138,14 +133,14 @@
     const iframeRect = iframe.getBoundingClientRect();
 
     let fontSize: string | number = window
-      .getComputedStyle(doc.documentElement, null)
+      .getComputedStyle(e.target as Element, null)
       .getPropertyValue("font-size");
     fontSize = Number(fontSize.slice(-3) === "rem")
       ? Number(fontSize.slice(0, fontSize.length - 3))
       : Number(fontSize.slice(0, fontSize.length - 2));
 
     tooltip.style.left = `${span.left + doc.documentElement.scrollLeft}px`;
-    tooltip.style.top = `${iframeRect.top + span.top + doc.documentElement.scrollTop - tooltip.offsetHeight * 2 - 2.5 * fontSize}px`;
+    tooltip.style.top = `${iframeRect.top + span.top + doc.documentElement.scrollTop - tooltip.offsetHeight - 3 * fontSize}px`;
   }
 
   async function addHighlight(args: {
@@ -202,6 +197,27 @@
     window.addHighlight = addHighlight;
     window.removeHighlight = removeHighlight;
     window.restoreHighlights = restoreHighlights;
+  }
+
+  function getFontSizeFromRange(range: Range) {
+    const textNode =
+      range.startContainer.nodeType === Node.TEXT_NODE
+        ? range.startContainer
+        : null;
+    if (textNode) {
+      const parentElement = textNode.parentElement as HTMLElement;
+      const computedStyle = window.getComputedStyle(parentElement);
+      let fontSize: number | string = computedStyle.fontSize;
+      if (!fontSize) {
+        fontSize = window
+          .getComputedStyle(doc.documentElement, null)
+          .getPropertyValue("font-size");
+      }
+      fontSize = Number(fontSize.slice(-3) === "rem")
+        ? Number(fontSize.slice(0, fontSize.length - 3))
+        : Number(fontSize.slice(0, fontSize.length - 2));
+      return fontSize;
+    }
   }
 </script>
 
