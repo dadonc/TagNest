@@ -59,7 +59,7 @@
         <AlertTriangle className="w-8 h-8 ml-6 inline-block text-red-600" />
       </h1>
       {#if itemsToDelete.length > 1}
-        <ul class="my-4 text-center list-disc list-inside">
+        <ul class="my-4">
           {#each itemsToDelete as item}
             <li>{item.name}</li>
           {/each}
@@ -122,3 +122,18 @@
     </div>
   </Modal>
 {/if}
+
+<style>
+  ul {
+    padding-left: 20px; /* Adjust as necessary */
+    list-style: none; /* Remove default bullets */
+  }
+  ul li::before {
+    content: "•"; /* Custom bullet */
+    margin-right: 10px; /* Space between bullet and text */
+  }
+  li {
+    display: flex;
+    align-items: baseline; /* Align the bullet and text */
+  }
+</style>

@@ -9,6 +9,7 @@ import {
 } from "../../../stores/items";
 import { contextMenuStore, settingsJson } from "../../../stores/stateStore";
 import { extractNameAndExtension } from "../../../../src/gschert";
+import { pins } from "../../../stores/pins";
 
 const deleteSteps = {
   video: {
@@ -210,6 +211,12 @@ export async function addToDeleteQueue(ids: string[], deleteFiles: boolean) {
         deleteStep: 0,
         deleteFile: deleteFiles,
       });
+
+      // remove from pins store
+      const $pins = get(pins)
+        .filter((pin) => pin.itemId !== item.id)
+        .map((pin) => ({ ...pin }));
+      pins.set($pins);
     }
   });
   deleteItemsStore.set($deleteItems);
