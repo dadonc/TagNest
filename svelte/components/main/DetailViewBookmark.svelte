@@ -85,12 +85,13 @@
     const tooltip = doc.createElement("button");
     tooltip.id = "tooltip";
     tooltip.textContent = "Highlight";
+    tooltip.style.fontSize = "16px";
     tooltip.style.position = "absolute";
     tooltip.style.zIndex = "1000";
     tooltip.style.background = "yellow";
     tooltip.style.color = "black";
     tooltip.style.border = "none";
-    tooltip.style.padding = "5px";
+    tooltip.style.padding = "2px 5px";
     doc.body.appendChild(tooltip);
     tooltip.addEventListener("mouseup", () => {
       parent.addHighlight({ bookmarkId: item.bookmark!.id });
@@ -109,12 +110,13 @@
     const tooltip = doc.createElement("button");
     tooltip.id = "tooltipRmv";
     tooltip.textContent = "Remove Highlight";
+    tooltip.style.fontSize = "16px";
     tooltip.style.position = "absolute";
     tooltip.style.zIndex = "1000";
     tooltip.style.background = "#ef4444";
     tooltip.style.color = "white";
     tooltip.style.border = "none";
-    tooltip.style.padding = "5px";
+    tooltip.style.padding = "2px 5px";
     doc.body.appendChild(tooltip);
     tooltip.addEventListener("click", () => {
       parent.removeHighlight(e.target as HTMLElement);

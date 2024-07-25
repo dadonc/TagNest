@@ -155,6 +155,12 @@ export const importSteps = {
       },
       desc: "Save file preview",
     },
+    // 2: {
+    //   func: async (item: SingleItem) => {
+    //     await new Promise((resolve) => setTimeout(resolve, 15000));
+    //   },
+    //   desc: "Save file preview",
+    // },
   },
 };
 
