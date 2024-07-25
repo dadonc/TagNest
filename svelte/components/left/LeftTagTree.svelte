@@ -22,10 +22,10 @@
 {#each Object.keys(tagTree) as key}
   <div
     class={key !== "_tags" ? `ml-${indent + 3}` : ""}
-    style={key !== "_tags" ? `margin-left: ${indent * 1.5}rem` : ""}
+    style={key !== "_tags" ? `margin-left: ${indent * 0.5}rem` : ""}
   >
     <div
-      class="pl-1 select-none"
+      class="pl-1 text-sm cursor-pointer select-none"
       on:keydown={(e) => {
         if (e.target) {
           e.stopPropagation();
@@ -51,7 +51,7 @@
       {/if}
       {#if Array.isArray(tagTree[key]) && key === "_tags"}
         {#each tagTree[key] as tag}
-          <LeftSingleTag {tag} />
+          <LeftSingleTag {tag} {indent} />
         {/each}
       {:else}
         <svelte:self tagTree={tagTree[key]} indent={indent + 1} />
@@ -62,7 +62,7 @@
 
 <style>
   .classToKeep {
-    color: #fff;
+    font-weight: bold;
   }
   .classToKeep div {
     display: none;

@@ -92,7 +92,7 @@
     {/if}
   </div>
   <div>
-    <div class="font-bold">Import</div>
+    <div class="mt-4 font-bold">Import</div>
     <div class="text-sm">
       How should imported files be treated? They can either be copied to the
       database folder, moved to the database folder or left in their original

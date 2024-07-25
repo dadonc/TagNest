@@ -7,6 +7,7 @@
   import { classNames, openContextMenu } from "../../utils";
 
   export let tag: FilteredTag;
+  export let indent;
   $: isSelected = $selectedTags.selectedIds.includes(tag.id);
   $: isDeSelected = $selectedTags.deselectedIds.includes(tag.id);
 
@@ -52,16 +53,17 @@
 <div
   on:contextmenu={openTagsContextMenu}
   class="flex items-center h-5 text-sm font-medium"
+  style={`margin-left: ${indent * 0.5}rem`}
 >
   <span>
     {#if tag.countAfterDeselection !== 0}
       <button
         on:click={() => toggleDeselectTag(tag.id)}
-        class="w-4 mr-1 font-mono text-xs text-error"
+        class="w-2 font-mono text-xs text-error"
         >{tag.countAfterDeselection}</button
       >
     {:else}
-      <div class="w-2 mr-1 font-mono text-xs opacity-0">00</div>
+      <div class="w-2 font-mono text-xs opacity-0">00</div>
     {/if}
   </span>
   <button
