@@ -21,6 +21,7 @@
 
   let displayVideo = false;
   let videoIsLoaded = false;
+  let displayProgress = false;
 
   let { name, extension } = extractNameAndExtension(item.file!.path);
   $: videoPath = `file://${$settingsJson.savePath}/previews/videos/${name}_preview.${extension}?cacheBust=${Date.now()}`;
@@ -166,14 +167,15 @@
     class="absolute inline-block w-5 h-5 transform -translate-x-1/2 -translate-y-1/2 rounded-sm bg-neutral playIcon text-base-content top-1/2 left-1/2"
     ><Play className="w-4 h-4 text-white p-1" /></span
   > -->
-  <span
-    class={classNames(
-      "absolute inline-block p-1 font-mono text-xs text-white rounded-sm right-1 bottom-8 bg-neutral durationString",
-      displayVideo ? "hidden" : ""
-    )}>{durationString}</span
-  >
-  {#if !displayVideo}
-    <PreviewName name={item.name || ""} hideName={false} />
+  {#if !displayProgress}
+    <span
+      class={classNames(
+        "absolute inline-block p-1 font-mono text-xs text-white rounded-sm right-1 bottom-8 bg-neutral durationString"
+      )}>{durationString}</span
+    >
+    {#if !displayVideo}
+      <PreviewName name={item.name || ""} hideName={false} />
+    {/if}
   {/if}
 
   {#if displayVideo}
@@ -205,7 +207,20 @@
       }}
       style={maxHeightStyle}
     />
+
     <div class="w-full bg-transparent h-7"></div>
+
+    {#if !displayProgress}
+      <div
+        class="absolute bottom-0 z-40 w-full bg-green-500 cursor-pointer h-7"
+        on:mouseover={() => (displayProgress = true)}
+        on:keydown={() => {}}
+        on:focus={() => {}}
+      >
+        <PreviewName name={item.name || ""} hideName={false} />
+      </div>
+    {/if}
+
     <progress
       title={item.name}
       on:mouseover={displayThumb}
@@ -213,6 +228,7 @@
       on:mouseleave={(e) => {
         thumbElement.style.display = "none";
         hoverSeekTimeSpan.style.display = "none";
+        displayProgress = false;
       }}
       on:mouseenter={() => {
         if (videoElement.paused) {
@@ -271,11 +287,13 @@
       class="absolute bottom-0 left-0 z-20 hidden bg-transparent"
     />
 
-    <span
-      class="absolute bottom-0 z-40 font-mono text-xs leading-7 text-white pointer-events-none h-7 right-2"
-    >
-      <span class="hidden" bind:this={hoverSeekTimeSpan}>00:00:00 / </span>
-      <span>{durationString}</span>
-    </span>
+    {#if displayProgress}
+      <span
+        class="absolute bottom-0 z-40 font-mono text-xs leading-7 text-white pointer-events-none h-7 right-2"
+      >
+        <span class="hidden" bind:this={hoverSeekTimeSpan}>00:00:00 / </span>
+        <span>{durationString}</span>
+      </span>
+    {/if}
   {/if}
 </div>
