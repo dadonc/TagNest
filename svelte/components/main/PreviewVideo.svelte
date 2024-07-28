@@ -50,10 +50,11 @@
     if (!videoElement) return; // on first render after changin to next video, videoElement is not yet defined
     thumbElement.width = videoElement.offsetWidth * thumbRatio;
     thumbElement.height = videoElement.offsetHeight * thumbRatio;
-    thumbElement.style.bottom = `calc(-${
-      videoElement.offsetHeight * thumbRatio //+ 24
-    }px)`;
-    thumbElement.style.bottom = "28px";
+    const containerRect =
+      videoElement.parentElement?.parentElement?.getBoundingClientRect();
+    const videoRect = videoElement.getBoundingClientRect();
+    if (!containerRect) return;
+    thumbElement.style.top = `${(containerRect.height - videoRect.height) / 2 - 14}px`; // 14: height of the progress bar / 2
   }
 
   const w = item.video!.width || 0;
@@ -125,7 +126,7 @@
 </script>
 
 <div
-  class="relative flex flex-col items-center justify-center w-full"
+  class="flex flex-col items-center justify-center w-full"
   on:mouseenter={() => {
     displayVideo = true;
     if (videoIsLoaded && videoElement.paused) {
@@ -204,7 +205,7 @@
       }}
       style={maxHeightStyle}
     />
-    <div class="w-full bg-red-500 h-7"></div>
+    <div class="w-full bg-transparent h-7"></div>
     <progress
       title={item.name}
       on:mouseover={displayThumb}
