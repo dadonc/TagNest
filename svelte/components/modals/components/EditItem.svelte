@@ -32,7 +32,7 @@
   }}
 />
 
-<div class="flex flex-col items-center justify-center">
+<div class="relative flex flex-col items-center justify-center">
   <PreviewChooser {item} hideName />
   {#if item.type === "bookmark" || item.type === "video"}
     <button

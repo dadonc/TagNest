@@ -1,18 +1,23 @@
 <script lang="ts">
   import Link from "../../assets/feather/Link.svelte";
   import type { SingleItem } from "../../stores/items";
+  import PreviewName from "./gschert/PreviewName.svelte";
+  import PreviewTypeInfo from "./gschert/PreviewTypeInfo.svelte";
 
   export let item: SingleItem;
   export let maxHeightStyle: string;
+  export let hideName: boolean;
 </script>
 
-<div class="relative hoverContainer">
+<div class="hoverContainer">
   <img
     src={"file://" + item.file?.path}
     alt=""
     style={maxHeightStyle}
     class="w-full"
   />
+  <PreviewTypeInfo type={item.type} />
+  <PreviewName name={item.name || ""} {hideName} />
   {#if item.url}
     <a
       target="_blank"

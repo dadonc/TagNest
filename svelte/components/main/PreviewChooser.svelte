@@ -22,7 +22,7 @@
   )}
 >
   {#if item.type === "image"}
-    <ImagePreview {item} {maxHeightStyle} />
+    <ImagePreview {item} {maxHeightStyle} {hideName} />
   {:else if item.type === "bookmark"}
     <BookmarkPreview {item} {maxHeightStyle} {hideName} />
   {:else if item.type === "pdf"}
