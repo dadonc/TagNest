@@ -59,11 +59,15 @@
     {#if tag.countAfterDeselection !== 0}
       <button
         on:click={() => toggleDeselectTag(tag.id)}
-        class="w-2 font-mono text-xs text-error"
+        class="flex items-center justify-center w-2 px-3 font-mono text-xs text-white bg-error rounded-3xl"
         >{tag.countAfterDeselection}</button
       >
     {:else}
-      <div class="w-2 font-mono text-xs opacity-0">00</div>
+      <div
+        class="flex items-center justify-center w-2 px-3 font-mono text-xs text-white opacity-0 bg-error rounded-3xl"
+      >
+        00
+      </div>
     {/if}
   </span>
   <button
@@ -79,7 +83,8 @@
       {tag.name.split(":").slice(-1)}
     </span>
     {#if !isSelected && !isDeSelected && tag.countAfterSelection !== 0}
-      <span class="px-3 text-xs bg-accent rounded-3xl text-accent-content"
+      <span
+        class="flex items-center justify-center px-3 text-xs text-white bg-accent rounded-3xl text-accent-content"
         >{tag.totalCount}</span
       >
     {/if}
