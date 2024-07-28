@@ -68,12 +68,21 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
     });
 
     return result.then(async ({ canceled, filePaths }) => {
-      if (filePaths.length > 1) {
+      if (
+        filePaths.length > 1 ||
+        (filePaths.length === 1 && fs.lstatSync(filePaths[0]).isDirectory())
+      ) {
         let allPaths: string[] = [];
 
         const getAllFilePaths = async (dirPath: string) => {
-          const files = await fs.promises.readdir(dirPath);
-          return files.map((file) => path.join(dirPath, file));
+          const entries = await fs.promises.readdir(dirPath, {
+            withFileTypes: true,
+          });
+          const files = entries.map((entry) => {
+            const resPath = path.resolve(dirPath, entry.name);
+            return entry.isDirectory() ? getAllFilePaths(resPath) : resPath;
+          });
+          return files.flat();
         };
 
         for (const filePath of filePaths) {
@@ -85,7 +94,6 @@ export default function ipcHandler(mainWindow: BrowserWindow) {
             allPaths.push(filePath);
           }
         }
-
         mainWindow.webContents.send("chosenFiles", allPaths);
       } else {
         const extension = filePaths[0].split(".").pop();

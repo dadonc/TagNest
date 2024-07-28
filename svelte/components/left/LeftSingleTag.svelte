@@ -84,7 +84,7 @@
     </span>
     {#if !isSelected && !isDeSelected && tag.countAfterSelection !== 0}
       <span
-        class="flex items-center justify-center px-3 text-xs text-white bg-accent rounded-3xl text-accent-content"
+        class="flex items-center justify-center px-3 text-xs text-white bg-accent rounded-3xl"
         >{tag.totalCount}</span
       >
     {/if}
