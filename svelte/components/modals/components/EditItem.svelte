@@ -34,7 +34,9 @@
 
 <div class="relative flex flex-col items-center justify-center">
   <PreviewChooser {item} hideName />
-  {#if item.type === "bookmark" || item.type === "video"}
+</div>
+{#if item.type === "bookmark" || item.type === "video"}
+  <div class="mt-2 text-center">
     <button
       class="text-blue-700"
       on:click={() => {
@@ -45,8 +47,8 @@
         }
       }}>Change thumbnail</button
     >
-  {/if}
-</div>
+  </div>
+{/if}
 <input
   bind:value={item.name}
   type="text"
