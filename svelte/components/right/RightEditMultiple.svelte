@@ -5,12 +5,12 @@
     importItems,
   } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
-  import { updateItemsTags } from "../../stores/tags";
+  import { addItemsTags, updateItemsTags } from "../../stores/tags";
   import { confirmDelete } from "../main/delete/DeleteQueue";
   import TagSelectWrapper from "../modals/components/TagSelectWrapper.svelte";
 
   export let items: SingleItem[];
-  export let modalClose: () => void = () => {};
+  export const modalClose: () => void = () => {};
 
   let itemsProcessed = 0;
   const sharedTags = $selectedItems.ids
@@ -36,17 +36,17 @@
   const save = async () => {
     await updateItemsTags($selectedItems.ids, tagString);
     isSaveButtonDisabled = true;
-    refreshDisplayedItems();
   };
-  const close = () => {
-    modalClose();
-    refreshDisplayedItems();
+
+  const addTags = async () => {
+    await addItemsTags($selectedItems.ids, tagString);
+    isSaveButtonDisabled = true;
   };
 </script>
 
 <svelte:window
   on:keydown={(e) => {
-    if (e.key == "s" && e.metaKey) save();
+    if (e.key == "s" && e.metaKey) addTags();
   }}
 />
 
@@ -57,11 +57,17 @@
 <TagSelectWrapper bind:tagString />
 
 <div class="flex justify-center mt-2 gap-x-2">
-  <button class="btn btn-tertiary" on:click={close}>Cancel</button>
   <button
     disabled={isSaveButtonDisabled}
     class="btn btn-primary"
-    on:click={save}>Save</button
+    title="Adds tags to existing tags (cmd + s)"
+    on:click={addTags}>Add tags</button
+  >
+  <button
+    disabled={isSaveButtonDisabled}
+    class="btn btn-primary"
+    title="Deletes other existing tags"
+    on:click={save}>Update tags</button
   >
 </div>
 <div class="flex justify-center">

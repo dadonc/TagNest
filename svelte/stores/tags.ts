@@ -138,6 +138,41 @@ export async function updateItemTags(item: SingleItem, tagString: string) {
   refreshDisplayedItems("updateItemTags");
 }
 
+async function addItemTags(item: SingleItem, tagString: string) {
+  const tagNames = tagString
+    .split(",")
+    .map((tag) => tag.trim())
+    .filter((t) => Boolean(t) && t != "&nbsp;");
+  const tags = await prisma.tag.findMany({
+    where: {
+      name: {
+        in: tagNames,
+      },
+    },
+  });
+
+  // Create new tags
+  const newTagNames = tagNames.filter(
+    (tagName) => !tags.some((tag) => tag.name === tagName)
+  );
+  const newTagIds = await createTags(newTagNames);
+
+  // Link newly added, but previously created tags
+  const allTags = [...tags.map((tag) => tag.id), ...newTagIds];
+
+  // Update item tags
+  await prisma.item.update({
+    where: {
+      id: item.id,
+    },
+    data: {
+      tags: {
+        connect: allTags.map((id) => ({ id })),
+      },
+    },
+  });
+}
+
 export async function updateItemsTags(itemIds: string[], tagString: string) {
   // if this takes long implement "dontRefreshStore"
   const items = await prisma.item.findMany({
@@ -152,6 +187,24 @@ export async function updateItemsTags(itemIds: string[], tagString: string) {
   for (const item of items) {
     await updateItemTags(item, tagString);
   }
+}
+
+export async function addItemsTags(itemIds: string[], tagString: string) {
+  // if this takes long implement "dontRefreshStore"
+  const items = await prisma.item.findMany({
+    where: {
+      id: {
+        in: itemIds,
+      },
+    },
+    include: itemInclude,
+  });
+  // Don't use Promise.all because tags should be created before the next item gets processed
+  for (const item of items) {
+    await addItemTags(item, tagString);
+  }
+  refreshTagsStore("addItemTags");
+  refreshDisplayedItems("addItemTags");
 }
 
 async function getTagByName(tagName: string) {
