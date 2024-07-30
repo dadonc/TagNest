@@ -105,10 +105,11 @@
         },
         { once: true }
       );
-
-      hoverSeekTimeSpan.style.display = "inline-block";
-      hoverSeekTimeSpan.textContent =
-        formatTime(videoElementHidden.currentTime) + " / ";
+      if (hoverSeekTimeSpan) {
+        hoverSeekTimeSpan.style.display = "inline-block";
+        hoverSeekTimeSpan.textContent =
+          formatTime(videoElementHidden.currentTime) + " / ";
+      }
     }
   }
 
