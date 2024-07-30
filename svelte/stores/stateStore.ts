@@ -72,12 +72,8 @@ export const filteredData = derived(
     const deselectedTagIds = $selectedTags.deselectedIds;
     if (selectedTagIds.length > 0) {
       filteredItems = filteredItems.filter((item) => {
-        let itemHasAllTags = true;
-        selectedTagIds.every((tagId) => {
-          if (!item.tags.some((tag) => tag.id === tagId)) {
-            itemHasAllTags = false;
-            return false;
-          }
+        let itemHasAllTags = selectedTagIds.every((tagId) => {
+          return item.tags.some((tag) => tag.id === tagId);
         });
         return itemHasAllTags;
       });

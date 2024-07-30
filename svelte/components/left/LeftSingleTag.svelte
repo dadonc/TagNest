@@ -56,7 +56,7 @@
   style={`margin-left: ${indent * 0.5}rem`}
 >
   <span>
-    {#if tag.countAfterDeselection !== 0}
+    {#if !isSelected && tag.countAfterDeselection !== 0}
       <button
         on:click={() => toggleDeselectTag(tag.id)}
         class="flex items-center justify-center w-2 px-3 font-mono text-xs text-white bg-error rounded-3xl"
@@ -74,7 +74,6 @@
     class={classNames(
       isSelected ? "bg-accent text-accent-content rounded-md" : "",
       isDeSelected ? "bg-error text-error-content rounded-md" : "",
-
       " w-full flex justify-between items-center pl-1"
     )}
     on:click={() => toggleSelectTag(tag.id)}
