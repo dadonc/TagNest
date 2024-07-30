@@ -57,8 +57,8 @@ padding-left: calc(0.5rem + 2px);"
             ($currentRoute === "details" &&
               $selectedItems.ids.length === 1 &&
               $selectedItems.ids[0] === pin.itemId)
-              ? "bg-primary-content border-2 border-blue-500"
-              : "bg-neutral-content border-2")}
+              ? "bg-base-300 border-2 border-blue-500"
+              : "bg-base-100 border border-neutral-500")}
           on:click={() => {
             $selectedItems.ids = [pin.itemId || ""];
             $currentRoute = pin.currentRoute;

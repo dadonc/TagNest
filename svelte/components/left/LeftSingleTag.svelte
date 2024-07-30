@@ -52,7 +52,7 @@
 
 <div
   on:contextmenu={openTagsContextMenu}
-  class="flex items-center h-5 text-sm font-medium"
+  class="flex items-center h-5 text-sm font-medium whitespace-nowrap"
   style={`margin-left: ${indent * 0.5}rem`}
 >
   <span>
