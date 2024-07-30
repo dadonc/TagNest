@@ -7,6 +7,7 @@
   export let tagString: string;
   export let displayAutocomplete: boolean;
   export let isAutoCompleteVisible: boolean;
+  export let autoCompleteClicked: boolean;
 
   let highlightedIndex = 0;
 
@@ -46,6 +47,7 @@
     if (highlightedIndex === matchesToShow.length - 1) {
       highlightedIndex = 0;
     }
+    autoCompleteClicked = true;
   }
 
   function handleKeydown(event: KeyboardEvent) {

@@ -8,13 +8,14 @@
 
   let displayAutocomplete = false;
   let isAutoCompleteVisible = false;
+  let autoCompleteClicked = false;
 
   const tagStringCopy = tagString;
 
   const placeholder =
     '<span class="absolute text-gray-500 pointer-events-none">tag1, group:tag2, ...<span>';
 
-  $: containerCSS = `w-full mt-2 pl-4 input input-bordered outlineFuckery h-12 flex items-center p-2 overflow-scroll caret-base-content ${isAutoCompleteVisible ? "rounded-b-none" : "rounded-b"}`;
+  $: containerCSS = `w-full mt-2 pl-4 input input-bordered outlineFuckery h-12 flex items-center p-2 overflow-scroll caret-base-content whitespace-pre-wrap ${isAutoCompleteVisible ? "rounded-b-none" : "rounded-b"}`;
 
   let tagsHTML = "";
   let hasUserInteracted = false;
@@ -47,13 +48,84 @@
     });
   }
 
+  function saveCursor() {
+    const selection = window.getSelection();
+    if (!selection || !selection.rangeCount) return null;
+    const range = selection.getRangeAt(0);
+    const preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(textInput);
+    preCaretRange.setEnd(range.startContainer, range.startOffset);
+    const start = preCaretRange.toString().length;
+    return { start, end: start + range.toString().length };
+  }
+
+  function restoreCursor(position: { start: number; end: number }) {
+    const selection = window.getSelection();
+    if (!selection) return;
+    const range = document.createRange();
+    range.setStart(textInput, 0);
+    range.collapse(true);
+
+    let nodeStack = [textInput],
+      node,
+      foundStart = false,
+      stop = false;
+    let charIndex = 0;
+
+    while (!stop && (node = nodeStack.pop() as any)) {
+      if (node.nodeType == 3) {
+        const nextCharIndex = charIndex + node.length;
+        if (
+          !foundStart &&
+          position.start >= charIndex &&
+          position.start <= nextCharIndex
+        ) {
+          range.setStart(node, position.start - charIndex);
+          foundStart = true;
+        }
+        if (
+          foundStart &&
+          position.end >= charIndex &&
+          position.end <= nextCharIndex
+        ) {
+          range.setEnd(node, position.end - charIndex);
+          stop = true;
+        }
+        charIndex = nextCharIndex;
+      } else {
+        let i = node.childNodes.length;
+        while (i--) {
+          nodeStack.push(node.childNodes[i] as any);
+        }
+      }
+    }
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
   const handleKeydown = (e: any) => {
     hasUserInteracted = true;
+    let pos;
+    if (!autoCompleteClicked) {
+      pos = saveCursor();
+    } else {
+      autoCompleteClicked = false;
+    }
     if (e.key === "Enter") {
       e.preventDefault();
       return;
     } else {
       tagString = e.target.innerText;
+    }
+
+    if (pos) {
+      setTimeout(() => {
+        restoreCursor(pos);
+      }, 0);
+      restoreCursor(pos);
+    } else {
+      setEndOfContenteditable(textInput);
     }
   };
 
@@ -89,16 +161,8 @@
       if (tagsHTML == placeholder) {
         tagsHTML = "&nbsp;";
       }
-      console.log("setend");
-      setTimeout(() => {
-        setEndOfContenteditable(textInput);
-      }, 0);
     }}
-    on:click={() => {
-      setTimeout(() => {
-        setEndOfContenteditable(textInput);
-      }, 0);
-    }}
+    on:click={() => {}}
     on:blur={(event) => {
       if (
         tagsHTML == "&nbsp;" ||
@@ -131,6 +195,7 @@
       bind:tagString
       bind:displayAutocomplete
       bind:isAutoCompleteVisible
+      bind:autoCompleteClicked
     />
   {/if}
 </div>
