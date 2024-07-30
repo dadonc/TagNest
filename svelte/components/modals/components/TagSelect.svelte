@@ -105,6 +105,7 @@
   }
 
   const handleKeydown = (e: any) => {
+    const veryFirstChar = tagString.length === 0;
     hasUserInteracted = true;
     let pos;
     if (!autoCompleteClicked) {
@@ -118,8 +119,7 @@
     } else {
       tagString = e.target.innerText;
     }
-
-    if (pos) {
+    if (pos && !veryFirstChar) {
       setTimeout(() => {
         restoreCursor(pos);
       }, 0);
