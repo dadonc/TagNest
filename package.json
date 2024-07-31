@@ -1,7 +1,7 @@
 {
   "name": "tagnest",
   "productName": "TagNest",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "TagNest - taggy tag tag",
   "main": ".vite/build/main.js",
   "scripts": {
