@@ -1,4 +1,4 @@
-<!-- This file isn't used anymore -->
+<!-- This file was only used for development purposes -->
 
 <script lang="ts">
   import { tick } from "svelte";

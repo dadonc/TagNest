@@ -7,7 +7,7 @@
   import { classNames, openContextMenu } from "../../utils";
 
   export let tag: FilteredTag;
-  export let indent;
+  export let indent: number;
   $: isSelected = $selectedTags.selectedIds.includes(tag.id);
   $: isDeSelected = $selectedTags.deselectedIds.includes(tag.id);
 

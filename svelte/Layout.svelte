@@ -214,10 +214,6 @@
     padding: 0.5rem 0 0.5rem 0.5rem;
   }
 
-  .topContainer {
-    /* -webkit-app-region: drag; */
-  }
-
   .grababble-x:active,
   .grababble-x:hover {
     cursor: col-resize;
