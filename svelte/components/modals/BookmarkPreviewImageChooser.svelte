@@ -25,7 +25,7 @@
 </script>
 
 {#if !isExpanded}
-  <div class="flex justify-center item-center">
+  <div class="flex flex-col justify-center item-center">
     <img
       src={path}
       alt="Bookmark preview"
@@ -36,6 +36,10 @@
       }}
       on:click={() => (isExpanded = true)}
     />
+
+    <button class="mt-2 text-blue-700" on:click={() => (isExpanded = true)}
+      >Change thumbnail</button
+    >
   </div>
 {:else if images.length > 0}
   <div class="flex flex-wrap">
