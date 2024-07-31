@@ -5,7 +5,11 @@
     importItems,
   } from "../../stores/items";
   import { selectedItems } from "../../stores/stateStore";
-  import { addItemsTags, updateItemsTags } from "../../stores/tags";
+  import {
+    addItemsTags,
+    removeItemsTags,
+    updateItemsTags,
+  } from "../../stores/tags";
   import { confirmDelete } from "../main/delete/DeleteQueue";
   import TagSelectWrapper from "../modals/components/TagSelectWrapper.svelte";
 
@@ -39,6 +43,19 @@
   };
 
   const addTags = async () => {
+    const origtagNames = originalTagString
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((t) => Boolean(t) && t != "&nbsp;");
+
+    const tagNames = tagString
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((t) => Boolean(t) && t != "&nbsp;");
+
+    const rmvdTags = origtagNames.filter((tag) => !tagNames.includes(tag));
+
+    await removeItemsTags($selectedItems.ids, rmvdTags);
     await addItemsTags($selectedItems.ids, tagString);
     isSaveButtonDisabled = true;
   };
@@ -61,13 +78,13 @@
     disabled={isSaveButtonDisabled}
     class="btn btn-primary"
     title="Adds tags to existing tags (cmd + s)"
-    on:click={addTags}>Add tags</button
+    on:click={addTags}>Update tags</button
   >
   <button
     disabled={isSaveButtonDisabled}
     class="btn btn-primary"
-    title="Deletes other existing tags"
-    on:click={save}>Update tags</button
+    title="Deletes prev. existing tags"
+    on:click={save}>Overwrite tags</button
   >
 </div>
 <div class="flex justify-center">

@@ -207,6 +207,40 @@ export async function addItemsTags(itemIds: string[], tagString: string) {
   refreshDisplayedItems("addItemTags");
 }
 
+export async function removeItemsTags(itemIds: string[], tagNames: string[]) {
+  const items = await prisma.item.findMany({
+    where: {
+      id: {
+        in: itemIds,
+      },
+    },
+    include: itemInclude,
+  });
+
+  const tags = await prisma.tag.findMany({
+    where: {
+      name: {
+        in: tagNames,
+      },
+    },
+  });
+  const tagIds = tags.map((tag) => tag.id);
+
+  for (const item of items) {
+    await prisma.item.update({
+      where: {
+        id: item.id,
+      },
+      data: {
+        tags: {
+          disconnect: tagIds.map((id) => ({ id })),
+        },
+      },
+    });
+  }
+  possiblyDeleteTags(tagIds);
+}
+
 async function getTagByName(tagName: string) {
   return prisma.tag.findFirst({
     where: {
