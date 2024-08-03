@@ -20,6 +20,12 @@
       "matches": ["<all_urls>"]
     }
   ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/content-script.js"]
+    }
+  ],
 
   "permissions": ["pageCapture", "tabs", "activeTab", "scripting"]
 }

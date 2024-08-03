@@ -1,4 +1,3 @@
-console.log("content script loaded");
 (function () {
   // Create the overlay div
   const overlay = document.createElement("div");

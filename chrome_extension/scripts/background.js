@@ -6,6 +6,13 @@ chrome.runtime.onInstalled.addListener(() => {
   checkServerStatusAndUpdateIcon();
 });
 
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action === "pageLoaded") {
+    checkServerStatusAndUpdateIcon();
+    sendResponse({ status: "ok" });
+  }
+});
+
 chrome.action.onClicked.addListener(iconClickLogic);
 
 async function checkConnection() {
