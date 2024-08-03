@@ -31,8 +31,10 @@
       </div>
       {#if item.file}
         <div>Size: {convertFileSize(item.file.size)}</div>
+        <div>Date created: {formatDate(item.file.created)}</div>
+      {:else}
+        <div>Date created: {formatDate(item.createdAt)}</div>
       {/if}
-      <div>Date created: {formatDate(item.createdAt)}</div>
       <div>Date updated: {formatDate(item.updatedAt)}</div>
     </div>
   {/if}

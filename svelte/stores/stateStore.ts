@@ -141,19 +141,13 @@ export const filteredData = derived(
     if ($currView.orderBy !== "shuffle") {
       filteredItems = filteredItems.sort((a, b) => {
         if ($currView.orderBy === "name") {
-          if (a.name && b.name && a.name < b.name) {
-            if ($currView.orderDirection === "asc") {
-              return -1;
-            }
-            return 1;
-          } else if (a.name && b.name && a.name > b.name) {
-            if ($currView.orderDirection === "asc") {
-              return 1;
-            }
-            return -1;
-          }
+          if (!a.name && !b.name) return 0;
+          if (!a.name) return $currView.orderDirection === "asc" ? 1 : -1;
+          if (!b.name) return $currView.orderDirection === "asc" ? -1 : 1;
+          const comparison = a.name.localeCompare(b.name);
+          return $currView.orderDirection === "asc" ? -comparison : comparison;
         } else if ($currView.orderBy === "createdAt") {
-          // get older date from file or item
+          // Get the older date from file or item
           const a_olderCreatedAt =
             a.file && a.file.created < a.createdAt
               ? a.file.created
@@ -162,19 +156,11 @@ export const filteredData = derived(
             b.file && b.file.created < b.createdAt
               ? b.file.created
               : b.createdAt;
-          if (a_olderCreatedAt < b_olderCreatedAt) {
-            if ($currView.orderDirection === "asc") {
-              return -1;
-            }
-            return 1;
-          } else if (a_olderCreatedAt > b_olderCreatedAt) {
-            if ($currView.orderDirection === "asc") {
-              return 1;
-            }
-            return -1;
-          }
+          const comparison =
+            Number(new Date(a_olderCreatedAt)) -
+            Number(new Date(b_olderCreatedAt));
+          return $currView.orderDirection === "asc" ? comparison : -comparison;
         } else if ($currView.orderBy === "updatedAt") {
-          // get newer date from file or item
           const a_newerUpdatedAt =
             a.file && a.file.updated > a.updatedAt
               ? a.file.updated
@@ -183,44 +169,17 @@ export const filteredData = derived(
             b.file && b.file.updated > b.updatedAt
               ? b.file.updated
               : b.updatedAt;
-          if (a_newerUpdatedAt < b_newerUpdatedAt) {
-            if ($currView.orderDirection === "asc") {
-              return -1;
-            }
-            return 1;
-          } else if (a_newerUpdatedAt > b_newerUpdatedAt) {
-            if ($currView.orderDirection === "asc") {
-              return 1;
-            }
-            return -1;
-          }
+          const comparison =
+            Number(new Date(a_newerUpdatedAt)) -
+            Number(new Date(b_newerUpdatedAt));
+          return $currView.orderDirection === "asc" ? comparison : -comparison;
         } else if ($currView.orderBy === "countOpened") {
-          if (a.countOpened < b.countOpened) {
-            if ($currView.orderDirection === "asc") {
-              return -1;
-            }
-            return 1;
-          } else if (a.countOpened > b.countOpened) {
-            if ($currView.orderDirection === "asc") {
-              return 1;
-            }
-            return -1;
-          }
+          const comparison = a.countOpened - b.countOpened;
+          return $currView.orderDirection === "asc" ? comparison : -comparison;
         } else if ($currView.orderBy === "fileSize") {
-          if (!a.file || !b.file) {
-            return 0;
-          }
-          if (a.file.size < b.file.size) {
-            if ($currView.orderDirection === "asc") {
-              return -1;
-            }
-            return 1;
-          } else if (a.file.size > b.file.size) {
-            if ($currView.orderDirection === "asc") {
-              return 1;
-            }
-            return -1;
-          }
+          if (!a.file || !b.file) return 0;
+          const comparison = Number(a.file.size) - Number(b.file.size);
+          return $currView.orderDirection === "asc" ? comparison : -comparison;
         }
         return 0;
       });
