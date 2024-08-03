@@ -203,6 +203,9 @@
           playPromise = videoElement.play();
         }
       }}
+      on:mouseleave={() => {
+        // displayProgress = false;
+      }}
       on:canplay={() => {
         videoIsLoaded = true;
       }}
@@ -215,6 +218,7 @@
       <div
         class="absolute bottom-0 z-40 w-full bg-green-500 cursor-pointer h-7"
         on:mouseover={() => (displayProgress = true)}
+        on:mouseleave={() => (displayProgress = false)}
         on:keydown={() => {}}
         on:focus={() => {}}
       >
