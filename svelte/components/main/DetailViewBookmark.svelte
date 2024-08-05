@@ -171,6 +171,7 @@
     });
     span.style.backgroundColor = "yellow";
     span.style.color = "black";
+    span.style.display = "inline";
     try {
       range.surroundContents(span);
       if (newId) {
