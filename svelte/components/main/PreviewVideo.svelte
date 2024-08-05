@@ -141,6 +141,7 @@
       videoElement.pause();
       displayVideo = false;
       videoIsLoaded = false;
+      displayProgress = false;
     }
   }}
   on:focus={() => {
@@ -259,7 +260,7 @@
       on:keydown={() => {}}
       on:focus={() => {}}
     />
-    {#if videoIsLoaded && videoElementHidden.duration > 0}
+    {#if videoIsLoaded && displayProgress && videoElementHidden.duration > 0}
       {#each item.video?.marks || [] as mark}
         <button
           on:mouseover={(e) => displayThumb(e, mark.mark)}
@@ -294,7 +295,7 @@
 
     {#if displayProgress}
       <span
-        class="absolute bottom-0 z-40 font-mono text-xs leading-7 text-white pointer-events-none h-7 right-2"
+        class="absolute bottom-0 z-20 font-mono text-xs leading-7 text-white pointer-events-none h-7 right-2"
       >
         <span class="hidden" bind:this={hoverSeekTimeSpan}>00:00:00 / </span>
         <span>{durationString}</span>
